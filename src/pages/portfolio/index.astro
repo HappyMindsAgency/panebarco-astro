@@ -3,6 +3,8 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import OriginalsShowcase from "../../components/OriginalsShowcase.astro";
+import PortfolioShowcase from "../../components/PortfolioShowcase.astro";
+import { getPortfolioShowcaseContent } from "../../data/portfolio-showcase";
 import { originalsProjects } from "../../data/originals";
 import { portfolioProjects as portfolioDetailProjects } from "../../data/portfolio";
 import { buildPath, joinLocalizedPath } from "../../i18n/routing";
@@ -10,6 +12,7 @@ import { buildPath, joinLocalizedPath } from "../../i18n/routing";
 const lang = "it" as const;
 const portfolioBearsPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioDetailProjects[0].slug.it);
 const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
+const portfolioShowcase = getPortfolioShowcaseContent(lang, { linkAll: true });
 
 const portfolioProjects = [
   {
@@ -191,6 +194,15 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
         </div>
       </div>
     </section>
+
+    <PortfolioShowcase
+      sectionClass="section-space section-space--tight pt-0"
+      containerClass="container portfolio-container"
+      title={portfolioShowcase.title}
+      stickerSrc={portfolioShowcase.stickerSrc}
+      stickerAlt={portfolioShowcase.stickerAlt}
+      items={portfolioShowcase.items}
+    />
 
     <section class="section-space section-space--tight pt-2 pt-md-3 pt-lg-4">
       <div class="container">

@@ -2,12 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import HeroStyHome from "../components/HeroStyHome.astro";
 import OriginalsShowcase from "../components/OriginalsShowcase.astro";
+import PortfolioShowcase from "../components/PortfolioShowcase.astro";
 import mainScriptUrl from "../scripts/main.js?url";
-import { portfolioProjects } from "../data/portfolio";
-import { buildPath, joinLocalizedPath } from "../i18n/routing";
+import { getPortfolioShowcaseContent } from "../data/portfolio-showcase";
+import { buildPath } from "../i18n/routing";
 
 const lang = "it" as const;
-const featuredPortfolioPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioProjects[0].slug.it);
+const portfolioShowcase = getPortfolioShowcaseContent(lang);
 
 const serviceAreas = [
   {
@@ -116,80 +117,17 @@ const serviceAreas = [
       <!-- Slider Panebarco Originals -->
       <OriginalsShowcase />
   
-      <!-- Griglia portfolio -->
-      <section id="portfolio" class="section-space">
-        <div class="container originals-stage portfolio-container">
-          <h2 class="section-title section-title-reveal">
-          <span class="section-title-text">PORTFOLIO</span>
-          <img class="section-title-sticker" src="/images/cose belle che abbiamo fatto.png" alt="" aria-hidden="true">
-        </h2>
-          <div class="portfolio-grid">
-            <article class="portfolio-item top-left">
-              <img src="/images/portfolio-cover-01-695x391.jpg" alt="Progetto portfolio 1">
-              <div class="portfolio-tags">
-                <span class="portfolio-tag">2D</span>
-                <span class="portfolio-tag">Animazione</span>
-              </div>
-              <div class="portfolio-overlay">
-                <h3>Progetto 01</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </article>
-            <article class="portfolio-item top-right">
-              <img src="/images/portfolio-cover-02-695x391.jpg" alt="Progetto portfolio 2">
-              <div class="portfolio-tags">
-                <span class="portfolio-tag">3D</span>
-                <span class="portfolio-tag">VFX</span>
-              </div>
-              <div class="portfolio-overlay">
-                <h3>Progetto 02</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </article>
-            <a
-              class="portfolio-item bottom-left text-decoration-none"
-              href={featuredPortfolioPath}
-              aria-label="Apri il progetto Vita dura per gli Orsi Marsicani"
-            >
-              <img src="/images/portfolio-cover-03-695x391.jpg" alt="Progetto portfolio 3">
-              <div class="portfolio-tags">
-                <span class="portfolio-tag">Regia</span>
-                <span class="portfolio-tag">2D</span>
-              </div>
-              <div class="portfolio-overlay">
-                <h3>Vita dura per gli Orsi Marsicani</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </a>
-            <article class="portfolio-item bottom-right">
-              <img src="/images/portfolio-cover-04-695x391.jpg" alt="Progetto portfolio 4">
-              <div class="portfolio-tags">
-                <span class="portfolio-tag">Animazione</span>
-                <span class="portfolio-tag">3D</span>
-              </div>
-              <div class="portfolio-overlay">
-                <h3>Progetto 04</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </article>
-            <article class="portfolio-item wide">
-              <img src="/images/portfolio-cover-05-695x391.jpg" alt="Progetto portfolio in evidenza">
-              <div class="portfolio-tags">
-                <span class="portfolio-tag">Regia</span>
-                <span class="portfolio-tag">VFX</span>
-                <span class="portfolio-tag">3D</span>
-              </div>
-              <div class="portfolio-overlay">
-                <h3>Progetto In Evidenza</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </article>
-          </div>
-          <div class="text-center mt-4">
-            <a href={buildPath("portfolio", lang)} class="btn btn-cta btn-cta--blue btn-pill portfolio-cta">SCOPRI DI PI&Ugrave;</a>
-          </div>
-        </div>
-      </section>
+      <PortfolioShowcase
+        sectionId="portfolio"
+        sectionClass="section-space"
+        containerClass="container originals-stage portfolio-container"
+        title={portfolioShowcase.title}
+        stickerSrc={portfolioShowcase.stickerSrc}
+        stickerAlt={portfolioShowcase.stickerAlt}
+        items={portfolioShowcase.items}
+        ctaHref={portfolioShowcase.ctaHref}
+        ctaLabel={portfolioShowcase.ctaLabel}
+      />
   
       <!-- Anteprima Paneblog -->
       <section id="paneblog" class="section-space section-space--tight">

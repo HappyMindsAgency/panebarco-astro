@@ -1,52 +1,8 @@
 (function () {
   let cleanupHomePage = function () {};
 
-  function setupPortfolioReveal(cleanups) {
-    const portfolioSection = document.getElementById("portfolio");
-    const nextSection = document.getElementById("paneblog");
-    const portfolioCards = portfolioSection
-      ? portfolioSection.querySelectorAll(".portfolio-item")
-      : [];
-
-    if (!portfolioSection || !nextSection || portfolioCards.length === 0) return;
-
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      portfolioCards.forEach(function (card) {
-        card.classList.add("is-in-view");
-      });
-      return;
-    }
-
-    portfolioCards.forEach(function (card, index) {
-      card.style.transitionDelay = String(index * 0.08) + "s";
-    });
-
-    const observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-
-          entry.target.classList.add("is-in-view");
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50% 0px",
-      }
-    );
-
-    portfolioCards.forEach(function (card) {
-      observer.observe(card);
-    });
-
-    cleanups.push(function () {
-      observer.disconnect();
-    });
-  }
-
   function setupRevealTitles(cleanups) {
-    const revealTitles = document.querySelectorAll(".section-title-reveal");
+    const revealTitles = document.querySelectorAll(".section-title-reveal:not([data-reveal-managed='self'])");
     if (!revealTitles.length) return;
 
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -300,7 +256,6 @@
     cleanupHomePage();
 
     const cleanups = [];
-    setupPortfolioReveal(cleanups);
     setupRevealTitles(cleanups);
     setupTypingText(cleanups);
     setupChatSlider(cleanups);

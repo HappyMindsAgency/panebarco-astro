@@ -1,0 +1,170 @@
+---
+interface PortfolioShowcaseItem {
+  title: string;
+  summary: string;
+  image: string;
+  imageAlt: string;
+  slot: string;
+  tags: string[];
+  href?: string;
+  ariaLabel?: string;
+}
+
+interface Props {
+  title: string;
+  stickerSrc: string;
+  stickerAlt?: string;
+  items: readonly PortfolioShowcaseItem[];
+  sectionId?: string;
+  sectionClass?: string;
+  containerClass?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const {
+  title,
+  stickerSrc,
+  stickerAlt = "",
+  items,
+  sectionId,
+  sectionClass = "section-space",
+  containerClass = "container originals-stage portfolio-container",
+  ctaHref,
+  ctaLabel,
+} = Astro.props;
+
+const hasCta = Boolean(ctaHref && ctaLabel);
+---
+
+<section id={sectionId} class={sectionClass} data-portfolio-showcase>
+  <div class={containerClass}>
+    <h2 class="section-title section-title-reveal" data-reveal-managed="self" data-portfolio-showcase-title>
+      <span class="section-title-text">{title}</span>
+      <img class="section-title-sticker" src={stickerSrc} alt={stickerAlt} aria-hidden={stickerAlt ? undefined : "true"} />
+    </h2>
+
+    <div class="portfolio-grid">
+      {items.map((item) => (
+        item.href ? (
+          <a
+            class:list={["portfolio-item", item.slot, "text-decoration-none"]}
+            href={item.href}
+            aria-label={item.ariaLabel}
+            data-portfolio-showcase-card
+          >
+            <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" />
+            <div class="portfolio-tags">
+              {item.tags.map((tag) => (
+                <span class="portfolio-tag">{tag}</span>
+              ))}
+            </div>
+            <div class="portfolio-overlay">
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+            </div>
+          </a>
+        ) : (
+          <article class:list={["portfolio-item", item.slot]} data-portfolio-showcase-card>
+            <img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" />
+            <div class="portfolio-tags">
+              {item.tags.map((tag) => (
+                <span class="portfolio-tag">{tag}</span>
+              ))}
+            </div>
+            <div class="portfolio-overlay">
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+            </div>
+          </article>
+        )
+      ))}
+    </div>
+
+    {hasCta && (
+      <div class="text-center mt-4">
+        <a href={ctaHref} class="btn btn-cta btn-cta--blue btn-pill portfolio-cta">{ctaLabel}</a>
+      </div>
+    )}
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    function initPortfolioShowcases() {
+      document.querySelectorAll("[data-portfolio-showcase]").forEach(function (root) {
+        if (root.dataset.bound === "true") return;
+        root.dataset.bound = "true";
+
+        var title = root.querySelector("[data-portfolio-showcase-title]");
+        var cards = root.querySelectorAll("[data-portfolio-showcase-card]");
+
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          if (title) title.classList.add("is-in-view");
+          cards.forEach(function (card) {
+            card.classList.add("is-in-view");
+          });
+          return;
+        }
+
+        if (title) {
+          var lastScrollY = window.scrollY;
+          var titleObserver = new IntersectionObserver(
+            function (entries) {
+              var currentScrollY = window.scrollY;
+              var isScrollingUp = currentScrollY < lastScrollY;
+              lastScrollY = currentScrollY;
+
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-in-view");
+                  return;
+                }
+
+                if (isScrollingUp) {
+                  entry.target.classList.remove("is-in-view");
+                }
+              });
+            },
+            {
+              threshold: 0.01,
+              rootMargin: "-35% 0px -35% 0px",
+            }
+          );
+
+          titleObserver.observe(title);
+        }
+
+        cards.forEach(function (card, index) {
+          card.style.transitionDelay = String(index * 0.08) + "s";
+        });
+
+        var cardObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+
+              entry.target.classList.add("is-in-view");
+              cardObserver.unobserve(entry.target);
+            });
+          },
+          {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50% 0px",
+          }
+        );
+
+        cards.forEach(function (card) {
+          cardObserver.observe(card);
+        });
+      });
+    }
+
+    if (!window.__panebarcoPortfolioShowcaseBound) {
+      document.addEventListener("astro:page-load", initPortfolioShowcases);
+      window.__panebarcoPortfolioShowcaseBound = true;
+    }
+
+    initPortfolioShowcases();
+  })();
+</script>
