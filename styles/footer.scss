@@ -44,6 +44,17 @@
   line-height: 1.35;
 }
 
+.footer-cta .contact-line a {
+  color: $white;
+  text-decoration: none;
+}
+
+.footer-cta .contact-line a:hover,
+.footer-cta .contact-line a:focus-visible {
+  color: $white;
+  text-decoration: underline;
+}
+
 .social-row {
   display: flex;
   align-items: center;
@@ -128,12 +139,12 @@
 
 .footer-meta a {
   color: $white;
-  text-decoration: none;
+  text-decoration: underline;
   font-weight: $font-weight-bold;
 }
 
 .footer-meta a:hover {
-  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 .footer-cta .btn-cta--orange:hover,

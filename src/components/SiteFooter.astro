@@ -17,18 +17,24 @@ const {
     <div class="row g-4 footer-main align-items-center">
       <div class="col-lg-4">
         <img class="footer-logo" src="/images/panebarco-logo-light.png" alt="Panebarco">
-        <p class="contact-line mb-0">Panebarco &amp; C. S.r.l. - Via Molino, 9<br>48121 Ravenna, Italia<br>+39 0544 35012 | +39 338 3693558<br>info@panebarco.it</p>
+        <p class="contact-line mb-0">
+          Panebarco &amp; C. S.r.l. - Via Molino, 9<br>
+          48121 Ravenna, Italia<br>
+          <a href="tel:+39054435012">+39 0544 35012</a> |
+          <a href="tel:+393383693558">+39 338 3693558</a><br>
+          <a href="mailto:info@panebarco.it">info@panebarco.it</a>
+        </p>
       </div>
 
       <div class="col-lg-3">
         <div class="social-row">
-          <a class="social-circle social-facebook" href="#" aria-label="Facebook">
+          <a class="social-circle social-facebook" href="https://www.facebook.com/PanebarcoMultimedia/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
             <i class="bi bi-facebook"></i>
           </a>
-          <a class="social-circle social-instagram" href="#" aria-label="Instagram">
+          <a class="social-circle social-instagram" href="https://www.instagram.com/panebarcos" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
             <i class="bi bi-instagram"></i>
           </a>
-          <a class="social-circle social-vimeo" href="#" aria-label="Vimeo">
+          <a class="social-circle social-vimeo" href="https://vimeo.com/panebarco" aria-label="Vimeo" target="_blank" rel="noopener noreferrer">
             <i class="bi bi-vimeo"></i>
           </a>
         </div>
@@ -37,7 +43,7 @@ const {
 
       <div class="col-lg-5">
         <h3 class="footer-heading">{customLabel("footer.heading", lang)}<br><span class="footer-heading-strong">{customLabel("footer.headingStrong", lang)}</span></h3>
-        <a href={buildPath("contacts", lang)} class="btn btn-cta btn-cta--orange btn-pill">{customLabel("footer.contactCta", lang)}</a>
+        <a href="mailto:info@panebarco.it" class="btn btn-cta btn-cta--orange btn-pill">{customLabel("footer.contactCta", lang)}</a>
       </div>
     </div>
 
