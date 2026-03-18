@@ -2,25 +2,28 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import { buildPath } from "../../i18n/routing";
+
+const lang = "it" as const;
 
 const specialProjects = [
   {
     title: "Curiosità e formati laterali",
-    href: "/paneblog",
+    href: buildPath("paneblog", lang),
     image: "/images/curiosita-01.jpg",
     summary: "Contenuti nati per sperimentare linguaggi, toni e usi fuori dal perimetro più istituzionale.",
     tags: ["Special projects", "Format"],
   },
   {
     title: "Progetti editoriali e di racconto",
-    href: "/paneblog/diario-di-viaggio",
+    href: buildPath("paneblogTravelDiary", lang),
     image: "/images/curiosita-02.jpg",
     summary: "Appunti visivi, materiali narrativi e piccoli mondi che tengono insieme processo, tono e identità.",
     tags: ["Editoriale", "Storytelling"],
   },
   {
     title: "Contenuti per librerie e archivi",
-    href: "/portfolio",
+    href: buildPath("portfolio", lang),
     image: "/images/curiosita-03.jpg",
     summary: "Materiali modulari pensati per vivere su più canali, nel tempo, con una logica di collezione e riuso.",
     tags: ["Library", "Content"],
@@ -30,21 +33,21 @@ const specialProjects = [
 const mindItems = [
   {
     title: "Paneblog",
-    href: "/paneblog",
+    href: buildPath("paneblog", lang),
     image: "/images/paneblog-cover-01-356x217.png",
     summary: "Appunti, dietro le quinte e pensieri che diventano racconto.",
     cta: "Apri il Paneblog",
   },
   {
     title: "Diario di viaggio",
-    href: "/paneblog/diario-di-viaggio",
+    href: buildPath("paneblogTravelDiary", lang),
     image: "/images/paneblog-cover-02-356x217.png",
     summary: "Una rotta più libera, dove i progetti si intrecciano a tappe, incontri e processi.",
     cta: "Leggi il diario",
   },
   {
     title: "Newsletter",
-    href: "/contatti",
+    href: buildPath("contacts", lang),
     image: "/images/paneblog-cover-03-356x217.png",
     summary: "Una selezione ragionata di novità, work in progress e contenuti da tenere d'occhio.",
     cta: "Richiedila",
@@ -55,6 +58,7 @@ const mindItems = [
 <Layout
   title="...E tanto altro - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page extras-page">
@@ -103,7 +107,7 @@ const mindItems = [
               meritano una vita più lunga e meno prevedibile.
             </p>
             <div class="mt-3 mt-lg-4">
-              <a class="btn btn-cta btn-cta--blue btn-pill" href="/contatti">Parliamone</a>
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Parliamone</a>
             </div>
           </div>
         </div>
@@ -173,7 +177,7 @@ const mindItems = [
                   Una raccolta in movimento di contenuti, frammenti, materiali e piccoli formati da usare come archivio vivo:
                   utile per raccontare meglio il lavoro, attivare conversazioni e dare continuità ai progetti anche fuori dal set.
                 </p>
-                <a class="btn btn-cta btn-cta--blue btn-pill" href="/contatti">Chiedici la social library</a>
+                <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Chiedici la social library</a>
               </div>
             </div>
 

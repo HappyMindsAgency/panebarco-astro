@@ -1,4 +1,7 @@
 ---
+import { originalsProjects } from "../data/originals";
+import { buildPath, joinLocalizedPath } from "../i18n/routing";
+
 interface OriginalItem {
   title: string;
   image: string;
@@ -18,21 +21,23 @@ const {
 } = Astro.props;
 
 // Dataset minimo condiviso tra home e pagine interne per pilotare lo showcase.
+const featuredOriginalPath = joinLocalizedPath(buildPath("originals", "it"), originalsProjects[0].slug.it);
+
 const originals: OriginalItem[] = [
   {
     title: "Caramelle",
     image: "/images/originals-cover-01-700x395.jpg",
-    link: "/originals/caramelle",
+    link: featuredOriginalPath,
   },
   {
     title: "Marta e la morte",
     image: "/images/originals-cover-02-270x395.jpg",
-    link: "/originals/caramelle",
+    link: featuredOriginalPath,
   },
   {
     title: "#Nostoppingnora",
     image: "/images/originals-cover-03-270x395.jpg",
-    link: "/originals/caramelle",
+    link: featuredOriginalPath,
   },
 ];
 
@@ -175,7 +180,7 @@ const [featured, sideOne, sideTwo] = originals;
           setCard(featuredCard, featuredTitle, featured);
           setCard(sideCard1, sideTitle1, sideOne);
           setCard(sideCard2, sideTitle2, sideTwo);
-          featuredBtn.setAttribute("href", featured.link || "/originals/caramelle");
+          featuredBtn.setAttribute("href", featured.link || featuredOriginalPath);
 
           window.requestAnimationFrame(function () {
             [featuredCard, sideCard1, sideCard2].forEach(function (card) {

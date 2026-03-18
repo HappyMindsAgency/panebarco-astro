@@ -1,77 +1,91 @@
+---
+import type { Lang } from "../i18n/config";
+import { customLabel } from "../i18n/labels";
+import { buildPath } from "../i18n/routing";
+
+interface Props {
+  lang?: Lang;
+}
+
+const {
+  lang = "it",
+} = Astro.props;
+---
+
 <div id="menuOverlay" class="menu-overlay" aria-hidden="true">
-  <button id="menuOverlayClose" class="menu-overlay-close" type="button" aria-label="Chiudi menu">
+  <button id="menuOverlayClose" class="menu-overlay-close" type="button" aria-label={customLabel("a11y.closeMenu", lang)}>
     <img class="menu-overlay-close-icon" src="/images/close-hamburger-menu.png" alt="" aria-hidden="true" />
   </button>
-  <nav class="menu-overlay-nav" aria-label="Menu principale">
+  <nav class="menu-overlay-nav" aria-label={customLabel("a11y.mainMenu", lang)}>
     <div class="menu-item">
       <div class="menu-item-head">
-        <a class="menu-overlay-link" href="/studio" data-bubble="/images/studio-la-nostra-tana.png">Studio</a>
+        <a class="menu-overlay-link" href={buildPath("studio", lang)} data-bubble="/images/studio-la-nostra-tana.png">{customLabel("menu.studio", lang)}</a>
         <button
           class="menu-submenu-toggle"
           type="button"
-          aria-label="Mostra sottovoci Studio"
+          aria-label={customLabel("a11y.openStudioSubmenu", lang)}
           aria-controls="submenu-studio"
           aria-expanded="false"
         >
           <i class="bi bi-chevron-down" aria-hidden="true"></i>
         </button>
       </div>
-      <div id="submenu-studio" class="menu-submenu" aria-label="Sottovoci Studio">
-        <a class="menu-submenu-link" href="/studio/storia-di-unazienda-mutante">storia di un'azienda mutante</a>
-        <a class="menu-submenu-link" href="/studio/i-panebarcos">i panebarcos</a>
-        <a class="menu-submenu-link" href="/studio/ci-vediamo-agli-oscar">ci vediamo agli oscar</a>
+      <div id="submenu-studio" class="menu-submenu" aria-label={customLabel("a11y.studioSubmenu", lang)}>
+        <a class="menu-submenu-link" href={buildPath("studioStory", lang)}>{customLabel("menu.studioStory", lang)}</a>
+        <a class="menu-submenu-link" href={buildPath("studioTeam", lang)}>{customLabel("menu.studioTeam", lang)}</a>
+        <a class="menu-submenu-link" href={buildPath("studioOscars", lang)}>{customLabel("menu.studioOscars", lang)}</a>
       </div>
     </div>
 
     <div class="menu-item">
       <div class="menu-item-head">
-        <a class="menu-overlay-link" href="/servizi" data-bubble="/images/servizi-cose.png">Servizi</a>
+        <a class="menu-overlay-link" href={buildPath("services", lang)} data-bubble="/images/servizi-cose.png">{customLabel("menu.services", lang)}</a>
         <button
           class="menu-submenu-toggle"
           type="button"
-          aria-label="Mostra sottovoci Servizi"
+          aria-label={customLabel("a11y.openServicesSubmenu", lang)}
           aria-controls="submenu-servizi"
           aria-expanded="false"
         >
           <i class="bi bi-chevron-down" aria-hidden="true"></i>
         </button>
       </div>
-      <div id="submenu-servizi" class="menu-submenu" aria-label="Sottovoci Servizi">
-        <a class="menu-submenu-link" href="/servizi/commercials">commercials</a>
-        <a class="menu-submenu-link" href="/servizi/post-produzione">post-produzione</a>
-        <a class="menu-submenu-link" href="/servizi/service">service</a>
-        <a class="menu-submenu-link" href="/servizi/e-tanto-altro">...e tanto altro</a>
+      <div id="submenu-servizi" class="menu-submenu" aria-label={customLabel("a11y.servicesSubmenu", lang)}>
+        <a class="menu-submenu-link" href={buildPath("servicesCommercials", lang)}>{customLabel("menu.servicesCommercials", lang)}</a>
+        <a class="menu-submenu-link" href={buildPath("servicesPost", lang)}>{customLabel("menu.servicesPost", lang)}</a>
+        <a class="menu-submenu-link" href={buildPath("servicesService", lang)}>{customLabel("menu.servicesService", lang)}</a>
+        <a class="menu-submenu-link" href={buildPath("servicesMore", lang)}>{customLabel("menu.servicesMore", lang)}</a>
       </div>
     </div>
 
-    <a class="menu-overlay-link" href="/portfolio" data-bubble="/images/portfolio-cose-belle.png">Portfolio</a>
-    <a class="menu-overlay-link" href="/originals" data-bubble="/images/originals-produzioni-indipendenti.png">Originals</a>
+    <a class="menu-overlay-link" href={buildPath("portfolio", lang)} data-bubble="/images/portfolio-cose-belle.png">{customLabel("menu.portfolio", lang)}</a>
+    <a class="menu-overlay-link" href={buildPath("originals", lang)} data-bubble="/images/originals-produzioni-indipendenti.png">{customLabel("menu.originals", lang)}</a>
 
     <div class="menu-item">
       <div class="menu-item-head">
-        <a class="menu-overlay-link" href="/paneblog" data-bubble="/images/paneblog-pensieri.png">Paneblog</a>
+        <a class="menu-overlay-link" href={buildPath("paneblog", lang)} data-bubble="/images/paneblog-pensieri.png">{customLabel("menu.paneblog", lang)}</a>
         <button
           class="menu-submenu-toggle"
           type="button"
-          aria-label="Mostra sottovoci Paneblog"
+          aria-label={customLabel("a11y.openPaneblogSubmenu", lang)}
           aria-controls="submenu-paneblog"
           aria-expanded="false"
         >
           <i class="bi bi-chevron-down" aria-hidden="true"></i>
         </button>
       </div>
-      <div id="submenu-paneblog" class="menu-submenu" aria-label="Sottovoci Paneblog">
-        <a class="menu-submenu-link" href="/paneblog/diario-di-viaggio">diario di viaggio</a>
+      <div id="submenu-paneblog" class="menu-submenu" aria-label={customLabel("a11y.paneblogSubmenu", lang)}>
+        <a class="menu-submenu-link" href={buildPath("paneblogTravelDiary", lang)}>{customLabel("menu.paneblogTravelDiary", lang)}</a>
       </div>
     </div>
 
-    <a class="menu-overlay-link" href="/contatti" data-bubble="/images/contatti-raccontaci.png">Contatti</a>
+    <a class="menu-overlay-link" href={buildPath("contacts", lang)} data-bubble="/images/contatti-raccontaci.png">{customLabel("menu.contacts", lang)}</a>
 
-    <div class="menu-lang" aria-label="Cambio lingua">
-      <button class="menu-lang-btn" type="button" aria-label="Switch to English">
+    <div class="menu-lang" aria-label={customLabel("a11y.languageSwitch", lang)}>
+      <button class="menu-lang-btn" type="button" aria-label={customLabel("a11y.switchToEnglish", lang)}>
         <img src="/images/inglese.png" alt="English" />
       </button>
-      <button class="menu-lang-btn" type="button" aria-label="Passa a italiano">
+      <button class="menu-lang-btn" type="button" aria-label={customLabel("a11y.switchToItalian", lang)}>
         <img src="/images/italiano.png" alt="Italiano" />
       </button>
     </div>

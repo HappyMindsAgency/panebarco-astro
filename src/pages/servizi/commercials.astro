@@ -4,6 +4,8 @@ import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
 
+const lang = "it" as const;
+
 // I 4 cluster narrativi mostrati nella sezione "modi per comunicare".
 const communicationModes = [
   "Raccontare",
@@ -52,6 +54,7 @@ const modeBubbleSets = {
 <Layout
   title="Commercials - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="commercials-page studio-page">

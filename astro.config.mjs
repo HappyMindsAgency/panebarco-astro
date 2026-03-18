@@ -5,4 +5,14 @@ export default defineConfig({
     host: true,
     port: 4321,
   },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          quietDeps: true,
+          silenceDeprecations: ["import"],
+        },
+      },
+    },
+  },
 });

@@ -2,6 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import { originalsProjects } from "../../data/originals";
+import { portfolioProjects } from "../../data/portfolio";
+import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+
+const lang = "it" as const;
+const portfolioBearsPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioProjects[0].slug.it);
+const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
 
 const interventionAreas = [
   {
@@ -29,28 +36,28 @@ const interventionAreas = [
 const relatedCases = [
   {
     title: "Vita dura per gli Orsi Marsicani",
-    href: "/portfolio/vita-dura-per-gli-orsi-marsicani",
+    href: portfolioBearsPath,
     image: "/images/rendering-a-livelli-02.jpg",
     summary: "Un progetto in cui integrazione CGI e live action si tengono insieme fino all'ultimo frame.",
     tags: ["3D", "Live action"],
   },
   {
     title: "Caramelle",
-    href: "/originals/caramelle",
+    href: originalCandiesPath,
     image: "/images/rendering-finale-02.jpg",
     summary: "Look, compositing e resa finale lavorano insieme per dare coerenza emotiva alle immagini.",
     tags: ["Finishing", "Look dev"],
   },
   {
     title: "Storyboard & Animatic",
-    href: "/originals/caramelle",
+    href: originalCandiesPath,
     image: "/images/storyboard-e-animatic-01.jpg",
     summary: "Quando la rifinitura visiva parte da una pipeline ben costruita e continua fino alla consegna.",
     tags: ["Pipeline", "Final frame"],
   },
   {
     title: "Commercials",
-    href: "/servizi/commercials",
+    href: buildPath("servicesCommercials", lang),
     image: "/images/compositing-e-visual-effects-01.jpg",
     summary: "Spot e brand video in cui la post-produzione diventa ritmo, tono e precisione narrativa.",
     tags: ["Brand video", "VFX"],
@@ -61,6 +68,7 @@ const relatedCases = [
 <Layout
   title="Post-produzione - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page commercials-page post-production-page">
@@ -90,7 +98,7 @@ const relatedCases = [
               keying, compositing, VFX, effetti particellari e color grading, curando ogni dettaglio della fase finale per
               un risultato impeccabile.
             </p>
-            <a class="btn btn-cta btn-cta--blue btn-pill" href="/studio">Scopri il nostro approccio</a>
+            <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("studio", lang)}>Scopri il nostro approccio</a>
           </div>
         </div>
       </div>

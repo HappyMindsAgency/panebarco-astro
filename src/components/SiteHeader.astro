@@ -4,6 +4,9 @@ import logoDark from "../../public/images/panebarco-logo-dark.png";
 import logoLight from "../../public/images/panebarco-logo-light.png";
 import menuWhite from "../../public/images/hamburger-menu-bianco.png";
 import menuBlack from "../../public/images/hamburger-menu-nero.png";
+import type { Lang } from "../i18n/config";
+import { customLabel } from "../i18n/labels";
+import { buildPath } from "../i18n/routing";
 
 interface Props {
   logoSrc?: string;
@@ -13,11 +16,13 @@ interface Props {
   containerClass?: string;
   showLogo?: boolean;
   menuIconSrc?: string;
+  lang?: Lang;
 }
 
 const {
   logoSrc,
-  logoHref = "/",
+  lang = "it",
+  logoHref = buildPath("home", lang),
   darkmode = true,
   logoAlt = "Panebarco",
   containerClass = "container-fluid hero-fluid px-3 px-md-4 px-lg-5",
@@ -36,7 +41,7 @@ const menuIcon = menuIconSrc ?? (darkmode ? menuWhite.src : menuBlack.src);
 <header class="top-header fixed-top">
   <div class={containerClass}>
     <div class="hero-nav">
-      <button class="menu-trigger" type="button" aria-label="Apri menu">
+      <button class="menu-trigger" type="button" aria-label={customLabel("a11y.openMenu", lang)}>
         {menuIcon ? (
           <img class="menu-trigger-icon" src={menuIcon} alt="" aria-hidden="true" />
         ) : (
@@ -55,4 +60,4 @@ const menuIcon = menuIconSrc ?? (darkmode ? menuWhite.src : menuBlack.src);
     </div>
   </div>
 </header>
-<MenuOverlay />
+<MenuOverlay lang={lang} />

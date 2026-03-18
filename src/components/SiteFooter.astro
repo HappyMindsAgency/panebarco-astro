@@ -1,3 +1,17 @@
+---
+import type { Lang } from "../i18n/config";
+import { customLabel } from "../i18n/labels";
+import { buildPath } from "../i18n/routing";
+
+interface Props {
+  lang?: Lang;
+}
+
+const {
+  lang = "it",
+} = Astro.props;
+---
+
 <footer id="contatti" class="footer-cta">
   <div class="container">
     <div class="row g-4 footer-main align-items-center">
@@ -22,21 +36,21 @@
       </div>
 
       <div class="col-lg-5">
-        <h3 class="footer-heading">Hai un progetto in mente?<br><span class="footer-heading-strong">Lo animiamo noi.</span></h3>
-        <a href="#" class="btn btn-cta btn-cta--orange btn-pill">CONTATTACI</a>
+        <h3 class="footer-heading">{customLabel("footer.heading", lang)}<br><span class="footer-heading-strong">{customLabel("footer.headingStrong", lang)}</span></h3>
+        <a href={buildPath("contacts", lang)} class="btn btn-cta btn-cta--orange btn-pill">{customLabel("footer.contactCta", lang)}</a>
       </div>
     </div>
 
     <div class="footer-meta">
       <p class="small-muted mb-0">
-        Copyright &copy; Panebarco &amp; C. 2025 | <a href="#">Privacy Policy</a> - <a href="#">Cookie Policy</a>
+        Copyright &copy; Panebarco &amp; C. 2025 | <a href={buildPath("privacyPolicy", lang)}>{customLabel("footer.privacy", lang)}</a> - <a href={buildPath("cookiePolicy", lang)}>{customLabel("footer.cookies", lang)}</a>
       </p>
     </div>
   </div>
 
   <div class="footer-signature">
     <div class="container">
-      Prodotto originale frutto delle menti felici e creative di
+      {customLabel("footer.signature", lang)}
       <a href="https://www.happyminds.it" target="_blank" rel="noopener noreferrer">HappyMinds</a>
     </div>
   </div>

@@ -1,4 +1,6 @@
 ---
+import { buildPath } from "../i18n/routing";
+
 interface Props {
   kicker: string;
   title: string;
@@ -12,7 +14,7 @@ interface Props {
 const {
   kicker,
   title,
-  href = "/contatti",
+  href = buildPath("contacts", "it"),
   buttonLabel = "Contattaci",
   figureSrc = "/images/lo-animiamo-noi.png",
   figureAlt = "Mascotte Panebarco",

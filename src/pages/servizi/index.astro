@@ -3,11 +3,14 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import OriginalsShowcase from "../../components/OriginalsShowcase.astro";
 import mainScriptUrl from "../../scripts/main.js?url";
+import { buildPath } from "../../i18n/routing";
+
+const lang = "it" as const;
 
 const serviceAreas = [
   {
     title: "Commercials e Brand Video",
-    href: "/servizi/commercials",
+    href: buildPath("servicesCommercials", lang),
     videoSrc: "/images/panebarco-commercial-video.mp4",
     poster: "/images/hero-commercials.png",
     summary:
@@ -22,7 +25,7 @@ const serviceAreas = [
   },
   {
     title: "Post-produzione",
-    href: "/servizi/post-produzione",
+    href: buildPath("servicesPost", lang),
     videoSrc: "/images/1021768637.mp4",
     poster: "/images/compositing-e-visual-effects-01.jpg",
     summary:
@@ -37,7 +40,7 @@ const serviceAreas = [
   },
   {
     title: "Service e Produzione Esecutiva",
-    href: "/servizi/service",
+    href: buildPath("servicesService", lang),
     videoSrc: "/images/panebarco-studio-video.mp4",
     poster: "/images/servizi-cover-03-340x487.jpg",
     summary:
@@ -52,7 +55,7 @@ const serviceAreas = [
   },
   {
     title: "Originals",
-    href: "/originals",
+    href: buildPath("originals", lang),
     videoSrc: "/images/1021768637.mp4",
     poster: "/images/hero-dettaglio-originals.jpg",
     summary:
@@ -89,6 +92,7 @@ const repeatedClientLogos = Array.from({ length: 3 }, (_, groupIndex) =>
 <Layout
   title="Servizi - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "hero-fluid" }}
 >
     <main class="studio-page services-page">
@@ -178,7 +182,7 @@ const repeatedClientLogos = Array.from({ length: 3 }, (_, groupIndex) =>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod
                 tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
               </p>
-              <a class="btn btn-cta btn-cta--blue btn-pill" href="/studio/ci-vediamo-agli-oscar">Conosci i Panebarcos</a>
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("studioOscars", lang)}>Conosci i Panebarcos</a>
             </div>
           </div>
         </div>

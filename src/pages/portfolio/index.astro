@@ -3,11 +3,18 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import OriginalsShowcase from "../../components/OriginalsShowcase.astro";
+import { originalsProjects } from "../../data/originals";
+import { portfolioProjects as portfolioDetailProjects } from "../../data/portfolio";
+import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+
+const lang = "it" as const;
+const portfolioBearsPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioDetailProjects[0].slug.it);
+const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
 
 const portfolioProjects = [
   {
     title: "Vita dura per gli Orsi Marsicani",
-    href: "/portfolio/vita-dura-per-gli-orsi-marsicani",
+    href: portfolioBearsPath,
     image: "/images/portfolio-cover-03-695x391.jpg",
     serviceCategory: "Service",
     videoType: "Entertainment",
@@ -16,7 +23,7 @@ const portfolioProjects = [
   },
   {
     title: "Caramelle",
-    href: "/originals/caramelle",
+    href: originalCandiesPath,
     image: "/images/caramelle-intro.jpg",
     serviceCategory: "Originals",
     videoType: "Emozionale",
@@ -25,7 +32,7 @@ const portfolioProjects = [
   },
   {
     title: "Marta e la morte",
-    href: "/originals/caramelle",
+    href: originalCandiesPath,
     image: "/images/marta-e-la-morte.jpg",
     serviceCategory: "Originals",
     videoType: "Story-driven",
@@ -34,7 +41,7 @@ const portfolioProjects = [
   },
   {
     title: "#Nostoppingnora",
-    href: "/originals/caramelle",
+    href: originalCandiesPath,
     image: "/images/nostoppingnora.jpg",
     serviceCategory: "Commercials",
     videoType: "Promozionale",
@@ -43,7 +50,7 @@ const portfolioProjects = [
   },
   {
     title: "Rendering a livelli",
-    href: "/servizi/post-produzione",
+    href: buildPath("servicesPost", lang),
     image: "/images/rendering-a-livelli-02.jpg",
     serviceCategory: "Post-produzione",
     videoType: "Divulgativo",
@@ -52,7 +59,7 @@ const portfolioProjects = [
   },
   {
     title: "Rendering finale",
-    href: "/servizi/post-produzione",
+    href: buildPath("servicesPost", lang),
     image: "/images/rendering-finale-01.jpg",
     serviceCategory: "Post-produzione",
     videoType: "Emozionale",
@@ -61,7 +68,7 @@ const portfolioProjects = [
   },
   {
     title: "Hero commercials",
-    href: "/servizi/commercials",
+    href: buildPath("servicesCommercials", lang),
     image: "/images/hero-commercials.png",
     serviceCategory: "Commercials",
     videoType: "Promozionale",
@@ -70,7 +77,7 @@ const portfolioProjects = [
   },
   {
     title: "Panebarco service",
-    href: "/servizi/service",
+    href: buildPath("servicesService", lang),
     image: "/images/portfolio-cover-05-695x391.jpg",
     serviceCategory: "Service",
     videoType: "Divulgativo",
@@ -87,6 +94,7 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
 <Layout
   title="Portfolio - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page portfolio-page">

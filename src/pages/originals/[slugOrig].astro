@@ -1,17 +1,13 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyDettaglio from "../../components/HeroStyDettaglio.astro";
+import { originalsProjects } from "../../data/originals";
+
+const lang = "it" as const;
 
 export function getStaticPaths() {
-  const originals = [
-    {
-      slugOrig: "caramelle",
-      title: "Caramelle",
-    },
-  ] as const;
-
-  return originals.map((project) => ({
-    params: { slugOrig: project.slugOrig },
+  return originalsProjects.map((project) => ({
+    params: { slugOrig: project.slug.it },
     props: { project },
   }));
 }
@@ -56,6 +52,7 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
   title={`${project.title} - Panebarco Originals`}
   description={`Dettaglio progetto Originals: ${project.title}`}
   useInnerStyles={true}
+  lang={lang}
   headerProps={{
     containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5",
   }}

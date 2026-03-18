@@ -2,6 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import { originalsProjects } from "../../data/originals";
+import { portfolioProjects } from "../../data/portfolio";
+import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+
+const lang = "it" as const;
+const portfolioBearsPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioProjects[0].slug.it);
+const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
 
 const supportAreas = [
   {
@@ -29,28 +36,28 @@ const supportAreas = [
 const relatedCases = [
   {
     title: "Commercials",
-    href: "/servizi/commercials",
+    href: buildPath("servicesCommercials", lang),
     image: "/images/hero-commercials.png",
     summary: "Quando concept, produzione e delivery devono restare allineati in un unico flusso operativo.",
     tags: ["Produzione", "Coordination"],
   },
   {
     title: "Vita dura per gli Orsi Marsicani",
-    href: "/portfolio/vita-dura-per-gli-orsi-marsicani",
+    href: portfolioBearsPath,
     image: "/images/raccontare-03.jpg",
     summary: "Un esempio di collaborazione con partner esterni, pipeline condivisa e gestione puntuale delle fasi.",
     tags: ["Service", "Pipeline"],
   },
   {
     title: "Caramelle",
-    href: "/originals/caramelle",
+    href: originalCandiesPath,
     image: "/images/lo-studio-panebarcos-02.jpg",
     summary: "Sviluppo, produzione e accompagnamento diventano un unico lavoro di squadra, dal primo snodo alla consegna.",
     tags: ["Originals", "Supporto"],
   },
   {
     title: "Lo Studio",
-    href: "/studio",
+    href: buildPath("studio", lang),
     image: "/images/lo-studio-panebarcos-04.jpg",
     summary: "Il lato operativo del nostro lavoro: coordinamento, flessibilità e integrazione con chi produce insieme a noi.",
     tags: ["Team", "Produzione"],
@@ -61,6 +68,7 @@ const relatedCases = [
 <Layout
   title="Service - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page commercials-page service-page">
@@ -89,7 +97,7 @@ const relatedCases = [
               con metodo, flessibilità e continuità. Possiamo intervenire nello sviluppo, nella produzione di contenuti 2D e 3D,
               nel coordinamento operativo e nella gestione del lavoro condiviso.
             </p>
-            <a class="btn btn-cta btn-cta--blue btn-pill" href="/studio">Scopri il nostro approccio</a>
+            <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("studio", lang)}>Scopri il nostro approccio</a>
           </div>
         </div>
       </div>

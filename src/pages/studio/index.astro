@@ -2,11 +2,15 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
+import { buildPath } from "../../i18n/routing";
+
+const lang = "it" as const;
 ---
 
 <Layout
   title="Studio - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
     <main class="studio-page">
@@ -214,7 +218,7 @@ import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod
                 tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
               </p>
-              <a class="btn btn-cta btn-cta--blue btn-pill" href="/studio/ci-vediamo-agli-oscar">Conosci i Panebarcos</a>
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("studioOscars", lang)}>Conosci i Panebarcos</a>
             </div>
           </div>
         </div>

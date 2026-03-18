@@ -3,29 +3,34 @@ import Layout from "../layouts/Layout.astro";
 import HeroStyHome from "../components/HeroStyHome.astro";
 import OriginalsShowcase from "../components/OriginalsShowcase.astro";
 import mainScriptUrl from "../scripts/main.js?url";
+import { portfolioProjects } from "../data/portfolio";
+import { buildPath, joinLocalizedPath } from "../i18n/routing";
+
+const lang = "it" as const;
+const featuredPortfolioPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioProjects[0].slug.it);
 
 const serviceAreas = [
   {
     title: "Commercials",
-    href: "/servizi/commercials",
+    href: buildPath("servicesCommercials", lang),
     image: "/images/servizi-cover-01-340x487.png",
     summary: "Spot, branded content e video pensati per raccontare, spiegare, promuovere e coinvolgere.",
   },
   {
     title: "Post-produzione",
-    href: "/servizi/post-produzione",
+    href: buildPath("servicesPost", lang),
     image: "/images/servizi-cover-02-340x487.jpg",
     summary: "Color, compositing, VFX e finishing per dare ritmo, atmosfera e precisione alle immagini.",
   },
   {
     title: "Service",
-    href: "/servizi/service",
+    href: buildPath("servicesService", lang),
     image: "/images/servizi-cover-03-340x487.jpg",
     summary: "Supporto produttivo e operativo per accompagnare ogni fase del lavoro, dalla partenza alla consegna.",
   },
   {
     title: "...e tanto altro",
-    href: "/servizi/e-tanto-altro",
+    href: buildPath("servicesMore", lang),
     image: "/images/servizi-cover-01-340x487.png",
     summary: "Progetti speciali, sperimentazioni e idee laterali che allargano il nostro modo di lavorare.",
   },
@@ -35,6 +40,7 @@ const serviceAreas = [
 <Layout
   title="Panebarco - Homepage"
   description="Homepage Panebarco"
+  lang={lang}
   headerProps={{ darkmode: false }}
 >
     <main>
@@ -65,8 +71,8 @@ const serviceAreas = [
                 curiosit&agrave; di sempre.
               </p>
               <div class="d-flex flex-wrap gap-2 mt-4 justify-content-center justify-content-lg-start">
-                <a href="#" class="btn btn-cta btn-cta--blue btn-pill">SCOPRI IL TEAM</a>
-                <a href="#" class="btn btn-cta btn-cta--orange btn-pill">SCOPRI DI PIU</a>
+                <a href={buildPath("studioTeam", lang)} class="btn btn-cta btn-cta--blue btn-pill">SCOPRI IL TEAM</a>
+                <a href={buildPath("studio", lang)} class="btn btn-cta btn-cta--orange btn-pill">SCOPRI DI PIU</a>
               </div>
             </div>
             <div class="col-lg-6">
@@ -142,7 +148,7 @@ const serviceAreas = [
             </article>
             <a
               class="portfolio-item bottom-left text-decoration-none"
-              href="/portfolio/vita-dura-per-gli-orsi-marsicani"
+              href={featuredPortfolioPath}
               aria-label="Apri il progetto Vita dura per gli Orsi Marsicani"
             >
               <img src="/images/portfolio-cover-03-695x391.jpg" alt="Progetto portfolio 3">
@@ -180,7 +186,7 @@ const serviceAreas = [
             </article>
           </div>
           <div class="text-center mt-4">
-            <a href="#" class="btn btn-cta btn-cta--blue btn-pill portfolio-cta">SCOPRI DI PI&Ugrave;</a>
+            <a href={buildPath("portfolio", lang)} class="btn btn-cta btn-cta--blue btn-pill portfolio-cta">SCOPRI DI PI&Ugrave;</a>
           </div>
         </div>
       </section>
@@ -200,7 +206,7 @@ const serviceAreas = [
                   <h3 class="blog-title">Dietro le quinte di Caramelle</h3>
                   <p class="blog-date">21 FEB 2026</p>
                   <p class="blog-abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in cursus erat.</p>
-                  <a class="blog-link" href="#">
+                  <a class="blog-link" href={buildPath("paneblogTravelDiary", lang)}>
                     Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
                   </a>
                 </div>
@@ -213,7 +219,7 @@ const serviceAreas = [
                   <h3 class="blog-title">Pipeline 3D: workflow interno</h3>
                   <p class="blog-date">15 FEB 2026</p>
                   <p class="blog-abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in cursus erat.</p>
-                  <a class="blog-link" href="#">
+                  <a class="blog-link" href={buildPath("paneblog", lang)}>
                     Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
                   </a>
                 </div>
@@ -226,7 +232,7 @@ const serviceAreas = [
                   <h3 class="blog-title">Regia e animazione: come si integrano</h3>
                   <p class="blog-date">08 FEB 2026</p>
                   <p class="blog-abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in cursus erat.</p>
-                  <a class="blog-link" href="#">
+                  <a class="blog-link" href={buildPath("paneblog", lang)}>
                     Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
                   </a>
                 </div>
@@ -234,7 +240,7 @@ const serviceAreas = [
             </div>
           </div>
           <div class="text-center mt-4">
-            <a href="#" class="btn btn-cta btn-cta--blue btn-pill">LEGGI IL PANEBLOG</a>
+            <a href={buildPath("paneblog", lang)} class="btn btn-cta btn-cta--blue btn-pill">LEGGI IL PANEBLOG</a>
           </div>
         </div>
       </section>

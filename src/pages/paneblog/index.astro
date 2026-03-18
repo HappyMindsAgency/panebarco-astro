@@ -1,11 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+
+const lang = "it" as const;
 ---
 
 <Layout
   title="Paneblog - Panebarco"
   useInnerStyles={true}
+  lang={lang}
   headerProps={{ containerClass: "hero-fluid" }}
 >
     <main class="studio-page">

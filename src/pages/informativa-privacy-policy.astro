@@ -1,8 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const lang = "it" as const;
 ---
 
-<Layout headerProps={{ containerClass: "hero-fluid" }}
-  useInnerStyles={true} headerProps={{ darkmode: false }}>
+<Layout
+  useInnerStyles={true}
+  lang={lang}
+  headerProps={{ darkmode: false }}
+>
  
 </Layout>
