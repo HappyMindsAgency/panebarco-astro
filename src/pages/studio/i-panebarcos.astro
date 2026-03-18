@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import HeroStyStudio from "../../components/HeroStyStudio.astro";
+---
+
+<Layout
+  title="I Panebarcos - Panebarco"
+  useInnerStyles={true}
+  headerProps={{ containerClass: "hero-fluid" }}
+>
+    <main class="studio-page">
+      <HeroStyStudio
+        backgroundVideoSrc="/images/1021768637.mp4"
+        bgWord="LA FAMIGLIA"
+        title="I PANEBARCOS"
+        subtitle="Volti e storie dietro ai nostri progetti"
+        sideImageSrc="/images/lo-studio-panebarco-teams.png"
+        sideImageAlt="Team Panebarco"
+        className="hero-sty-studio page-hero page-hero--studio"
+      />
+
+      <section class="page-main page-main--studio">
+        <div class="container">
+          <h2>Universi originali Panebarco</h2>
+        </div>
+      </section>
+
+    </main>
+</Layout>
