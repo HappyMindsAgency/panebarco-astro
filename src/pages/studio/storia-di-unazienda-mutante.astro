@@ -1,32 +1,319 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import HeroStyHome from "../../components/HeroStyHome.astro";
+import OscarCtaSection from "../../components/OscarCtaSection.astro";
+import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
+import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
+
+const mediaFeature = {
+  title: "Racconto pubblico su RNext - Repubblica",
+  body:
+    "Un ritratto pubblico che restituisce il passaggio dalla carta alle produzioni multimediali, raccontando come la bottega sia diventata nel tempo un laboratorio familiare in continua evoluzione.",
+  href: "https://www.repubblica.it/topics/news/daniele_e_marianna_panebarco-96630417/",
+  embedSrc: "https://www.repubblica.it/topics/news/daniele_e_marianna_panebarco-96630417/",
+} as const;
 ---
 
 <Layout
   title="Storia di un'azienda mutante - Panebarco"
   useInnerStyles={true}
   lang={lang}
-  headerProps={{ containerClass: "hero-fluid" }}
+  headerProps={{ darkmode: false, containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
-    <main class="studio-page">
-      <HeroStyStudio
-        backgroundVideoSrc="/images/1021768637.mp4"
-        bgWord="LA NOSTRA STORIA"
-        title="STORIA DI UN'AZIENDA MUTANTE"
-        subtitle="Dal 1995 un laboratorio in continua trasformazione"
-        sideImageSrc="/images/lo-studio-panebarco-teams.png"
-        sideImageAlt="Team Panebarco"
-        className="hero-sty-studio page-hero page-hero--studio"
-      />
+  <main class="studio-page story-mutant-page">
+    <HeroStyHome
+      id="story-mutant-hero"
+      className="hero-wrap"
+      videoSrc="/images/panebarco-studio-video.mp4"
+      title="Storia di un'azienda mutante"
+      showSlider={false}
+      showCta={false}
+      showSubtitle={false}
+    />
 
-      <section class="page-main page-main--studio">
-        <div class="container">
-          <h2 class="mt-5 pt-5">Universi originali Panebarco</h2>
+    <section class="page-main page-main--studio story-mutant-intro">
+      <div class="container">
+        <div class="row g-4 g-xl-5 align-items-center studio-story">
+          <div class="col-12 col-xl-7">
+            <div class="story-mutant-intro-copy studio-story-copy">
+              <h2 class="page-title-uniform">Una bottega multimediale nata per mutare</h2>
+              <p>
+                Tutto parte dal fumetto, dall'illustrazione e da un modo molto artigianale di costruire storie. Nel 1995
+                Daniele Panebarco decide di spostare quel mestiere dentro un territorio nuovo e fonda una bottega che
+                trasforma la carta in avventure interattive, animazione e produzioni multimediali.
+              </p>
+              <p>
+                Da allora la struttura si e allargata senza perdere il suo carattere familiare: nuove competenze, nuovi
+                formati, nuovi passaggi di testimone. Il risultato e un laboratorio che cambia pelle restando fedele alla
+                propria origine narrativa.
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-xl-5">
+            <div class="story-mutant-intro-art">
+              <img class="img-fluid d-block mx-auto" src="/images/studio-la-nostra-tana.png" alt="Illustrazione della bottega Panebarco" />
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </main>
+    <section class="studio-timeline section-space">
+      <div class="container">
+        <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">Questa e la storia di un'azienda mutante</h2>
+        <div class="studio-timeline-track" data-studio-timeline>
+          <button
+            class="studio-timeline-arrow studio-timeline-arrow--prev"
+            type="button"
+            aria-label="Anno precedente"
+            data-timeline-prev
+          >
+            <img src="/images/freccia-sinistra.png" alt="" aria-hidden="true" />
+          </button>
+
+          <div class="studio-timeline-viewport" id="studioTimelineViewport" aria-labelledby="studioTimelineTitle">
+            <div class="studio-timeline-slides">
+              <article class="studio-timeline-card is-active">
+                <div class="row g-3 g-lg-4 align-items-center">
+                  <div class="col-12 col-md-6 studio-timeline-year">
+                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione 1976" />
+                  </div>
+                  <div class="col-12 col-md-6 studio-timeline-copy">
+                    <h3>Gli inizi</h3>
+                    <p>
+                      Nell'aprile 1976 Daniele pubblica il suo primo fumetto sulla rivista Il Mago, mentre in famiglia
+                      comincia anche un'altra storia: quella di Marianna. Sono anni in cui il segno su carta e il
+                      racconto disegnato definiscono il primo nucleo del mestiere.
+                    </p>
+                    <p>
+                      Per quasi vent'anni il lavoro cresce dentro il fumetto e l'illustrazione, costruendo una base
+                      narrativa forte che restera anche nelle trasformazioni successive.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="studio-timeline-card">
+                <div class="row g-3 g-lg-4 align-items-center">
+                  <div class="col-12 col-md-6 studio-timeline-year">
+                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione 1995" />
+                  </div>
+                  <div class="col-12 col-md-6 studio-timeline-copy">
+                    <h3>La svolta del 1995</h3>
+                    <p>
+                      Nel 1995 nasce Panebarco &amp; C.: l'idea non e solo produrre immagini, ma portare le storie fuori
+                      dalla pagina e trasformarle in esperienze interattive e multimediali.
+                    </p>
+                    <p>
+                      E qui che la bottega cambia scala: il disegno resta il cuore, ma i linguaggi si allargano e il
+                      lavoro prende una direzione piu ibrida.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="studio-timeline-card">
+                <div class="row g-3 g-lg-4 align-items-center">
+                  <div class="col-12 col-md-6 studio-timeline-year">
+                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione 2005" />
+                  </div>
+                  <div class="col-12 col-md-6 studio-timeline-copy">
+                    <h3>Una storia di famiglia</h3>
+                    <p>
+                      Nel 2005 Marianna, Matteo e Camilla entrano in azienda. L'impresa si rinnova dall'interno e
+                      diventa sempre di piu una casa creativa familiare, capace di tenere insieme continuita e mutazione.
+                    </p>
+                    <p>
+                      Nuovi ruoli, nuove sensibilita e una gestione condivisa portano Panebarco verso produzioni sempre
+                      piu articolate tra 2D, 3D, video e sviluppo originale.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="studio-timeline-card">
+                <div class="row g-3 g-lg-4 align-items-center">
+                  <div class="col-12 col-md-6 studio-timeline-year">
+                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione oggi" />
+                  </div>
+                  <div class="col-12 col-md-6 studio-timeline-copy">
+                    <h3>Le mutazioni di oggi</h3>
+                    <p>
+                      Oggi Panebarco sviluppa animazione, contenuti branded, service, post-produzione e progetti
+                      originali, mantenendo un'identita che resta bottega anche quando i formati cambiano.
+                    </p>
+                    <p>
+                      E mentre la nuova generazione guida l'impresa, Daniele continua a tornare al fumetto: segno che le
+                      trasformazioni migliori non cancellano l'origine, la rilanciano.
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <button
+            class="studio-timeline-arrow studio-timeline-arrow--next"
+            type="button"
+            aria-label="Anno successivo"
+            data-timeline-next
+          >
+            <img src="/images/freccia-destra.png" alt="" aria-hidden="true" />
+          </button>
+        </div>
+
+        <div class="studio-timeline-dots" role="tablist" aria-label="Seleziona una fase della storia">
+          <button class="studio-timeline-dot is-active" type="button" aria-label="Vai agli inizi" data-timeline-dot="0"></button>
+          <button class="studio-timeline-dot" type="button" aria-label="Vai al 1995" data-timeline-dot="1"></button>
+          <button class="studio-timeline-dot" type="button" aria-label="Vai al 2005" data-timeline-dot="2"></button>
+          <button class="studio-timeline-dot" type="button" aria-label="Vai a oggi" data-timeline-dot="3"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space section-space--soft story-mutant-media">
+      <div class="container">
+        <div class="row g-4 g-xl-5 align-items-center">
+          <div class="col-12 col-xl-4">
+            <div class="story-mutant-media__copy story-mutant-media__copy-card" data-story-media-reveal>
+              <h2 class="page-title-uniform">{mediaFeature.title}</h2>
+              <p>{mediaFeature.body}</p>
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={mediaFeature.href} target="_blank" rel="noopener noreferrer">
+                Apri il racconto pubblico
+              </a>
+            </div>
+          </div>
+          <div class="col-12 col-xl-8">
+            <div class="story-mutant-media__frame">
+              <button
+                class="story-mutant-media__expand"
+                type="button"
+                aria-label="Espandi il racconto pubblico"
+                data-story-media-expand
+              >
+                <i class="bi bi-arrows-fullscreen" aria-hidden="true"></i>
+                <span>Espandi</span>
+              </button>
+              <div class="ratio ratio-16x9 overflow-hidden rounded-4">
+                <iframe
+                  src={mediaFeature.embedSrc}
+                  title={mediaFeature.title}
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="story-mutant-media-modal" aria-hidden="true" data-story-media-modal>
+      <div class="story-mutant-media-modal__backdrop" data-story-media-close></div>
+      <div class="story-mutant-media-modal__dialog" role="dialog" aria-modal="true" aria-label={mediaFeature.title}>
+        <button class="story-mutant-media-modal__close" type="button" aria-label="Chiudi espansione" data-story-media-close>
+          <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+        <div class="ratio ratio-16x9 overflow-hidden rounded-4">
+          <iframe
+            src={mediaFeature.embedSrc}
+            title={`${mediaFeature.title} - vista espansa`}
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <OscarCtaSection
+      heading="Chi ha guidato tutte queste mutazioni?"
+      highlight="CONOSCI I PANEBARCOS"
+      body="Dietro ogni passaggio di questa storia c'e una famiglia creativa che ha continuato a cambiare forma senza perdere il proprio modo di lavorare."
+      href={buildPath("studioTeam", lang)}
+      buttonLabel="Conosci i Panebarcos"
+    />
+  </main>
+
+  <script type="module" src={studioPageScriptUrl}></script>
+  <script is:inline>
+    (function () {
+      function initStoryMediaReveal() {
+        var cards = document.querySelectorAll("[data-story-media-reveal]");
+        if (!cards.length) return;
+
+        var prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion) {
+          cards.forEach(function (card) {
+            card.classList.add("is-in-view");
+          });
+          return;
+        }
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              entry.target.classList.toggle("is-in-view", entry.isIntersecting);
+            });
+          },
+          {
+            threshold: 0.25,
+            rootMargin: "0px 0px -8% 0px",
+          }
+        );
+
+        cards.forEach(function (card) {
+          observer.observe(card);
+        });
+
+        document.addEventListener(
+          "astro:before-swap",
+          function () {
+            observer.disconnect();
+          },
+          { once: true }
+        );
+      }
+
+      if (!window.__storyMutantMediaRevealBound) {
+        document.addEventListener("astro:page-load", initStoryMediaReveal);
+        window.__storyMutantMediaRevealBound = true;
+      }
+
+      initStoryMediaReveal();
+
+      (function initStoryMediaExpand() {
+        var expandButton = document.querySelector("[data-story-media-expand]");
+        var modal = document.querySelector("[data-story-media-modal]");
+        if (!expandButton || !modal || modal.dataset.bound === "true") return;
+        modal.dataset.bound = "true";
+
+        var closeButtons = modal.querySelectorAll("[data-story-media-close]");
+
+        function setOpen(nextOpen) {
+          modal.classList.toggle("is-open", nextOpen);
+          modal.setAttribute("aria-hidden", String(!nextOpen));
+          document.documentElement.classList.toggle("story-media-modal-open", nextOpen);
+          document.body.classList.toggle("story-media-modal-open", nextOpen);
+        }
+
+        expandButton.addEventListener("click", function () {
+          setOpen(true);
+        });
+
+        closeButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            setOpen(false);
+          });
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && modal.classList.contains("is-open")) {
+            setOpen(false);
+          }
+        });
+      })();
+    })();
+  </script>
 </Layout>
