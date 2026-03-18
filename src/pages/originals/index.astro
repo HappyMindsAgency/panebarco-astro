@@ -1,31 +1,129 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import OriginalsShowcase from "../../components/OriginalsShowcase.astro";
+import OscarCtaSection from "../../components/OscarCtaSection.astro";
+import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
+
+const introCopy = {
+  title: "Universi originali sviluppati da casa",
+  paragraphs: [
+    "Originals e il luogo in cui le idee nascono prima di avere un formato preciso: corti, serie, lungometraggi e progetti che si muovono tra animazione, sviluppo editoriale e nuove forme di racconto.",
+    "Qui costruiamo proprieta intellettuali, definiamo mondi, personaggi e tono visivo, e cerchiamo partner con cui portare questi progetti dalla scrittura alla produzione, fino alla distribuzione.",
+  ],
+} as const;
+
+const developmentAreas = [
+  {
+    title: "Cortometraggi",
+    summary:
+      "Progetti compatti e autoriali, pensati per festival, circuiti cinematografici e sviluppo di nuove IP.",
+  },
+  {
+    title: "Serie animate",
+    summary:
+      "Format seriali con personaggi forti, mondi chiari e possibilita di evoluzione su piu stagioni e pubblici.",
+  },
+  {
+    title: "Lungometraggi",
+    summary:
+      "Sviluppi piu ampi, dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.",
+  },
+  {
+    title: "Progetti crossmediali",
+    summary:
+      "Idee che possono vivere su piu piattaforme: audiovisivo, editoria, educational, licensing e attivazioni speciali.",
+  },
+] as const;
 ---
 
 <Layout
   title="Originals - Panebarco"
   useInnerStyles={true}
   lang={lang}
-  headerProps={{ containerClass: "hero-fluid" }}
+  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
-    <main class="studio-page">
-      <HeroStyStudio
-        backgroundVideoSrc="/images/1021768637.mp4"
-        bgWord="PRODUZIONI INDIPENDENTI"
-        title="ORIGINALS"
-        subtitle="Format originali sviluppati dentro la nostra casa creativa"
-        sideImageSrc="/images/lo-studio-panebarco-teams.png"
-        sideImageAlt="Team Panebarco"
-        className="hero-sty-studio page-hero page-hero--studio"
-      />
-  
-      <section class="page-main page-main--studio">
-        <div class="container">
-          <h2>Universi originali Panebarco</h2>
+  <main class="studio-page originals-page">
+    <HeroStyStudio
+      backgroundVideoSrc="/images/1021768637.mp4"
+      bgWord="PRODUZIONI INDIPENDENTI"
+      title="ORIGINALS"
+      subtitle="Format originali sviluppati dentro la nostra casa creativa"
+      sideImageSrc="/images/lo-studio-panebarco-teams.png"
+      sideImageAlt="Team Panebarco"
+      className="hero-sty-studio page-hero page-hero--studio"
+    />
+
+    <section class="page-main page-main--studio originals-intro">
+      <div class="container">
+        <div class="row g-4 g-xl-5 align-items-center">
+          <div class="col-12 col-xl-7">
+            <div class="originals-intro-copy">
+              <h2 class="page-title-uniform">{introCopy.title}</h2>
+              {introCopy.paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          <div class="col-12 col-xl-5">
+            <div class="originals-intro-art">
+              <img
+                class="img-fluid d-block mx-auto"
+                src="/images/originals-produzioni-indipendenti.png"
+                alt="Produzioni indipendenti"
+              />
+            </div>
+          </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <section class="section-space section-space--soft originals-areas" aria-labelledby="originalsAreasTitle">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-4 mb-lg-5">
+          <div class="col-12 col-xl-8">
+            <h2 id="originalsAreasTitle" class="page-title-uniform">Ambiti di sviluppo</h2>
+          </div>
+        </div>
+
+        <div class="row g-4 originals-areas-grid">
+          {developmentAreas.map((area, index) => (
+            <div class="col-12 col-md-6">
+              <article class="originals-area-card h-100">
+                <div class="originals-area-card__body">
+                  <p class="originals-area-card__index">0{index + 1}</p>
+                  <h3>{area.title}</h3>
+                  <p>{area.summary}</p>
+                </div>
+              </article>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <OriginalsShowcase />
+
+    <OscarCtaSection
+      heading="Spoiler sul finale?"
+      highlight="CI VEDIAMO AGLI OSCAR"
+      body="I nostri Originals sono pensati per crescere con partner, coproduzioni e percorsi di distribuzione. Se vuoi capire come sviluppiamo un progetto fino alla sua forma finale, qui trovi il contesto giusto."
+      href={buildPath("studioOscars", lang)}
+      buttonLabel="Conosci i Panebarcos"
+    />
+
+    <section class="section-space section-space--tight pt-2 pt-md-3 pt-lg-4">
+      <div class="container">
+        <ContactCtaBanner
+          kicker="Hai un progetto originale da sviluppare?"
+          title="PARLIAMONE NOI."
+          href={buildPath("contacts", lang)}
+          buttonLabel="Contattaci"
+        />
+      </div>
+    </section>
+  </main>
 </Layout>

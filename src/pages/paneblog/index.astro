@@ -1,31 +1,508 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import HeroStyHome from "../../components/HeroStyHome.astro";
+import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
+
+const diarySlides = [
+  {
+    date: "21 FEB 2026",
+    title: "Diario di viaggio",
+    headline: "Dentro Caramelle: appunti di sviluppo, passaggi chiave e intuizioni raccolte lungo il percorso.",
+    summary:
+      "Un diario aperto sul processo: dalle prime ipotesi visive alla costruzione del tono, fino ai materiali che aiutano un progetto a prendere forma.",
+    image: "/images/paneblog-cover-01-356x217.png",
+    href: buildPath("paneblogTravelDiary", lang),
+    cta: "Apri il diario",
+  },
+  {
+    date: "15 FEB 2026",
+    title: "Taccuino di produzione",
+    headline: "Workflow, scelte operative e prove interne che trasformano un'idea in pipeline reale.",
+    summary:
+      "Note rapide su organizzazione, strumenti e piccoli aggiustamenti di metodo che cambiano la tenuta di un progetto nel tempo.",
+    image: "/images/paneblog-cover-02-356x217.png",
+    href: buildPath("paneblog", lang),
+    cta: "Leggi l'articolo",
+  },
+  {
+    date: "08 FEB 2026",
+    title: "Dietro le quinte",
+    headline: "Quando regia, design e animazione smettono di stare in compartimenti separati.",
+    summary:
+      "Un blocco piu editoriale per raccontare connessioni, frizioni utili e dettagli di processo che di solito restano fuori dalla vista.",
+    image: "/images/paneblog-cover-03-356x217.png",
+    href: buildPath("paneblog", lang),
+    cta: "Scopri di piu",
+  },
+] as const;
+
+const flashNews = [
+  {
+    label: "Flash news",
+    title: "Nuovi appunti in arrivo dal Diario di viaggio.",
+  },
+  {
+    label: "Work in progress",
+    title: "Stiamo preparando una raccolta di materiali di sviluppo Originals.",
+  },
+  {
+    label: "Dal laboratorio",
+    title: "In arrivo un focus sui workflow usati tra storyboard, animatic e previs.",
+  },
+] as const;
+
+const articles = [
+  {
+    title: "Dietro le quinte di Caramelle",
+    date: "21 FEB 2026",
+    category: "Diario di viaggio",
+    image: "/images/paneblog-cover-01-356x217.png",
+    summary: "Un primo blocco di appunti visivi e narrativi raccolti durante lo sviluppo del progetto.",
+    href: buildPath("paneblogTravelDiary", lang),
+  },
+  {
+    title: "Pipeline 3D: workflow interno",
+    date: "15 FEB 2026",
+    category: "Pipeline",
+    image: "/images/paneblog-cover-02-356x217.png",
+    summary: "Come organizziamo passaggi, materiali e revisioni quando il lavoro deve restare fluido e leggibile.",
+    href: buildPath("paneblog", lang),
+  },
+  {
+    title: "Regia e animazione: come si integrano",
+    date: "08 FEB 2026",
+    category: "Dietro le quinte",
+    image: "/images/paneblog-cover-03-356x217.png",
+    summary: "Una lettura piu trasversale del rapporto tra idea, messa in scena e costruzione del movimento.",
+    href: buildPath("paneblog", lang),
+  },
+  {
+    title: "Materiali di sviluppo per una serie animata",
+    date: "01 FEB 2026",
+    category: "Originals",
+    image: "/images/paneblog-cover-01-356x217.png",
+    summary: "Personaggi, pitch, tono e mondo narrativo: cosa serve davvero per dare continuita a una serie.",
+    href: buildPath("paneblog", lang),
+  },
+  {
+    title: "Dal brief al visual tone",
+    date: "26 GEN 2026",
+    category: "Processo",
+    image: "/images/paneblog-cover-02-356x217.png",
+    summary: "Un passaggio spesso invisibile, ma decisivo: mettere ordine tra riferimenti, linguaggio e direzione visiva.",
+    href: buildPath("paneblog", lang),
+  },
+  {
+    title: "Piccoli formati, grandi deviazioni",
+    date: "18 GEN 2026",
+    category: "Editoriale",
+    image: "/images/paneblog-cover-03-356x217.png",
+    summary: "Quando un contenuto laterale diventa utile per tenere vivo un progetto e allargarne la presenza.",
+    href: buildPath("paneblog", lang),
+  },
+] as const;
+
+const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipeline", "Originals", "Processo", "Editoriale"] as const;
 ---
 
 <Layout
   title="Paneblog - Panebarco"
   useInnerStyles={true}
   lang={lang}
-  headerProps={{ containerClass: "hero-fluid" }}
+  headerProps={{ darkmode: false, containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
-    <main class="studio-page">
-      <HeroStyStudio
-        backgroundVideoSrc="/images/1021768637.mp4"
-        bgWord="PENSIERI"
-        title="PANEBLOG"
-        subtitle="Appunti, processi e dietro le quinte del nostro lavoro"
-        sideImageSrc="/images/lo-studio-panebarco-teams.png"
-        sideImageAlt="Team Panebarco"
-        className="hero-sty-studio page-hero page-hero--studio"
-      />
-  
-       <section class="page-main page-main--studio">
-        <div class="container">
-          <h2>Pensieri che diventano storie</h2>
+  <main class="studio-page paneblog-page">
+    <HeroStyHome
+      id="paneblog-hero"
+      className="hero-wrap"
+      videoSrc="/images/1021768637.mp4"
+      title="PANEBLOG"
+      subtitle="Pensieri che ci frullano in testa"
+      showSlider={false}
+      showCta={false}
+    />
+
+    <section class="section-space section-space--soft paneblog-diary" data-paneblog-slider>
+      <div class="container">
+        <div class="row justify-content-center text-center mb-4 mb-lg-5">
+          <div class="col-12 col-xl-8">
+            <h2 class="page-title-uniform">Diario di viaggio</h2>
+            <p class="paneblog-section-intro mb-0">
+              Un cursore sui contenuti piu vicini al processo: tappe, note di sviluppo e aggiornamenti rapidi dal laboratorio.
+            </p>
+          </div>
         </div>
-      </section>
-    </main>
+
+        <div class="row g-4 g-xl-5 align-items-stretch">
+          <div class="col-12 col-xl-8">
+            <article class="paneblog-diary-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-12 col-lg-6">
+                  <div class="ratio ratio-4x3 paneblog-diary-card__media">
+                    <img src={diarySlides[0].image} alt={diarySlides[0].headline} data-paneblog-slide-image />
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="paneblog-diary-card__body">
+                    <p class="paneblog-diary-card__meta">
+                      <span data-paneblog-slide-date>{diarySlides[0].date}</span>
+                      <span class="paneblog-diary-card__dot" aria-hidden="true"></span>
+                      <span data-paneblog-slide-kicker>{diarySlides[0].title}</span>
+                    </p>
+                    <h3 data-paneblog-slide-title>{diarySlides[0].headline}</h3>
+                    <p data-paneblog-slide-summary>{diarySlides[0].summary}</p>
+                    <div class="paneblog-diary-card__actions">
+                      <a class="btn btn-cta btn-cta--blue btn-pill" href={diarySlides[0].href} data-paneblog-slide-link>
+                        {diarySlides[0].cta}
+                      </a>
+                      <div class="paneblog-diary-card__nav">
+                        <button type="button" class="paneblog-diary-card__arrow" aria-label="Slide precedente" data-paneblog-prev>
+                          <i class="bi bi-arrow-left"></i>
+                        </button>
+                        <button type="button" class="paneblog-diary-card__arrow" aria-label="Slide successiva" data-paneblog-next>
+                          <i class="bi bi-arrow-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="paneblog-diary-card__dots" aria-label="Seleziona una slide">
+                      {diarySlides.map((slide, index) => (
+                        <button
+                          type="button"
+                          class:list={["paneblog-diary-card__dot-button", index === 0 && "is-active"]}
+                          aria-label={`Vai a ${slide.headline}`}
+                          data-paneblog-dot={index}
+                        ></button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-12 col-xl-4">
+            <div class="paneblog-flash-stack h-100">
+              {flashNews.map((item) => (
+                <article class="paneblog-flash-card">
+                  <p class="paneblog-flash-card__label">{item.label}</p>
+                  <h3>{item.title}</h3>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space paneblog-articles" data-paneblog-root>
+      <div class="container">
+        <div class="row justify-content-center text-center mb-3 mb-lg-4">
+          <div class="col-12 col-xl-8">
+            <h2 class="page-title-uniform">Lista articoli</h2>
+          </div>
+        </div>
+
+        <div class="paneblog-filters mb-4 mb-lg-5">
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            {articleFilters.map((filter, index) => (
+              <button
+                class:list={["paneblog-filter-chip", index === 0 && "is-active"]}
+                type="button"
+                data-filter-value={filter}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="row g-4" data-paneblog-grid>
+          {articles.map((article) => (
+            <div class="col-12 col-md-6 col-xl-4" data-article-card data-category={article.category}>
+              <article class="card blog-card h-100">
+                <img src={article.image} alt={article.title} loading="lazy" decoding="async" />
+                <div class="card-body">
+                  <p class="blog-date">{article.date}</p>
+                  <p class="paneblog-article-category">{article.category}</p>
+                  <h3 class="blog-title">{article.title}</h3>
+                  <p class="blog-abstract">{article.summary}</p>
+                  <a class="blog-link" href={article.href}>
+                    Leggi di piu <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </article>
+            </div>
+          ))}
+        </div>
+
+        <div class="paneblog-empty-state d-none text-center mt-4" data-paneblog-empty>
+          <p class="mb-0">Nessun articolo corrisponde al filtro selezionato.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-space section-space--tight paneblog-newsletter">
+      <div class="container">
+        <div class="paneblog-newsletter-card">
+          <div class="row g-4 align-items-center">
+            <div class="col-12 col-lg-7">
+              <div class="paneblog-newsletter-copy">
+                <h2 class="paneblog-newsletter-title">
+                  ISCRIVITI ALLA <br />
+                  <span
+                    id="newsletter-typing-text"
+                    class="paneblog-newsletter-title__accent typing-text"
+                    data-words="newsletter"
+                    aria-live="polite"
+                  ></span>
+                </h2>
+                <p>
+                  Una selezione essenziale di novita, work in progress e appunti dal laboratorio, pensata per chi vuole seguire
+                  i progetti mentre stanno ancora prendendo forma.
+                </p>
+                <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Iscriviti ora</a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="paneblog-newsletter-art">
+                <div class="paneblog-newsletter-stack" aria-hidden="true">
+                  <img
+                    class="paneblog-newsletter-figure"
+                    src="/images/panebarcos_skecth-team_light.png"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline define:vars={{ diarySlides }}>
+    (function () {
+      function initPaneblogPage() {
+        (function setupNewsletterTyping() {
+          var typingText = document.getElementById("newsletter-typing-text");
+          if (!typingText || typingText.dataset.bound === "true") return;
+          typingText.dataset.bound = "true";
+
+          var words = (typingText.getAttribute("data-words") || "")
+            .split("|")
+            .map(function (word) {
+              return word.trim();
+            })
+            .filter(Boolean);
+
+          if (!words.length) return;
+
+          var wordIndex = 0;
+          var charIndex = 0;
+          var isDeleting = false;
+          var currentColor = "#009FE3";
+          var timeoutId = null;
+          var palette = ["#009FE3", "#B03D4F", "#995791", "#3394B2", "#30997B"];
+          var typingSpeed = 90;
+          var deletingSpeed = 55;
+          var wordPause = 1200;
+          var restartPause = 350;
+
+          function queue(nextStep, delay) {
+            timeoutId = window.setTimeout(nextStep, delay);
+          }
+
+          function animateTyping() {
+            var currentWord = words[wordIndex];
+
+            if (!isDeleting) {
+              if (charIndex === 0) {
+                currentColor = palette[Math.floor(Math.random() * palette.length)];
+                typingText.style.color = currentColor;
+              }
+
+              charIndex += 1;
+              typingText.textContent = currentWord.slice(0, charIndex).toUpperCase();
+
+              if (charIndex === currentWord.length) {
+                isDeleting = true;
+                queue(animateTyping, wordPause);
+                return;
+              }
+
+              queue(animateTyping, typingSpeed);
+              return;
+            }
+
+            charIndex -= 1;
+            typingText.textContent = currentWord.slice(0, Math.max(0, charIndex)).toUpperCase();
+
+            if (charIndex === 0) {
+              isDeleting = false;
+              wordIndex = (wordIndex + 1) % words.length;
+              queue(animateTyping, restartPause);
+              return;
+            }
+
+            queue(animateTyping, deletingSpeed);
+          }
+
+          typingText.textContent = "";
+
+          window.addEventListener(
+            "beforeunload",
+            function () {
+              if (timeoutId !== null) {
+                window.clearTimeout(timeoutId);
+              }
+            },
+            { once: true }
+          );
+
+          queue(animateTyping, 500);
+        })();
+
+        document.querySelectorAll("[data-paneblog-slider]").forEach(function (root) {
+          if (root.dataset.bound === "true") return;
+          root.dataset.bound = "true";
+
+          var image = root.querySelector("[data-paneblog-slide-image]");
+          var date = root.querySelector("[data-paneblog-slide-date]");
+          var kicker = root.querySelector("[data-paneblog-slide-kicker]");
+          var title = root.querySelector("[data-paneblog-slide-title]");
+          var summary = root.querySelector("[data-paneblog-slide-summary]");
+          var link = root.querySelector("[data-paneblog-slide-link]");
+          var prev = root.querySelector("[data-paneblog-prev]");
+          var next = root.querySelector("[data-paneblog-next]");
+          var dots = root.querySelectorAll("[data-paneblog-dot]");
+
+          if (!image || !date || !kicker || !title || !summary || !link || !prev || !next || !dots.length) return;
+
+          var activeIndex = 0;
+          var autoplayId = null;
+
+          function mod(index, length) {
+            return ((index % length) + length) % length;
+          }
+
+          function render(index) {
+            activeIndex = mod(index, diarySlides.length);
+            var item = diarySlides[activeIndex];
+
+            image.setAttribute("src", item.image);
+            image.setAttribute("alt", item.headline);
+            date.textContent = item.date;
+            kicker.textContent = item.title;
+            title.textContent = item.headline;
+            summary.textContent = item.summary;
+            link.setAttribute("href", item.href);
+            link.textContent = item.cta;
+
+            dots.forEach(function (dot, dotIndex) {
+              dot.classList.toggle("is-active", dotIndex === activeIndex);
+            });
+          }
+
+          function stopAutoplay() {
+            if (autoplayId !== null) {
+              window.clearInterval(autoplayId);
+              autoplayId = null;
+            }
+          }
+
+          function startAutoplay() {
+            stopAutoplay();
+            autoplayId = window.setInterval(function () {
+              render(activeIndex + 1);
+            }, 4200);
+          }
+
+          prev.addEventListener("click", function () {
+            render(activeIndex - 1);
+            startAutoplay();
+          });
+
+          next.addEventListener("click", function () {
+            render(activeIndex + 1);
+            startAutoplay();
+          });
+
+          dots.forEach(function (dot) {
+            dot.addEventListener("click", function () {
+              render(Number(dot.getAttribute("data-paneblog-dot") || 0));
+              startAutoplay();
+            });
+          });
+
+          root.addEventListener("pointerenter", stopAutoplay);
+          root.addEventListener("pointerleave", startAutoplay);
+          root.addEventListener("focusin", stopAutoplay);
+          root.addEventListener("focusout", function () {
+            window.requestAnimationFrame(function () {
+              if (!root.contains(document.activeElement)) {
+                startAutoplay();
+              }
+            });
+          });
+
+          render(0);
+          startAutoplay();
+        });
+
+        document.querySelectorAll("[data-paneblog-root]").forEach(function (root) {
+          if (root.dataset.bound === "true") return;
+          root.dataset.bound = "true";
+
+          var activeFilter = "Tutti";
+          var buttons = root.querySelectorAll("[data-filter-value]");
+          var cards = root.querySelectorAll("[data-article-card]");
+          var emptyState = root.querySelector("[data-paneblog-empty]");
+
+          function updateCards() {
+            var visibleCount = 0;
+
+            cards.forEach(function (card) {
+              var category = card.getAttribute("data-category");
+              var isVisible = activeFilter === "Tutti" || activeFilter === category;
+
+              card.classList.toggle("d-none", !isVisible);
+              if (isVisible) visibleCount += 1;
+            });
+
+            if (emptyState) {
+              emptyState.classList.toggle("d-none", visibleCount > 0);
+            }
+          }
+
+          buttons.forEach(function (button) {
+            button.addEventListener("click", function () {
+              var value = button.getAttribute("data-filter-value");
+              if (!value) return;
+
+              activeFilter = value;
+
+              buttons.forEach(function (btn) {
+                btn.classList.toggle("is-active", btn === button);
+              });
+
+              updateCards();
+            });
+          });
+
+          updateCards();
+        });
+      }
+
+      if (!window.__paneblogPageBound) {
+        document.addEventListener("astro:page-load", initPaneblogPage);
+        window.__paneblogPageBound = true;
+      }
+
+      initPaneblogPage();
+    })();
+  </script>
 </Layout>

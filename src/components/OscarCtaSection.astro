@@ -1,0 +1,41 @@
+---
+interface Props {
+  heading: string;
+  highlight: string;
+  body: string;
+  href: string;
+  buttonLabel: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  sectionClass?: string;
+}
+
+const {
+  heading,
+  highlight,
+  body,
+  href,
+  buttonLabel,
+  imageSrc = "/images/lo-studio-oscar.png",
+  imageAlt = "Personaggi con Oscar",
+  sectionClass = "studio-oscar-section section-space section-space--soft",
+} = Astro.props;
+---
+
+<section class={sectionClass}>
+  <div class="container">
+    <div class="row g-4 g-lg-5 align-items-start align-items-lg-center studio-oscar-grid">
+      <div class="col-12 col-lg-5 studio-oscar-art">
+        <img class="img-fluid d-block mx-auto mx-lg-0" src={imageSrc} alt={imageAlt} />
+      </div>
+      <div class="col-12 col-lg-7 studio-oscar-copy text-start">
+        <h2 class="page-title-uniform">
+          {heading}
+          <span>{highlight}</span>
+        </h2>
+        <p>{body}</p>
+        <a class="btn btn-cta btn-cta--blue btn-pill" href={href}>{buttonLabel}</a>
+      </div>
+    </div>
+  </div>
+</section>
