@@ -1,0 +1,167 @@
+---
+import type { Lang } from "../i18n/config";
+import { customLabel } from "../i18n/labels";
+import { buildPath } from "../i18n/routing";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "it" } = Astro.props;
+
+const menuItems = [
+  {
+    id: "studio",
+    label: customLabel("menu.studio", lang),
+    href: buildPath("studio", lang),
+    bubble: "/images/studio-la-nostra-tana.png",
+    children: [
+      { href: buildPath("studioStory", lang), label: customLabel("menu.studioStory", lang) },
+      { href: buildPath("studioTeam", lang), label: customLabel("menu.studioTeam", lang) },
+      { href: buildPath("studioOscars", lang), label: customLabel("menu.studioOscars", lang) },
+    ],
+  },
+  {
+    id: "services",
+    label: customLabel("menu.services", lang),
+    href: buildPath("services", lang),
+    bubble: "/images/servizi-cose.png",
+    children: [
+      { href: buildPath("servicesCommercials", lang), label: customLabel("menu.servicesCommercials", lang) },
+      { href: buildPath("servicesPost", lang), label: customLabel("menu.servicesPost", lang) },
+      { href: buildPath("servicesService", lang), label: customLabel("menu.servicesService", lang) },
+      { href: buildPath("servicesMore", lang), label: customLabel("menu.servicesMore", lang) },
+    ],
+  },
+  {
+    id: "portfolio",
+    label: customLabel("menu.portfolio", lang),
+    href: buildPath("portfolio", lang),
+    bubble: "/images/portfolio-cose-belle.png",
+    children: [],
+  },
+  {
+    id: "originals",
+    label: customLabel("menu.originals", lang),
+    href: buildPath("originals", lang),
+    bubble: "/images/originals-produzioni-indipendenti.png",
+    children: [],
+  },
+  {
+    id: "paneblog",
+    label: customLabel("menu.paneblog", lang),
+    href: buildPath("paneblog", lang),
+    bubble: "/images/paneblog-pensieri.png",
+    children: [
+      { href: buildPath("paneblogTravelDiary", lang), label: customLabel("menu.paneblogTravelDiary", lang) },
+    ],
+  },
+  {
+    id: "contacts",
+    label: customLabel("menu.contacts", lang),
+    href: buildPath("contacts", lang),
+    bubble: "/images/contatti-raccontaci.png",
+    children: [],
+  },
+];
+
+const defaultPanel = menuItems.find((item) => item.children.length > 0) ?? menuItems[0];
+---
+
+<div id="menuOverlayRevamp" class="menu-overlay-v2" aria-hidden="true">
+  <button
+    id="menuOverlayRevampClose"
+    class="menu-overlay-v2-close"
+    type="button"
+    aria-label={customLabel("a11y.closeMenu", lang)}
+  >
+    <img class="menu-overlay-v2-close-icon" src="/images/close-hamburger-menu.png" alt="" aria-hidden="true" />
+  </button>
+
+  <a href={buildPath("home", lang)} class="menu-overlay-v2-logo" aria-label="Panebarco">
+    <img src="/images/panebarco-logo-light.png" alt="Panebarco" />
+  </a>
+
+  <nav class="menu-overlay-v2-shell" aria-label={customLabel("a11y.mainMenu", lang)}>
+    <div class="menu-overlay-v2-main">
+      <ul class="menu-overlay-v2-list" role="list">
+        {menuItems.map((item, index) => (
+          <li
+            class="menu-v2-item"
+            data-menu-item={item.id}
+            data-bubble={item.bubble}
+            data-has-children={item.children.length > 0 ? "true" : "false"}
+          >
+            <div class="menu-v2-row">
+              <a
+                class="menu-v2-link"
+                href={item.href}
+                data-menu-link={item.id}
+                data-bubble={item.bubble}
+                data-default-active={index === 0 ? "true" : undefined}
+              >
+                {item.label}
+              </a>
+              {item.children.length > 0 && (
+                <button
+                  class="menu-v2-toggle"
+                  type="button"
+                  aria-label={item.label}
+                  aria-controls={`menu-v2-submenu-${item.id}`}
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                </button>
+              )}
+            </div>
+
+            {item.children.length > 0 && (
+              <div id={`menu-v2-submenu-${item.id}`} class="menu-v2-mobile-submenu">
+                {item.children.map((child) => (
+                  <a class="menu-v2-mobile-submenu-link" href={child.href}>{child.label}</a>
+                ))}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <div class="menu-overlay-v2-lang" aria-label={customLabel("a11y.languageSwitch", lang)}>
+        <button class="menu-overlay-v2-lang-btn" type="button" aria-label={customLabel("a11y.switchToEnglish", lang)}>
+          <img src="/images/inglese.png" alt="English" />
+        </button>
+        <button class="menu-overlay-v2-lang-btn" type="button" aria-label={customLabel("a11y.switchToItalian", lang)}>
+          <img src="/images/italiano.png" alt="Italiano" />
+        </button>
+      </div>
+    </div>
+
+    <aside class="menu-overlay-v2-panel" aria-live="polite">
+      <img
+        id="menuOverlayRevampBubble"
+        class="menu-overlay-v2-bubble"
+        src={defaultPanel.bubble}
+        alt=""
+        aria-hidden="true"
+      />
+
+      <div class="menu-overlay-v2-panel-copy">
+        {menuItems.filter((item) => item.children.length > 0).map((item) => (
+          <div
+            class:list={["menu-v2-panel-section", item.id === defaultPanel.id && "is-active"]}
+            data-panel-for={item.id}
+          >
+            <a class="menu-v2-panel-title" href={item.href}>{item.label}</a>
+            <div class="menu-v2-panel-links">
+              {item.children.map((child) => (
+                <a class="menu-v2-panel-link" href={child.href}>{child.label}</a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </aside>
+  </nav>
+
+  <img class="menu-overlay-v2-team" src="/images/panebarcos_skecth-team_light.png" alt="" />
+</div>
