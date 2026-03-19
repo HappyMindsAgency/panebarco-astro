@@ -1,18 +1,28 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import HeroStyHome from "../../components/HeroStyHome.astro";
+import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import OscarCtaSection from "../../components/OscarCtaSection.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
 import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 
-const mediaFeature = {
-  title: "Racconto pubblico su RNext - Repubblica",
-  body:
-    "Un ritratto pubblico che restituisce il passaggio dalla carta alle produzioni multimediali, raccontando come la bottega sia diventata nel tempo un laboratorio familiare in continua evoluzione.",
-  href: "https://www.repubblica.it/topics/news/daniele_e_marianna_panebarco-96630417/",
-  embedSrc: "https://www.repubblica.it/topics/news/daniele_e_marianna_panebarco-96630417/",
+const mediaGallery = {
+  title: "Contenuti multimediali",
+  videos: [
+    {
+      title: "Approfondimento studio 01",
+      embedSrc: "https://www.youtube-nocookie.com/embed/W_smIq9Xscw",
+    },
+    {
+      title: "Approfondimento studio 02",
+      embedSrc: "https://www.youtube-nocookie.com/embed/f0Zrn__I2Fc",
+    },
+    {
+      title: "Approfondimento studio 03",
+      embedSrc: "https://www.youtube-nocookie.com/embed/W_smIq9Xscw?start=18",
+    },
+  ],
 } as const;
 ---
 
@@ -20,17 +30,17 @@ const mediaFeature = {
   title="Storia di un'azienda mutante - Panebarco"
   useInnerStyles={true}
   lang={lang}
-  headerProps={{ darkmode: false, containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
+  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page story-mutant-page">
-    <HeroStyHome
-      id="story-mutant-hero"
-      className="hero-wrap"
-      videoSrc="/images/panebarco-studio-video.mp4"
-      title="Storia di un'azienda mutante"
-      showSlider={false}
-      showCta={false}
-      showSubtitle={false}
+    <HeroStyStudio
+      backgroundVideoSrc="/images/panebarco-studio-video.mp4"
+      bgWord="LA TANA"
+      title="STORIA DI UN'AZIENDA MUTANTE"
+      subtitle="Supporto creativo, produttivo e operativo lungo tutto il processo"
+      showSideImage={false}
+      sideImageSrc="/images/lo-studio-panebarco-teams.png"
+      sideImageAlt="Team Panebarco"
     />
 
     <section class="page-main page-main--studio story-mutant-intro">
@@ -175,57 +185,42 @@ const mediaFeature = {
 
     <section class="section-space section-space--soft story-mutant-media">
       <div class="container">
-        <div class="row g-4 g-xl-5 align-items-center">
-          <div class="col-12 col-xl-4">
-            <div class="story-mutant-media__copy story-mutant-media__copy-card" data-story-media-reveal>
-              <h2 class="page-title-uniform">{mediaFeature.title}</h2>
-              <p>{mediaFeature.body}</p>
-              <a class="btn btn-cta btn-cta--blue btn-pill" href={mediaFeature.href} target="_blank" rel="noopener noreferrer">
-                Apri il racconto pubblico
-              </a>
+        <div class="story-mutant-media__intro text-center">
+          <h2 class="page-title-uniform">{mediaGallery.title}</h2>
+        </div>
+        <div class="story-mutant-media__grid">
+          <div class="story-mutant-media__video story-mutant-media__video--primary">
+            <div class="ratio ratio-16x9 overflow-hidden rounded-4">
+              <iframe
+                src={mediaGallery.videos[0].embedSrc}
+                title={mediaGallery.videos[0].title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
             </div>
           </div>
-          <div class="col-12 col-xl-8">
-            <div class="story-mutant-media__frame">
-              <button
-                class="story-mutant-media__expand"
-                type="button"
-                aria-label="Espandi il racconto pubblico"
-                data-story-media-expand
-              >
-                <i class="bi bi-arrows-fullscreen" aria-hidden="true"></i>
-                <span>Espandi</span>
-              </button>
-              <div class="ratio ratio-16x9 overflow-hidden rounded-4">
-                <iframe
-                  src={mediaFeature.embedSrc}
-                  title={mediaFeature.title}
-                  loading="lazy"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                ></iframe>
+
+          <div class="story-mutant-media__stack">
+            {mediaGallery.videos.slice(1).map((video) => (
+              <div class="story-mutant-media__video story-mutant-media__video--secondary">
+                <div class="ratio ratio-16x9 overflow-hidden rounded-4">
+                  <iframe
+                    src={video.embedSrc}
+                    title={video.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                  ></iframe>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
     </section>
-
-    <div class="story-mutant-media-modal" aria-hidden="true" data-story-media-modal>
-      <div class="story-mutant-media-modal__backdrop" data-story-media-close></div>
-      <div class="story-mutant-media-modal__dialog" role="dialog" aria-modal="true" aria-label={mediaFeature.title}>
-        <button class="story-mutant-media-modal__close" type="button" aria-label="Chiudi espansione" data-story-media-close>
-          <i class="bi bi-x-lg" aria-hidden="true"></i>
-        </button>
-        <div class="ratio ratio-16x9 overflow-hidden rounded-4">
-          <iframe
-            src={mediaFeature.embedSrc}
-            title={`${mediaFeature.title} - vista espansa`}
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
-        </div>
-      </div>
-    </div>
 
     <OscarCtaSection
       heading="Chi ha guidato tutte queste mutazioni?"
@@ -237,113 +232,4 @@ const mediaFeature = {
   </main>
 
   <script type="module" src={studioPageScriptUrl}></script>
-  <script is:inline>
-    (function () {
-      var cleanupStoryMutantPage = window.__cleanupStoryMutantPage || function () {};
-
-      function setupStoryMediaReveal(cleanups) {
-        var cards = document.querySelectorAll("[data-story-media-reveal]");
-        if (!cards.length) return;
-
-        var prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (prefersReducedMotion) {
-          cards.forEach(function (card) {
-            card.classList.add("is-in-view");
-          });
-          return;
-        }
-
-        var observer = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              entry.target.classList.toggle("is-in-view", entry.isIntersecting);
-            });
-          },
-          {
-            threshold: 0.25,
-            rootMargin: "0px 0px -8% 0px",
-          }
-        );
-
-        cards.forEach(function (card) {
-          observer.observe(card);
-        });
-
-        cleanups.push(function () {
-          observer.disconnect();
-        });
-      }
-
-      function setupStoryMediaExpand(cleanups) {
-        var expandButton = document.querySelector("[data-story-media-expand]");
-        var modal = document.querySelector("[data-story-media-modal]");
-        if (!expandButton || !modal) return;
-
-        var closeButtons = modal.querySelectorAll("[data-story-media-close]");
-
-        function setOpen(nextOpen) {
-          modal.classList.toggle("is-open", nextOpen);
-          modal.setAttribute("aria-hidden", String(!nextOpen));
-          document.documentElement.classList.toggle("story-media-modal-open", nextOpen);
-          document.body.classList.toggle("story-media-modal-open", nextOpen);
-        }
-
-        function openModal() {
-          setOpen(true);
-        }
-
-        function closeModal() {
-          setOpen(false);
-        }
-
-        function handleKeydown(event) {
-          if (event.key === "Escape" && modal.classList.contains("is-open")) {
-            closeModal();
-          }
-        }
-
-        expandButton.addEventListener("click", openModal);
-        closeButtons.forEach(function (button) {
-          button.addEventListener("click", closeModal);
-        });
-        document.addEventListener("keydown", handleKeydown);
-
-        cleanups.push(function () {
-          closeModal();
-          expandButton.removeEventListener("click", openModal);
-          closeButtons.forEach(function (button) {
-            button.removeEventListener("click", closeModal);
-          });
-          document.removeEventListener("keydown", handleKeydown);
-        });
-      }
-
-      function initStoryMutantPage() {
-        cleanupStoryMutantPage();
-
-        var cleanups = [];
-        setupStoryMediaReveal(cleanups);
-        setupStoryMediaExpand(cleanups);
-
-        cleanupStoryMutantPage = function () {
-          cleanups.forEach(function (dispose) {
-            dispose();
-          });
-        };
-
-        window.__cleanupStoryMutantPage = cleanupStoryMutantPage;
-      }
-
-      if (!window.__storyMutantPageBound) {
-        document.addEventListener("astro:before-swap", function () {
-          cleanupStoryMutantPage();
-        });
-
-        document.addEventListener("astro:page-load", initStoryMutantPage);
-        window.__storyMutantPageBound = true;
-      }
-
-      initStoryMutantPage();
-    })();
-  </script>
 </Layout>

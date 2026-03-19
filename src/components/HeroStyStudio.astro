@@ -5,6 +5,7 @@ interface Props {
   bgWord?: string;
   title?: string;
   subtitle?: string;
+  showSideImage?: boolean;
   sideImageSrc?: string;
   sideImageAlt?: string;
 }
@@ -15,12 +16,15 @@ const {
   bgWord = "LA TANA",
   title = "LO STUDIO",
   subtitle = "Idee al confine tra cartoon e realtà",
+  showSideImage = true,
   sideImageSrc = "/images/lo-studio-panebarco-teams.png",
   sideImageAlt = "Team Panebarco",
 } = Astro.props;
+
+const hasSideImage = showSideImage && Boolean(sideImageSrc);
 ---
 
-<section class={className}>
+<section class:list={[className, hasSideImage && "hero-sty-studio--with-side-image"]}>
   {backgroundVideoSrc && (
     <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
       <source src={backgroundVideoSrc} type="video/mp4" />
@@ -31,12 +35,12 @@ const {
     <div class="row g-4 g-lg-5 align-items-end">
       <div class="col-12 col-lg-7 col-xl-6">
         <div class="page-hero-text">
-          <p class="page-hero-bgword">{bgWord}</p>
-          <h1 class="page-hero-title">{title}</h1>
-          <p class="page-hero-subtitle">{subtitle}</p>
+          {bgWord && <p class="page-hero-bgword">{bgWord}</p>}
+          {title && <h1 class="page-hero-title">{title}</h1>}
+          {subtitle && <p class="page-hero-subtitle">{subtitle}</p>}
         </div>
       </div>
-      {sideImageSrc && (
+      {showSideImage && sideImageSrc && (
         <div class="col-12 col-lg-5 col-xl-6 text-lg-end">
           <div class="page-hero-media">
             <img
