@@ -37,7 +37,9 @@ E mentre la nuova generazione guida l'impresa, Daniele continua a tornare al fum
 Apri il racconto pubblico
 </a> </div> </div> <div class="col-12 col-xl-8"> <div class="story-mutant-media__frame"> <button class="story-mutant-media__expand" type="button" aria-label="Espandi il racconto pubblico" data-story-media-expand> <i class="bi bi-arrows-fullscreen" aria-hidden="true"></i> <span>Espandi</span> </button> <div class="ratio ratio-16x9 overflow-hidden rounded-4"> <iframe src="https://www.repubblica.it/topics/news/daniele_e_marianna_panebarco-96630417/" title="Racconto pubblico su RNext - Repubblica" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe> </div> </div> </div> </div> </div> </section> <div class="story-mutant-media-modal" aria-hidden="true" data-story-media-modal> <div class="story-mutant-media-modal__backdrop" data-story-media-close></div> <div class="story-mutant-media-modal__dialog" role="dialog" aria-modal="true" aria-label="Racconto pubblico su RNext - Repubblica"> <button class="story-mutant-media-modal__close" type="button" aria-label="Chiudi espansione" data-story-media-close> <i class="bi bi-x-lg" aria-hidden="true"></i> </button> <div class="ratio ratio-16x9 overflow-hidden rounded-4"> <iframe src="https://www.repubblica.it/topics/news/daniele_e_marianna_panebarco-96630417/" title="Racconto pubblico su RNext - Repubblica - vista espansa" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe> </div> </div> </div> <section class="studio-oscar-section section-space section-space--soft"> <div class="container"> <div class="row g-4 g-lg-5 align-items-start align-items-lg-center studio-oscar-grid"> <div class="col-12 col-lg-5 studio-oscar-art"> <img class="img-fluid d-block mx-auto mx-lg-0" src="/images/lo-studio-oscar.png" alt="Personaggi con Oscar"> </div> <div class="col-12 col-lg-7 studio-oscar-copy text-start"> <h2 class="page-title-uniform"> Chi ha guidato tutte queste mutazioni? <span>CONOSCI I PANEBARCOS</span> </h2> <p>Dietro ogni passaggio di questa storia c&#39;e una famiglia creativa che ha continuato a cambiare forma senza perdere il proprio modo di lavorare.</p> <a class="btn btn-cta btn-cta--blue btn-pill" href="/studio/i-panebarcos">Conosci i Panebarcos</a> </div> </div> </div> </section> </main> <script type="module" src="/_astro/studio.i-E83DCs.js"></script> <script>
     (function () {
-      function initStoryMediaReveal() {
+      var cleanupStoryMutantPage = window.__cleanupStoryMutantPage || function () {};
+
+      function setupStoryMediaReveal(cleanups) {
         var cards = document.querySelectorAll("[data-story-media-reveal]");
         if (!cards.length) return;
 
@@ -65,27 +67,15 @@ Apri il racconto pubblico
           observer.observe(card);
         });
 
-        document.addEventListener(
-          "astro:before-swap",
-          function () {
-            observer.disconnect();
-          },
-          { once: true }
-        );
+        cleanups.push(function () {
+          observer.disconnect();
+        });
       }
 
-      if (!window.__storyMutantMediaRevealBound) {
-        document.addEventListener("astro:page-load", initStoryMediaReveal);
-        window.__storyMutantMediaRevealBound = true;
-      }
-
-      initStoryMediaReveal();
-
-      (function initStoryMediaExpand() {
+      function setupStoryMediaExpand(cleanups) {
         var expandButton = document.querySelector("[data-story-media-expand]");
         var modal = document.querySelector("[data-story-media-modal]");
-        if (!expandButton || !modal || modal.dataset.bound === "true") return;
-        modal.dataset.bound = "true";
+        if (!expandButton || !modal) return;
 
         var closeButtons = modal.querySelectorAll("[data-story-media-close]");
 
@@ -96,22 +86,62 @@ Apri il racconto pubblico
           document.body.classList.toggle("story-media-modal-open", nextOpen);
         }
 
-        expandButton.addEventListener("click", function () {
+        function openModal() {
           setOpen(true);
-        });
+        }
 
-        closeButtons.forEach(function (button) {
-          button.addEventListener("click", function () {
-            setOpen(false);
-          });
-        });
+        function closeModal() {
+          setOpen(false);
+        }
 
-        document.addEventListener("keydown", function (event) {
+        function handleKeydown(event) {
           if (event.key === "Escape" && modal.classList.contains("is-open")) {
-            setOpen(false);
+            closeModal();
           }
+        }
+
+        expandButton.addEventListener("click", openModal);
+        closeButtons.forEach(function (button) {
+          button.addEventListener("click", closeModal);
         });
-      })();
+        document.addEventListener("keydown", handleKeydown);
+
+        cleanups.push(function () {
+          closeModal();
+          expandButton.removeEventListener("click", openModal);
+          closeButtons.forEach(function (button) {
+            button.removeEventListener("click", closeModal);
+          });
+          document.removeEventListener("keydown", handleKeydown);
+        });
+      }
+
+      function initStoryMutantPage() {
+        cleanupStoryMutantPage();
+
+        var cleanups = [];
+        setupStoryMediaReveal(cleanups);
+        setupStoryMediaExpand(cleanups);
+
+        cleanupStoryMutantPage = function () {
+          cleanups.forEach(function (dispose) {
+            dispose();
+          });
+        };
+
+        window.__cleanupStoryMutantPage = cleanupStoryMutantPage;
+      }
+
+      if (!window.__storyMutantPageBound) {
+        document.addEventListener("astro:before-swap", function () {
+          cleanupStoryMutantPage();
+        });
+
+        document.addEventListener("astro:page-load", initStoryMutantPage);
+        window.__storyMutantPageBound = true;
+      }
+
+      initStoryMutantPage();
     })();
   </script>  <footer id="contatti" class="footer-cta"> <div class="container"> <div class="row g-4 footer-main align-items-center"> <div class="col-lg-4"> <img class="footer-logo" src="/images/panebarco-logo-light.png" alt="Panebarco"> <p class="contact-line mb-0">
 Panebarco &amp; C. S.r.l. - Via Molino, 9<br>

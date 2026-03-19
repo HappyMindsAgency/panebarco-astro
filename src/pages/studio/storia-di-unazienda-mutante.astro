@@ -239,7 +239,9 @@ const mediaFeature = {
   <script type="module" src={studioPageScriptUrl}></script>
   <script is:inline>
     (function () {
-      function initStoryMediaReveal() {
+      var cleanupStoryMutantPage = window.__cleanupStoryMutantPage || function () {};
+
+      function setupStoryMediaReveal(cleanups) {
         var cards = document.querySelectorAll("[data-story-media-reveal]");
         if (!cards.length) return;
 
@@ -267,27 +269,15 @@ const mediaFeature = {
           observer.observe(card);
         });
 
-        document.addEventListener(
-          "astro:before-swap",
-          function () {
-            observer.disconnect();
-          },
-          { once: true }
-        );
+        cleanups.push(function () {
+          observer.disconnect();
+        });
       }
 
-      if (!window.__storyMutantMediaRevealBound) {
-        document.addEventListener("astro:page-load", initStoryMediaReveal);
-        window.__storyMutantMediaRevealBound = true;
-      }
-
-      initStoryMediaReveal();
-
-      (function initStoryMediaExpand() {
+      function setupStoryMediaExpand(cleanups) {
         var expandButton = document.querySelector("[data-story-media-expand]");
         var modal = document.querySelector("[data-story-media-modal]");
-        if (!expandButton || !modal || modal.dataset.bound === "true") return;
-        modal.dataset.bound = "true";
+        if (!expandButton || !modal) return;
 
         var closeButtons = modal.querySelectorAll("[data-story-media-close]");
 
@@ -298,22 +288,62 @@ const mediaFeature = {
           document.body.classList.toggle("story-media-modal-open", nextOpen);
         }
 
-        expandButton.addEventListener("click", function () {
+        function openModal() {
           setOpen(true);
-        });
+        }
 
-        closeButtons.forEach(function (button) {
-          button.addEventListener("click", function () {
-            setOpen(false);
-          });
-        });
+        function closeModal() {
+          setOpen(false);
+        }
 
-        document.addEventListener("keydown", function (event) {
+        function handleKeydown(event) {
           if (event.key === "Escape" && modal.classList.contains("is-open")) {
-            setOpen(false);
+            closeModal();
           }
+        }
+
+        expandButton.addEventListener("click", openModal);
+        closeButtons.forEach(function (button) {
+          button.addEventListener("click", closeModal);
         });
-      })();
+        document.addEventListener("keydown", handleKeydown);
+
+        cleanups.push(function () {
+          closeModal();
+          expandButton.removeEventListener("click", openModal);
+          closeButtons.forEach(function (button) {
+            button.removeEventListener("click", closeModal);
+          });
+          document.removeEventListener("keydown", handleKeydown);
+        });
+      }
+
+      function initStoryMutantPage() {
+        cleanupStoryMutantPage();
+
+        var cleanups = [];
+        setupStoryMediaReveal(cleanups);
+        setupStoryMediaExpand(cleanups);
+
+        cleanupStoryMutantPage = function () {
+          cleanups.forEach(function (dispose) {
+            dispose();
+          });
+        };
+
+        window.__cleanupStoryMutantPage = cleanupStoryMutantPage;
+      }
+
+      if (!window.__storyMutantPageBound) {
+        document.addEventListener("astro:before-swap", function () {
+          cleanupStoryMutantPage();
+        });
+
+        document.addEventListener("astro:page-load", initStoryMutantPage);
+        window.__storyMutantPageBound = true;
+      }
+
+      initStoryMutantPage();
     })();
   </script>
 </Layout>
