@@ -3,39 +3,13 @@ import Layout from "../layouts/Layout.astro";
 import HeroStyHome from "../components/HeroStyHome.astro";
 import OriginalsShowcase from "../components/OriginalsShowcase.astro";
 import PortfolioShowcase from "../components/PortfolioShowcase.astro";
+import ServicesShowcase from "../components/ServicesShowcase.astro";
 import mainScriptUrl from "../scripts/main.js?url";
 import { getPortfolioShowcaseContent } from "../data/portfolio-showcase";
 import { buildPath } from "../i18n/routing";
 
 const lang = "it" as const;
 const portfolioShowcase = getPortfolioShowcaseContent(lang);
-
-const serviceAreas = [
-  {
-    title: "Commercials",
-    href: buildPath("servicesCommercials", lang),
-    image: "/images/servizi-cover-01-340x487.png",
-    summary: "Spot, branded content e video pensati per raccontare, spiegare, promuovere e coinvolgere.",
-  },
-  {
-    title: "Post-produzione",
-    href: buildPath("servicesPost", lang),
-    image: "/images/servizi-cover-02-340x487.jpg",
-    summary: "Color, compositing, VFX e finishing per dare ritmo, atmosfera e precisione alle immagini.",
-  },
-  {
-    title: "Service",
-    href: buildPath("servicesService", lang),
-    image: "/images/servizi-cover-03-340x487.jpg",
-    summary: "Supporto produttivo e operativo per accompagnare ogni fase del lavoro, dalla partenza alla consegna.",
-  },
-  {
-    title: "...e tanto altro",
-    href: buildPath("servicesMore", lang),
-    image: "/images/servizi-cover-01-340x487.png",
-    summary: "Progetti speciali, sperimentazioni e idee laterali che allargano il nostro modo di lavorare.",
-  },
-] as const;
 ---
 
 <Layout
@@ -85,34 +59,7 @@ const serviceAreas = [
         </div>
       </section>
   
-      <!-- Cards servizi -->
-      <section id="servizi" class="section-space section-space--soft services-home-cards">
-        <div class="container">
-          <h2 class="section-title section-title-reveal">
-            <span class="section-title-text">SERVIZI</span>
-            <img class="section-title-sticker" src="/images/cose che sappiamo fare.png" alt="" aria-hidden="true">
-          </h2>
-          <div class="row g-4 services-box-grid">
-            {serviceAreas.map((service) => (
-              <div class="col-12 col-md-6 col-lg-3">
-                <a
-                  class="services-box-link d-block text-decoration-none"
-                  href={service.href}
-                  aria-label={`Apri la pagina ${service.title}`}
-                >
-                  <article class="services-box-card" style={`--service-bg:url('${service.image}');`}>
-                    <div class="services-box-card__overlay"></div>
-                    <div class="services-box-card__content">
-                      <h3>{service.title}</h3>
-                      <p>{service.summary}</p>
-                    </div>
-                  </article>
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServicesShowcase lang={lang} />
   
       <!-- Slider Panebarco Originals -->
       <OriginalsShowcase />

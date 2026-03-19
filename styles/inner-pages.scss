@@ -440,6 +440,339 @@ body.inner-page {
     color: var(--ink);
   }
 
+  .oscars-page {
+    --oscars-pastel-1: #009fe3;
+    --oscars-pastel-2: #b03d4f;
+    --oscars-pastel-3: #995791;
+    --oscars-pastel-4: #3394b2;
+    --oscars-pastel-5: #30997b;
+  }
+
+  .oscars-page .oscars-belief-hero {
+    position: relative;
+    padding-bottom: clamp(3rem, 6vw, 4.2rem);
+    overflow: hidden;
+  }
+
+  .oscars-page .oscars-belief-hero .container,
+  .oscars-page .oscars-belief-hero .row {
+    min-height: clamp(12rem, 20vw, 15rem);
+    align-items: center;
+  }
+
+  .oscars-page .oscars-belief-title {
+    margin-bottom: 0;
+    text-align: center;
+    font-size: clamp(2.5rem, 6.6vw, 4.9rem);
+    line-height: 0.94;
+  }
+
+  .oscars-page .oscars-belief-title-shell {
+    position: relative;
+    isolation: isolate;
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(1rem, 2.1vw, 1.45rem) clamp(1rem, 2.4vw, 1.75rem);
+    border: 4px solid rgba(15, 23, 42, 0.92);
+    border-radius: 2rem;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(0, 159, 227, 0.14), transparent 26%),
+      radial-gradient(circle at 86% 22%, rgba(176, 61, 79, 0.16), transparent 26%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), #ffffff 100%);
+    box-shadow: 0 0.65rem 1.35rem rgba(15, 23, 42, 0.06);
+  }
+
+  .oscars-page .oscars-belief-title-shell__copy {
+    display: inline-block;
+    min-height: 0;
+    width: auto;
+  }
+
+  .oscars-page .oscars-belief-title-shell::before,
+  .oscars-page .oscars-belief-title-shell::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 1.6rem;
+  }
+
+  .oscars-page .oscars-belief-title-shell::before {
+    inset: auto auto -0.7rem 0.9rem;
+    width: clamp(8rem, 20vw, 10.5rem);
+    height: clamp(1.15rem, 2.4vw, 1.55rem);
+    background: rgba(48, 153, 123, 0.22);
+    transform: rotate(-4deg);
+  }
+
+  .oscars-page .oscars-belief-title-shell::after {
+    top: -1rem;
+    right: clamp(0.8rem, 2.4vw, 1.35rem);
+    width: clamp(6.2rem, 13vw, 7.8rem);
+    height: clamp(1.05rem, 2.4vw, 1.4rem);
+    background: rgba(153, 87, 145, 0.2);
+    transform: rotate(7deg);
+  }
+
+  .oscars-page .oscars-belief-hero,
+  .oscars-page .oscars-values,
+  .oscars-page .oscars-work,
+  .oscars-page .oscars-dream {
+    background: var(--bg);
+  }
+
+  .oscars-page [data-oscars-block-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 2.4rem, 0) scale(0.985);
+    filter: saturate(0.92);
+    transition:
+      opacity 0.65s ease,
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.7s ease;
+    transition-delay: var(--oscars-reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .oscars-page [data-oscars-block-reveal].is-in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: saturate(1);
+  }
+
+  .oscars-page .oscars-section-head {
+    max-width: 48rem;
+    margin: 0 auto clamp(1.6rem, 3vw, 2.2rem);
+  }
+
+  .oscars-page .oscars-value-card {
+    --oscar-accent-rgb: 0, 159, 227;
+    position: relative;
+    height: 100%;
+    border-radius: 1.8rem;
+    padding: clamp(1.25rem, 2.4vw, 1.9rem);
+    background: rgba(255, 255, 255, 0.98);
+    border: 6px solid rgba(var(--oscar-accent-rgb), 0.92);
+    box-shadow:
+      0 0.55rem 1.4rem rgba(15, 23, 42, 0.06),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+    transition:
+      transform 0.24s ease,
+      box-shadow 0.24s ease;
+  }
+
+  .oscars-page .oscars-value-card:hover,
+  .oscars-page .oscars-value-card:focus-within {
+    transform: translateY(-0.3rem);
+    box-shadow:
+      0 0.9rem 1.8rem rgba(15, 23, 42, 0.09),
+      inset 0 0 0 1px rgba(var(--oscar-accent-rgb), 0.14);
+  }
+
+  .oscars-page .oscars-value-card--1 {
+    --oscar-accent-rgb: 0, 159, 227;
+  }
+
+  .oscars-page .oscars-value-card--2 {
+    --oscar-accent-rgb: 176, 61, 79;
+  }
+
+  .oscars-page .oscars-value-card--3 {
+    --oscar-accent-rgb: 153, 87, 145;
+  }
+
+  .oscars-page .oscars-value-card--4 {
+    --oscar-accent-rgb: 51, 148, 178;
+  }
+
+  .oscars-page .oscars-value-card--5 {
+    --oscar-accent-rgb: 48, 153, 123;
+  }
+
+  .oscars-page .oscars-value-card__index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    min-height: 2.2rem;
+    margin-bottom: 0.85rem;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    background: rgba(var(--oscar-accent-rgb), 0.1);
+    color: rgba(var(--oscar-accent-rgb), 0.96);
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  .oscars-page .oscars-value-card__label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.2rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.85rem;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    background: rgba(var(--oscar-accent-rgb), 0.92);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    transform: rotate(-4deg);
+    box-shadow: 0 0.4rem 0.9rem rgba(var(--oscar-accent-rgb), 0.16);
+    animation: oscars-value-badge-pop 5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .oscars-page .row > div:nth-child(1) .oscars-value-card__label {
+    animation-delay: 0s;
+  }
+
+  .oscars-page .row > div:nth-child(2) .oscars-value-card__label {
+    animation-delay: 1s;
+  }
+
+  .oscars-page .row > div:nth-child(3) .oscars-value-card__label {
+    animation-delay: 2s;
+  }
+
+  .oscars-page .row > div:nth-child(4) .oscars-value-card__label {
+    animation-delay: 3s;
+  }
+
+  .oscars-page .row > div:nth-child(5) .oscars-value-card__label {
+    animation-delay: 4s;
+  }
+
+  @keyframes oscars-value-badge-pop {
+    0%,
+    16%,
+    100% {
+      transform: rotate(-4deg) scale(1);
+      box-shadow: 0 0.4rem 0.9rem rgba(var(--oscar-accent-rgb), 0.16);
+    }
+
+    4% {
+      transform: rotate(-7deg) scale(1.15);
+      box-shadow: 0 0.65rem 1.2rem rgba(var(--oscar-accent-rgb), 0.22);
+    }
+
+    8% {
+      transform: rotate(-2deg) scale(0.96);
+      box-shadow: 0 0.3rem 0.7rem rgba(var(--oscar-accent-rgb), 0.12);
+    }
+
+    11% {
+      transform: rotate(-5deg) scale(1.08);
+      box-shadow: 0 0.55rem 1rem rgba(var(--oscar-accent-rgb), 0.18);
+    }
+  }
+
+  .oscars-page .oscars-value-card h3,
+  .oscars-page .oscars-work-card h3 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.9rem, 3vw, 2.35rem);
+    line-height: 1.02;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .oscars-page .oscars-value-card p,
+  .oscars-page .oscars-work-card p {
+    margin-bottom: 0;
+  }
+
+  .oscars-page .oscars-dream-card {
+    position: relative;
+    max-width: 62rem;
+    margin: 0 auto;
+    border-radius: 2rem;
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+    background: linear-gradient(180deg, #131820 0%, #090b0f 100%);
+    box-shadow: 0 0.75rem 1.7rem rgba(0, 0, 0, 0.12);
+    color: #fff;
+  }
+
+  .oscars-page .oscars-dream-card h2 {
+    margin-bottom: 0.9rem;
+    color: #fff;
+  }
+
+  .oscars-page .oscars-dream-card__lead {
+    margin-bottom: 0.9rem;
+    color: #fff;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    line-height: 1.25;
+    font-weight: 900;
+  }
+
+  .oscars-page .oscars-dream-card p:last-child {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .oscars-page .oscars-dream-card__art img {
+    width: min(100%, 14rem);
+    filter: drop-shadow(0 0.9rem 1.6rem rgba(0, 0, 0, 0.28));
+  }
+
+  .oscars-page .oscars-work-card {
+    position: relative;
+    height: 100%;
+    border-radius: 1.8rem;
+    padding: clamp(1.25rem, 2.4vw, 1.9rem);
+    background: #fff;
+    border: 6px solid rgba(48, 153, 123, 0.92);
+    box-shadow:
+      0 0.55rem 1.4rem rgba(15, 23, 42, 0.06),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+    transition:
+      transform 0.24s ease,
+      box-shadow 0.24s ease;
+  }
+
+  .oscars-page .oscars-work-card:hover,
+  .oscars-page .oscars-work-card:focus-within {
+    transform: translateY(-0.28rem);
+    box-shadow:
+      0 0.85rem 1.8rem rgba(15, 23, 42, 0.09),
+      inset 0 0 0 1px rgba(48, 153, 123, 0.12);
+  }
+
+  .oscars-page .oscars-work-card__kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.1rem;
+    min-height: 2.2rem;
+    margin-bottom: 0.8rem;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    background: rgba(var(--bs-success-rgb), 0.12);
+    color: var(--bs-success);
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .oscars-page [data-oscars-block-reveal] {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+
+    .oscars-page .oscars-value-card__label {
+      animation: none;
+    }
+  }
+
   .studio-team-page .panebarcos-page-intro__copy h2 {
     margin-bottom: $spacer;
   }
@@ -2498,6 +2831,18 @@ body.inner-page {
       width: min(100%, 20rem);
     }
 
+    .oscars-page .oscars-belief-title-shell {
+      max-width: 100%;
+    }
+
+    .oscars-page .oscars-belief-title-shell__copy {
+      min-height: 0;
+    }
+
+    .oscars-page .page-main--studio.oscars-belief-hero {
+      padding-top: clamp(8.8rem, 16vw, 10.2rem);
+    }
+
     .studio-team-page .panebarcos-page-intro__art img {
       width: min(100%, 20rem);
     }
@@ -2652,6 +2997,47 @@ body.inner-page {
 
     .story-mutant-page .story-mutant-intro-art img {
       width: min(100%, 18rem);
+    }
+
+    .oscars-page .oscars-dream-card,
+    .oscars-page .oscars-value-card,
+    .oscars-page .oscars-work-card {
+      padding-inline: $spacer;
+    }
+
+    .oscars-page .oscars-belief-title-shell {
+      display: inline-block;
+      padding: 0.95rem 0.9rem 1.05rem;
+      border-width: 4px;
+    }
+
+    .oscars-page .oscars-belief-hero .container,
+    .oscars-page .oscars-belief-hero .row {
+      min-height: auto;
+    }
+
+    .oscars-page .page-main--studio.oscars-belief-hero {
+      padding-top: clamp(8.2rem, 22vw, 10rem);
+    }
+
+    .oscars-page .oscars-belief-title-shell__copy {
+      min-height: 0;
+      width: auto;
+    }
+
+    .oscars-page .oscars-belief-title-shell::before {
+      left: 0.65rem;
+      bottom: -0.5rem;
+    }
+
+    .oscars-page .oscars-belief-title-shell::after {
+      top: -0.7rem;
+      right: 0.75rem;
+    }
+
+    .oscars-page .oscars-value-card h3,
+    .oscars-page .oscars-work-card h3 {
+      font-size: clamp(1.75rem, 8vw, 2.05rem);
     }
 
     .studio-team-page .panebarcos-page-intro__art img {

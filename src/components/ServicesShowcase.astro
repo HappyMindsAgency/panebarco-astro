@@ -1,0 +1,178 @@
+---
+import type { Lang } from "../i18n/config";
+import { buildPath } from "../i18n/routing";
+
+interface Props {
+  lang?: Lang;
+  sectionId?: string;
+  sectionClass?: string;
+  containerClass?: string;
+}
+
+const {
+  lang = "it",
+  sectionId = "servizi",
+  sectionClass = "section-space section-space--soft services-home-cards",
+  containerClass = "container",
+} = Astro.props;
+
+const content = {
+  it: {
+    title: "SERVIZI",
+    stickerSrc: "/images/cose che sappiamo fare.png",
+    stickerAlt: "Cose che sappiamo fare",
+    items: [
+      {
+        title: "Commercials",
+        href: buildPath("servicesCommercials", lang),
+        image: "/images/servizi-cover-01-340x487.png",
+        summary: "Spot, branded content e video pensati per raccontare, spiegare, promuovere e coinvolgere.",
+      },
+      {
+        title: "Post-produzione",
+        href: buildPath("servicesPost", lang),
+        image: "/images/servizi-cover-02-340x487.jpg",
+        summary: "Color, compositing, VFX e finishing per dare ritmo, atmosfera e precisione alle immagini.",
+      },
+      {
+        title: "Service",
+        href: buildPath("servicesService", lang),
+        image: "/images/servizi-cover-03-340x487.jpg",
+        summary: "Supporto produttivo e operativo per accompagnare ogni fase del lavoro, dalla partenza alla consegna.",
+      },
+      {
+        title: "...e tanto altro",
+        href: buildPath("servicesMore", lang),
+        image: "/images/servizi-cover-01-340x487.png",
+        summary: "Progetti speciali, sperimentazioni e idee laterali che allargano il nostro modo di lavorare.",
+      },
+    ],
+  },
+  en: {
+    title: "SERVICES",
+    stickerSrc: "/images/cose che sappiamo fare.png",
+    stickerAlt: "What we know how to do",
+    items: [
+      {
+        title: "Commercials",
+        href: buildPath("servicesCommercials", lang),
+        image: "/images/servizi-cover-01-340x487.png",
+        summary: "Spots, branded content and videos built to explain, promote and engage with a clear visual identity.",
+      },
+      {
+        title: "Post-production",
+        href: buildPath("servicesPost", lang),
+        image: "/images/servizi-cover-02-340x487.jpg",
+        summary: "Color, compositing, VFX and finishing to give images rhythm, atmosphere and precision.",
+      },
+      {
+        title: "Service",
+        href: buildPath("servicesService", lang),
+        image: "/images/servizi-cover-03-340x487.jpg",
+        summary: "Production support and operations across every phase, from kickoff to delivery.",
+      },
+      {
+        title: "...and more",
+        href: buildPath("servicesMore", lang),
+        image: "/images/servizi-cover-01-340x487.png",
+        summary: "Special projects, experiments and side ideas that widen the way we work.",
+      },
+    ],
+  },
+} as const;
+
+const showcase = content[lang];
+---
+
+<section id={sectionId} class={sectionClass}>
+  <div class={containerClass}>
+    <h2 class="section-title section-title-reveal" data-services-showcase-title data-reveal-managed="self">
+      <span class="section-title-text">{showcase.title}</span>
+      <img class="section-title-sticker" src={showcase.stickerSrc} alt="" aria-hidden="true" />
+    </h2>
+    <div class="row g-4 services-box-grid">
+      {showcase.items.map((service) => (
+        <div class="col-12 col-md-6 col-lg-3">
+          <a
+            class="services-box-link d-block text-decoration-none"
+            href={service.href}
+            aria-label={`Apri la pagina ${service.title}`}
+          >
+            <article class="services-box-card" style={`--service-bg:url('${service.image}');`}>
+              <div class="services-box-card__overlay"></div>
+              <div class="services-box-card__content">
+                <h3>{service.title}</h3>
+                <p>{service.summary}</p>
+              </div>
+            </article>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var cleanupServicesShowcase = window.__cleanupServicesShowcase || function () {};
+
+    function initServicesShowcase() {
+      cleanupServicesShowcase();
+
+      var titles = document.querySelectorAll("[data-services-showcase-title]");
+      if (!titles.length) return;
+
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        titles.forEach(function (title) {
+          title.classList.add("is-in-view");
+        });
+        return;
+      }
+
+      var lastScrollY = window.scrollY;
+      var observer = new IntersectionObserver(
+        function (entries) {
+          var currentScrollY = window.scrollY;
+          var isScrollingUp = currentScrollY < lastScrollY;
+          lastScrollY = currentScrollY;
+
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-in-view");
+              return;
+            }
+
+            if (isScrollingUp) {
+              entry.target.classList.remove("is-in-view");
+            }
+          });
+        },
+        {
+          threshold: 0.01,
+          rootMargin: "-35% 0px -35% 0px",
+        }
+      );
+
+      titles.forEach(function (title) {
+        observer.observe(title);
+      });
+
+      cleanupServicesShowcase = function () {
+        observer.disconnect();
+      };
+
+      window.__cleanupServicesShowcase = cleanupServicesShowcase;
+    }
+
+    if (!window.__servicesShowcaseBound) {
+      document.addEventListener("astro:before-swap", function () {
+        cleanupServicesShowcase();
+      });
+
+      document.addEventListener("astro:page-load", initServicesShowcase);
+      window.__servicesShowcaseBound = true;
+    }
+
+    initServicesShowcase();
+  })();
+</script>
