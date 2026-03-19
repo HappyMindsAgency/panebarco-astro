@@ -2131,39 +2131,153 @@ body.inner-page {
     transform: rotate(10deg);
   }
 
-  .portfolio-page .portfolio-filter-group {
-    text-align: center;
+  .portfolio-page .portfolio-filters {
+    margin-inline: auto;
+    max-width: min(100%, 82rem);
+    padding: clamp(1.2rem, 2vw, 1.8rem);
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      0 0.85rem 2rem rgba(15, 23, 42, 0.06),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  }
+
+  .portfolio-page .portfolio-filter-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: end;
+  }
+
+  .portfolio-page .portfolio-filter-field {
+    position: relative;
   }
 
   .portfolio-page .portfolio-filter-label {
-    margin: 0 0 0.75rem;
-    color: var(--ink);
-    font-size: 0.92rem;
+    display: inline-block;
+    margin: 0 0 0.65rem;
+    color: rgba(15, 23, 42, 0.9);
+    font-size: 0.98rem;
     font-weight: 900;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    letter-spacing: -0.01em;
   }
 
-  .portfolio-page .portfolio-filter-chip {
-    border: 0;
+  .portfolio-page .portfolio-filter-select-shell {
+    position: relative;
+  }
+
+  .portfolio-page .portfolio-filter-select {
+    width: 100%;
+    min-height: 3.45rem;
+    padding: 0.9rem 3.1rem 0.9rem 1rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
     border-radius: 999px;
-    padding: 0.62rem 1rem;
-    background: rgba(15, 23, 42, 0.06);
-    color: rgba(15, 23, 42, 0.82);
-    font-weight: 800;
-    line-height: 1;
+    background: #fff;
+    color: rgba(15, 23, 42, 0.9);
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 0.35rem 0.9rem rgba(15, 23, 42, 0.04);
+    appearance: none;
+    -webkit-appearance: none;
     transition:
-      background 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease;
+      border-color 0.22s ease,
+      box-shadow 0.22s ease,
+      transform 0.22s ease;
   }
 
-  .portfolio-page .portfolio-filter-chip.is-active,
-  .portfolio-page .portfolio-filter-chip:hover,
-  .portfolio-page .portfolio-filter-chip:focus-visible {
-    background: var(--bs-primary);
-    color: #fff;
-    transform: translateY(-0.08rem);
+  .portfolio-page .portfolio-filter-select:hover {
+    border-color: rgba(15, 23, 42, 0.22);
+  }
+
+  .portfolio-page .portfolio-filter-select:focus-visible {
+    outline: none;
+    border-color: rgba(var(--bs-primary-rgb), 0.45);
+    box-shadow:
+      0 0 0 0.24rem rgba(var(--bs-primary-rgb), 0.12),
+      0 0.55rem 1.15rem rgba(15, 23, 42, 0.07);
+    transform: translateY(-0.03rem);
+  }
+
+  .portfolio-page .portfolio-filter-select-icon {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    color: rgba(15, 23, 42, 0.72);
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  .portfolio-page .portfolio-filter-actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .portfolio-page .portfolio-filter-submit {
+    min-height: 3.45rem;
+    padding-inline: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    box-shadow: 0 0.85rem 1.6rem rgba(var(--bs-primary-rgb), 0.18);
+  }
+
+  .portfolio-page .portfolio-empty-state {
+    max-width: 36rem;
+    margin-inline: auto;
+    padding: 1rem 1.2rem;
+    border-radius: 1.3rem;
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow:
+      0 0.8rem 1.8rem rgba(15, 23, 42, 0.06),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+  }
+
+  .portfolio-page .portfolio-empty-state p {
+    color: rgba(15, 23, 42, 0.82);
+    font-weight: 700;
+  }
+
+  @media (max-width: 991.98px) {
+    .portfolio-page .portfolio-filter-form {
+      grid-template-columns: 1fr;
+    }
+
+    .portfolio-page .portfolio-filter-actions {
+      justify-content: stretch;
+    }
+
+    .portfolio-page .portfolio-filter-submit {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .portfolio-page .portfolio-filters {
+      padding: 1rem;
+      border-radius: 1.5rem;
+    }
+
+    .portfolio-page .portfolio-filter-label {
+      font-size: 0.96rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .portfolio-page .portfolio-filter-select {
+      min-height: 3.2rem;
+      padding-left: 0.95rem;
+      font-size: 0.98rem;
+    }
+
+    .portfolio-page .portfolio-filter-submit {
+      min-height: 3.2rem;
+    }
   }
 
   .portfolio-page .portfolio-work-card {
