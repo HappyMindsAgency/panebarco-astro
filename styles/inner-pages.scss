@@ -440,6 +440,519 @@ body.inner-page {
     color: var(--ink);
   }
 
+  .studio-team-page .panebarcos-page-intro__copy h2 {
+    margin-bottom: $spacer;
+  }
+
+  .studio-team-page .panebarcos-page-intro__copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  .studio-team-page .panebarcos-page-intro__art img {
+    width: min(100%, 23rem);
+  }
+
+  .studio-team-page .panebarcos-groups,
+  .studio-team-page .panebarcos-page-intro {
+    background: var(--bg);
+  }
+
+  .studio-team-page .panebarcos-family-block__head {
+    max-width: 56rem;
+    margin-bottom: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .studio-team-page .panebarcos-family-block__title {
+    margin: 0 0 clamp(1.5rem, 3vw, 2.2rem);
+    text-align: center;
+    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.8rem);
+    line-height: 0.92;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .studio-team-page .panebarcos-family-block__head h2 {
+    margin: 0 0 0.85rem;
+  }
+
+  .studio-team-page .panebarcos-family-block__head p {
+    margin-bottom: 0;
+  }
+
+  .studio-team-page .panebarcos-member-card {
+    --member-accent-rgb: var(--bs-primary-rgb);
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(10.5rem, 13.5rem) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 1rem;
+    overflow: hidden;
+    border-radius: 1.9rem;
+    padding: clamp(1rem, 2vw, 1.15rem);
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 34%),
+      linear-gradient(180deg, #e8f8ff 0%, #cfeefe 100%);
+    box-shadow:
+      0 1.15rem 2.8rem rgba(15, 23, 42, 0.09),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+    transition:
+      transform 0.24s ease,
+      box-shadow 0.24s ease;
+  }
+
+  .studio-team-page .panebarcos-member-card--alt {
+    --member-accent-rgb: var(--bs-success-rgb);
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 34%),
+      linear-gradient(180deg, #ebf8f4 0%, #d4efe5 100%);
+  }
+
+  .studio-team-page .panebarcos-family-block .row > div:nth-child(3) .panebarcos-member-card {
+    --member-accent-rgb: 13, 202, 240;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 34%),
+      linear-gradient(180deg, #edfaff 0%, #d7f4ff 100%);
+  }
+
+  .studio-team-page .panebarcos-family-block .row > div:nth-child(4) .panebarcos-member-card {
+    --member-accent-rgb: 32, 201, 151;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 34%),
+      linear-gradient(180deg, #eefaf7 0%, #daf4ec 100%);
+  }
+
+  .studio-team-page .panebarcos-member-card:hover,
+  .studio-team-page .panebarcos-member-card:focus-within {
+    transform: translateY(-0.32rem);
+    box-shadow:
+      0 1.45rem 3rem rgba(15, 23, 42, 0.14),
+      inset 0 0 0 1px rgba(var(--bs-primary-rgb), 0.08);
+  }
+
+  .studio-team-page .panebarcos-member-card__sticker {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.2rem;
+    padding: 0.42rem 0.95rem;
+    border-radius: 1rem;
+    background: rgba(var(--member-accent-rgb), 0.95);
+    color: #fff;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    transform: rotate(-5deg);
+    box-shadow: 0 0.7rem 1.2rem rgba(var(--member-accent-rgb), 0.24);
+    animation: panebarcos-sticker-pop 5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    animation-play-state: paused;
+  }
+
+  .studio-team-page .panebarcos-member-card--alt .panebarcos-member-card__sticker {
+    color: #fff;
+  }
+
+  .studio-team-page .panebarcos-family-block .row > div:nth-child(1) .panebarcos-member-card__sticker {
+    animation-delay: 0s;
+  }
+
+  .studio-team-page .panebarcos-family-block .row > div:nth-child(2) .panebarcos-member-card__sticker {
+    animation-delay: 1s;
+  }
+
+  .studio-team-page .panebarcos-family-block .row > div:nth-child(3) .panebarcos-member-card__sticker {
+    animation-delay: 2s;
+  }
+
+  .studio-team-page .panebarcos-family-block .row > div:nth-child(4) .panebarcos-member-card__sticker {
+    animation-delay: 3s;
+  }
+
+  .studio-team-page .panebarcos-network-card .panebarcos-group-card__sticker {
+    --member-accent-rgb: var(--bs-warning-rgb);
+    animation: panebarcos-sticker-pop 5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    animation-delay: 4s;
+    animation-play-state: paused;
+  }
+
+  @keyframes panebarcos-sticker-pop {
+    0%,
+    16%,
+    100% {
+      transform: rotate(-5deg) scale(1);
+      box-shadow: 0 0.7rem 1.2rem rgba(var(--member-accent-rgb), 0.24);
+    }
+
+    4% {
+      transform: rotate(-8deg) scale(1.16);
+      box-shadow: 0 1rem 1.7rem rgba(var(--member-accent-rgb), 0.32);
+    }
+
+    7% {
+      transform: rotate(-3deg) scale(0.95);
+      box-shadow: 0 0.55rem 1rem rgba(var(--member-accent-rgb), 0.2);
+    }
+
+    10% {
+      transform: rotate(-6deg) scale(1.08);
+      box-shadow: 0 0.85rem 1.45rem rgba(var(--member-accent-rgb), 0.28);
+    }
+
+    13% {
+      transform: rotate(-5deg) scale(0.99);
+      box-shadow: 0 0.65rem 1.1rem rgba(var(--member-accent-rgb), 0.22);
+    }
+  }
+
+  .studio-team-page .panebarcos-member-card__stage {
+    position: relative;
+    min-height: clamp(13rem, 18vw, 15rem);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 35%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.26) 100%);
+  }
+
+  .studio-team-page .panebarcos-member-card__stage::before,
+  .studio-team-page .panebarcos-member-card__stage::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .studio-team-page .panebarcos-member-card__stage::before {
+    width: 7rem;
+    height: 7rem;
+    top: -1.4rem;
+    left: -1.4rem;
+    background: rgba(255, 255, 255, 0.34);
+  }
+
+  .studio-team-page .panebarcos-member-card__stage::after {
+    width: 4.5rem;
+    height: 4.5rem;
+    right: -1rem;
+    bottom: -1rem;
+    background: rgba(var(--member-accent-rgb), 0.18);
+  }
+
+  .studio-team-page .panebarcos-member-card__stage img {
+    position: relative;
+    z-index: 1;
+    width: min(72%, 11rem);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0.9rem 1.4rem rgba(0, 0, 0, 0.14));
+  }
+
+  .studio-team-page .panebarcos-member-card__body h3 {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.65rem, 2.2vw, 2rem);
+    line-height: 0.98;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .studio-team-page .panebarcos-member-card__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:
+      clamp(0.4rem, 1vw, 0.7rem)
+      clamp(5.8rem, 10vw, 7.2rem)
+      clamp(0.2rem, 0.6vw, 0.3rem)
+      0;
+  }
+
+  .studio-team-page .panebarcos-member-card__body p {
+    margin: 0;
+  }
+
+  .studio-team-page .panebarcos-group-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 2rem;
+    padding: clamp(1rem, 2.2vw, 1.25rem);
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 34%),
+      linear-gradient(180deg, #fff5dc 0%, #ffe6b8 100%);
+    box-shadow:
+      0 1.15rem 2.8rem rgba(15, 23, 42, 0.09),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+    transition:
+      transform 0.24s ease,
+      box-shadow 0.24s ease;
+  }
+
+  .studio-team-page .panebarcos-group-card--network {
+    background:
+      radial-gradient(circle at top left, rgba(50, 173, 196, 0.22) 0%, rgba(50, 173, 196, 0) 30%),
+      linear-gradient(180deg, #121821 0%, #090b0f 100%);
+  }
+
+  .studio-team-page .panebarcos-group-card:hover,
+  .studio-team-page .panebarcos-group-card:focus-within {
+    transform: translateY(-0.32rem);
+    box-shadow:
+      0 1.45rem 3rem rgba(15, 23, 42, 0.14),
+      inset 0 0 0 1px rgba(var(--bs-primary-rgb), 0.08);
+  }
+
+  .studio-team-page .panebarcos-group-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .studio-team-page .panebarcos-group-card__eyebrow {
+    margin: 0;
+    color: rgba(var(--bs-primary-rgb), 0.96);
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .studio-team-page .panebarcos-group-card__sticker {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.35rem;
+    padding: 0.45rem 1rem;
+    border-radius: 1rem;
+    background: #33a9df;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+    transform: rotate(-5deg);
+    box-shadow: 0 0.7rem 1.2rem rgba(51, 169, 223, 0.24);
+  }
+
+  .studio-team-page .panebarcos-group-card--network .panebarcos-group-card__sticker {
+    background: #ffb629;
+    color: #11151d;
+    box-shadow: 0 0.7rem 1.2rem rgba(255, 182, 41, 0.24);
+  }
+
+  .studio-team-page .panebarcos-group-card__stage {
+    position: relative;
+    min-height: clamp(14rem, 28vw, 18rem);
+    display: grid;
+    place-items: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 1.6rem;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 35%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.26) 100%);
+  }
+
+  .studio-team-page .panebarcos-group-card__stage::before,
+  .studio-team-page .panebarcos-group-card__stage::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .studio-team-page .panebarcos-group-card__stage::before {
+    width: clamp(9rem, 18vw, 12rem);
+    height: clamp(9rem, 18vw, 12rem);
+    top: -2rem;
+    left: -2rem;
+    background: rgba(255, 255, 255, 0.34);
+  }
+
+  .studio-team-page .panebarcos-group-card__stage::after {
+    width: clamp(6rem, 14vw, 8rem);
+    height: clamp(6rem, 14vw, 8rem);
+    right: -1.4rem;
+    bottom: -1.4rem;
+    background: rgba(var(--bs-primary-rgb), 0.18);
+  }
+
+  .studio-team-page .panebarcos-group-card--network .panebarcos-group-card__stage {
+    background:
+      radial-gradient(circle at 50% 20%, rgba(51, 169, 223, 0.24) 0%, rgba(51, 169, 223, 0) 38%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.12) 100%);
+  }
+
+  .studio-team-page .panebarcos-group-card__stage > img {
+    position: relative;
+    z-index: 1;
+    width: min(82%, 23rem);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1rem 1.5rem rgba(0, 0, 0, 0.16));
+  }
+
+  .studio-team-page .panebarcos-group-card--network .panebarcos-group-card__stage > img {
+    width: min(88%, 25rem);
+    filter: drop-shadow(0 1rem 1.8rem rgba(0, 0, 0, 0.28));
+  }
+
+  .studio-team-page .panebarcos-group-card__avatars {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .studio-team-page .panebarcos-group-card__avatar {
+    width: clamp(2.75rem, 5vw, 3.5rem);
+    height: clamp(2.75rem, 5vw, 3.5rem);
+    margin-left: -0.4rem;
+    border: 3px solid rgba(255, 255, 255, 0.96);
+    border-radius: 999px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 0.6rem 1.1rem rgba(15, 23, 42, 0.16);
+  }
+
+  .studio-team-page .panebarcos-group-card__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .studio-team-page .panebarcos-group-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: clamp(0.2rem, 0.8vw, 0.4rem) clamp(0.2rem, 0.8vw, 0.4rem) 0;
+  }
+
+  .studio-team-page .panebarcos-group-card h3 {
+    margin: 0 0 0.85rem;
+    font-size: clamp(2rem, 3vw, 2.45rem);
+    line-height: 1.02;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .studio-team-page .panebarcos-group-card p {
+    margin-bottom: 1rem;
+  }
+
+  .studio-team-page .panebarcos-group-card--network h3,
+  .studio-team-page .panebarcos-group-card--network p {
+    color: #fff;
+  }
+
+  .studio-team-page .panebarcos-group-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .studio-team-page .panebarcos-group-card__tags li {
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1;
+    transform: rotate(-2deg);
+  }
+
+  .studio-team-page .panebarcos-group-card__tags li:nth-child(2n) {
+    transform: rotate(2deg);
+  }
+
+  .studio-team-page .panebarcos-group-card--network .panebarcos-group-card__tags li {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
+
+  .studio-team-page .panebarcos-network-card__body {
+    padding-right: clamp(0.2rem, 0.8vw, 0.7rem);
+  }
+
+  .studio-team-page .panebarcos-network-card__stage {
+    min-height: clamp(15rem, 26vw, 19rem);
+    margin-bottom: 0;
+  }
+
+  .studio-team-page [data-panebarcos-reveal] {
+    opacity: 0;
+    transform: translateX(-2.8rem) rotate(-1.8deg) scale(0.97);
+    transition:
+      opacity 0.62s ease,
+      transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.24s ease;
+    transition-delay: var(--panebarcos-reveal-delay, 0ms);
+  }
+
+  .studio-team-page [data-panebarcos-reveal] .panebarcos-member-card__sticker,
+  .studio-team-page [data-panebarcos-reveal] .panebarcos-group-card__sticker {
+    opacity: 0;
+    transform: translateY(-0.8rem) rotate(-10deg) scale(0.88);
+    transition:
+      opacity 0.34s ease,
+      transform 0.54s cubic-bezier(0.2, 0.9, 0.2, 1.1);
+    transition-delay: calc(var(--panebarcos-reveal-delay, 0ms) + 140ms);
+  }
+
+  .studio-team-page [data-panebarcos-reveal].is-in-view {
+    opacity: 1;
+    transform: translateX(0) rotate(0) scale(1);
+  }
+
+  .studio-team-page [data-panebarcos-reveal].is-in-view .panebarcos-member-card__sticker,
+  .studio-team-page [data-panebarcos-reveal].is-in-view .panebarcos-group-card__sticker {
+    opacity: 1;
+    transform: translateY(0) rotate(-5deg) scale(1);
+    animation-play-state: running;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .studio-team-page .panebarcos-member-card__sticker {
+      animation: none;
+    }
+
+    .studio-team-page [data-panebarcos-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: box-shadow 0.24s ease;
+    }
+
+    .studio-team-page [data-panebarcos-reveal] .panebarcos-member-card__sticker,
+    .studio-team-page [data-panebarcos-reveal] .panebarcos-group-card__sticker {
+      opacity: 1;
+      transform: rotate(-5deg);
+      transition: none;
+    }
+  }
+
   .story-mutant-page .story-mutant-media {
     background: var(--bg);
     --section-space-top: clamp(5.6rem, 10vw, 7.4rem);
@@ -1985,6 +2498,10 @@ body.inner-page {
       width: min(100%, 20rem);
     }
 
+    .studio-team-page .panebarcos-page-intro__art img {
+      width: min(100%, 20rem);
+    }
+
     .story-mutant-page .story-mutant-intro {
       padding-top: clamp(4.2rem, 7vw, 5.4rem);
     }
@@ -2135,6 +2652,88 @@ body.inner-page {
 
     .story-mutant-page .story-mutant-intro-art img {
       width: min(100%, 18rem);
+    }
+
+    .studio-team-page .panebarcos-page-intro__art img {
+      width: min(100%, 17rem);
+    }
+
+    .studio-team-page .panebarcos-family-block__head {
+      margin-bottom: 1.25rem;
+    }
+
+    .studio-team-page .panebarcos-member-card {
+      border-radius: 1.65rem;
+      padding: 0.85rem;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .studio-team-page .panebarcos-member-card__sticker {
+      top: 0.8rem;
+      right: 0.8rem;
+      min-height: 2rem;
+      padding-inline: 0.75rem;
+      font-size: 0.72rem;
+    }
+
+    .studio-team-page .panebarcos-member-card__stage {
+      min-height: 12rem;
+      border-radius: 1.2rem;
+    }
+
+    .studio-team-page .panebarcos-member-card__stage img {
+      width: min(72%, 9rem);
+    }
+
+    .studio-team-page .panebarcos-member-card__body h3 {
+      font-size: clamp(1.5rem, 7vw, 1.85rem);
+    }
+
+    .studio-team-page .panebarcos-member-card__body {
+      padding: 0.15rem 0 0;
+    }
+
+    .studio-team-page .panebarcos-group-card {
+      border-radius: 1.65rem;
+      padding: 0.85rem;
+    }
+
+    .studio-team-page .panebarcos-group-card__header {
+      gap: 0.65rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .studio-team-page .panebarcos-group-card__sticker {
+      min-height: 2.05rem;
+      padding-inline: 0.75rem;
+      font-size: 0.74rem;
+    }
+
+    .studio-team-page .panebarcos-group-card__stage {
+      min-height: 12.5rem;
+      border-radius: 1.35rem;
+    }
+
+    .studio-team-page .panebarcos-group-card__avatar {
+      width: 2.45rem;
+      height: 2.45rem;
+    }
+
+    .studio-team-page .panebarcos-group-card__body {
+      padding-inline: $spacer;
+    }
+
+    .studio-team-page .panebarcos-group-card h3 {
+      font-size: clamp(1.8rem, 8vw, 2.15rem);
+    }
+
+    .studio-team-page .panebarcos-group-card__tags {
+      gap: 0.55rem;
+    }
+
+    .studio-team-page .panebarcos-group-card__tags li {
+      font-size: 0.84rem;
     }
 
     .story-mutant-page .story-mutant-intro {
