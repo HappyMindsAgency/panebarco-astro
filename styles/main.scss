@@ -534,7 +534,8 @@ h2 {
     }
 
     .menu-v2-item {
-      width: 100%;
+      width: fit-content;
+      max-width: 100%;
       position: relative;
     }
 
@@ -556,9 +557,8 @@ h2 {
     }
 
     .menu-v2-row {
-      display: flex;
+      display: inline-flex;
       align-items: baseline;
-      justify-content: space-between;
       gap: 1rem;
     }
 
@@ -2322,7 +2322,9 @@ h2 {
       }
 
       .menu-v2-row {
+        display: flex;
         align-items: center;
+        justify-content: space-between;
       }
 
       .menu-v2-link {

@@ -22,6 +22,8 @@
     const panelSections = Array.from(overlay.querySelectorAll("[data-panel-for]"));
     const toggles = Array.from(overlay.querySelectorAll(".menu-v2-toggle"));
     const mobileLinks = Array.from(overlay.querySelectorAll(".menu-v2-mobile-submenu-link, .menu-v2-panel-link, .menu-v2-panel-title"));
+    const DESKTOP_HOVER_INTENT_MS = 120;
+    let hoverIntentTimer = null;
 
     function isMobileViewport() {
       return window.matchMedia("(max-width: 767.98px)").matches;
@@ -80,6 +82,21 @@
       overlay.classList.toggle("has-panel-content", hasMatchingPanel);
     }
 
+    function clearHoverIntentTimer() {
+      if (hoverIntentTimer) {
+        window.clearTimeout(hoverIntentTimer);
+        hoverIntentTimer = null;
+      }
+    }
+
+    function scheduleDesktopPanelActivation(id) {
+      clearHoverIntentTimer();
+      hoverIntentTimer = window.setTimeout(function () {
+        setActivePanel(id);
+        hoverIntentTimer = null;
+      }, DESKTOP_HOVER_INTENT_MS);
+    }
+
     function getDefaultDesktopItemId() {
       const firstWithChildren = items.find(function (item) {
         return item.dataset.hasChildren === "true";
@@ -98,6 +115,7 @@
     }
 
     function closeMenu() {
+      clearHoverIntentTimer();
       collapseMobileSubmenus();
       overlay.classList.remove("is-open");
       overlay.setAttribute("aria-hidden", "true");
@@ -131,22 +149,16 @@
 
       link.addEventListener("mouseenter", function () {
         if (isMobileViewport()) return;
-        setActivePanel(id);
+        scheduleDesktopPanelActivation(id);
       }, { signal });
 
       link.addEventListener("focus", function () {
         if (isMobileViewport()) return;
+        clearHoverIntentTimer();
         setActivePanel(id);
       }, { signal });
 
       link.addEventListener("click", closeMenu, { signal });
-    });
-
-    items.forEach(function (item) {
-      item.addEventListener("mouseenter", function () {
-        if (isMobileViewport()) return;
-        setActivePanel(item.dataset.menuItem);
-      }, { signal });
     });
 
     toggles.forEach(function (toggle) {
@@ -174,6 +186,7 @@
     });
 
     window.addEventListener("resize", function () {
+      clearHoverIntentTimer();
       if (overlay.classList.contains("is-open")) {
         setMenuCompensation();
         if (!isMobileViewport()) {
@@ -192,6 +205,7 @@
     window.addEventListener("scroll", updateScrolledHeaderState, { passive: true, signal });
 
     cleanupMenu = function () {
+      clearHoverIntentTimer();
       controller.abort();
     };
   }
