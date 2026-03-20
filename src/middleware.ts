@@ -1,4 +1,5 @@
-import { defineMiddleware } from "astro:middleware";
+import type { MiddlewareHandler } from "astro";
+import { redirects } from "./lib/redirects.js";
 
 const MAINTENANCE_MODE_ENABLED = true;
 const MAINTENANCE_BYPASS_QUERY_PARAM = "bypass";
@@ -7,13 +8,14 @@ const MAINTENANCE_BYPASS_COOKIE = "maintenance_bypass";
 const MAINTENANCE_BYPASS_DURATION_SECONDS = 60 * 60 * 12;
 const MAINTENANCE_PAGE_PATH = "/maintenance";
 
-export const onRequest = defineMiddleware((context, next) => {
+export const onRequest: MiddlewareHandler = (context, next) => {
   const { url, cookies, redirect } = context;
   const { pathname, searchParams } = url;
   const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
   const isApiRoute =
     normalizedPathname === "/api" || normalizedPathname.startsWith("/api/");
   const isMaintenancePage = normalizedPathname === MAINTENANCE_PAGE_PATH;
+  const redirectTarget = redirects[normalizedPathname as keyof typeof redirects];
 
   if (isApiRoute) {
     return next();
@@ -40,18 +42,24 @@ export const onRequest = defineMiddleware((context, next) => {
   }
 
   if (!MAINTENANCE_MODE_ENABLED) {
+    if (redirectTarget) {
+      return redirect(redirectTarget, 301);
+    }
+
     return next();
   }
 
-  if (isMaintenancePage) {
-    return next();
+  if (!isMaintenancePage) {
+    const hasBypassCookie = cookies.get(MAINTENANCE_BYPASS_COOKIE)?.value === "true";
+
+    if (!hasBypassCookie) {
+      return redirect(MAINTENANCE_PAGE_PATH, 302);
+    }
   }
 
-  const hasBypassCookie = cookies.get(MAINTENANCE_BYPASS_COOKIE)?.value === "true";
-
-  if (hasBypassCookie) {
-    return next();
+  if (redirectTarget) {
+    return redirect(redirectTarget, 301);
   }
 
-  return redirect(MAINTENANCE_PAGE_PATH, 302);
-});
+  return next();
+};
