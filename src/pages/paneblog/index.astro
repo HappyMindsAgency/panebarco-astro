@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import HeroStyHome from "../../components/HeroStyHome.astro";
+import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
@@ -108,93 +108,25 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
 ---
 
 <Layout
-  title="Paneblog - Panebarco"
+  title="Originals - Panebarco"
   useInnerStyles={true}
   lang={lang}
-  headerProps={{ darkmode: false, containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
+  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
-  <main class="studio-page paneblog-page">
-    <HeroStyHome
-      id="paneblog-hero"
-      className="hero-wrap"
-      videoSrc="/images/1021768637.mp4"
-      title="PANEBLOG"
-      subtitle="Pensieri che ci frullano in testa"
-      showSlider={false}
-      showCta={false}
+  <main class="studio-page originals-page">
+    <HeroStyStudio
+      backgroundVideoSrc="/images/1021768637.mp4"
+      bgWord="PRODUZIONI INDIPENDENTI"
+      title="ORIGINALS"
+      subtitle="Format originali sviluppati dentro la nostra casa creativa"
+      sideImageSrc="/images/lo-studio-panebarco-teams.png"
+      sideImageAlt="Team Panebarco"
+      className="hero-sty-studio page-hero page-hero--studio"
+      showSideImage={false}
     />
 
-    <section class="section-space section-space--soft paneblog-diary" data-paneblog-slider>
-      <div class="container">
-        <div class="row justify-content-center text-center mb-4 mb-lg-5">
-          <div class="col-12 col-xl-8">
-            <h2 class="page-title-uniform">Diario di viaggio</h2>
-            <p class="paneblog-section-intro mb-0">
-              Un cursore sui contenuti piu vicini al processo: tappe, note di sviluppo e aggiornamenti rapidi dal laboratorio.
-            </p>
-          </div>
-        </div>
 
-        <div class="row g-4 g-xl-5 align-items-stretch">
-          <div class="col-12 col-xl-8">
-            <article class="paneblog-diary-card h-100">
-              <div class="row g-0 h-100">
-                <div class="col-12 col-lg-6">
-                  <div class="ratio ratio-4x3 paneblog-diary-card__media">
-                    <img src={diarySlides[0].image} alt={diarySlides[0].headline} data-paneblog-slide-image />
-                  </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                  <div class="paneblog-diary-card__body">
-                    <p class="paneblog-diary-card__meta">
-                      <span data-paneblog-slide-date>{diarySlides[0].date}</span>
-                      <span class="paneblog-diary-card__dot" aria-hidden="true"></span>
-                      <span data-paneblog-slide-kicker>{diarySlides[0].title}</span>
-                    </p>
-                    <h3 data-paneblog-slide-title>{diarySlides[0].headline}</h3>
-                    <p data-paneblog-slide-summary>{diarySlides[0].summary}</p>
-                    <div class="paneblog-diary-card__actions">
-                      <a class="btn btn-cta btn-cta--blue btn-pill" href={diarySlides[0].href} data-paneblog-slide-link>
-                        {diarySlides[0].cta}
-                      </a>
-                      <div class="paneblog-diary-card__nav">
-                        <button type="button" class="paneblog-diary-card__arrow" aria-label="Slide precedente" data-paneblog-prev>
-                          <i class="bi bi-arrow-left"></i>
-                        </button>
-                        <button type="button" class="paneblog-diary-card__arrow" aria-label="Slide successiva" data-paneblog-next>
-                          <i class="bi bi-arrow-right"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="paneblog-diary-card__dots" aria-label="Seleziona una slide">
-                      {diarySlides.map((slide, index) => (
-                        <button
-                          type="button"
-                          class:list={["paneblog-diary-card__dot-button", index === 0 && "is-active"]}
-                          aria-label={`Vai a ${slide.headline}`}
-                          data-paneblog-dot={index}
-                        ></button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-12 col-xl-4">
-            <div class="paneblog-flash-stack h-100">
-              {flashNews.map((item) => (
-                <article class="paneblog-flash-card">
-                  <p class="paneblog-flash-card__label">{item.label}</p>
-                  <h3>{item.title}</h3>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+   
 
     <section class="section-space paneblog-articles" data-paneblog-root>
       <div class="container">

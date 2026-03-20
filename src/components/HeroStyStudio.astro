@@ -22,6 +22,7 @@ const {
 } = Astro.props;
 
 const hasSideImage = showSideImage && Boolean(sideImageSrc);
+const textColumnClass = hasSideImage ? "col-12 col-lg-7 col-xl-6" : "col-12";
 ---
 
 <section class:list={[className, hasSideImage && "hero-sty-studio--with-side-image"]}>
@@ -33,7 +34,7 @@ const hasSideImage = showSideImage && Boolean(sideImageSrc);
 
   <div class="container page-hero-content page-hero-content--studio">
     <div class="row g-4 g-lg-5 align-items-end">
-      <div class="col-12 col-lg-7 col-xl-6">
+      <div class={textColumnClass}>
         <div class="page-hero-text">
           {bgWord && <p class="page-hero-bgword">{bgWord}</p>}
           {title && <h1 class="page-hero-title">{title}</h1>}

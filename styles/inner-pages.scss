@@ -181,6 +181,7 @@ body.inner-page {
     margin-top: clamp(-2.1rem, -3vw, -1.1rem);
     transform: translate(clamp(0.2rem, 0.8vw, 0.8rem), clamp(-0.5rem, -1vw, -0.1rem));
     margin-bottom: clamp(-1.4rem, -2.4vw, -0.85rem);
+    white-space: nowrap;
   }
 
   .studio-page .page-hero--studio .page-hero-title {
@@ -197,7 +198,8 @@ body.inner-page {
     font-size: clamp(#{$font-size-lg * 1.5}, 2.7vw, #{$h3-font-size});
     font-weight: $font-weight-bolder;
     line-height: 1.14;
-    max-width: min(40rem, 54vw);
+    max-width: none;
+    white-space: nowrap;
   }
 
   .studio-page .page-hero--studio .page-hero-media {
@@ -4042,6 +4044,7 @@ body.inner-page {
     .studio-page .page-hero--studio .page-hero-subtitle {
       font-size: clamp(#{$font-size-lg * 1.35}, 6.4vw, #{$h4-font-size});
       max-width: none;
+      white-space: normal;
     }
 
     .studio-page .page-hero--studio {
@@ -4059,6 +4062,7 @@ body.inner-page {
       margin-top: clamp(-1.1rem, -2.8vw, -0.5rem);
       transform: translate(clamp(0.08rem, 0.7vw, 0.22rem), clamp(-0.22rem, -0.6vw, -0.04rem));
       margin-bottom: clamp(-0.8rem, -1.6vw, -0.4rem);
+      white-space: normal;
     }
 
     .studio-page .page-hero--studio .page-hero-title {

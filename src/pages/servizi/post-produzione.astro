@@ -51,6 +51,13 @@ const modeImageSets = {
     "/images/rendering-finale-01.jpg",
   ],
 } as const;
+
+const modeBubbleSets = {
+  Integrare: "/images/raccontare.png",
+  Trasformare: "/images/spiegare.png",
+  Rifinire: "/images/promuovere.png",
+  Potenziare: "/images/coinvolgere.png",
+} as const;
 ---
 
 <Layout
@@ -97,11 +104,22 @@ const modeImageSets = {
             <h2 class="page-title-uniform text-primary mb-5 text-lg-center">QUATTRO MODI DI INTERVENIRE.</h2>
             {communicationModes.map((mode, index) => {
               const scenes = modeImageSets[mode];
+              const bubble = modeBubbleSets[mode];
 
               return (
                 <article class:list={[index > 0 && "mt-5 mt-lg-6 pt-3 pt-lg-4", index === communicationModes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
                   <div class="commercial-mode-heading" data-commercial-mode-heading>
                     <h3 class="fw-bold text-body display-5 display-lg-4">{mode}</h3>
+                    {bubble && (
+                      <img
+                        class="commercial-mode-bubble"
+                        src={bubble}
+                        alt=""
+                        aria-hidden="true"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
                   </div>
                   <p>{modeDescriptions[mode]}</p>
 
