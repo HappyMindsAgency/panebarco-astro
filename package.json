@@ -1,19 +1,25 @@
 {
-  "name": "sbarabaus-astro",
+  "name": "panebarco-astro",
   "private": true,
   "type": "module",
   "version": "0.1.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "astro" : "astro"
   },
   "dependencies": {
+    "@strapi/client": "^1.6.1",
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/node": "^9.5.2",
+    "@astrojs/vercel": "^9.0.4",
     "astro": "^5.2.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3"
   },
   "devDependencies": {
+    "@astrojs/node": "^9.5.5",
     "sass": "^1.97.3"
   }
 }
