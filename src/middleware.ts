@@ -34,11 +34,10 @@ export const onRequest: MiddlewareHandler = (context, next) => {
     });
 
     searchParams.delete(MAINTENANCE_BYPASS_QUERY_PARAM);
+    const cleanSearch = searchParams.toString();
+    const cleanLocation = cleanSearch ? `${pathname}?${cleanSearch}` : pathname;
 
-    const cleanUrl = new URL(url);
-    cleanUrl.search = searchParams.toString();
-
-    return redirect(cleanUrl.toString(), 302);
+    return redirect(cleanLocation, 302);
   }
 
   if (!MAINTENANCE_MODE_ENABLED) {
