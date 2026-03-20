@@ -805,12 +805,13 @@ h2 {
       pointer-events: none;
     }
 
-    .hero-card > :not(.hero-bg-video):not(.chat-pop) {
+    .hero-card > :not(.hero-bg-video):not(.chat-pop):not(.chat-slider-pop) {
       position: relative;
       z-index: 2;
     }
 
-    .hero-card > .chat-pop {
+    .hero-card > .chat-pop,
+    .hero-card > .chat-slider-pop {
       position: absolute;
       z-index: 3;
       left: auto;
@@ -1792,7 +1793,6 @@ h2 {
 
     .portfolio-container .section-title {
       margin-bottom: clamp(2rem, 4.2vw, 3rem);
-      font-size: clamp(2.25rem, 6.2vw, 4rem);
     }
 
     .portfolio-grid {

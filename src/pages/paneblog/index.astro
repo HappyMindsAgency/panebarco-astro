@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import ChatPopSlider from "../../components/ChatPopSlider.astro";
+import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import { buildPath } from "../../i18n/routing";
 
@@ -50,6 +52,30 @@ const flashNews = [
   {
     label: "Dal laboratorio",
     title: "In arrivo un focus sui workflow usati tra storyboard, animatic e previs.",
+  },
+] as const;
+
+const diaryChatMessages = [
+  {
+    date: "18/03/2026",
+    character: "Maya",
+    avatar: "/images/teams-avatar-che-fate-01.png",
+    title: "Flash dal diario",
+    text: "Oggi abbiamo salvato tre appunti utili da una reference trovata quasi per caso.",
+  },
+  {
+    date: "16/03/2026",
+    character: "Luca",
+    avatar: "/images/teams-avatar-che-fate-02.png",
+    title: "Nota di produzione",
+    text: "Abbiamo rimesso in fila timing, tono e materiali per capire cosa tenere vivo nel racconto.",
+  },
+  {
+    date: "12/03/2026",
+    character: "Nora",
+    avatar: "/images/teams-avatar-che-fate-03.png",
+    title: "Dietro le quinte",
+    text: "Una piccola deviazione di processo ci ha aperto una strada piu interessante per il progetto.",
   },
 ] as const;
 
@@ -113,7 +139,7 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
   lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
-  <main class="studio-page originals-page">
+  <main class="studio-page originals-page paneblog-page">
     <HeroStyStudio
       backgroundVideoSrc="/images/1021768637.mp4"
       bgWord="PRODUZIONI INDIPENDENTI"
@@ -130,9 +156,36 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
 
     <section class="section-space paneblog-articles" data-paneblog-root>
       <div class="container">
-        <div class="row justify-content-center text-center mb-3 mb-lg-4">
-          <div class="col-12 col-xl-8">
-            <h2 class="page-title-uniform">Lista articoli</h2>
+        <div class="row justify-content-center text-center mb-4 mb-lg-5">
+          <div class="col-12">
+            <h2 id="paneblogMindTitle" class="section-title section-title-reveal paneblog-mind-title" data-paneblog-mind-title>
+              <span class="section-title-text">Diario di viaggio</span>
+              <span class="paneblog-mind-title__balloons" aria-hidden="true">
+                <span class="paneblog-mind-bubble paneblog-mind-bubble--green">Pensieri</span>
+                <span class="paneblog-mind-bubble paneblog-mind-bubble--red">Che ci frullano in testa</span>
+              </span>
+            </h2>
+            <p class="paneblog-mind-subtitle mt-4">
+              Un luogo piu editoriale del sito: flash news, dietro le quinte, note di produzione e storie raccolte lungo il
+              viaggio
+            </p>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mb-4 mb-lg-5">
+          <div class="col-12">
+            <ChatPopSlider
+              variant="wide"
+              className="paneblog-chat-pop"
+              ariaLabel="Flash dal diario"
+              messages={diaryChatMessages}
+            />
+          </div>
+        </div>
+
+        <div class="row justify-content-center text-center mb-3 mb-lg-4 mt-5">
+          <div class="col-12 col-xl-8 mt-md-5">
+            <h2 class="page-title-uniform mt-5">Lista articoli</h2>
           </div>
         </div>
 
@@ -175,50 +228,59 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
       </div>
     </section>
 
-    <section class="section-space section-space--tight paneblog-newsletter">
-      <div class="container">
-        <div class="paneblog-newsletter-card">
-          <div class="row g-4 align-items-center">
-            <div class="col-12 col-lg-7">
-              <div class="paneblog-newsletter-copy">
-                <h2 class="paneblog-newsletter-title">
-                  ISCRIVITI ALLA <br />
-                  <span
-                    id="newsletter-typing-text"
-                    class="paneblog-newsletter-title__accent typing-text"
-                    data-words="newsletter"
-                    aria-live="polite"
-                  ></span>
-                </h2>
-                <p>
-                  Una selezione essenziale di novita, work in progress e appunti dal laboratorio, pensata per chi vuole seguire
-                  i progetti mentre stanno ancora prendendo forma.
-                </p>
-                <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Iscriviti ora</a>
-              </div>
-            </div>
-            <div class="col-12 col-lg-5">
-              <div class="paneblog-newsletter-art">
-                <div class="paneblog-newsletter-stack" aria-hidden="true">
-                  <img
-                    class="paneblog-newsletter-figure"
-                    src="/images/panebarcos_skecth-team_light.png"
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="container mt-5 mb-5">
+        <ContactCtaBanner
+          kicker="Vuoi ricevere gli aggiornamenti?"
+          title="ISCRIVITI ALLA NEWSLETTER."
+        />
       </div>
-    </section>
   </main>
 
   <script is:inline define:vars={{ diarySlides }}>
     (function () {
       function initPaneblogPage() {
+        (function setupMindTitleReveal() {
+          var revealTitles = document.querySelectorAll("[data-paneblog-mind-title]");
+          if (!revealTitles.length) return;
+
+          if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            revealTitles.forEach(function (title) {
+              title.classList.add("is-in-view");
+            });
+            return;
+          }
+
+          var lastScrollY = window.scrollY;
+          var observer = new IntersectionObserver(
+            function (entries) {
+              var currentScrollY = window.scrollY;
+              var isScrollingUp = currentScrollY < lastScrollY;
+              lastScrollY = currentScrollY;
+
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-in-view");
+                  return;
+                }
+
+                if (isScrollingUp) {
+                  entry.target.classList.remove("is-in-view");
+                }
+              });
+            },
+            {
+              threshold: 0.01,
+              rootMargin: "-35% 0px -35% 0px",
+            }
+          );
+
+          revealTitles.forEach(function (title) {
+            if (title.dataset.revealBound === "true") return;
+            title.dataset.revealBound = "true";
+            observer.observe(title);
+          });
+        })();
+
         (function setupNewsletterTyping() {
           var typingText = document.getElementById("newsletter-typing-text");
           if (!typingText || typingText.dataset.bound === "true") return;

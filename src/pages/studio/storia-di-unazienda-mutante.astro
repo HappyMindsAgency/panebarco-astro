@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import OscarCtaSection from "../../components/OscarCtaSection.astro";
+import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
 import { buildPath } from "../../i18n/routing";
 
@@ -222,14 +222,14 @@ const mediaGallery = {
       </div>
     </section>
 
-    <OscarCtaSection
-      heading="Chi ha guidato tutte queste mutazioni?"
-      highlight="CONOSCI I PANEBARCOS"
-      body="Dietro ogni passaggio di questa storia c'e una famiglia creativa che ha continuato a cambiare forma senza perdere il proprio modo di lavorare."
-      href={buildPath("studioTeam", lang)}
-      buttonLabel="Conosci i Panebarcos"
-    />
-  </main>
+  <section class="section-space section-space--tight mt-4 mt-md-5 mt-lg-5 pt-2 pt-md-3 pt-lg-4">
+      <div class="container">
+        <ContactCtaBanner
+          kicker="Hai un progetto in mente?"
+          title="LO ANIMIAMO NOI."
+        />
+      </div>
+    </section>
 
   <script type="module" src={studioPageScriptUrl}></script>
 </Layout>

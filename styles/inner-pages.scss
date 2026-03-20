@@ -2061,7 +2061,7 @@ body.inner-page {
   }
 
   .originals-page .portfolio-section-heading {
-    text-align: left;
+    text-align: center;
   }
 
   .portfolio-page .portfolio-section-heading .page-title-uniform,
@@ -2072,7 +2072,7 @@ body.inner-page {
   }
 
   .originals-page .portfolio-section-intro {
-    margin-inline: 0;
+    margin-inline: auto;
     max-width: 60ch;
   }
 
@@ -2224,7 +2224,7 @@ body.inner-page {
   }
 
   .extras-page .extras-mind-title .section-title-text {
-    font-size: clamp(2.8rem, 5.6vw, 5.1rem);
+    font-size: inherit;
     line-height: 0.92;
     letter-spacing: -0.035em;
     text-transform: none;
@@ -2337,7 +2337,7 @@ body.inner-page {
     }
 
     .extras-page .extras-mind-title .section-title-text {
-      font-size: clamp(2.5rem, 7.8vw, 4rem);
+      font-size: inherit;
       line-height: 0.95;
     }
 
@@ -2368,7 +2368,7 @@ body.inner-page {
     }
 
     .extras-page .extras-mind-title .section-title-text {
-      font-size: clamp(2.15rem, 10.5vw, 3rem);
+      font-size: inherit;
       line-height: 0.98;
     }
 
@@ -3631,6 +3631,191 @@ body.inner-page {
 
   .paneblog-page .paneblog-articles .blog-card {
     width: 100%;
+  }
+
+  .paneblog-articles .paneblog-chat-pop {
+    --chat-width: min(100%, 92rem);
+    --chat-min-height: clamp(14.5rem, 20vw, 18rem);
+    --chat-rotate: 3.2deg;
+  }
+
+  .paneblog-articles .paneblog-mind-title {
+    width: min(100%, 72rem);
+    max-width: min(100%, 72rem);
+    margin: 0 auto;
+    padding-top: clamp(5.2rem, 8vw, 6.4rem);
+    padding-bottom: clamp(2rem, 3.2vw, 2.6rem);
+    text-align: center;
+  }
+
+  .paneblog-articles .paneblog-mind-title .section-title-text {
+    font-size: inherit;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    text-transform: none;
+    color: var(--ink);
+  }
+
+  .paneblog-articles .paneblog-mind-subtitle {
+    width: min(100%, 58rem);
+    margin: 0.35rem auto 0;
+    font-size: clamp(1rem, 0.92rem + 0.35vw, 1.2rem);
+    line-height: 1.5;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .paneblog-articles .paneblog-mind-title__balloons {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: min(100%, 32rem);
+    height: 100%;
+    pointer-events: none;
+    transform: translateX(-50%);
+    z-index: 3;
+  }
+
+  .paneblog-articles .paneblog-mind-bubble {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.9rem;
+    padding: 0.48rem 0.95rem 0.42rem;
+    font-family: "Margarine", cursive;
+    font-size: clamp(0.92rem, 0.82rem + 0.45vw, 1.45rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    white-space: nowrap;
+    box-shadow: 0 0.6rem 1.3rem rgba(15, 23, 42, 0.16);
+    opacity: 0;
+    transition:
+      opacity 0.55s ease,
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .paneblog-articles .paneblog-mind-bubble--green {
+    left: 30%;
+    top: clamp(2rem, 4.8vw, 3.6rem);
+    z-index: 3;
+    background: #38a081;
+    transform: translate(-50%, 0.2rem) rotate(-7deg) scale(0.86);
+  }
+
+  .paneblog-articles .paneblog-mind-bubble--green::after,
+  .paneblog-articles .paneblog-mind-bubble--red::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .paneblog-articles .paneblog-mind-bubble--green::after {
+    left: 1.15rem;
+    bottom: -0.52rem;
+    border-width: 0.65rem 0.4rem 0 0;
+    border-color: #38a081 transparent transparent transparent;
+  }
+
+  .paneblog-articles .paneblog-mind-bubble--red {
+    left: 54%;
+    bottom: clamp(-0.45rem, 0.3vw, 0.1rem);
+    z-index: 4;
+    background: #bf445c;
+    transform: translate(-50%, 0.3rem) rotate(-7deg) scale(0.86);
+  }
+
+  .paneblog-articles .paneblog-mind-bubble--red::after {
+    right: 1.15rem;
+    bottom: -0.52rem;
+    border-width: 0.65rem 0 0 0.4rem;
+    border-color: #bf445c transparent transparent transparent;
+  }
+
+  .paneblog-articles .paneblog-mind-title.is-in-view .paneblog-mind-bubble--green {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(-7deg) scale(1);
+  }
+
+  .paneblog-articles .paneblog-mind-title.is-in-view .paneblog-mind-bubble--red {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(-7deg) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paneblog-articles .paneblog-mind-bubble {
+      opacity: 1;
+    }
+
+    .paneblog-articles .paneblog-mind-bubble--green {
+      transform: translate(-50%, 0) rotate(-7deg) scale(1);
+    }
+
+    .paneblog-articles .paneblog-mind-bubble--red {
+      transform: translate(-50%, 0) rotate(-7deg) scale(1);
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .paneblog-articles .paneblog-mind-title {
+      padding-top: clamp(5.4rem, 12vw, 6.6rem);
+      padding-bottom: 2rem;
+    }
+
+    .paneblog-articles .paneblog-mind-title .section-title-text {
+      line-height: 0.95;
+    }
+
+    .paneblog-articles .paneblog-mind-title__balloons {
+      width: min(100%, 26rem);
+    }
+
+    .paneblog-articles .paneblog-mind-subtitle {
+      width: min(100%, 46rem);
+    }
+
+    .paneblog-articles .paneblog-mind-bubble {
+      font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      padding: 0.42rem 0.82rem 0.36rem;
+    }
+
+    .paneblog-articles .paneblog-mind-bubble--green {
+      left: 31%;
+      top: 2.4rem;
+    }
+
+    .paneblog-articles .paneblog-mind-bubble--red {
+      left: 53%;
+      bottom: -0.3rem;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .paneblog-articles .paneblog-mind-title {
+      padding-top: 5.8rem;
+      padding-bottom: 1.8rem;
+    }
+
+    .paneblog-articles .paneblog-mind-title .section-title-text {
+      line-height: 0.98;
+    }
+
+    .paneblog-articles .paneblog-mind-title__balloons {
+      width: min(100%, 20rem);
+    }
+
+    .paneblog-articles .paneblog-mind-bubble {
+      font-size: 0.92rem;
+    }
+
+    .paneblog-articles .paneblog-mind-subtitle {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
   }
 
   .paneblog-page .paneblog-newsletter-card {

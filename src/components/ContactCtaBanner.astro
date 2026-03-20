@@ -42,12 +42,12 @@ const {
     min-height: clamp(13rem, 24vw, 19rem);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding:
       clamp(1.2rem, 2.4vw, 2.1rem)
       clamp(1.2rem, 2.6vw, 2.2rem)
       clamp(1.2rem, 2.4vw, 2.1rem)
-      clamp(10.8rem, 26vw, 18rem);
+      calc(clamp(1.2rem, 4.2vw, 4.8rem) + clamp(11.5rem, 24vw, 18.5rem) + clamp(1.8rem, 3.2vw, 3rem));
     overflow: visible;
   }
 
@@ -65,15 +65,21 @@ const {
   .contact-cta-copy {
     position: relative;
     z-index: 1;
-    width: clamp(21rem, 38vw, 36rem);
+    width: 100%;
+    max-width: clamp(26rem, 54vw, 64rem);
+    margin-left: clamp(1rem, 2vw, 2.2rem);
+    min-width: 0;
+  }
+
+  .contact-cta-kicker,
+  .contact-cta-title {
     max-width: 100%;
   }
 
   @media (max-width: 991.98px) {
     .contact-cta-card {
       min-height: clamp(10.8rem, 31vw, 14.4rem);
-      padding-left: clamp(8.8rem, 30vw, 13.8rem);
-      justify-content: center;
+      padding-left: calc(clamp(0.9rem, 2.6vw, 2.4rem) + clamp(8.8rem, 27vw, 13rem) + clamp(1.2rem, 2.4vw, 2rem));
     }
 
     .contact-cta-figure {
@@ -82,15 +88,15 @@ const {
     }
 
     .contact-cta-copy {
-      width: clamp(17rem, 46vw, 28rem);
+      max-width: clamp(18rem, 48vw, 34rem);
+      margin-left: clamp(0.8rem, 1.6vw, 1.2rem);
     }
   }
 
   @media (max-width: 767.98px) {
     .contact-cta-card {
       min-height: clamp(6.8rem, 25vw, 8.5rem);
-      padding: 0.8rem 1rem 0.8rem clamp(5.2rem, 24vw, 7.2rem);
-      justify-content: center;
+      padding: 0.8rem 1rem 0.8rem calc(clamp(0.35rem, 1.5vw, 0.9rem) + clamp(4.9rem, 18vw, 6.4rem) + 1.15rem);
     }
 
     .contact-cta-figure {
@@ -99,7 +105,9 @@ const {
     }
 
     .contact-cta-copy {
-      width: auto;
+      width: 100%;
+      max-width: none;
+      margin-left: 0.7rem;
     }
   }
 </style>

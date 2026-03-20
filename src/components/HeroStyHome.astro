@@ -1,4 +1,6 @@
 ---
+import ChatPopSlider from "./ChatPopSlider.astro";
+
 interface Props {
   showSlider?: boolean;
   className?: string;
@@ -98,61 +100,7 @@ const hasCta = normalizeBool(showCta, true);
             )}
           </div>
           {hasSlider && (
-            <div class="chat-pop" role="region" aria-label="Anteprima chat">
-              <div class="chat-header">
-                <span id="chatSliderDate" class="chat-date">
-                  15/01/2026
-                </span>
-                <div class="chat-fixed">
-                  <span class="chat-chip">che fate?</span>
-                  <span class="chat-avatar chat-avatar--fixed">
-                    <img
-                      src="/images/avatar-che-fate-00.png"
-                      alt="Avatar fisso"
-                    />
-                  </span>
-                </div>
-              </div>
-              <div class="chat-message-row">
-                <span class="chat-avatar chat-avatar--slider">
-                  <img
-                    id="chatSliderAvatarImg"
-                    src="https://picsum.photos/seed/chat-slider-1/140/140"
-                    alt="Avatar personaggio"
-                  />
-                </span>
-                <div class="chat-body">
-                  <strong id="chatSliderTitle">Titolo del messaggio</strong>
-                  <p id="chatSliderText">
-                    Aenean vel tortor aliquet, lobortis ligula a, tempus metus.
-                    Vestibulum aliquet, ante sit amet.
-                  </p>
-                </div>
-              </div>
-              <div class="chat-controls">
-                <button
-                  id="chatSliderPrev"
-                  class="chat-nav"
-                  type="button"
-                  aria-label="Messaggio precedente"
-                >
-                  <i class="bi bi-chevron-left" />
-                </button>
-                <div
-                  id="chatSliderDots"
-                  class="chat-dots"
-                  aria-label="Navigazione messaggi"
-                />
-                <button
-                  id="chatSliderNext"
-                  class="chat-nav"
-                  type="button"
-                  aria-label="Messaggio successivo"
-                >
-                  <i class="bi bi-chevron-right" />
-                </button>
-              </div>
-            </div>
+            <ChatPopSlider variant="hero" />
           )}
         </div>
       </div>

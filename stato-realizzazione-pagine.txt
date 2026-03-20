@@ -8,14 +8,13 @@ FATTE
 - ...e tanto altro
 - Portfolio
 - Originals
-- Storia di un'azienda mutante
+- Storia di un'azienda mutante (DA RIGUARDARE)
 - I Panebarcos
 - il dettaglio Originals
 - il dettaglio Portfolio
-
+- Paneblog 
 
 Da sviluppare
-- Paneblog
 - Contatti
 - Ci vediamo agli Oscar
 - Diario di viaggio

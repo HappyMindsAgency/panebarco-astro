@@ -1,0 +1,653 @@
+---
+interface ChatMessage {
+  date: string;
+  character: string;
+  avatar: string;
+  title: string;
+  text: string;
+}
+
+interface Props {
+  messages?: readonly ChatMessage[];
+  variant?: "hero" | "wide";
+  className?: string;
+  fixedChipText?: string;
+  fixedAvatarSrc?: string;
+  fixedAvatarAlt?: string;
+  ariaLabel?: string;
+}
+
+const defaultMessages: readonly ChatMessage[] = [
+  {
+    date: "15/01/2026",
+    character: "Maya",
+    avatar: "/images/teams-avatar-che-fate-01.png",
+    title: "Titolo del messaggio",
+    text: "Aenean vel tortor aliquet, lobortis ligula a, tempus metus.",
+  },
+  {
+    date: "22/01/2026",
+    character: "Luca",
+    avatar: "/images/teams-avatar-che-fate-02.png",
+    title: "Secondo messaggio",
+    text: "Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
+  },
+  {
+    date: "30/01/2026",
+    character: "Nora",
+    avatar: "/images/teams-avatar-che-fate-03.png",
+    title: "Terzo messaggio",
+    text: "Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum.",
+  },
+];
+
+const {
+  messages = defaultMessages,
+  variant = "hero",
+  className = "",
+  fixedChipText = "che fate?",
+  fixedAvatarSrc = "/images/avatar-che-fate-00.png",
+  fixedAvatarAlt = "Avatar fisso",
+  ariaLabel = "Anteprima chat",
+} = Astro.props;
+
+const resolvedMessages = messages.length ? messages : defaultMessages;
+const initialMessage = resolvedMessages[0];
+const messagesJson = JSON.stringify(resolvedMessages);
+---
+
+<div
+  class:list={["chat-slider-pop", variant === "wide" ? "chat-slider-pop--wide" : "chat-slider-pop--hero", className]}
+  data-chat-slider
+  data-chat-slider-messages={messagesJson}
+  role="region"
+  aria-label={ariaLabel}
+>
+  <div class="chat-slider-pop__header">
+    <span class="chat-slider-pop__date" data-chat-slider-date>{initialMessage.date}</span>
+    <div class="chat-slider-pop__fixed">
+      <span class="chat-slider-pop__chip">{fixedChipText}</span>
+      <span class="chat-slider-pop__avatar chat-slider-pop__avatar--fixed">
+        <img src={fixedAvatarSrc} alt={fixedAvatarAlt} />
+      </span>
+    </div>
+  </div>
+
+  <div class="chat-slider-pop__message-row">
+    <span class="chat-slider-pop__avatar chat-slider-pop__avatar--slider">
+      <img data-chat-slider-avatar src={initialMessage.avatar} alt={`Avatar di ${initialMessage.character}`} />
+    </span>
+    <div class="chat-slider-pop__body">
+      <strong data-chat-slider-title>{initialMessage.title}</strong>
+      <p data-chat-slider-text>{initialMessage.text}</p>
+    </div>
+  </div>
+
+  <div class="chat-slider-pop__controls">
+    <button class="chat-slider-pop__nav" type="button" data-chat-slider-prev aria-label="Messaggio precedente">
+      <i class="bi bi-chevron-left" aria-hidden="true"></i>
+    </button>
+    <div class="chat-slider-pop__dots" data-chat-slider-dots aria-label="Navigazione messaggi"></div>
+    <button class="chat-slider-pop__nav" type="button" data-chat-slider-next aria-label="Messaggio successivo">
+      <i class="bi bi-chevron-right" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    function cleanupChatSliders() {
+      document.querySelectorAll("[data-chat-slider]").forEach(function (root) {
+        if (typeof root.__chatSliderCleanup === "function") {
+          root.__chatSliderCleanup();
+          root.__chatSliderCleanup = null;
+        }
+
+        delete root.dataset.bound;
+      });
+    }
+
+    function initChatSliders() {
+      document.querySelectorAll("[data-chat-slider]").forEach(function (root) {
+        if (root.dataset.bound === "true") return;
+        root.dataset.bound = "true";
+
+        var rawMessages = root.getAttribute("data-chat-slider-messages") || "[]";
+        var messages = [];
+
+        try {
+          messages = JSON.parse(rawMessages);
+        } catch (error) {
+          messages = [];
+        }
+
+        if (!Array.isArray(messages) || !messages.length) return;
+
+        var dateEl = root.querySelector("[data-chat-slider-date]");
+        var titleEl = root.querySelector("[data-chat-slider-title]");
+        var textEl = root.querySelector("[data-chat-slider-text]");
+        var avatarImg = root.querySelector("[data-chat-slider-avatar]");
+        var prevBtn = root.querySelector("[data-chat-slider-prev]");
+        var nextBtn = root.querySelector("[data-chat-slider-next]");
+        var dotsWrap = root.querySelector("[data-chat-slider-dots]");
+
+        if (!dateEl || !titleEl || !textEl || !avatarImg || !prevBtn || !nextBtn || !dotsWrap) return;
+
+        var controller = new AbortController();
+        var signal = controller.signal;
+        var activeIndex = 0;
+        var autoplayTimer = null;
+
+        function mod(index, length) {
+          return ((index % length) + length) % length;
+        }
+
+        function stopAutoplay() {
+          if (autoplayTimer !== null) {
+            window.clearInterval(autoplayTimer);
+            autoplayTimer = null;
+          }
+        }
+
+        function startAutoplay() {
+          stopAutoplay();
+          autoplayTimer = window.setInterval(function () {
+            render(activeIndex + 1, false);
+          }, 5000);
+        }
+
+        dotsWrap.innerHTML = "";
+        var dots = messages.map(function (_, index) {
+          var dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "chat-slider-pop__dot";
+          dot.setAttribute("aria-label", "Vai al messaggio " + (index + 1));
+          dot.addEventListener(
+            "click",
+            function () {
+              render(index, true);
+            },
+            { signal: signal }
+          );
+          dotsWrap.appendChild(dot);
+          return dot;
+        });
+
+        function render(index, userInitiated) {
+          activeIndex = mod(index, messages.length);
+          var item = messages[activeIndex];
+
+          dateEl.textContent = item.date;
+          titleEl.textContent = item.title;
+          textEl.textContent = item.text;
+          avatarImg.src = item.avatar;
+          avatarImg.alt = "Avatar di " + item.character;
+
+          dots.forEach(function (dot, dotIndex) {
+            dot.classList.toggle("is-active", dotIndex === activeIndex);
+          });
+
+          if (userInitiated) {
+            startAutoplay();
+          }
+        }
+
+        prevBtn.addEventListener(
+          "click",
+          function () {
+            render(activeIndex - 1, true);
+          },
+          { signal: signal }
+        );
+
+        nextBtn.addEventListener(
+          "click",
+          function () {
+            render(activeIndex + 1, true);
+          },
+          { signal: signal }
+        );
+
+        root.addEventListener(
+          "pointerenter",
+          function () {
+            stopAutoplay();
+          },
+          { signal: signal }
+        );
+
+        root.addEventListener(
+          "pointerleave",
+          function () {
+            startAutoplay();
+          },
+          { signal: signal }
+        );
+
+        root.addEventListener(
+          "focusin",
+          function () {
+            stopAutoplay();
+          },
+          { signal: signal }
+        );
+
+        root.addEventListener(
+          "focusout",
+          function () {
+            window.requestAnimationFrame(function () {
+              if (!root.contains(document.activeElement)) {
+                startAutoplay();
+              }
+            });
+          },
+          { signal: signal }
+        );
+
+        render(0, false);
+        startAutoplay();
+
+        root.__chatSliderCleanup = function () {
+          controller.abort();
+          stopAutoplay();
+        };
+      });
+    }
+
+    if (!window.__chatSliderPopBound) {
+      document.addEventListener("astro:before-swap", cleanupChatSliders);
+      document.addEventListener("astro:page-load", initChatSliders);
+      window.__chatSliderPopBound = true;
+    }
+
+    initChatSliders();
+  })();
+</script>
+
+<style is:global>
+  .chat-slider-pop {
+    --chat-width: clamp(20rem, 45vw, 32rem);
+    --chat-border-width: 8px;
+    --chat-radius: 1.6rem;
+    --chat-padding: 0.88rem 0.92rem 0.74rem;
+    --chat-rotate: 7deg;
+    --chat-shadow: 0 0.85rem 1.7rem rgba(0, 0, 0, 0.26);
+    --chat-right: clamp(1.1rem, 3.3vw, 2.5rem);
+    --chat-bottom: clamp(-4rem, -4.3vw, -2.9rem);
+    --chat-left: auto;
+    --chat-top: auto;
+    --chat-position: absolute;
+    --chat-min-height: auto;
+    --chat-date-size: clamp(0.92rem, 1.16vw, 1.56rem);
+    --chat-chip-size: clamp(1.22rem, 1.58vw, 1.9rem);
+    --chat-fixed-avatar-size: clamp(2.88rem, 3.44vw, 3.76rem);
+    --chat-slider-avatar-size: clamp(3.16rem, 3.92vw, 4.24rem);
+    --chat-title-size: clamp(1rem, 1.2vw, 1.6rem);
+    --chat-copy-size: clamp(0.76rem, 0.88vw, 1.14rem);
+    --chat-copy-lines: 2;
+    --chat-controls-margin-top: 0.55rem;
+    --chat-tail-right: 1.3rem;
+    --chat-tail-bottom: -1rem;
+    position: var(--chat-position);
+    top: var(--chat-top);
+    right: var(--chat-right);
+    bottom: var(--chat-bottom);
+    left: var(--chat-left);
+    width: var(--chat-width);
+    min-height: var(--chat-min-height);
+    background: #0ea6e9;
+    border: var(--chat-border-width) solid #fff;
+    border-radius: var(--chat-radius);
+    padding: var(--chat-padding);
+    box-shadow: var(--chat-shadow);
+    transform: rotate(var(--chat-rotate));
+    color: #fff;
+    animation: chat-slider-pop-bounce-in 0.95s cubic-bezier(0.2, 0.9, 0.2, 1.05) both;
+    animation-delay: 0.2s;
+  }
+
+  .chat-slider-pop--hero {
+    z-index: 3;
+  }
+
+  .chat-slider-pop--wide {
+    --chat-width: min(100%, 80rem);
+    --chat-border-width: 10px;
+    --chat-radius: 2.2rem;
+    --chat-padding: 1.15rem 1.35rem 1rem;
+    --chat-rotate: 4deg;
+    --chat-shadow: 0 1.6rem 3.4rem rgba(15, 23, 42, 0.16);
+    --chat-right: auto;
+    --chat-bottom: auto;
+    --chat-left: auto;
+    --chat-top: auto;
+    --chat-position: relative;
+    --chat-min-height: clamp(14rem, 22vw, 18.5rem);
+    --chat-date-size: clamp(1.25rem, 2.1vw, 2.25rem);
+    --chat-chip-size: clamp(2rem, 2.9vw, 3.2rem);
+    --chat-fixed-avatar-size: clamp(4rem, 5.4vw, 5.5rem);
+    --chat-slider-avatar-size: clamp(4.2rem, 5.8vw, 5.9rem);
+    --chat-title-size: clamp(1.65rem, 2vw, 2.7rem);
+    --chat-copy-size: clamp(1.05rem, 1.25vw, 1.9rem);
+    --chat-copy-lines: 3;
+    --chat-controls-margin-top: 1rem;
+    margin: 0 auto;
+  }
+
+  @keyframes chat-slider-pop-bounce-in {
+    0% {
+      opacity: 0;
+      transform: translateY(4rem) scale(0.78) rotate(var(--chat-rotate));
+    }
+
+    55% {
+      opacity: 1;
+      transform: translateY(-0.9rem) scale(1.04) rotate(var(--chat-rotate));
+    }
+
+    75% {
+      transform: translateY(0.35rem) scale(0.98) rotate(var(--chat-rotate));
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(var(--chat-rotate));
+    }
+  }
+
+  .chat-slider-pop::before {
+    content: "";
+    position: absolute;
+    right: var(--chat-tail-right);
+    bottom: var(--chat-tail-bottom);
+    width: 0;
+    height: 0;
+    border-left: 0.8rem solid transparent;
+    border-right: 0.8rem solid transparent;
+    border-top: 1rem solid #fff;
+  }
+
+  .chat-slider-pop::after {
+    content: "";
+    position: absolute;
+    right: calc(var(--chat-tail-right) + 0.16rem);
+    bottom: calc(var(--chat-tail-bottom) + 0.26rem);
+    width: 0;
+    height: 0;
+    border-left: 0.64rem solid transparent;
+    border-right: 0.64rem solid transparent;
+    border-top: 0.78rem solid #0ea6e9;
+  }
+
+  .chat-slider-pop__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .chat-slider-pop__date {
+    font-size: var(--chat-date-size);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .chat-slider-pop__fixed {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  .chat-slider-pop__chip {
+    position: relative;
+    background: #fff;
+    color: #1f1f1f;
+    border-radius: 999px;
+    padding: 0.32rem 1rem 0.4rem;
+    font-family: "Margarine", "Sofia Sans", sans-serif;
+    font-size: var(--chat-chip-size);
+    font-weight: 800;
+    line-height: 0.9;
+    white-space: nowrap;
+  }
+
+  .chat-slider-pop__chip::after {
+    content: "";
+    position: absolute;
+    right: -0.58rem;
+    top: 52%;
+    width: 1.05rem;
+    height: 1.05rem;
+    background: #fff;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    transform: translateY(-50%);
+  }
+
+  .chat-slider-pop__message-row {
+    display: flex;
+    align-items: center;
+    gap: 0.68rem;
+  }
+
+  .chat-slider-pop__avatar {
+    width: var(--chat-slider-avatar-size);
+    height: var(--chat-slider-avatar-size);
+    border-radius: 50%;
+    border: 4px solid #fff;
+    flex: 0 0 auto;
+    overflow: hidden;
+    background: #fff;
+    display: block;
+  }
+
+  .chat-slider-pop__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .chat-slider-pop__avatar--fixed {
+    width: var(--chat-fixed-avatar-size);
+    height: var(--chat-fixed-avatar-size);
+  }
+
+  .chat-slider-pop__body {
+    position: relative;
+    background: #fff;
+    color: #1f1f1f;
+    border-radius: 1rem;
+    padding: 0.46rem 0.68rem 0.52rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chat-slider-pop--wide .chat-slider-pop__body {
+    border-radius: 1.35rem;
+    padding: 0.8rem 1.15rem 0.92rem;
+  }
+
+  .chat-slider-pop__body::before {
+    content: "";
+    position: absolute;
+    left: -0.56rem;
+    top: 0.72rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    background: #fff;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  }
+
+  .chat-slider-pop__body strong {
+    display: block;
+    font-size: var(--chat-title-size);
+    font-weight: 900;
+    margin-bottom: 0.25rem;
+    line-height: 1.05;
+    text-align: left;
+  }
+
+  .chat-slider-pop__body p {
+    margin: 0;
+    color: #2a2a2a;
+    font-size: var(--chat-copy-size);
+    line-height: 1.28;
+    font-weight: 600;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--chat-copy-lines);
+    line-clamp: var(--chat-copy-lines);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .chat-slider-pop__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: var(--chat-controls-margin-top);
+  }
+
+  .chat-slider-pop__nav {
+    width: 1.45rem;
+    height: 1.45rem;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.95;
+    transition: transform 0.22s ease, opacity 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+  }
+
+  .chat-slider-pop--wide .chat-slider-pop__nav {
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 1.4rem;
+  }
+
+  .chat-slider-pop__nav i {
+    display: block;
+    line-height: 1;
+    font-weight: 700;
+    -webkit-text-stroke: 0.35px currentColor;
+    text-shadow: 0 0 0 currentColor;
+  }
+
+  .chat-slider-pop__nav:hover,
+  .chat-slider-pop__nav:focus-visible {
+    background: #fff;
+    color: #f3ab28;
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  .chat-slider-pop__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.38rem;
+  }
+
+  .chat-slider-pop__dot {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .chat-slider-pop--wide .chat-slider-pop__dot {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .chat-slider-pop__dot.is-active {
+    background: #ffd04b;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chat-slider-pop {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .chat-slider-pop--wide {
+      --chat-width: min(100%, 68rem);
+      --chat-border-width: 8px;
+      --chat-radius: 1.75rem;
+      --chat-padding: 0.95rem 1rem 0.85rem;
+      --chat-date-size: clamp(1rem, 2vw, 1.5rem);
+      --chat-chip-size: clamp(1.55rem, 3.4vw, 2.15rem);
+      --chat-fixed-avatar-size: clamp(3.4rem, 7vw, 4.4rem);
+      --chat-slider-avatar-size: clamp(3.7rem, 7vw, 4.6rem);
+      --chat-title-size: clamp(1.3rem, 2.4vw, 1.9rem);
+      --chat-copy-size: clamp(0.92rem, 1.6vw, 1.18rem);
+      --chat-copy-lines: 3;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .chat-slider-pop--wide {
+      --chat-width: 100%;
+      --chat-radius: 1.45rem;
+      --chat-padding: 0.82rem 0.82rem 0.72rem;
+      --chat-rotate: 2.5deg;
+      --chat-date-size: 0.98rem;
+      --chat-chip-size: 1.3rem;
+      --chat-fixed-avatar-size: 2.9rem;
+      --chat-slider-avatar-size: 3.1rem;
+      --chat-title-size: 1.05rem;
+      --chat-copy-size: 0.86rem;
+      --chat-copy-lines: 3;
+    }
+
+    .chat-slider-pop--wide .chat-slider-pop__chip {
+      padding: 0.22rem 0.72rem 0.3rem;
+    }
+
+    .chat-slider-pop--wide .chat-slider-pop__message-row {
+      align-items: flex-start;
+    }
+
+    .chat-slider-pop--wide .chat-slider-pop__body {
+      padding: 0.62rem 0.78rem 0.68rem;
+    }
+
+    .chat-slider-pop--wide .chat-slider-pop__nav {
+      width: 2rem;
+      height: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .chat-slider-pop--wide .chat-slider-pop__dot {
+      width: 0.8rem;
+      height: 0.8rem;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .chat-slider-pop--hero {
+      --chat-width: min(88vw, 24.8rem);
+      --chat-border-width: 6px;
+      --chat-radius: 1.2rem;
+      --chat-padding: 0.68rem 0.72rem 0.58rem;
+      --chat-date-size: 0.92rem;
+      --chat-chip-size: 1.24rem;
+      --chat-fixed-avatar-size: 2.56rem;
+      --chat-slider-avatar-size: 2.8rem;
+      --chat-title-size: 0.86rem;
+      --chat-copy-size: 0.72rem;
+    }
+  }
+</style>
