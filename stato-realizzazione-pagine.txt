@@ -1,20 +1,21 @@
 FATTE 
 - Home
 - Studio
-- Commercials
-- il dettaglio Originals
-- il dettaglio Portfolio
 - Servizi
+- Commercials
 - Post-produzione
 - Service
 - ...e tanto altro
-
-Da sviluppare
 - Portfolio
 - Originals
-- Paneblog
-- Contatti
 - Storia di un'azienda mutante
 - I Panebarcos
+- il dettaglio Originals
+- il dettaglio Portfolio
+
+
+Da sviluppare
+- Paneblog
+- Contatti
 - Ci vediamo agli Oscar
 - Diario di viaggio

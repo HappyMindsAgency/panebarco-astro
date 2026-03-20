@@ -1,41 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import OriginalsShowcase from "../../components/OriginalsShowcase.astro";
-import OscarCtaSection from "../../components/OscarCtaSection.astro";
-import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import OriginalsPortfolioSlider from "../../components/OriginalsPortfolioSlider.astro";
 import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 
-const introCopy = {
-  title: "Universi originali sviluppati da casa",
-  paragraphs: [
-    "Originals e il luogo in cui le idee nascono prima di avere un formato preciso: corti, serie, lungometraggi e progetti che si muovono tra animazione, sviluppo editoriale e nuove forme di racconto.",
-    "Qui costruiamo proprieta intellettuali, definiamo mondi, personaggi e tono visivo, e cerchiamo partner con cui portare questi progetti dalla scrittura alla produzione, fino alla distribuzione.",
-  ],
-} as const;
-
 const developmentAreas = [
   {
+    theme: "shorts",
     title: "Cortometraggi",
-    summary:
-      "Progetti compatti e autoriali, pensati per festival, circuiti cinematografici e sviluppo di nuove IP.",
+    summary: "Formati compatti e autoriali pensati per festival, ricerca visiva e nascita di nuove IP.",
   },
   {
+    theme: "series",
     title: "Serie animate",
-    summary:
-      "Format seriali con personaggi forti, mondi chiari e possibilita di evoluzione su piu stagioni e pubblici.",
+    summary: "Progetti seriali con personaggi forti, architetture narrative elastiche e mondi pronti a espandersi.",
   },
   {
+    theme: "features",
     title: "Lungometraggi",
-    summary:
-      "Sviluppi piu ampi, dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.",
+    summary: "Sviluppi lunghi dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.",
   },
   {
+    theme: "crossmedia",
     title: "Progetti crossmediali",
-    summary:
-      "Idee che possono vivere su piu piattaforme: audiovisivo, editoria, educational, licensing e attivazioni speciali.",
+    summary: "Idee che possono vivere su piu piattaforme tra audiovisivo, editoria, educational e licensing.",
+  },
+] as const;
+
+const finalCtas = [
+  {
+    theme: "cyan",
+    title: "CTA Ci vediamo agli oscar",
+    titleClass: "fw-bold",
+    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris massa.",
+    href: buildPath("studioOscars", lang),
+    buttonLabel: "Partnership",
+  },
+  {
+    theme: "violet",
+    title: "CTA Contattaci",
+    titleClass: "fw-bold",
+    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris massa.",
+    href: buildPath("studioOscars", lang),
+    buttonLabel: "Scrivici",
   },
 ] as const;
 ---
@@ -55,75 +64,156 @@ const developmentAreas = [
       sideImageSrc="/images/lo-studio-panebarco-teams.png"
       sideImageAlt="Team Panebarco"
       className="hero-sty-studio page-hero page-hero--studio"
+      showSideImage={false}
     />
 
-    <section class="page-main page-main--studio originals-intro">
-      <div class="container">
-        <div class="row g-4 g-xl-5 align-items-center">
-          <div class="col-12 col-xl-7">
-            <div class="originals-intro-copy">
-              <h2 class="page-title-uniform">{introCopy.title}</h2>
-              {introCopy.paragraphs.map((paragraph) => (
-                <p>{paragraph}</p>
-              ))}
+    <div class="originals-scroll-shell" data-originals-scroll-shell>
+      <section class="page-main-offset section-space section-space--soft originals-pillars" aria-labelledby="originalsPillarsTitle">
+        <div class="container">
+          <div class="row mb-3 mb-lg-4">
+            <div class="col-12 portfolio-section-heading">
+              <h2 id="originalsPillarsTitle" class="page-title-uniform">Esplora i progetti</h2>
+              <p class="portfolio-section-intro">
+                Filtra il portfolio per area di servizio o per tipologia di video e scorri una griglia più ampia di lavori,
+                frame e casi correlati.
+              </p>
             </div>
           </div>
-          <div class="col-12 col-xl-5">
-            <div class="originals-intro-art">
-              <img
-                class="img-fluid d-block mx-auto"
-                src="/images/originals-produzioni-indipendenti.png"
-                alt="Produzioni indipendenti"
-              />
-            </div>
+
+          <div class="row g-4 originals-pillars-grid">
+            {developmentAreas.map((area, index) => (
+              <div class="col-12 col-md-6 col-xl-3">
+                <article class:list={["originals-pillar-card", `originals-pillar-card--${area.theme}`]} tabindex="0">
+                  <div class="originals-pillar-card__media" aria-hidden="true"></div>
+                  <div class="originals-pillar-card__shade" aria-hidden="true"></div>
+                  <div class="originals-pillar-card__content">
+                    <p class="originals-pillar-card__index">0{index + 1}</p>
+                    <h3>{area.title}</h3>
+                    <div class="originals-pillar-card__description">
+                      <p>{area.summary}</p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section-space section-space--soft originals-areas" aria-labelledby="originalsAreasTitle">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-4 mb-lg-5">
-          <div class="col-12 col-xl-8">
-            <h2 id="originalsAreasTitle" class="page-title-uniform">Ambiti di sviluppo</h2>
+      <OriginalsPortfolioSlider />
+
+      <section class="section-space section-space--tight originals-dual-cta" aria-labelledby="originalsFinalCtaTitle">
+        <div class="container">
+          <div class="row g-4">
+            {finalCtas.map((cta) => (
+              <div class="col-12 col-lg-6">
+                <article class:list={["originals-cta-card", `originals-cta-card--${cta.theme}`]}>
+                  <div class="originals-cta-card__body">
+                    <h3 class:list={[cta.titleClass]}>{cta.title}</h3>
+                    <p>{cta.body}</p>
+                    <a class="btn btn-cta btn-cta--orange btn-pill mt-3" href={cta.href}>{cta.buttonLabel}</a>
+                  </div>
+                </article>
+              </div>
+            ))}
           </div>
         </div>
-
-        <div class="row g-4 originals-areas-grid">
-          {developmentAreas.map((area, index) => (
-            <div class="col-12 col-md-6">
-              <article class="originals-area-card h-100">
-                <div class="originals-area-card__body">
-                  <p class="originals-area-card__index">0{index + 1}</p>
-                  <h3>{area.title}</h3>
-                  <p>{area.summary}</p>
-                </div>
-              </article>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <OriginalsShowcase />
-
-    <OscarCtaSection
-      heading="Spoiler sul finale?"
-      highlight="CI VEDIAMO AGLI OSCAR"
-      body="I nostri Originals sono pensati per crescere con partner, coproduzioni e percorsi di distribuzione. Se vuoi capire come sviluppiamo un progetto fino alla sua forma finale, qui trovi il contesto giusto."
-      href={buildPath("studioOscars", lang)}
-      buttonLabel="Conosci i Panebarcos"
-    />
-
-    <section class="section-space section-space--tight pt-2 pt-md-3 pt-lg-4">
-      <div class="container">
-        <ContactCtaBanner
-          kicker="Hai un progetto originale da sviluppare?"
-          title="PARLIAMONE NOI."
-          href={buildPath("contacts", lang)}
-          buttonLabel="Contattaci"
-        />
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
+
+  <script is:inline>
+    (function () {
+      var cleanupOriginalsPage = window.__panebarcoOriginalsPageCleanup || function () {};
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function mix(start, end, progress) {
+        return Math.round(start + (end - start) * progress);
+      }
+
+      function mixColor(from, to, progress) {
+        return "rgb(" + mix(from[0], to[0], progress) + ", " + mix(from[1], to[1], progress) + ", " + mix(from[2], to[2], progress) + ")";
+      }
+
+      function mixAlpha(from, to, progress) {
+        return String(from + (to - from) * progress);
+      }
+
+      function initOriginalsPage() {
+        cleanupOriginalsPage();
+
+        var cleanups = [];
+
+        document.querySelectorAll("[data-originals-scroll-shell]").forEach(function (shell) {
+          var ticking = false;
+
+          function computeProgress() {
+            var rect = shell.getBoundingClientRect();
+            var shellTop = window.scrollY + rect.top;
+            var shellHeight = shell.offsetHeight;
+            var start = shellTop - window.innerHeight * 0.08;
+            var end = shellTop + shellHeight - window.innerHeight * 0.52;
+
+            if (end <= start) {
+              end = start + 1;
+            }
+
+            return clamp((window.scrollY - start) / (end - start), 0, 1);
+          }
+
+          function applyTheme(progress) {
+            shell.style.setProperty("--originals-shell-bg", mixColor([245, 247, 250], [10, 14, 24], progress));
+            shell.style.setProperty("--originals-shell-ink", mixColor([15, 23, 42], [244, 247, 250], progress));
+            shell.style.setProperty("--originals-shell-muted", mixColor([71, 85, 105], [196, 204, 216], progress));
+            shell.style.setProperty("--originals-shell-panel-alpha", mixAlpha(0.92, 0.16, progress));
+            shell.style.setProperty("--originals-shell-panel-strong-alpha", mixAlpha(0.98, 0.22, progress));
+            shell.style.setProperty("--originals-shell-border-alpha", mixAlpha(0.08, 0.22, progress));
+            shell.style.setProperty("--originals-shell-shadow-alpha", mixAlpha(0.08, 0.34, progress));
+          }
+
+          function renderTheme() {
+            ticking = false;
+            applyTheme(computeProgress());
+          }
+
+          function requestThemeFrame() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(renderTheme);
+          }
+
+          window.addEventListener("scroll", requestThemeFrame, { passive: true });
+          window.addEventListener("resize", requestThemeFrame);
+          requestThemeFrame();
+
+          cleanups.push(function () {
+            window.removeEventListener("scroll", requestThemeFrame);
+            window.removeEventListener("resize", requestThemeFrame);
+          });
+        });
+
+        cleanupOriginalsPage = function () {
+          cleanups.forEach(function (cleanup) {
+            cleanup();
+          });
+        };
+
+        window.__panebarcoOriginalsPageCleanup = cleanupOriginalsPage;
+      }
+
+      if (!window.__panebarcoOriginalsPageBound) {
+        document.addEventListener("astro:before-swap", function () {
+          cleanupOriginalsPage();
+        });
+
+        document.addEventListener("astro:page-load", initOriginalsPage);
+        window.__panebarcoOriginalsPageBound = true;
+      }
+
+      initOriginalsPage();
+    })();
+  </script>
 </Layout>

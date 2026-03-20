@@ -1,0 +1,603 @@
+---
+import { originalsProjects } from "../data/originals";
+import { buildPath, joinLocalizedPath } from "../i18n/routing";
+
+interface Props {
+  sectionId?: string;
+  sectionClass?: string;
+  containerClass?: string;
+}
+
+const {
+  sectionId = "originals-showcase",
+  sectionClass = "section-space section-space--soft portfolio-originals-slider originals-showcase-slider",
+  containerClass = "container",
+} = Astro.props;
+
+const originalCandiesPath = joinLocalizedPath(buildPath("originals", "it"), originalsProjects[0].slug.it);
+
+const slides = [
+  {
+    title: "Caramelle",
+    subtitle: "Serie animate",
+    image: "/images/originals-cover-01-700x395.jpg",
+    href: originalCandiesPath,
+  },
+  {
+    title: "Marta e la morte",
+    subtitle: "Lungometraggi",
+    image: "/images/originals-cover-02-270x395.jpg",
+    href: originalCandiesPath,
+  },
+  {
+    title: "#Nostoppingnora",
+    subtitle: "Short formats",
+    image: "/images/originals-cover-03-270x395.jpg",
+    href: originalCandiesPath,
+  },
+] as const;
+---
+
+<section id={sectionId} class={sectionClass}>
+  <div class={containerClass}>
+    <div class="originals-showcase-brand">
+      <img class="originals-title-logo" src="/images/panebarco originals logo.png" alt="Panebarco Originals" />
+    </div>
+
+    <div
+      class="portfolio-originals-slider__shell position-relative"
+      data-originals-slider
+      data-originals-start="0"
+      tabindex="0"
+      aria-label="Showcase Originals"
+      aria-roledescription="carousel"
+    >
+      <button
+        class="portfolio-originals-slider__arrow portfolio-originals-slider__arrow--prev btn btn-light rounded-circle"
+        type="button"
+        aria-label="Slide precedente"
+        data-originals-prev
+      >
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div class="portfolio-originals-slider__frame" data-originals-frame>
+        <div class="portfolio-originals-slider__track">
+          {slides.map((slide, index) => (
+            <a
+              class="portfolio-originals-slider__slide text-decoration-none"
+              href={slide.href}
+              data-originals-slide
+              data-slide-index={index}
+              aria-label={`Apri ${slide.title}`}
+            >
+              <img src={slide.image} alt={slide.title} loading="lazy" decoding="async" draggable="false" />
+              <div class="portfolio-originals-slider__overlay">
+                <h3>{slide.title}</h3>
+                <p>{slide.subtitle}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <button
+        class="portfolio-originals-slider__arrow portfolio-originals-slider__arrow--next btn btn-light rounded-circle"
+        type="button"
+        aria-label="Slide successiva"
+        data-originals-next
+      >
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    function initOriginalsPortfolioSlider() {
+      document.querySelectorAll("[data-originals-slider]").forEach(function (root) {
+        if (root.dataset.bound === "true") return;
+        root.dataset.bound = "true";
+
+        var prev = root.querySelector("[data-originals-prev]");
+        var next = root.querySelector("[data-originals-next]");
+        var frame = root.querySelector("[data-originals-frame]");
+        var slides = Array.prototype.slice.call(root.querySelectorAll("[data-originals-slide]"));
+
+        if (!prev || !next || !frame || slides.length < 3) return;
+
+        var activeIndex = Number(root.getAttribute("data-originals-start") || 0);
+        var dragStartX = null;
+        var dragDeltaX = 0;
+        var pointerId = null;
+        var suppressClick = false;
+
+        function mod(index, length) {
+          return ((index % length) + length) % length;
+        }
+
+        function syncSlides() {
+          var prevIndex = mod(activeIndex - 1, slides.length);
+          var nextIndex = mod(activeIndex + 1, slides.length);
+
+          slides.forEach(function (slide, index) {
+            var isActive = index === activeIndex;
+            var isPrev = index === prevIndex;
+            var isNext = index === nextIndex;
+            var isVisible = isActive || isPrev || isNext;
+
+            slide.classList.toggle("is-active", isActive);
+            slide.classList.toggle("is-prev", isPrev);
+            slide.classList.toggle("is-next", isNext);
+            slide.classList.toggle("is-hidden", !isVisible);
+            slide.setAttribute("aria-hidden", isVisible ? "false" : "true");
+            slide.tabIndex = isVisible ? 0 : -1;
+          });
+        }
+
+        function goTo(index) {
+          activeIndex = mod(index, slides.length);
+          syncSlides();
+        }
+
+        function goPrev() {
+          goTo(activeIndex - 1);
+        }
+
+        function goNext() {
+          goTo(activeIndex + 1);
+        }
+
+        function releaseDrag() {
+          dragStartX = null;
+          dragDeltaX = 0;
+          pointerId = null;
+          root.classList.remove("is-dragging");
+        }
+
+        function completeGesture(deltaX) {
+          if (Math.abs(deltaX) < 48) {
+            releaseDrag();
+            return;
+          }
+
+          suppressClick = true;
+          window.setTimeout(function () {
+            suppressClick = false;
+          }, 120);
+
+          if (deltaX > 0) {
+            goPrev();
+          } else {
+            goNext();
+          }
+
+          releaseDrag();
+        }
+
+        prev.addEventListener("click", goPrev);
+        next.addEventListener("click", goNext);
+
+        root.addEventListener("keydown", function (event) {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            goPrev();
+          }
+
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            goNext();
+          }
+        });
+
+        slides.forEach(function (slide, index) {
+          slide.addEventListener("click", function (event) {
+            if (suppressClick) {
+              event.preventDefault();
+              return;
+            }
+
+            if (index === activeIndex) return;
+
+            event.preventDefault();
+            goTo(index);
+          });
+        });
+
+        if (window.PointerEvent) {
+          frame.addEventListener("dragstart", function (event) {
+            event.preventDefault();
+          });
+
+          frame.addEventListener("pointerdown", function (event) {
+            if (event.pointerType === "mouse" && event.button !== 0) return;
+
+            dragStartX = event.clientX;
+            dragDeltaX = 0;
+            pointerId = event.pointerId;
+            root.classList.add("is-dragging");
+
+            if (frame.setPointerCapture) {
+              frame.setPointerCapture(pointerId);
+            }
+          });
+
+          frame.addEventListener("pointermove", function (event) {
+            if (dragStartX === null || event.pointerId !== pointerId) return;
+            dragDeltaX = event.clientX - dragStartX;
+          });
+
+          frame.addEventListener("pointerup", function (event) {
+            if (dragStartX === null || event.pointerId !== pointerId) return;
+            completeGesture(dragDeltaX);
+          });
+
+          frame.addEventListener("pointercancel", function () {
+            releaseDrag();
+          });
+        } else {
+          var touchStartX = null;
+
+          frame.addEventListener(
+            "touchstart",
+            function (event) {
+              if (!event.touches || !event.touches.length) return;
+              touchStartX = event.touches[0].clientX;
+            },
+            { passive: true }
+          );
+
+          frame.addEventListener(
+            "touchend",
+            function (event) {
+              if (touchStartX === null || !event.changedTouches || !event.changedTouches.length) return;
+              completeGesture(event.changedTouches[0].clientX - touchStartX);
+              touchStartX = null;
+            },
+            { passive: true }
+          );
+        }
+
+        window.requestAnimationFrame(function () {
+          goTo(activeIndex);
+        });
+      });
+    }
+
+    if (!window.__panebarcoOriginalsPortfolioSliderBound) {
+      document.addEventListener("astro:page-load", initOriginalsPortfolioSlider);
+      window.__panebarcoOriginalsPortfolioSliderBound = true;
+    }
+
+    initOriginalsPortfolioSlider();
+  })();
+</script>
+
+<style>
+  .originals-showcase-brand {
+    display: flex;
+    justify-content: center;
+    margin-bottom: clamp(1.2rem, 2vw, 2rem);
+  }
+
+  .originals-showcase-brand .originals-title-logo {
+    width: min(21rem, 58vw);
+    margin-bottom: 0;
+  }
+
+  .portfolio-originals-slider {
+    --portfolio-slider-slide-width: min(74vw, 54rem);
+    --portfolio-slider-side-width: min(22vw, 16rem);
+  }
+
+  .portfolio-originals-slider__shell {
+    position: relative;
+    isolation: isolate;
+    padding-inline: clamp(2rem, 5vw, 4rem);
+    min-height: clamp(22rem, 48vw, 40rem);
+    outline: none;
+  }
+
+  .portfolio-originals-slider__shell.is-dragging {
+    cursor: grabbing;
+  }
+
+  .portfolio-originals-slider__frame {
+    position: relative;
+    z-index: 1;
+    min-height: inherit;
+    overflow: visible;
+    touch-action: pan-y;
+    cursor: grab;
+  }
+
+  .portfolio-originals-slider__track {
+    position: relative;
+    min-height: inherit;
+    overflow: visible;
+  }
+
+  .portfolio-originals-slider__slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--portfolio-slider-slide-width);
+    aspect-ratio: 16 / 10;
+    min-height: clamp(20rem, 46vw, 34rem);
+    overflow: hidden;
+    border-radius: clamp(1.35rem, 2vw, 2rem);
+    background: #0f1115;
+    box-shadow: 0 1rem 2.6rem rgba(15, 23, 42, 0.14);
+    transform: translate(-50%, -50%) scale(0.88);
+    transform-origin: center center;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.28s ease,
+      opacity 0.28s ease,
+      box-shadow 0.28s ease,
+      filter 0.28s ease;
+  }
+
+  .portfolio-originals-slider__slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.76) 100%);
+    z-index: 1;
+    transition: background 0.28s ease;
+  }
+
+  .portfolio-originals-slider__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.96);
+    transition:
+      transform 0.45s ease,
+      filter 0.28s ease;
+  }
+
+  .portfolio-originals-slider__slide.is-active,
+  .portfolio-originals-slider__slide.is-prev,
+  .portfolio-originals-slider__slide.is-next {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .portfolio-originals-slider__slide.is-active {
+    z-index: 3;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 1.4rem 3.4rem rgba(15, 23, 42, 0.18);
+  }
+
+  .portfolio-originals-slider__slide.is-prev,
+  .portfolio-originals-slider__slide.is-next {
+    z-index: 1;
+    width: min(50vw, 29rem);
+    min-height: clamp(18.5rem, 37vw, 28rem);
+    opacity: 0.88;
+  }
+
+  .portfolio-originals-slider__slide.is-prev {
+    transform: translate(calc(-50% - 96%), -50%) scale(0.95);
+  }
+
+  .portfolio-originals-slider__slide.is-next {
+    transform: translate(calc(-50% + 96%), -50%) scale(0.95);
+  }
+
+  .portfolio-originals-slider__slide.is-hidden {
+    z-index: 0;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.82);
+  }
+
+  .portfolio-originals-slider__slide.is-active::before {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.84) 100%);
+  }
+
+  .portfolio-originals-slider__slide.is-active img {
+    filter: saturate(1);
+  }
+
+  .portfolio-originals-slider__slide:hover img,
+  .portfolio-originals-slider__slide:focus-visible img {
+    transform: scale(1.03);
+  }
+
+  .portfolio-originals-slider__overlay {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.45rem;
+    min-height: 38%;
+    padding: clamp(1.2rem, 2vw, 2rem);
+    text-align: center;
+    color: #fff;
+  }
+
+  .portfolio-originals-slider__overlay h3 {
+    margin: 0;
+    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
+    font-size: clamp(1.95rem, 3vw, 4rem);
+    line-height: 0.94;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .portfolio-originals-slider__overlay p {
+    margin: 0;
+    font-size: clamp(1rem, 1rem + 0.2vw, 1.45rem);
+    line-height: 1.15;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.96);
+  }
+
+  .portfolio-originals-slider__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 6;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border: 0;
+    box-shadow: 0 0.8rem 2rem rgba(15, 23, 42, 0.12);
+    transform: translateY(-50%);
+  }
+
+  .portfolio-originals-slider__arrow i {
+    font-size: 1.35rem;
+    color: rgba(var(--bs-primary-rgb), 0.95);
+  }
+
+  .portfolio-originals-slider__arrow--prev {
+    left: 0.2rem;
+  }
+
+  .portfolio-originals-slider__arrow--next {
+    right: 0.2rem;
+  }
+
+  @media (max-width: 991.98px) {
+    .portfolio-originals-slider {
+      --portfolio-slider-slide-width: min(80vw, 38rem);
+    }
+
+    .portfolio-originals-slider__shell {
+      padding-inline: 2.6rem;
+      min-height: clamp(19rem, 54vw, 28rem);
+    }
+
+    .portfolio-originals-slider__slide.is-prev,
+    .portfolio-originals-slider__slide.is-next {
+      width: min(34vw, 15rem);
+      min-height: clamp(13rem, 25vw, 16rem);
+      opacity: 0.74;
+    }
+
+    .portfolio-originals-slider__slide.is-prev {
+      transform: translate(calc(-50% - 88%), -50%) scale(0.9);
+    }
+
+    .portfolio-originals-slider__slide.is-next {
+      transform: translate(calc(-50% + 88%), -50%) scale(0.9);
+    }
+
+    .portfolio-originals-slider__arrow {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
+
+    .portfolio-originals-slider__arrow--prev {
+      left: 0.75rem;
+    }
+
+    .portfolio-originals-slider__arrow--next {
+      right: 0.75rem;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .portfolio-originals-slider {
+      --portfolio-slider-slide-width: calc(100vw - 3rem);
+      --portfolio-slider-mobile-arrow-inset: 0.85rem;
+    }
+
+    .portfolio-originals-slider__shell {
+      min-height: 17.75rem;
+      padding-inline: 1.6rem;
+    }
+
+    .portfolio-originals-slider__slide {
+      width: var(--portfolio-slider-slide-width);
+      min-height: 16rem;
+      transform: translate(-50%, -50%) scale(0.96);
+    }
+
+    .portfolio-originals-slider__slide.is-prev,
+    .portfolio-originals-slider__slide.is-next {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .portfolio-originals-slider__overlay {
+      min-height: 44%;
+      padding: 1.1rem 1rem 1.2rem;
+    }
+
+    .portfolio-originals-slider__overlay h3 {
+      font-size: clamp(1.8rem, 8vw, 2.7rem);
+    }
+
+    .portfolio-originals-slider__overlay p {
+      font-size: 1rem;
+    }
+
+    .portfolio-originals-slider__arrow {
+      width: 3rem;
+      height: 3rem;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+      box-shadow: 0 0.65rem 1.6rem rgba(0, 0, 0, 0.16);
+    }
+
+    .portfolio-originals-slider__arrow--prev {
+      left: calc(50% - (var(--portfolio-slider-slide-width) / 2) + var(--portfolio-slider-mobile-arrow-inset));
+    }
+
+    .portfolio-originals-slider__arrow--next {
+      right: calc(50% - (var(--portfolio-slider-slide-width) / 2) + var(--portfolio-slider-mobile-arrow-inset));
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .portfolio-originals-slider {
+      --portfolio-slider-slide-width: calc(100vw - 2.5rem);
+      --portfolio-slider-mobile-arrow-inset: 0.7rem;
+    }
+
+    .portfolio-originals-slider__shell {
+      min-height: 16.5rem;
+    }
+
+    .portfolio-originals-slider__slide {
+      min-height: 14.75rem;
+      border-radius: 1.25rem;
+    }
+
+    .portfolio-originals-slider__overlay {
+      min-height: 48%;
+      padding: 1rem 1rem 1.05rem;
+    }
+
+    .portfolio-originals-slider__overlay h3 {
+      font-size: clamp(1.55rem, 8.5vw, 2.2rem);
+      line-height: 0.98;
+    }
+
+    .portfolio-originals-slider__overlay p {
+      font-size: 0.94rem;
+    }
+
+    .portfolio-originals-slider__arrow {
+      width: 2.7rem;
+      height: 2.7rem;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+    }
+
+    .portfolio-originals-slider__arrow i {
+      font-size: 1.1rem;
+    }
+  }
+</style>

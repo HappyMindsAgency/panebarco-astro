@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
+import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 
@@ -66,6 +67,7 @@ const modeBubbleSets = {
       subtitle="Lorem ipsum dolor sit amet"
       sideImageSrc="/images/hero-commercials.png"
       sideImageAlt="Hero commercials"
+      showSideImage={false}
     />
 
     <!-- Intro editoriale della sezione commercials -->
@@ -105,9 +107,17 @@ const modeBubbleSets = {
                 `https://placehold.co/760x340/png?text=${mode}+04`,
               ];
               const bubble = modeBubbleSets[mode as keyof typeof modeBubbleSets];
+              const useEditorialSplit =
+                mode === "Raccontare" || mode === "Spiegare" || mode === "Promuovere" || mode === "Coinvolgere";
+              const topRowImageStyle = useEditorialSplit
+                ? "height: clamp(220px, 28vw, 300px); object-fit: cover;"
+                : "height: 300px; object-fit: cover;";
+              const bottomRowImageStyle = useEditorialSplit
+                ? "height: clamp(220px, 28vw, 300px); object-fit: cover;"
+                : "height: 240px; object-fit: cover;";
 
               return (
-              <article class:list={[index > 0 && "mt-5 pt-2", index === communicationModes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
+              <article class:list={[index > 0 && "mt-5 mt-lg-6 pt-3 pt-lg-4", index === communicationModes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
                 <!-- Titolo modalità + bubble decorativa animata -->
                 <div class="commercial-mode-heading" data-commercial-mode-heading>
                   <h3 class="fw-bold text-body display-5 display-lg-4">{mode}</h3>
@@ -129,13 +139,13 @@ const modeBubbleSets = {
 
                 <!-- Set di 4 card media con overlay informativo al focus/hover -->
                 <div class="row g-3">
-                  <div class="col-12 col-md-6">
+                  <div class:list={["col-12", useEditorialSplit ? "col-lg-8" : "col-md-6"]}>
                     <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 1`}>
                       <img
                         class="img-fluid w-100"
                         src={scenes[0]}
                         alt={`${mode} scena 1`}
-                        style="height: 300px; object-fit: cover;"
+                        style={topRowImageStyle}
                       />
                       <div class="commercials-media-tags" aria-hidden="true">
                         <span class="commercials-media-tag">{mode}</span>
@@ -147,13 +157,13 @@ const modeBubbleSets = {
                       </div>
                     </article>
                   </div>
-                  <div class="col-12 col-md-6">
+                  <div class:list={["col-12", useEditorialSplit ? "col-lg-4" : "col-md-6"]}>
                     <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 2`}>
                       <img
                         class="img-fluid w-100"
                         src={scenes[1]}
                         alt={`${mode} scena 2`}
-                        style="height: 300px; object-fit: cover;"
+                        style={topRowImageStyle}
                       />
                       <div class="commercials-media-tags" aria-hidden="true">
                         <span class="commercials-media-tag">{mode}</span>
@@ -165,13 +175,13 @@ const modeBubbleSets = {
                       </div>
                     </article>
                   </div>
-                  <div class="col-12 col-md-5">
+                  <div class:list={["col-12", useEditorialSplit ? "col-lg-4" : "col-md-5"]}>
                     <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 3`}>
                       <img
                         class="img-fluid w-100"
                         src={scenes[2]}
                         alt={`${mode} scena 3`}
-                        style="height: 240px; object-fit: cover;"
+                        style={bottomRowImageStyle}
                       />
                       <div class="commercials-media-tags" aria-hidden="true">
                         <span class="commercials-media-tag">{mode}</span>
@@ -183,13 +193,13 @@ const modeBubbleSets = {
                       </div>
                     </article>
                   </div>
-                  <div class="col-12 col-md-7">
+                  <div class:list={["col-12", useEditorialSplit ? "col-lg-8" : "col-md-7"]}>
                     <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 4`}>
                       <img
                         class="img-fluid w-100"
                         src={scenes[3]}
                         alt={`${mode} scena 4`}
-                        style="height: 240px; object-fit: cover;"
+                        style={bottomRowImageStyle}
                       />
                       <div class="commercials-media-tags" aria-hidden="true">
                         <span class="commercials-media-tag">{mode}</span>
@@ -202,11 +212,17 @@ const modeBubbleSets = {
                     </article>
                   </div>
                 </div>
+
+                <div class="mt-5 mt-lg-6 text-center">
+                  <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>
+                    Parliamone
+                  </a>
+                </div>
               </article>
             )})}
 
             <!-- CTA finale verso pagina contatti -->
-            <section class="mt-4 mt-md-5 pt-2 pt-md-4">
+            <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
               <ContactCtaBanner
                 kicker="Hai un progetto in mente?"
                 title="LO ANIMIAMO NOI."

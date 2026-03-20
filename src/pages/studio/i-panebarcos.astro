@@ -166,6 +166,7 @@ const pageContent = {
 } as const;
 
 const content = pageContent[lang];
+const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMembers];
 ---
 
 <Layout
@@ -210,7 +211,7 @@ const content = pageContent[lang];
           <h2 class="panebarcos-family-block__title page-title-uniform text-body">Il team</h2>
 
           <div class="row g-4 panebarcos-family-grid">
-            {content.familyMembers.map((member, index) => (
+            {duplicatedFamilyMembers.map((member, index) => (
               <div class="col-12 col-sm-6 col-xl-3">
                 <article
                   class="panebarcos-family-card h-100"
@@ -233,73 +234,35 @@ const content = pageContent[lang];
           </div>
         </div>
 
-        <div class="row g-4 g-xl-4 mt-4 mt-xl-5 panebarcos-network-grid">
-          {content.networkMembers.map((member, index) => (
-            <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
-              <article
-                class="panebarcos-network-person h-100"
-                data-panebarcos-reveal
-                style={`--panebarcos-reveal-delay:${(index + 4) * 85}ms;`}
-              >
-                <div class="panebarcos-network-person__media">
-                  <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
-                </div>
-                <div class="panebarcos-network-person__overlay">
-                  <h3>{member.name}</h3>
-                  <p>{member.role}</p>
-                  <span class="panebarcos-network-person__badge" aria-hidden="true">
-                    <i class="bi bi-linkedin"></i>
-                  </span>
-                </div>
-              </article>
-            </div>
-          ))}
-        </div>
-
         <section class="panebarcos-network-listing mt-5 mt-xl-6" aria-labelledby="panebarcosNetworkListingTitle">
           <div class="panebarcos-network-listing__intro">
             <h2 id="panebarcosNetworkListingTitle" class="page-title-uniform text-body">{content.networkListTitle}</h2>
-            <p>{content.networkListIntro}</p>
+            <p class="text-body">{content.networkListIntro}</p>
           </div>
 
-          <div class="row g-3 panebarcos-network-listing__grid">
-            {content.networkListMembers.map((member, index) => (
-              <div class="col-12 col-md-6 col-xl-4">
+          <div class="row g-4 g-xl-4 mt-4 mt-xl-5 panebarcos-network-grid">
+            {content.networkMembers.map((member, index) => (
+              <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
                 <article
-                  class="panebarcos-network-listing__item"
+                  class="panebarcos-network-person h-100"
                   data-panebarcos-reveal
-                  style={`--panebarcos-reveal-delay:${(index + 12) * 55}ms;`}
+                  style={`--panebarcos-reveal-delay:${(index + 4) * 85}ms;`}
                 >
-                  <span class="panebarcos-network-listing__avatar" aria-hidden="true">
-                    <img src={member.photo} alt="" />
-                  </span>
-                  <div class="panebarcos-network-listing__body">
+                  <div class="panebarcos-network-person__media">
+                    <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
+                  </div>
+                  <div class="panebarcos-network-person__overlay">
                     <h3>{member.name}</h3>
                     <p>{member.role}</p>
+                    <span class="panebarcos-network-person__badge" aria-hidden="true">
+                      <i class="bi bi-linkedin"></i>
+                    </span>
                   </div>
                 </article>
               </div>
             ))}
           </div>
         </section>
-      </div>
-    </section>
-
-    <section class="panebarcos-work section-space section-space--soft" aria-labelledby="panebarcosWorkTitle">
-      <div class="container">
-        <div class="panebarcos-work__shell">
-          <h2 id="panebarcosWorkTitle" class="page-title-uniform">{content.workTitle}</h2>
-          <div class="row g-4 mt-1">
-              {content.workAreas.map((area, index) => (
-                <div class="col-12 col-lg-4">
-                  <article class="panebarcos-work-card">
-                    <h3>{area.title}</h3>
-                    <p>{area.body}</p>
-                  </article>
-                </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
 
