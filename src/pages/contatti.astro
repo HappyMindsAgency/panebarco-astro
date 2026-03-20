@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HeroStyStudio from "../components/HeroStyStudio.astro";
+import contactsPageScriptUrl from "../scripts/pages/contacts.js?url";
 import { buildPath } from "../i18n/routing";
 
 const lang = "it" as const;
@@ -11,11 +12,36 @@ const contactDetails = {
   email: "info@panebarco.it",
 } as const;
 
-const socialLinks = [
-  { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/PanebarcoMultimedia/" },
-  { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/panebarcos" },
-  { label: "Vimeo", icon: "vimeo", href: "https://vimeo.com/panebarco" },
+const contactCards = [
+  {
+    icon: "bi-envelope-paper-heart",
+    title: "Email",
+    text: "Per brief, richieste o una prima chiacchierata, scrivici quando vuoi.",
+    href: `mailto:${contactDetails.email}`,
+    linkLabel: contactDetails.email,
+    secondaryLink: null,
+  },
+  {
+    icon: "bi-telephone-forward",
+    title: "Telefono",
+    text: "Se preferisci sentirci al volo, qui trovi i numeri del nostro studio.",
+    href: `tel:${contactDetails.phones[0].replace(/\s+/g, "")}`,
+    linkLabel: contactDetails.phones[0],
+    secondaryLink: {
+      href: `tel:${contactDetails.phones[1].replace(/\s+/g, "")}`,
+      label: contactDetails.phones[1],
+    },
+  },
+  {
+    icon: "bi-geo-alt",
+    title: "Indirizzo",
+    text: "La nostra tana è a Ravenna: passa a trovarci, meglio ancora se con un progetto.",
+    href: "https://maps.google.com/?q=Via+Molino+9,+48121+Ravenna,+Italia",
+    linkLabel: `${contactDetails.address[0]}, ${contactDetails.address[1]}`,
+    secondaryLink: null,
+  },
 ] as const;
+
 ---
 
 <Layout
@@ -24,132 +50,293 @@ const socialLinks = [
   lang={lang}
   headerProps={{ containerClass: "hero-fluid" }}
 >
-    <main class="studio-page contacts-page">
-      <HeroStyStudio
-        backgroundVideoSrc="/images/1021768637.mp4"
-        bgWord="RACCONTACI"
-        title="CONTATTI"
-        subtitle="Parlaci del tuo progetto: lo animiamo insieme"
-        sideImageSrc="/images/lo-studio-panebarco-teams.png"
-        sideImageAlt="Team Panebarco"
-        className="hero-sty-studio page-hero page-hero--studio"
-        showSideImage={false}
-      />
-  
-      <section class="page-main page-main--studio contacts-content">
-        <div class="container">
-          <div class="row g-4 g-xl-5 align-items-start">
-            <div class="col-12 col-xl-7">
-              <div class="contacts-form-shell">
-                <div class="contacts-section-head">
-                  <p class="contacts-eyebrow">Form contatti</p>
-                  <h2 class="page-title-uniform">Iscriviti alla Newsletter</h2>
-                  <p class="mb-0">
-                    Non perderti eventi e novità: iscriviti alla newsletter e resta sempre aggiornato.
-                  </p>
-                </div>
+  <main class="studio-page contacts-page">
+    <HeroStyStudio
+      backgroundVideoSrc="/images/1021768637.mp4"
+      bgWord="RACCONTACI"
+      title="CONTATTI"
+      subtitle="Parlaci del tuo progetto: lo animiamo insieme"
+      sideImageSrc="/images/lo-studio-panebarco-teams.png"
+      sideImageAlt="Team Panebarco"
+      className="hero-sty-studio page-hero page-hero--studio"
+      showSideImage={false}
+    />
 
-                <form class="contacts-form" action="#" method="post" novalidate>
-                  <div class="row g-3">
-                    <div class="col-12 col-md-6">
-                      <label class="form-label" for="contactName">Nome e cognome</label>
-                      <input class="form-control" id="contactName" name="name" type="text" placeholder="Come ti chiami?" />
+    <section class="page-main page-main--studio contacts-content">
+      <div class="container">
+        <section class="contacts-intro contacts-block text-center" aria-labelledby="contactsIntroTitle">
+          <h2 id="contactsIntroTitle" class="page-title-uniform">Mettiamo a fuoco la prossima storia insieme</h2>
+          <p class="contacts-intro__lead mx-auto mb-0">
+            Che tu abbia un progetto da sviluppare, un’idea da far crescere o voglia entrare in orbita con noi,
+            qui trovi il modo giusto per iniziare la conversazione.
+          </p>
+        </section>
+
+        <section class="contact-section contacts-block" aria-labelledby="contactsCardsTitle">
+          <h2 id="contactsCardsTitle" class="visually-hidden">Informazioni di contatto</h2>
+          <div class="contact-info-grid">
+            {contactCards.map((item) => (
+              <article class="contact-info-card contacts-info-card">
+                <div class="contact-info-head">
+                  <span class="contact-info-icon contacts-info-card__icon" aria-hidden="true">
+                    <i class={`bi ${item.icon}`}></i>
+                  </span>
+                  <h3>{item.title}</h3>
+                </div>
+                <div class="contacts-info-card__body">
+                  <p>{item.text}</p>
+                  {item.title === "Indirizzo" ? (
+                    <address class="contacts-info-card__links mb-0">
+                      <a href={item.href} target={item.href.startsWith("https") ? "_blank" : undefined} rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}>
+                        {contactDetails.address[0]}
+                        <br />
+                        {contactDetails.address[1]}
+                      </a>
+                    </address>
+                  ) : (
+                    <div class="contacts-info-card__links">
+                      <a href={item.href} target={item.href.startsWith("https") ? "_blank" : undefined} rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}>
+                        {item.linkLabel}
+                      </a>
+                      {item.secondaryLink && (
+                        <a href={item.secondaryLink.href}>{item.secondaryLink.label}</a>
+                      )}
                     </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label" for="contactEmail">Email</label>
-                      <input class="form-control" id="contactEmail" name="email" type="email" placeholder="nome@azienda.it" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label" for="contactPhone">Telefono</label>
-                      <input class="form-control" id="contactPhone" name="phone" type="tel" placeholder="+39" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label" for="contactCompany">Azienda / ruolo</label>
-                      <input class="form-control" id="contactCompany" name="company" type="text" placeholder="Se vuoi, raccontaci da dove scrivi" />
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label" for="contactMessage">Messaggio</label>
-                      <textarea
-                        class="form-control"
-                        id="contactMessage"
-                        name="message"
-                        rows="6"
-                        placeholder="Di che progetto si tratta? In che fase siete? Cosa ti serve da noi?"
-                      ></textarea>
-                    </div>
-                    <div class="col-12">
-                      <div class="contacts-consent">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="accepted" id="contactConsent" name="consent" />
-                          <label class="form-check-label" for="contactConsent">
-                            Ho letto e accetto i Termini di servizio e l'
-                            <a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.
-                          </label>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="contacts-form-section contacts-block" aria-labelledby="contactsFormTitle">
+          <div class="contacts-section-head contacts-section-head--center text-start mt-5">
+            <h2 id="contactsFormTitle" class="page-title-uniform pt-5 mt-5">Scegli il modo in cui vuoi contattarci</h2>
+            <p class="mb-0">
+              Usa il form giusto per mandarci un brief, raccontarci un’esigenza produttiva oppure presentarti
+              per una collaborazione futura.
+            </p>
+          </div>
+
+          <div class="contacts-tabs-shell" data-contacts-tabs>
+            <div class="contacts-tabs-nav" role="tablist" aria-label="Seleziona il tipo di richiesta">
+              <button
+                class="contacts-tab-button is-active"
+                type="button"
+                id="contacts-tab-contact"
+                role="tab"
+                aria-selected="true"
+                aria-controls="contacts-panel-contact"
+                data-contacts-tab="contact"
+              >
+                <i class="bi bi-send" aria-hidden="true"></i>
+                <span>Contattaci</span>
+              </button>
+              <button
+                class="contacts-tab-button"
+                type="button"
+                id="contacts-tab-collab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="contacts-panel-collab"
+                data-contacts-tab="collab"
+                tabindex="-1"
+              >
+                <i class="bi bi-people" aria-hidden="true"></i>
+                <span>Collabora</span>
+              </button>
+            </div>
+
+            <section
+              class="contacts-tab-panel is-active"
+              id="contacts-panel-contact"
+              role="tabpanel"
+              aria-labelledby="contacts-tab-contact"
+              data-contacts-panel="contact"
+            >
+              <div class="contacts-tab-card">
+                <div class="row g-3 g-xl-4 align-items-start align-items-lg-stretch">
+                  <div class="col-12 col-lg-4 col-xl-4">
+                    <aside class="contacts-tab-visual contacts-tab-visual--contact h-100">
+                      <div class="contacts-tab-visual__head">
+                        <img
+                          class="contacts-tab-balloon"
+                          src="/images/contatti-raccontaci.png"
+                          alt="Raccontaci il tuo progetto"
+                        />
+                      </div>
+
+                      <div class="contacts-tab-visual__bottom">
+                        <div class="contacts-tab-visual__stage">
+                          <div class="contacts-tab-visual__portrait" aria-hidden="true">
+                            <img src="/images/teams-avatar-che-fate-01.png" alt="" />
+                          </div>
+                        </div>
+
+                        <div class="contacts-visual-note">
+                          <p>
+                            Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.
+                          </p>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-12">
-                      <button class="btn btn-cta btn-cta--blue btn-pill" type="button">Iscriviti</button>
+                    </aside>
+                  </div>
+
+                  <div class="col-12 col-lg-8 col-xl-8">
+                    <div class="contacts-form-shell">
+                      <form class="contacts-form" action="#" method="post" novalidate>
+                        <div class="row g-2 g-xl-3">
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="contactName">Nome</label>
+                            <input class="form-control" id="contactName" name="name" type="text" autocomplete="given-name" placeholder="Come ti chiami?" />
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="contactEmail">Email</label>
+                            <input class="form-control" id="contactEmail" name="email" type="email" autocomplete="email" placeholder="nome@azienda.it" />
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="contactCompany">Azienda</label>
+                            <input class="form-control" id="contactCompany" name="company" type="text" autocomplete="organization" placeholder="Studio, brand o realtà da cui scrivi" />
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="contactPhone">Telefono</label>
+                            <input class="form-control" id="contactPhone" name="phone" type="tel" autocomplete="tel" placeholder="+39 000 0000000" />
+                          </div>
+                          <div class="col-12">
+                            <label class="form-label" for="contactMessage">Messaggio</label>
+                            <textarea
+                              class="form-control"
+                              id="contactMessage"
+                              name="message"
+                              rows="5"
+                              placeholder="Raccontaci il progetto, dove siete arrivati e come possiamo esservi utili."
+                            ></textarea>
+                          </div>
+                          <div class="col-12">
+                            <div class="contacts-consent">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="accepted" id="contactConsent" name="consent" required />
+                                <label class="form-check-label" for="contactConsent">
+                                  Ho letto e accetto l’
+                                  <a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="newsletter" id="contactNewsletter" name="newsletter" />
+                                <label class="form-check-label" for="contactNewsletter">
+                                  Voglio ricevere news, progetti e aggiornamenti di Pane Barco.
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <button class="btn btn-cta btn-cta--blue btn-pill" type="submit">Invia messaggio</button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
-            </div>
+            </section>
 
-            <div class="col-12 col-xl-5">
-              <div class="contacts-info-card">
-                <img class="contacts-info-art" src="/images/contatti-raccontaci.png" alt="" aria-hidden="true" />
+            <section
+              class="contacts-tab-panel"
+              id="contacts-panel-collab"
+              role="tabpanel"
+              aria-labelledby="contacts-tab-collab"
+              data-contacts-panel="collab"
+              hidden
+            >
+              <div class="contacts-tab-card">
+                <div class="row g-3 g-xl-4 align-items-start align-items-lg-stretch">
+                  <div class="col-12 col-lg-4 col-xl-4">
+                    <aside class="contacts-tab-visual contacts-tab-visual--contact collabora h-100">
+                      <div class="contacts-tab-visual__head">
+                        <img
+                          class="contacts-tab-balloon"
+                          src="/images/contatti-raccontaci.png"
+                          alt="Raccontaci il tuo progetto"
+                        />
+                      </div>
 
-                <div class="contacts-info-block">
-                  <h2 class="page-title-uniform">Contatti</h2>
-                </div>
+                      <div class="contacts-tab-visual__bottom">
+                        <div class="contacts-tab-visual__stage">
+                          <div class="contacts-tab-visual__portrait" aria-hidden="true">
+                            <img src="/images/teams-avatar-camilla-04.png" alt="" />
+                          </div>
+                        </div>
 
-                <div class="contacts-detail">
-                  <p class="contacts-detail__label">Indirizzo</p>
-                  <p class="contacts-detail__value">
-                    {contactDetails.address[0]}<br />
-                    {contactDetails.address[1]}
-                  </p>
-                </div>
+                        <div class="contacts-visual-note">
+                          <p>
+                            Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.
+                          </p>
+                        </div>
+                      </div>
+                    </aside>
+                  </div>
 
-                <div class="contacts-detail">
-                  <p class="contacts-detail__label">Telefono</p>
-                  <p class="contacts-detail__value">
-                    {contactDetails.phones.map((phone) => (
-                      <>
-                        <a href={`tel:${phone.replace(/\s+/g, "")}`}>{phone}</a><br />
-                      </>
-                    ))}
-                  </p>
-                </div>
-
-                <div class="contacts-detail">
-                  <p class="contacts-detail__label">Email</p>
-                  <p class="contacts-detail__value">
-                    <a href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
-                  </p>
-                </div>
-
-                <div class="contacts-detail contacts-detail--social">
-                  <p class="contacts-detail__label">Seguici</p>
-                  <div class="social-row mb-0">
-                    {socialLinks.map((item) => (
-                      <a
-                        class:list={["social-circle", `social-${item.icon}`]}
-                        href={item.href}
-                        aria-label={item.label}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <i class={`bi bi-${item.icon}`}></i>
-                      </a>
-                    ))}
+                  <div class="col-12 col-lg-8 col-xl-8">
+                    <div class="contacts-form-shell">
+                      <form class="contacts-form" action="#" method="post" novalidate>
+                        <div class="row g-2 g-xl-3">
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="collabName">Nome e cognome</label>
+                            <input class="form-control" id="collabName" name="full_name" type="text" autocomplete="name" placeholder="Nome Cognome" />
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="collabEmail">Email</label>
+                            <input class="form-control" id="collabEmail" name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" />
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="collabRole">Ruolo</label>
+                            <input class="form-control" id="collabRole" name="role" type="text" autocomplete="organization-title" placeholder="Animazione, regia, compositing, produzione..." />
+                          </div>
+                          <div class="col-12 col-md-6">
+                            <label class="form-label" for="collabPortfolio">Portfolio / link</label>
+                            <input class="form-control" id="collabPortfolio" name="portfolio" type="url" inputmode="url" placeholder="https://" />
+                          </div>
+                          <div class="col-12">
+                            <label class="form-label" for="collabPresentation">Presentazione</label>
+                            <textarea
+                              class="form-control"
+                              id="collabPresentation"
+                              name="presentation"
+                              rows="5"
+                              placeholder="Dicci chi sei, come lavori e su quali progetti ti piacerebbe collaborare."
+                            ></textarea>
+                          </div>
+                          <div class="col-12">
+                            <div class="contacts-consent">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="accepted" id="collabConsent" name="consent" required />
+                                <label class="form-check-label" for="collabConsent">
+                                  Ho letto e accetto l’
+                                  <a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="newsletter" id="collabNewsletter" name="newsletter" />
+                                <label class="form-check-label" for="collabNewsletter">
+                                  Voglio ricevere aggiornamenti e novità dal mondo Pane Barco.
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <button class="btn btn-cta btn-cta--blue btn-pill" type="submit">Invia candidatura</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script type="module" src={contactsPageScriptUrl}></script>
 </Layout>
