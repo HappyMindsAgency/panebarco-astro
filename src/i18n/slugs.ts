@@ -10,8 +10,8 @@ export const localizedSlugs = {
     en: "studio",
   },
   studioStory: {
-    it: "studio/storia-di-unazienda-mutante",
-    en: "studio/storia-di-unazienda-mutante",
+    it: "studio/storia-di-un-azienda-mutante",
+    en: "studio/storia-di-un-azienda-mutante",
   },
   studioTeam: {
     it: "studio/i-panebarcos",
