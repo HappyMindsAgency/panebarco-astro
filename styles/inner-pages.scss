@@ -591,6 +591,8 @@ body.inner-page {
   }
 
   .oscars-page .oscars-belief-sticker {
+    --oscars-sticker-rotate: 0deg;
+    --oscars-sticker-delay: 0ms;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -602,6 +604,38 @@ body.inner-page {
     color: #ffffff;
     text-align: center;
     box-shadow: 0 1rem 1.9rem rgba(15, 23, 42, 0.16);
+    opacity: 0;
+    transform: translate3d(0, 1.75rem, 0) rotate(var(--oscars-sticker-rotate)) scale(0.92);
+    transition:
+      opacity 0.52s ease,
+      transform 0.82s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--oscars-sticker-delay);
+    will-change: opacity, transform;
+  }
+
+  .oscars-page [data-oscars-block-reveal].is-in-view .oscars-belief-sticker {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(var(--oscars-sticker-rotate)) scale(1);
+  }
+
+  .oscars-page .oscars-belief-sticker:nth-child(1) {
+    --oscars-sticker-delay: 0ms;
+  }
+
+  .oscars-page .oscars-belief-sticker:nth-child(2) {
+    --oscars-sticker-delay: 180ms;
+  }
+
+  .oscars-page .oscars-belief-sticker:nth-child(3) {
+    --oscars-sticker-delay: 360ms;
+  }
+
+  .oscars-page .oscars-belief-sticker:nth-child(4) {
+    --oscars-sticker-delay: 540ms;
+  }
+
+  .oscars-page .oscars-belief-sticker:nth-child(5) {
+    --oscars-sticker-delay: 720ms;
   }
 
   .oscars-page .oscars-belief-sticker__title {
@@ -624,20 +658,20 @@ body.inner-page {
 
   .oscars-page .oscars-belief-sticker--blue {
     background: #009fe3;
-    transform: rotate(-4deg);
+    --oscars-sticker-rotate: -4deg;
     justify-self: end;
     margin-top: 0.4rem;
   }
 
   .oscars-page .oscars-belief-sticker--violet {
     background: #995791;
-    transform: rotate(5deg);
+    --oscars-sticker-rotate: 5deg;
     justify-self: start;
   }
 
   .oscars-page .oscars-belief-sticker--red {
     background: #b03d4f;
-    transform: rotate(4deg);
+    --oscars-sticker-rotate: 4deg;
     justify-self: center;
     grid-column: 1 / span 2;
     min-width: clamp(10.5rem, 18vw, 13rem);
@@ -645,13 +679,13 @@ body.inner-page {
 
   .oscars-page .oscars-belief-sticker--green {
     background: #30997b;
-    transform: rotate(7deg);
+    --oscars-sticker-rotate: 7deg;
     justify-self: end;
   }
 
   .oscars-page .oscars-belief-sticker--cyan {
     background: #3394b2;
-    transform: rotate(-4deg);
+    --oscars-sticker-rotate: -4deg;
     justify-self: start;
   }
 
@@ -957,6 +991,12 @@ body.inner-page {
 
     .oscars-page .oscars-value-card__label {
       animation: none;
+    }
+
+    .oscars-page .oscars-belief-sticker {
+      opacity: 1;
+      transform: rotate(var(--oscars-sticker-rotate));
+      transition: none;
     }
   }
 
