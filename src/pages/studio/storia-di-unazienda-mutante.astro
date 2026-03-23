@@ -8,20 +8,12 @@ const lang = "it" as const;
 
 const mediaGallery = {
   title: "Contenuti multimediali",
-  videos: [
-    {
-      title: "Approfondimento studio 01",
-      embedSrc: "https://www.youtube-nocookie.com/embed/W_smIq9Xscw",
-    },
-    {
-      title: "Approfondimento studio 02",
-      embedSrc: "https://www.youtube-nocookie.com/embed/f0Zrn__I2Fc",
-    },
-    {
-      title: "Approfondimento studio 03",
-      embedSrc: "https://www.youtube-nocookie.com/embed/W_smIq9Xscw?start=18",
-    },
-  ],
+  intro:
+    "Un solo contenuto, ma centrale: un passaggio video che racconta bene il nostro modo di cambiare linguaggio, restando riconoscibili.",
+  video: {
+    title: "Approfondimento studio",
+    embedSrc: "https://www.youtube-nocookie.com/embed/W_smIq9Xscw",
+  },
 } as const;
 
 const newsletterFigure = "/images/lo-studio-panebarco-teams.png";
@@ -183,38 +175,22 @@ const newsletterFigure = "/images/lo-studio-panebarco-teams.png";
 
     <section class="section-space section-space--soft story-mutant-media">
       <div class="container">
-        <div class="story-mutant-media__intro text-center">
+        <div class="story-mutant-media__intro text-lg-center text-start">
           <h2 class="page-title-uniform">{mediaGallery.title}</h2>
+          <p>{mediaGallery.intro}</p>
         </div>
-        <div class="story-mutant-media__grid">
-          <div class="story-mutant-media__video story-mutant-media__video--primary">
+        <div class="story-mutant-media__content">
+          <div class="story-mutant-media__video story-mutant-media__video--single">
             <div class="ratio ratio-16x9 overflow-hidden rounded-4">
               <iframe
-                src={mediaGallery.videos[0].embedSrc}
-                title={mediaGallery.videos[0].title}
+                src={mediaGallery.video.embedSrc}
+                title={mediaGallery.video.title}
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen
                 referrerpolicy="strict-origin-when-cross-origin"
               ></iframe>
             </div>
-          </div>
-
-          <div class="story-mutant-media__stack">
-            {mediaGallery.videos.slice(1).map((video) => (
-              <div class="story-mutant-media__video story-mutant-media__video--secondary">
-                <div class="ratio ratio-16x9 overflow-hidden rounded-4">
-                  <iframe
-                    src={video.embedSrc}
-                    title={video.title}
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                    referrerpolicy="strict-origin-when-cross-origin"
-                  ></iframe>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
