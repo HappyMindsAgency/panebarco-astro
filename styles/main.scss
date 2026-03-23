@@ -67,6 +67,16 @@ p {
   margin: 0 0 1em;
 }
 
+h1 {
+  font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: clamp(#{$h1-font-size * 1.1}, 6vw, #{$h1-font-size * 2.3});
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
 h2 {
   font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
   font-weight: 700;
@@ -443,15 +453,18 @@ h2 {
       padding: 2rem;
       background: rgba(0, 0, 0, 0.68);
       backdrop-filter: blur(10px);
+      visibility: hidden;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
       overflow: hidden;
     }
 
     .menu-overlay-v2.is-open {
+      visibility: visible;
       opacity: 1;
       pointer-events: auto;
+      transition-delay: 0s;
     }
 
     .menu-overlay-v2-close {
@@ -687,6 +700,9 @@ h2 {
     .menu-v2-panel-section.is-active {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .menu-overlay-v2.is-open .menu-v2-panel-section.is-active {
       pointer-events: auto;
     }
 

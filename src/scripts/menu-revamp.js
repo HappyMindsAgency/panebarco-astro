@@ -117,7 +117,14 @@
     function closeMenu() {
       clearHoverIntentTimer();
       collapseMobileSubmenus();
+      panelSections.forEach(function (panel) {
+        panel.classList.remove("is-active");
+      });
+      items.forEach(function (item) {
+        item.classList.remove("is-active");
+      });
       overlay.classList.remove("is-open");
+      overlay.classList.remove("has-panel-content");
       overlay.setAttribute("aria-hidden", "true");
       document.body.classList.remove("menu-open");
       document.documentElement.style.removeProperty("--menu-scrollbar-comp");
