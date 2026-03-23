@@ -2015,10 +2015,18 @@ body.inner-page {
   /* Pagina Servizi */
   .services-page .services-hub-intro {
     overflow: hidden;
+    padding-bottom: clamp(1.6rem, 3vw, 2.5rem);
   }
 
   .services-page .services-intro-copy h2 {
     margin-bottom: $spacer;
+  }
+
+  .services-page .services-intro-copy p {
+    margin: 0;
+    color: rgba(17, 24, 39, 0.92);
+    font-weight: 700;
+    line-height: 1.55;
   }
 
   .services-page .services-bullets,
@@ -2280,6 +2288,19 @@ body.inner-page {
     display: flex;
     justify-content: center;
     margin-bottom: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .services-page .services-originals-band__intro {
+    max-width: 62rem;
+    margin: 0 auto clamp(1.5rem, 3vw, 2.4rem);
+    text-align: center;
+  }
+
+  .services-page .services-originals-band__intro p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 700;
+    line-height: 1.55;
   }
 
   .services-page .services-originals-band__cta {

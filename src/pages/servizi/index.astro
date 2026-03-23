@@ -7,6 +7,8 @@ import { buildPath, joinLocalizedPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
+const servicesIntro =
+  "Lavoriamo tra commercials, post-produzione e service con un approccio che si adatta al progetto: possiamo entrare nello sviluppo, rafforzare un impianto visivo, sostenere la produzione o rifinire quello che gia esiste, scegliendo ogni volta l'intervento piu utile.";
 
 const serviceAreas = [
   {
@@ -54,6 +56,21 @@ const serviceAreas = [
     ],
     buttonLabel: "Scopri di piu",
   },
+  {
+    title: "... e tanto altro",
+    href: buildPath("servicesMore", lang),
+    image: "/images/hero-commercials.png",
+    imageAlt: "Collage di progetti speciali Panebarco",
+    summary:
+      "Ci sono progetti che non stanno dentro un'etichetta sola: formati ibridi, contenuti editoriali, librerie sociali e idee laterali che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.",
+    bullets: [
+      "Progetti speciali",
+      "Contenuti editoriali",
+      "Social library",
+      "Newsletter & format",
+    ],
+    buttonLabel: "Scopri di piu",
+  },
 ] as const;
 
 const clientNames = [
@@ -98,6 +115,9 @@ const portfolioOriginalSlides = [
     href: originalCandiesPath,
   },
 ] as const;
+
+const originalsIntro =
+  "Panebarco Originals e lo spazio in cui sviluppiamo storie nostre: mondi, personaggi e formati che nascono da un immaginario autoriale e crescono tra ricerca visiva, scrittura e produzione.";
 ---
 
 <Layout
@@ -118,9 +138,19 @@ const portfolioOriginalSlides = [
         showSideImage={false}
       />
 
-      
+      <section class="page-main page-main--studio services-hub-intro">
+        <div class="w-100">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 text-lg-center text-start services-intro-copy">
+                <p class="mb-0">{servicesIntro}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section id="servizi" class="page-main-offset section-space section-space--soft services-home-cards services-figma-list">
+      <section id="servizi" class="section-space section-space--soft pt-0 services-home-cards services-figma-list">
         <div class="container">
           <div class="services-figma-list__rows">
             {serviceAreas.map((service, index) => (
@@ -171,6 +201,10 @@ const portfolioOriginalSlides = [
         <div class="container">
           <div class="services-originals-band__brand">
             <img class="originals-title-logo" src="/images/panebarco originals logo.png" alt="Panebarco Originals" />
+          </div>
+
+          <div class="services-originals-band__intro">
+            <p>{originalsIntro}</p>
           </div>
 
           <div class="portfolio-originals-slider__shell position-relative" data-portfolio-slider data-portfolio-start="0">
