@@ -41,6 +41,9 @@ const lang = "it" as const;
                 tristique laoreet. Donec ac enim vestibulum, sagittis urna sit amet,
                 posuere ex.
               </p>
+              <a class="btn btn-cta btn-cta--blue btn-pill mt-3" href={buildPath("studioStory", lang)}>
+                Leggi la storia
+              </a>
             </div>
             <div class="col-12 col-lg-5 studio-story-art text-lg-end">
               <img class="studio-story-intro-img img-fluid d-block ms-lg-auto" src="/images/lo-studio-img-intro.png" alt="Illustrazione intro lo studio">
@@ -50,7 +53,7 @@ const lang = "it" as const;
       </section>
 
       <!-- Timeline/slider storia azienda -->
-      <section class="studio-timeline section-space">
+      <section class="studio-timeline section-space" hidden>
         <div class="container">
           <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">Questa è la storia di un’azienda mutante</h2>
           <div class="studio-timeline-track" data-studio-timeline>
