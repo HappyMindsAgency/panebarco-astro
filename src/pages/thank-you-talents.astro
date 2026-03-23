@@ -1,0 +1,26 @@
+---
+import SimpleThankYouPage from "../components/SimpleThankYouPage.astro";
+import Layout from "../layouts/Layout.astro";
+import { buildPath } from "../i18n/routing";
+
+const lang = "it" as const;
+---
+
+<Layout
+  title="Candidatura ricevuta | Panebarco"
+  description="Conferma di invio della candidatura o proposta di collaborazione a Panebarco."
+  lang={lang}
+  useInnerStyles={true}
+  headerProps={{ darkmode: false, containerClass: "hero-fluid" }}
+>
+  <SimpleThankYouPage
+    eyebrow="Candidatura ricevuta"
+    title="Grazie per esserti presentato."
+    lead="La tua candidatura è arrivata correttamente al team Panebarco."
+    summaryTitle="Ti ringraziamo per l’interesse"
+    summaryItems={[
+      "Il team ha ricevuto correttamente il tuo messaggio e il materiale inviato.",
+    ]}
+    primaryAction={{ href: buildPath("home", lang), label: "Torna alla home", variant: "blue" }}
+  />
+</Layout>

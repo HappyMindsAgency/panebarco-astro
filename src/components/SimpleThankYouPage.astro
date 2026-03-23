@@ -1,0 +1,222 @@
+---
+interface Action {
+  href: string;
+  label: string;
+  variant?: "blue" | "orange";
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead: string;
+  paragraphs?: string[];
+  summaryTitle?: string;
+  summaryItems?: string[];
+  primaryAction: Action;
+}
+
+const {
+  eyebrow = "Messaggio inviato correttamente",
+  title,
+  lead,
+  paragraphs = [],
+  summaryTitle = "Prossimi passi",
+  summaryItems = [],
+  primaryAction,
+} = Astro.props;
+---
+
+<main class="thank-you-page">
+  <section class="thank-you-section" aria-labelledby="thankYouTitle">
+    <div class="container">
+      <div class="thank-you-card row g-0 align-items-stretch">
+        <div class="col-12 col-lg-7">
+          <div class="thank-you-copy">
+            <p class="thank-you-eyebrow">
+              <i class="bi bi-check2-circle" aria-hidden="true"></i>
+              <span>{eyebrow}</span>
+            </p>
+
+            <h1 id="thankYouTitle">{title}</h1>
+            <p class="thank-you-lead">{lead}</p>
+
+            {paragraphs.length > 0 && (
+              <div class="thank-you-body">
+                {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            )}
+
+            <div class="thank-you-actions">
+              <a
+                href={primaryAction.href}
+                class={`btn btn-cta btn-pill ${primaryAction.variant === "orange" ? "btn-cta--orange" : "btn-cta--blue"}`}
+              >
+                {primaryAction.label}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <aside class="thank-you-summary" aria-label={summaryTitle}>
+            <p class="thank-you-summary__eyebrow">{summaryTitle}</p>
+
+            {summaryItems.length > 0 ? (
+              <ul class="thank-you-summary__list">
+                {summaryItems.map((item) => (
+                  <li>
+                    <i class="bi bi-arrow-right-short" aria-hidden="true"></i>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="thank-you-summary__empty mb-0">Ti aggiorniamo presto via email.</p>
+            )}
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+  .thank-you-page {
+    min-height: 100svh;
+    display: flex;
+  }
+
+  .thank-you-section {
+    flex: 1;
+    display: grid;
+    align-items: center;
+    padding-top: clamp(6.5rem, 11vw, 8.5rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+    background: var(--bg);
+  }
+
+  .thank-you-card {
+    overflow: hidden;
+    border-radius: clamp(1.75rem, 3vw, 2.5rem);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      0 1.2rem 3rem rgba(15, 23, 42, 0.08),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+  }
+
+  .thank-you-copy {
+    height: 100%;
+    padding:
+      clamp(2rem, 4vw, 4rem)
+      clamp(1.5rem, 4vw, 4rem)
+      clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .thank-you-eyebrow,
+  .thank-you-summary__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 1rem;
+    color: rgba(var(--bs-primary-rgb), 0.92);
+    font-size: 0.84rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .thank-you-eyebrow i {
+    font-size: 1rem;
+  }
+
+  .thank-you-copy h1 {
+    margin: 0;
+    max-width: 12ch;
+  }
+
+  .thank-you-lead {
+    margin: 1.25rem 0 0;
+    font-size: clamp(1.05rem, 0.96rem + 0.45vw, 1.28rem);
+    line-height: 1.6;
+  }
+
+  .thank-you-body {
+    margin-top: 1.25rem;
+    max-width: 44rem;
+  }
+
+  .thank-you-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .thank-you-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .thank-you-summary {
+    height: 100%;
+    padding:
+      clamp(2rem, 4vw, 4rem)
+      clamp(1.5rem, 3vw, 2.6rem);
+    background:
+      linear-gradient(180deg, rgba(0, 159, 227, 0.1), rgba(255, 255, 255, 0.95)),
+      #f4fbff;
+    border-left: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .thank-you-summary__list {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .thank-you-summary__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .thank-you-summary__list i {
+    color: var(--bs-primary);
+    font-size: 1.1rem;
+    transform: translateY(0.05rem);
+  }
+
+  .thank-you-summary__empty {
+    line-height: 1.5;
+  }
+
+  @media (max-width: 991.98px) {
+    .thank-you-card {
+      max-width: 48rem;
+      margin-inline: auto;
+    }
+
+    .thank-you-summary {
+      border-left: 0;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .thank-you-section {
+      padding-top: 5.8rem;
+    }
+
+    .thank-you-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .thank-you-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

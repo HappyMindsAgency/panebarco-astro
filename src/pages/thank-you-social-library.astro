@@ -1,0 +1,26 @@
+---
+import SimpleThankYouPage from "../components/SimpleThankYouPage.astro";
+import Layout from "../layouts/Layout.astro";
+import { buildPath } from "../i18n/routing";
+
+const lang = "it" as const;
+---
+
+<Layout
+  title="Richiesta ricevuta | Panebarco Social Library"
+  description="Conferma di invio della richiesta per la Social Library di Panebarco."
+  lang={lang}
+  useInnerStyles={true}
+  headerProps={{ darkmode: false, containerClass: "hero-fluid" }}
+>
+  <SimpleThankYouPage
+    eyebrow="Richiesta ricevuta"
+    title="Iscrizione ricevuta."
+    lead="La tua richiesta per la Panebarco Social Library è stata ricevuta correttamente."
+    summaryTitle="Prossimi passi"
+    summaryItems={[
+      "Tieni d'occhio la casella di posta da cui ci hai scritto.",
+    ]}
+    primaryAction={{ href: buildPath("home", lang), label: "Torna alla home", variant: "blue" }}
+  />
+</Layout>

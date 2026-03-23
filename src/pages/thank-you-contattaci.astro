@@ -1,0 +1,27 @@
+---
+import SimpleThankYouPage from "../components/SimpleThankYouPage.astro";
+import Layout from "../layouts/Layout.astro";
+import { buildPath } from "../i18n/routing";
+
+const lang = "it" as const;
+---
+
+<Layout
+  title="Grazie per averci contattato | Panebarco"
+  description="Conferma di invio del messaggio a Panebarco."
+  lang={lang}
+  useInnerStyles={true}
+  headerProps={{ darkmode: false, containerClass: "hero-fluid" }}
+>
+  <SimpleThankYouPage
+    eyebrow="Contatto ricevuto"
+    title="Grazie, il tuo messaggio è arrivato."
+    lead="Abbiamo ricevuto la tua richiesta e il team Panebarco la leggerà al più presto."
+    summaryTitle="Nel frattempo"
+    summaryItems={[
+      "Tieni d'occhio la casella di posta da cui ci hai scritto.",
+
+    ]}
+    primaryAction={{ href: buildPath("home", lang), label: "Torna alla home", variant: "blue" }}
+  />
+</Layout>
