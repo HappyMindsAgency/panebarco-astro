@@ -3,7 +3,6 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
-import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 
@@ -198,11 +197,6 @@ const modeBubbleSets = {
                     </div>
                   </div>
 
-                  <div class="mt-5 mt-lg-6 text-center">
-                    <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>
-                      Parliamone
-                    </a>
-                  </div>
                 </article>
               );
             })}
