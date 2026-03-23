@@ -4,7 +4,7 @@ import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
-const newsletterFigure = "/images/lo-studio-panebarco-teams.png";
+const newsletterFigure = "/images/cta-ci-vediamo-agli-oscar.png";
 const beliefStickers = [
   { title: "Bellezza", subtitle: "come responsabilità", theme: "blue" },
   { title: "Complessita", subtitle: "come valore", theme: "violet" },
@@ -158,14 +158,14 @@ const content = pageContent[lang];
       </div>
     </section>
 
-    <div class="container pt-md-5 mt-5 mb-5" data-oscars-block-reveal style="--oscars-reveal-delay:160ms;">
+    <div class="container pt-md-5 mt-5 mb-5">
       <section class="extras-newsletter-card">
         <div class="extras-newsletter-card__copy">
           <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
           <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
             ISCRIVITI ALLA NEWSLETTER.
           </h2>
-          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
+          <a class="btn btn-cta btn-cta--orange btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
         </div>
         <img
           class="extras-newsletter-card__figure"

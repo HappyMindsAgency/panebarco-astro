@@ -3062,9 +3062,12 @@ body.inner-page {
     overflow: visible;
   }
 
-  .story-mutant-page .extras-newsletter-card,
-  .oscars-page .extras-newsletter-card {
+  .story-mutant-page .extras-newsletter-card {
     background: #995791;
+  }
+
+  .oscars-page .extras-newsletter-card {
+    background: #3394b2;
   }
 
   .extras-page .extras-newsletter-card__copy,
@@ -3106,19 +3109,7 @@ body.inner-page {
 
   .story-mutant-page .extras-newsletter-card__figure,
   .oscars-page .extras-newsletter-card__figure {
-    width: clamp(13rem, 26vw, 20rem);
-    top: 0;
-    bottom: auto;
-    transform: translateY(-30%);
-  }
-
-  @media (max-width: 991.98px) {
-    .story-mutant-page .extras-newsletter-card__figure,
-    .oscars-page .extras-newsletter-card__figure {
-      top: auto;
-      bottom: 0;
-      transform: none;
-    }
+    width: clamp(15rem, 30vw, 23rem);
   }
 
   @media (max-width: 991.98px) {
@@ -3156,35 +3147,17 @@ body.inner-page {
       bottom: 0;
     }
 
+    .story-mutant-page .extras-newsletter-card__figure,
+    .oscars-page .extras-newsletter-card__figure {
+      width: clamp(10.2rem, 31vw, 15rem);
+    }
+
     .extras-page .extras-newsletter-card__copy,
     .story-mutant-page .extras-newsletter-card__copy,
     .oscars-page .extras-newsletter-card__copy {
       max-width: clamp(18rem, 48vw, 34rem);
     }
 
-    .story-mutant-page .extras-newsletter-card,
-    .oscars-page .extras-newsletter-card {
-      min-height: auto;
-      padding:
-        clamp(0.9rem, 2.6vw, 2.4rem)
-        clamp(0.9rem, 2.6vw, 2.4rem)
-        clamp(1rem, 2.8vw, 2.6rem)
-        clamp(0.9rem, 2.6vw, 2.4rem);
-    }
-
-    .story-mutant-page .extras-newsletter-card__copy,
-    .oscars-page .extras-newsletter-card__copy {
-      max-width: none;
-    }
-
-    .story-mutant-page .extras-newsletter-card__figure,
-    .oscars-page .extras-newsletter-card__figure {
-      width: clamp(8.8rem, 27vw, 13rem);
-      right: clamp(0.9rem, 2.6vw, 2.4rem);
-      top: auto;
-      bottom: clamp(-4.5rem, -10vw, -2.8rem);
-      transform: none;
-    }
   }
 
   @media (max-width: 767.98px) {
@@ -3246,22 +3219,9 @@ body.inner-page {
       bottom: 0;
     }
 
-    .story-mutant-page .extras-newsletter-card,
-    .oscars-page .extras-newsletter-card {
-      min-height: auto;
-      padding: 0.9rem 1rem 1.1rem;
-    }
-
-    .story-mutant-page .extras-newsletter-card__copy,
-    .oscars-page .extras-newsletter-card__copy {
-      max-width: none;
-    }
-
     .story-mutant-page .extras-newsletter-card__figure,
     .oscars-page .extras-newsletter-card__figure {
-      right: 0.9rem;
-      width: clamp(7rem, 24vw, 9rem);
-      bottom: clamp(-3.4rem, -10vw, -2.2rem);
+      width: clamp(5.8rem, 21vw, 7.8rem);
     }
   }
 
