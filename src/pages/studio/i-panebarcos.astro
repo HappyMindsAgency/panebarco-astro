@@ -5,6 +5,8 @@ import OscarCtaSection from "../../components/OscarCtaSection.astro";
 import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
+const showNetworkListing = false;
+const showFamilyAvatars = false;
 
 const pageContent = {
   it: {
@@ -187,6 +189,7 @@ const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMemb
       className="hero-sty-studio page-hero page-hero--studio"
     />
 
+    <!-- Intro della pagina con testo editoriale e immagine del team. -->
     <section class="page-main page-main--studio panebarcos-page-intro">
       <div class="container">
         <div class="row g-4 g-xl-5 align-items-center">
@@ -205,6 +208,7 @@ const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMemb
       </div>
     </section>
 
+    <!-- Sezione principale con cards del team e, opzionalmente, network esteso. -->
     <section class="section-space section-space--soft panebarcos-groups" aria-label="Team e network Panebarco">
       <div class="container">
         <div class="panebarcos-family-block">
@@ -222,9 +226,11 @@ const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMemb
                     <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
                   </div>
                   <div class="panebarcos-family-card__body">
-                    <span class="panebarcos-family-card__avatar" aria-hidden="true">
-                      <img src={member.avatar} alt="" />
-                    </span>
+                    {showFamilyAvatars && (
+                      <span class="panebarcos-family-card__avatar" aria-hidden="true">
+                        <img src={member.avatar} alt="" />
+                      </span>
+                    )}
                     <h3>{member.name}</h3>
                     <p>{member.role}</p>
                   </div>
@@ -234,38 +240,43 @@ const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMemb
           </div>
         </div>
 
-        <section class="panebarcos-network-listing mt-5 mt-xl-6" aria-labelledby="panebarcosNetworkListingTitle">
-          <div class="panebarcos-network-listing__intro">
-            <h2 id="panebarcosNetworkListingTitle" class="page-title-uniform text-body">{content.networkListTitle}</h2>
-            <p class="text-body">{content.networkListIntro}</p>
-          </div>
+        <!-- E tanti altri panebarcos -->
+        {showNetworkListing && (
+          <!-- Blocco network collaboratori, tenuto dietro flag per attivazione temporanea. -->
+          <section class="panebarcos-network-listing mt-5 mt-xl-6" aria-labelledby="panebarcosNetworkListingTitle">
+            <div class="panebarcos-network-listing__intro">
+              <h2 id="panebarcosNetworkListingTitle" class="page-title-uniform text-body">{content.networkListTitle}</h2>
+              <p class="text-body">{content.networkListIntro}</p>
+            </div>
 
-          <div class="row g-4 g-xl-4 mt-4 mt-xl-5 panebarcos-network-grid">
-            {content.networkMembers.map((member, index) => (
-              <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
-                <article
-                  class="panebarcos-network-person h-100"
-                  data-panebarcos-reveal
-                  style={`--panebarcos-reveal-delay:${(index + 4) * 85}ms;`}
-                >
-                  <div class="panebarcos-network-person__media">
-                    <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
-                  </div>
-                  <div class="panebarcos-network-person__overlay">
-                    <h3>{member.name}</h3>
-                    <p>{member.role}</p>
-                    <span class="panebarcos-network-person__badge" aria-hidden="true">
-                      <i class="bi bi-linkedin"></i>
-                    </span>
-                  </div>
-                </article>
-              </div>
-            ))}
-          </div>
-        </section>
+            <div class="row g-4 g-xl-4 mt-4 mt-xl-5 panebarcos-network-grid">
+              {content.networkMembers.map((member, index) => (
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
+                  <article
+                    class="panebarcos-network-person h-100"
+                    data-panebarcos-reveal
+                    style={`--panebarcos-reveal-delay:${(index + 4) * 85}ms;`}
+                  >
+                    <div class="panebarcos-network-person__media">
+                      <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
+                    </div>
+                    <div class="panebarcos-network-person__overlay">
+                      <h3>{member.name}</h3>
+                      <p>{member.role}</p>
+                      <span class="panebarcos-network-person__badge" aria-hidden="true">
+                        <i class="bi bi-linkedin"></i>
+                      </span>
+                    </div>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </section>
 
+    <!-- CTA finale verso la pagina "Ci vediamo agli Oscar". -->
     <OscarCtaSection
       heading="Spoiler sul finale?"
       highlight="CI VEDIAMO AGLI OSCAR"
