@@ -1560,8 +1560,17 @@ h2 {
     .originals-title-logo {
       display: block;
       width: min(25rem, 72vw);
-      margin: 0 auto 2rem;
+      margin: 0 auto 1rem;
       filter: drop-shadow(0 0.35rem 0.8rem rgba(0, 0, 0, 0.2));
+    }
+
+    .originals-title-copy {
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(1rem, 0.94rem + 0.24vw, 1.16rem);
+      line-height: 1.5;
+      font-weight: 700;
     }
 
     .originals-carousel {
@@ -1731,7 +1740,7 @@ h2 {
 
     .originals-parallax--large .originals-title-logo {
       width: min(29rem, 78vw);
-      margin-bottom: 2.35rem;
+      margin-bottom: 1.1rem;
     }
 
     .originals-parallax--large .originals-layout {
