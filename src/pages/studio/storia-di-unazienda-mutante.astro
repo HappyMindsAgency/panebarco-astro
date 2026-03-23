@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
 import { buildPath } from "../../i18n/routing";
 
@@ -24,6 +23,8 @@ const mediaGallery = {
     },
   ],
 } as const;
+
+const newsletterFigure = "/images/lo-studio-panebarco-teams.png";
 ---
 
 <Layout
@@ -43,28 +44,25 @@ const mediaGallery = {
       sideImageAlt="Team Panebarco"
     />
 
-    <section class="page-main page-main--studio story-mutant-intro">
+    <section class="page-main page-main--studio">
       <div class="container">
-        <div class="row g-4 g-xl-5 align-items-center studio-story">
-          <div class="col-12 col-xl-7">
-            <div class="story-mutant-intro-copy studio-story-copy">
-              <h2 class="page-title-uniform">Una bottega multimediale nata per mutare</h2>
-              <p>
-                Tutto parte dal fumetto, dall'illustrazione e da un modo molto artigianale di costruire storie. Nel 1995
-                Daniele Panebarco decide di spostare quel mestiere dentro un territorio nuovo e fonda una bottega che
-                trasforma la carta in avventure interattive, animazione e produzioni multimediali.
-              </p>
-              <p>
-                Da allora la struttura si e allargata senza perdere il suo carattere familiare: nuove competenze, nuovi
-                formati, nuovi passaggi di testimone. Il risultato e un laboratorio che cambia pelle restando fedele alla
-                propria origine narrativa.
-              </p>
-            </div>
+        <div class="row g-4 g-xl-5 align-items-end studio-story">
+          <div class="col-12 col-lg-7 studio-story-copy">
+            <h2 class="page-title-uniform">Storia di un'azienda mutante</h2>
+            <p>
+              Duis in nibh egestas, facilisis magna ac, sagittis felis. Curabitur
+              sagittis nisi non porttitor ullamcorper. Proin mattis, lacus eu
+              condimentum dapibus, turpis lectus pellentesque mauris, vitae ornare
+              nunc leo et justo.
+            </p>
+            <p>
+              Pellentesque tempus elementum aliquet. Etiam commodo elit ut mi
+              tristique laoreet. Donec ac enim vestibulum, sagittis urna sit amet,
+              posuere ex.
+            </p>
           </div>
-          <div class="col-12 col-xl-5">
-            <div class="story-mutant-intro-art">
-              <img class="img-fluid d-block mx-auto" src="/images/studio-la-nostra-tana.png" alt="Illustrazione della bottega Panebarco" />
-            </div>
+          <div class="col-12 col-lg-5 studio-story-art text-lg-end">
+            <img class="studio-story-intro-img img-fluid d-block ms-lg-auto" src="/images/lo-studio-img-intro.png" alt="Illustrazione intro lo studio" />
           </div>
         </div>
       </div>
@@ -222,14 +220,24 @@ const mediaGallery = {
       </div>
     </section>
 
-  <section class="section-space section-space--tight mt-4 mt-md-5 mt-lg-5 pt-2 pt-md-3 pt-lg-4">
-      <div class="container">
-        <ContactCtaBanner
-          kicker="Hai un progetto in mente?"
-          title="LO ANIMIAMO NOI."
+    <div class="container pt-md-5 mt-5 mb-5">
+      <section class="extras-newsletter-card">
+        <div class="extras-newsletter-card__copy">
+          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
+          <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
+            ISCRIVITI ALLA NEWSLETTER.
+          </h2>
+          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
+        </div>
+        <img
+          class="extras-newsletter-card__figure"
+          src={newsletterFigure}
+          alt="Mascotte Panebarco"
+          loading="lazy"
+          decoding="async"
         />
-      </div>
-    </section>
+      </section>
+    </div>
 
   <script type="module" src={studioPageScriptUrl}></script>
 </Layout>

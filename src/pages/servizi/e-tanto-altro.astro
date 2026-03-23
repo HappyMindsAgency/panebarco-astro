@@ -1,285 +1,286 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 
 const specialProjects = [
   {
-    title: "Curiosità e formati laterali",
+    title: "Curiosita e formati laterali",
     href: buildPath("paneblog", lang),
-    image: "/images/curiosita-01.jpg",
-    summary: "Contenuti nati per sperimentare linguaggi, toni e usi fuori dal perimetro più istituzionale.",
-    tags: ["Special projects", "Format"],
+    image: "/images/portfolio-cover-01-695x391.jpg",
+    alt: "Storyboard e contenuti laterali Panebarco",
+    summary: "Contenuti nati per sperimentare formati ibridi, linguaggi piu leggeri e materiali che possono vivere anche oltre il progetto principale.",
+    slot: "top-left",
+    tags: ["Editoriale", "Format"],
   },
   {
-    title: "Progetti editoriali e di racconto",
+    title: "Progetti editoriali e racconto",
     href: buildPath("paneblogTravelDiary", lang),
-    image: "/images/curiosita-02.jpg",
-    summary: "Appunti visivi, materiali narrativi e piccoli mondi che tengono insieme processo, tono e identità.",
-    tags: ["Editoriale", "Storytelling"],
+    image: "/images/portfolio-cover-02-695x391.jpg",
+    alt: "Personaggio in una scena editoriale Panebarco",
+    summary: "Appunti visivi, backstage e narrazioni corte pensate per dare continuita al tono dei progetti anche fuori dal set.",
+    slot: "top-right",
+    tags: ["Storytelling", "Backstage"],
   },
   {
-    title: "Contenuti per librerie e archivi",
+    title: "Esperimenti visivi",
     href: buildPath("portfolio", lang),
-    image: "/images/curiosita-03.jpg",
-    summary: "Materiali modulari pensati per vivere su più canali, nel tempo, con una logica di collezione e riuso.",
+    image: "/images/portfolio-cover-03-695x391.jpg",
+    alt: "Personaggio illustrato colorato Panebarco",
+    summary: "Piccoli test, variazioni di stile e prove di immaginario che ci aiutano a far evolvere il linguaggio del laboratorio.",
+    slot: "bottom-left",
+    tags: ["Visual", "R&D"],
+  },
+  {
+    title: "Contenuti da archivio vivo",
+    href: buildPath("portfolio", lang),
+    image: "/images/portfolio-cover-04-695x391.jpg",
+    alt: "Ritratto character-driven Panebarco",
+    summary: "Materiali modulari che restano utili nel tempo, si riattivano facilmente e alimentano una libreria di contenuti sempre pronta a muoversi.",
+    slot: "bottom-right",
     tags: ["Library", "Content"],
   },
 ] as const;
 
-const specialProjectsGrid = [...specialProjects.slice(0, 2), ...specialProjects.slice(0, 2)];
-
-const mindItems = [
+const thoughtCards = [
   {
-    eyebrow: "Paneblog",
-    headline: "Articoli, backstage e note editoriali",
+    label: "Paneblog",
     href: buildPath("paneblog", lang),
     summary:
-      "Il lato più ragionato del nostro flusso: riflessioni, riferimenti, piccoli processi e contenuti da tenere vicini.",
-    cta: "Vai al Paneblog",
+      "Note veloci da set, studio e lavorazioni: cose raccolte al volo, ma spesso decisive per capire come evolve un progetto.",
+    cta: "Scopri di piu",
+    stickerClass: "extras-figma-thought-card__sticker--red",
   },
   {
-    eyebrow: "Diario di viaggio",
-    headline: "Appunti rapidi da lavorazioni, eventi e studio",
+    label: "Diario di viaggio",
     href: buildPath("paneblogTravelDiary", lang),
     summary:
-      "Flash, annotazioni e materiali raccolti lungo il percorso, per fermare cose piccole ma spesso decisive.",
-    cta: "Apri il diario",
+      "Note veloci da set, studio e lavorazioni: cose raccolte al volo, ma spesso decisive per capire come evolve un progetto.",
+    cta: "Accedi ora",
+    stickerClass: "extras-figma-thought-card__sticker--blue",
   },
   {
-    eyebrow: "Newsletter",
-    headline: "Aggiornamenti essenziali, senza rumore",
+    label: "Newsletter",
     href: buildPath("contacts", lang),
     summary:
-      "Un formato leggero per restare in contatto con nuovi progetti, contenuti utili e uscite che vale la pena seguire.",
-    cta: "Iscriviti",
+      "Aggiornamenti essenziali su nuove uscite, materiali utili e direzioni che vale la pena seguire senza troppo rumore intorno.",
+    cta: "Accedi ora",
+    stickerClass: "extras-figma-thought-card__sticker--violet",
   },
 ] as const;
+
+const socialLibraryBackdrop = "/images/panebarco-social-library.jpg";
+const newsletterFigure = "/images/lo-animiamo-noi.png";
 ---
 
 <Layout
-  title="...E tanto altro - Panebarco"
+  title="E tanto altro - Panebarco"
   useInnerStyles={true}
   lang={lang}
-  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
+  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5", darkmode: true }}
 >
   <main class="studio-page extras-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="ALTRE STORIE"
-      title="...E TANTO ALTRO"
+      backgroundVideoSrc="/images/panebarco-commercial-video.mp4"
+      bgWord="SERVIZI"
+      title="E TANTO ALTRO"
+      subtitle="Idee al confine tra cartoon e realta"
+      sideImageSrc="/images/hero-commercials.png"
+      sideImageAlt="Hero e tanto altro"
       showSideImage={false}
-      subtitle="Progetti speciali, contenuti laterali e idee che tengono vivo il laboratorio"
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
     />
 
-    <section class="page-main page-main--studio extras-intro">
-      <div class="container">
-        <div class="row g-4 g-xl-5 align-items-center">
-          <div class="col-12 col-xl-7">
-            <div class="extras-intro-copy">
-              <h2 class="page-title-uniform">Qui finiscono le etichette e iniziano le deviazioni interessanti.</h2>
-              <p>
-                Oltre ai servizi più riconoscibili ci sono territori che usiamo per allargare il linguaggio, testare idee,
-                costruire contenuti editoriali e mettere in circolo materiali che non stanno in una sola categoria.
+    <section class="page-main page-main--studio">
+      <div class="w-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-lg-center text-start">
+              <h2 class="page-title-uniform mb-4 text-body">Qui finiscono le etichette e iniziano le deviazioni interessanti.</h2>
+              <p class="mb-4">
+                Amiamo definirci bottega multimediale: un luogo in cui ogni progetto nasce su misura, ma anche uno spazio
+                attraversato da idee, persone, formati e curiosita che non stanno in una sola categoria.
               </p>
-              <p>
-                È uno spazio più aperto, ma non meno progettato: raccoglie progetti speciali, contenuti laterali, strumenti
-                per raccontarci meglio e una libreria viva di cose che possono tornare utili anche ad altri.
+              <p class="mb-0">
+                Questa pagina raccoglie proprio quel margine fertile: progetti speciali, contenuti editoriali, materiali da
+                archivio e strumenti narrativi che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.
               </p>
-            </div>
-          </div>
-
-          <div class="col-12 col-xl-5">
-            <div class="extras-intro-art">
-              <img class="img-fluid d-block mx-auto" src="/images/paneblog-pensieri.png" alt="Pensieri che ci frullano in testa">
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section-space section-space--soft extras-special-projects" aria-labelledby="specialProjectsTitle">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-2 mb-lg-3">
-          <div class="col-12 col-xl-8">
-            <h2 id="specialProjectsTitle" class="page-title-uniform">Progetti speciali</h2>
-            <p class="extras-section-intro mb-0">
-              Formati ibridi, iniziative editoriali, contenuti nati per testare nuove direzioni o tenere insieme materiali che
-              meritano una vita più lunga e meno prevedibile.
-            </p>
-            <div class="mt-3 mt-lg-4 mb-4 mb-lg-5">
-              <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Parliamone</a>
-            </div>
-          </div>
+    <section class="extras-figma-projects" aria-labelledby="specialProjectsTitle">
+      <div class="container portfolio-container extras-figma-projects__container" data-portfolio-showcase>
+        <div class="extras-figma-projects__heading">
+          <h2 id="specialProjectsTitle" class="page-title-uniform">Progetti speciali</h2>
+          <p>
+            Formati ibridi, racconti laterali e contenuti che nascono per esplorare nuove direzioni senza perdere la
+            mano artigianale del nostro modo di lavorare.
+          </p>
         </div>
 
-        <div class="row g-4 g-xl-5 extras-special-projects__grid">
-          {specialProjectsGrid.map((item) => (
-            <div class="col-12 col-lg-6">
-              <a class="extras-case-card d-block h-100 text-decoration-none" href={item.href}>
-                <div class="extras-case-card__media">
-                  <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
-                </div>
-                <div class="extras-case-card__body">
-                  <div class="extras-case-card__eyebrow small fw-bold text-uppercase" aria-hidden="true">{item.tags.join(" · ")}</div>
-                  <h3 class="h2 lh-1 fw-bold">{item.title}</h3>
-                  <p class="h5 lh-base fw-bold mb-0">{item.summary}</p>
-                </div>
+        <div class="portfolio-grid">
+          {specialProjects.map((item) => (
+            <a
+              class:list={["portfolio-item", item.slot, "text-decoration-none"]}
+              href={item.href}
+              aria-label={`Apri il progetto speciale ${item.title}`}
+              data-portfolio-showcase-card
+            >
+              <img src={item.image} alt={item.alt} loading="lazy" decoding="async" />
+              <div class="portfolio-tags">
+                {item.tags.map((tag) => (
+                  <span class="portfolio-tag">{tag}</span>
+                ))}
+              </div>
+              <div class="portfolio-overlay">
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="extras-figma-projects__cta">
+          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Parliamone</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="extras-figma-thoughts" aria-labelledby="extrasThoughtsTitle">
+      <div class="container">
+        <h2 id="extrasThoughtsTitle" class="extras-figma-thoughts__title">Pensieri che ci frullano in testa</h2>
+
+        <div class="extras-figma-thoughts__grid">
+          {thoughtCards.map((item) => (
+            <article class="extras-figma-thought-card">
+              <a class:list={["extras-figma-thought-card__sticker", item.stickerClass]} href={item.href}>
+                {item.label}
               </a>
-            </div>
+              <p class="extras-figma-thought-card__summary">{item.summary}</p>
+              <a class="btn btn-cta btn-cta--orange btn-pill extras-figma-thought-card__cta" href={item.href}>
+                {item.cta}
+              </a>
+            </article>
           ))}
         </div>
       </div>
     </section>
 
-    <section class="extras-mind" aria-labelledby="extrasMindTitle">
+    <section class="extras-figma-library" style={`--extras-library-image: url('${socialLibraryBackdrop}');`}>
       <div class="container">
-        <div class="row justify-content-center text-center">
-          <div class="col-12">
-            <h2 id="extrasMindTitle" class="section-title section-title-reveal extras-mind-title" data-extras-mind-title>
-              <span class="section-title-text">Pensieri che ci frullano in testa</span>
-              <span class="extras-mind-title__balloons" aria-hidden="true">
-                <span class="extras-mind-bubble extras-mind-bubble--green">Pensieri</span>
-                <span class="extras-mind-bubble extras-mind-bubble--red">Che ci frullano in testa</span>
-              </span>
-            </h2>
-          </div>
-        </div>
-
-        <div class="row g-4 mt-3 mt-lg-4 mb-5 extras-mind-grid">
-          {mindItems.map((item) => (
-            <div class="col-12 col-md-6 col-xl-4">
-              <a class="extras-mind-card h-100 text-decoration-none" href={item.href}>
-                <div class="extras-mind-card__body">
-                  <span class="extras-mind-card__eyebrow small fw-bold text-uppercase">{item.eyebrow}</span>
-                  <h3 class="h2 lh-1 fw-bold">{item.headline}</h3>
-                  <p class="h5 lh-base fw-bold mb-0">{item.summary}</p>
-                  <span class="extras-mind-card__link fs-6 fw-bold">
-                    {item.cta} <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                  </span>
-                </div>
-              </a>
-            </div>
-          ))}
+        <div class="extras-figma-library__content">
+          <p class="extras-figma-library__eyebrow">PSL</p>
+          <h2 class="extras-figma-library__title">Panebarco Social Library</h2>
+          <p class="extras-figma-library__body">
+            Una raccolta in movimento di contenuti, frammenti e materiali da riattivare nel tempo: una libreria viva per
+            raccontare meglio il lavoro, costruire continuita e far circolare ogni progetto oltre il set.
+          </p>
+          <a class="btn btn-cta btn-cta--blue btn-pill extras-figma-library__cta" href={buildPath("contacts", lang)}>Scopri di piu</a>
         </div>
       </div>
     </section>
 
-    <section class="section-space section-space--soft extras-social-library">
-      <div class="container">
-        <div class="extras-social-library__inner">
-          <div class="row g-4 g-lg-5 align-items-center">
-            <div class="col-12 col-lg-7">
-              <div class="extras-social-library__copy">
-                <h2 class="page-title-uniform">Panebarco Social Library</h2>
-                <p>
-                  Una raccolta in movimento di contenuti, frammenti, materiali e piccoli formati da usare come archivio vivo:
-                  utile per raccontare meglio il lavoro, attivare conversazioni e dare continuità ai progetti anche fuori dal set.
-                </p>
-                <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Chiedici la social library</a>
-              </div>
-            </div>
-
-            <div class="col-12 col-lg-5">
-              <div class="extras-social-library__stack">
-                <img class="extras-social-library__card extras-social-library__card--one" src="/images/curiosita-01.jpg" alt="">
-                <img class="extras-social-library__card extras-social-library__card--two" src="/images/curiosita-02.jpg" alt="">
-                <img class="extras-social-library__card extras-social-library__card--three" src="/images/curiosita-03.jpg" alt="">
-              </div>
-            </div>
-          </div>
+    <div class="container pt-md-5 mt-5 mb-5">
+      <section class="extras-newsletter-card">
+        <div class="extras-newsletter-card__copy">
+          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
+          <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
+            ISCRIVITI ALLA NEWSLETTER.
+          </h2>
+          <a class="btn btn-cta btn-cta--orange btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
         </div>
-      </div>
-    </section>
-
-    <section class="section-space section-space--tight pt-2 pt-md-3 pt-lg-4">
-      <div class="container">
-        <ContactCtaBanner
-          kicker="Hai in mente un formato meno prevedibile?"
-          title="LO COSTRUIAMO NOI."
+        <img
+          class="extras-newsletter-card__figure"
+          src={newsletterFigure}
+          alt="Mascotte Panebarco"
+          loading="lazy"
+          decoding="async"
         />
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <script is:inline>
     (function () {
-      var cleanupExtrasMindTitle = window.__cleanupExtrasMindTitle || function () {};
+      function initPortfolioShowcases() {
+        document.querySelectorAll("[data-portfolio-showcase]").forEach(function (root) {
+          if (root.dataset.bound === "true") return;
+          root.dataset.bound = "true";
 
-      function setupExtrasMindTitleReveal(cleanups) {
-        var revealTitles = document.querySelectorAll("[data-extras-mind-title]");
-        if (!revealTitles.length) return;
+          var title = root.querySelector("[data-portfolio-showcase-title]");
+          var cards = root.querySelectorAll("[data-portfolio-showcase-card]");
 
-        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          revealTitles.forEach(function (title) {
-            title.classList.add("is-in-view");
-          });
-          return;
-        }
-
-        var lastScrollY = window.scrollY;
-        var observer = new IntersectionObserver(
-          function (entries) {
-            var currentScrollY = window.scrollY;
-            var isScrollingUp = currentScrollY < lastScrollY;
-            lastScrollY = currentScrollY;
-
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-in-view");
-                return;
-              }
-
-              if (isScrollingUp) {
-                entry.target.classList.remove("is-in-view");
-              }
+          if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            if (title) title.classList.add("is-in-view");
+            cards.forEach(function (card) {
+              card.classList.add("is-in-view");
             });
-          },
-          {
-            threshold: 0.01,
-            rootMargin: "-35% 0px -35% 0px",
+            return;
           }
-        );
 
-        revealTitles.forEach(function (title) {
-          observer.observe(title);
-        });
+          if (title) {
+            var lastScrollY = window.scrollY;
+            var titleObserver = new IntersectionObserver(
+              function (entries) {
+                var currentScrollY = window.scrollY;
+                var isScrollingUp = currentScrollY < lastScrollY;
+                lastScrollY = currentScrollY;
 
-        cleanups.push(function () {
-          observer.disconnect();
-        });
-      }
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add("is-in-view");
+                    return;
+                  }
 
-      function initExtrasPage() {
-        cleanupExtrasMindTitle();
+                  if (isScrollingUp) {
+                    entry.target.classList.remove("is-in-view");
+                  }
+                });
+              },
+              {
+                threshold: 0.01,
+                rootMargin: "-35% 0px -35% 0px",
+              }
+            );
 
-        var cleanups = [];
-        setupExtrasMindTitleReveal(cleanups);
+            titleObserver.observe(title);
+          }
 
-        cleanupExtrasMindTitle = function () {
-          cleanups.forEach(function (dispose) {
-            dispose();
+          cards.forEach(function (card, index) {
+            card.style.transitionDelay = String(index * 0.08) + "s";
           });
-        };
 
-        window.__cleanupExtrasMindTitle = cleanupExtrasMindTitle;
-      }
+          var cardObserver = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
 
-      if (!window.__extrasMindTitleBound) {
-        document.addEventListener("astro:before-swap", function () {
-          cleanupExtrasMindTitle();
+                entry.target.classList.add("is-in-view");
+                cardObserver.unobserve(entry.target);
+              });
+            },
+            {
+              threshold: 0.15,
+              rootMargin: "0px 0px -50% 0px",
+            }
+          );
+
+          cards.forEach(function (card) {
+            cardObserver.observe(card);
+          });
         });
-
-        document.addEventListener("astro:page-load", initExtrasPage);
-        window.__extrasMindTitleBound = true;
       }
 
-      initExtrasPage();
+      if (!window.__panebarcoPortfolioShowcaseBound) {
+        document.addEventListener("astro:page-load", initPortfolioShowcases);
+        window.__panebarcoPortfolioShowcaseBound = true;
+      }
+
+      initPortfolioShowcases();
     })();
   </script>
 </Layout>

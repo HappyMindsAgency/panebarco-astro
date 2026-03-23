@@ -1,58 +1,40 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import ServicesShowcase from "../../components/ServicesShowcase.astro";
+import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
+const newsletterFigure = "/images/lo-studio-panebarco-teams.png";
+const beliefStickers = [
+  { title: "Bellezza", subtitle: "come responsabilita", theme: "blue" },
+  { title: "Complessita", subtitle: "come valore", theme: "violet" },
+  { title: "Cura", subtitle: "come metodo", theme: "red" },
+  { title: "Indipendenza", subtitle: "creativa", theme: "green" },
+  { title: "Inclusivita", subtitle: "come scelta narrativa", theme: "cyan" },
+] as const;
 
 const pageContent = {
   it: {
     valuesTitle: "In cosa crediamo",
-    values: [
-      {
-        label: "Responsabilità",
-        title: "Bellezza come responsabilità",
-        body: "Le immagini non servono solo a colpire: devono essere giuste, leggibili e all’altezza delle storie che portano con sé.",
-      },
-      {
-        label: "Metodo",
-        title: "Cura come metodo",
-        body: "Ogni fase, dall’idea alla consegna, merita attenzione. Il dettaglio non è decorazione: è parte del lavoro ben fatto.",
-      },
-      {
-        label: "Profondità",
-        title: "Complessità come valore",
-        body: "Non semplifichiamo tutto per forza. Ci interessa costruire progetti che tengano insieme livelli, sfumature e profondità.",
-      },
-      {
-        label: "Scelta",
-        title: "Inclusività come scelta narrativa",
-        body: "Crediamo in storie aperte, accessibili e capaci di parlare a pubblici diversi senza perdere personalità.",
-      },
-      {
-        label: "Libertà",
-        title: "Indipendenza creativa",
-        body: "Difendiamo la possibilità di scegliere il tono, il ritmo e il linguaggio giusto per ogni progetto, senza scorciatoie standard.",
-      },
-    ],
     dreamTitle: "Cosa sogniamo",
     dreamLead: "Per noi \"Ci vediamo agli Oscar\" è una battuta, un augurio e un orientamento insieme.",
     dreamBody:
       "Vuol dire puntare in alto senza perdere il lato artigianale del lavoro. Continuare a coltivare idee che maturano nel tempo, trovare i partner giusti e costruire progetti che possano stare accanto ai migliori, senza smettere di essere profondamente nostri.",
-    workTitle: "Come ci piace lavorare",
+    workTitle: "Come lavoriamo",
+    workSubtitle: "Il nostro metodo",
     workAreas: [
       {
-        kicker: "01",
+        kicker: "A",
         title: "Tempo e maturazione delle idee",
         body: "Ci interessa dare spazio ai progetti perché trovino la loro forma: ascoltare, correggere, far sedimentare e poi rilanciare.",
       },
       {
-        kicker: "02",
+        kicker: "B",
         title: "Dialogo e collaborazione",
         body: "Lavoriamo bene quando il confronto è reale: con chi scrive, con chi produce, con chi entra nel progetto portando un punto di vista utile.",
       },
       {
-        kicker: "03",
+        kicker: "C",
         title: "Artigianalità e metodo",
         body: "Non crediamo nelle scorciatoie spettacolari. Ci piace un processo chiaro, concreto, capace di unire intuizione e struttura.",
       },
@@ -60,51 +42,25 @@ const pageContent = {
   },
   en: {
     valuesTitle: "What we believe in",
-    values: [
-      {
-        label: "Responsibility",
-        title: "Beauty as responsibility",
-        body: "Images should not only impress: they need to be right, readable and worthy of the stories they carry.",
-      },
-      {
-        label: "Method",
-        title: "Care as method",
-        body: "Every phase, from idea to delivery, deserves attention. Detail is not decoration: it is part of doing the job well.",
-      },
-      {
-        label: "Depth",
-        title: "Complexity as value",
-        body: "We do not simplify everything by default. We want projects that can hold layers, nuances and depth together.",
-      },
-      {
-        label: "Choice",
-        title: "Inclusivity as narrative choice",
-        body: "We believe in stories that are open, accessible and able to speak to different audiences without losing personality.",
-      },
-      {
-        label: "Freedom",
-        title: "Creative independence",
-        body: "We protect the ability to choose the right tone, pace and language for each project without defaulting to standard shortcuts.",
-      },
-    ],
     dreamTitle: "What we dream of",
     dreamLead: "For us \"See you at the Oscars\" is a joke, a wish and a compass all at once.",
     dreamBody:
       "It means aiming high without losing the handmade side of the work. It means nurturing ideas over time, finding the right partners and building projects that can stand next to the best while remaining unmistakably ours.",
-    workTitle: "How we like to work",
+    workTitle: "How we work",
+    workSubtitle: "Our method",
     workAreas: [
       {
-        kicker: "01",
+        kicker: "A",
         title: "Time and maturation of ideas",
         body: "We value giving projects enough room to find their shape: listening, revising, letting things settle and then pushing forward again.",
       },
       {
-        kicker: "02",
+        kicker: "B",
         title: "Dialogue and collaboration",
         body: "We work best when the conversation is real: with writers, producers and everyone who brings a useful point of view into the project.",
       },
       {
-        kicker: "03",
+        kicker: "C",
         title: "Craft and method",
         body: "We do not believe in flashy shortcuts. We prefer a clear, practical process able to combine intuition and structure.",
       },
@@ -133,37 +89,31 @@ const content = pageContent[lang];
       className="hero-sty-studio page-hero page-hero--studio"
     />
 
-    <section class="page-main page-main--studio oscars-belief-hero">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-xl-10 d-flex justify-content-center">
-            <div class="oscars-belief-title-shell">
-              <div class="oscars-belief-title-shell__copy">
-                <h2 class="section-title oscars-belief-title" aria-label={content.valuesTitle}>
-                  IN COSA <br />
-                  <span id="oscars-belief-typing" class="accent typing-text" data-words="crediamo" aria-live="polite"></span>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-space section-space--soft oscars-values" aria-labelledby="oscarsValuesTitle">
+    <section class="page-main page-main--studio oscars-beliefs" aria-labelledby="oscarsValuesTitle">
       <div class="container" data-oscars-block-reveal style="--oscars-reveal-delay:80ms;">
-        <div class="row g-4">
-          {content.values.map((value, index) => (
-            <div class:list={["col-12", index === content.values.length - 1 ? "col-lg-12" : "col-lg-6", index === 2 ? "col-xl-7" : "", index === 3 ? "col-xl-5" : ""]}>
-              <article class:list={["oscars-value-card", "h-100", `oscars-value-card--${index + 1}`]}>
-                {index === 0 ? <h2 id="oscarsValuesTitle" class="visually-hidden">{content.valuesTitle}</h2> : null}
-                <span class="oscars-value-card__index">{String(index + 1).padStart(2, "0")}</span>
-                <span class="oscars-value-card__label">{value.label}</span>
-                <h3>{value.title}</h3>
-                <p>{value.body}</p>
-              </article>
-            </div>
-          ))}
+        <div class="oscars-section-head text-center">
+          <h2 id="oscarsValuesTitle" class="page-title-uniform">{content.valuesTitle}</h2>
+        </div>
+
+        <div class="oscars-beliefs__layout">
+          <div class="oscars-beliefs__art">
+            <img
+              class="img-fluid d-block mx-auto"
+              src="/images/lo-studio-panebarco-teams.png"
+              alt="Team Panebarco"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="oscars-beliefs__stickers" aria-label={content.valuesTitle}>
+            {beliefStickers.map((item) => (
+              <div class:list={["oscars-belief-sticker", `oscars-belief-sticker--${item.theme}`]}>
+                <span class="oscars-belief-sticker__title">{item.title}</span>
+                <span class="oscars-belief-sticker__subtitle">{item.subtitle}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -171,17 +121,17 @@ const content = pageContent[lang];
     <section class="section-space oscars-dream" aria-labelledby="oscarsDreamTitle">
       <div class="container">
         <div class="oscars-dream-card" data-oscars-block-reveal style="--oscars-reveal-delay:120ms;">
-          <div class="row g-4 g-xl-5 align-items-center">
-            <div class="col-12 col-lg-7">
-              <h2 id="oscarsDreamTitle" class="page-title-uniform">{content.dreamTitle}</h2>
-              <p class="oscars-dream-card__lead">{content.dreamLead}</p>
-              <p>{content.dreamBody}</p>
-            </div>
-            <div class="col-12 col-lg-5">
-              <div class="oscars-dream-card__art">
-                <img class="img-fluid d-block mx-auto" src="/images/studio-make-magic-happen.png" alt="" aria-hidden="true" />
-              </div>
-            </div>
+          <h2 id="oscarsDreamTitle" class="page-title-uniform oscars-dream-card__title">{content.dreamTitle}</h2>
+          <p class="oscars-dream-card__lead">{content.dreamLead}</p>
+          <p class="oscars-dream-card__body">{content.dreamBody}</p>
+          <div class="oscars-dream-card__art">
+            <img
+              class="img-fluid d-block w-100"
+              src="/images/teams-valori.png"
+              alt="Team Panebarco insieme"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
       </div>
@@ -191,23 +141,40 @@ const content = pageContent[lang];
       <div class="container" data-oscars-block-reveal style="--oscars-reveal-delay:140ms;">
         <div class="oscars-section-head text-center">
           <h2 id="oscarsWorkTitle" class="page-title-uniform">{content.workTitle}</h2>
+          <p class="oscars-work__subtitle">{content.workSubtitle}</p>
         </div>
-        <div class="row g-4 g-xl-5">
+        <div class="oscars-work__stack">
           {content.workAreas.map((area) => (
-            <div class="col-12 col-lg-4">
-              <article class="oscars-work-card h-100">
+            <article class="oscars-work-card">
+              <span class="oscars-work-card__badge" aria-hidden="true">{area.kicker}</span>
+              <div class="oscars-work-card__body py-4 py-lg-4">
                 <span class="oscars-work-card__kicker">{area.kicker}</span>
                 <h3>{area.title}</h3>
                 <p>{area.body}</p>
-              </article>
-            </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
 
-    <div data-oscars-block-reveal style="--oscars-reveal-delay:160ms;">
-      <ServicesShowcase lang={lang} sectionId="oscars-services" />
+    <div class="container pt-md-5 mt-5 mb-5" data-oscars-block-reveal style="--oscars-reveal-delay:160ms;">
+      <section class="extras-newsletter-card">
+        <div class="extras-newsletter-card__copy">
+          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
+          <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
+            ISCRIVITI ALLA NEWSLETTER.
+          </h2>
+          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
+        </div>
+        <img
+          class="extras-newsletter-card__figure"
+          src={newsletterFigure}
+          alt="Mascotte Panebarco"
+          loading="lazy"
+          decoding="async"
+        />
+      </section>
     </div>
   </main>
 

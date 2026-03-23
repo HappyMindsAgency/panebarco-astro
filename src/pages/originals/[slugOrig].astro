@@ -2,17 +2,18 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyDettaglio from "../../components/HeroStyDettaglio.astro";
 import { originalsProjects } from "../../data/originals";
+import { buildPath } from "../../i18n/routing";
 
 const lang = "it" as const;
 
-export function getStaticPaths() {
-  return originalsProjects.map((project) => ({
-    params: { slugOrig: project.slug.it },
-    props: { project },
-  }));
-}
+const slugOrig = Astro.params.slugOrig ?? "";
+const project =
+  originalsProjects.find((item) => item.slug.it === slugOrig) ??
+  Astro.props.project;
 
-const { project } = Astro.props;
+if (!project) {
+  return Astro.redirect(buildPath("originals", lang));
+}
 
 const sliderExtraSlides = [
   [

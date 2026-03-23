@@ -3,46 +3,47 @@ import Layout from "../layouts/Layout.astro";
 import { buildPath } from "../i18n/routing";
 
 const lang = "it" as const;
+const homeHref = buildPath("home", lang);
+const contactsHref = buildPath("contacts", lang);
 ---
 
 <Layout
   title="404 - Pagina non trovata | Panebarco"
   description="La pagina che stai cercando non esiste o si è spostata."
   lang={lang}
-  headerProps={{ darkmode: true }}
+  useInnerStyles={true}
+  headerProps={{ darkmode: false, containerClass: "hero-fluid" }}
 >
-  <main class="error-page">
-    <section class="error-hero">
-      <div class="error-hero__backdrop" aria-hidden="true"></div>
-      <div class="container error-shell">
-        <div class="error-copy">
-          <p class="error-kicker">Oops, questa pagina ha perso la rotta</p>
-          <h1 class="error-title">
-            <span class="error-title__ghost">404</span>
-            <span class="error-title__main">Pagina non trovata</span>
-          </h1>
-          <p class="error-lead">
-            Sembra che il contenuto che cercavi sia finito fuori scena. Ti riportiamo
-            su un percorso utile, senza farti girare a vuoto.
-          </p>
-
-          <div class="error-actions">
-            <a class="btn btn-cta btn-cta--orange btn-pill" href={buildPath("home", lang)}>
-              Torna alla home
-            </a>
+  <main class="error-404-page">
+    <section class="error-404-section section-space" aria-labelledby="error404Title">
+      <div class="container">
+        <div class="error-404-card row g-0 align-items-center">
+          <div class="col-12 col-lg-6 order-2 order-lg-1">
+            <figure class="error-404-visual mb-0">
+              <img
+                src="/images/pigeon-1-pagina-404.png"
+                alt="Piccione Panebarco"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
           </div>
-        </div>
 
-        <div class="error-visual" aria-hidden="true">
-          <div class="error-visual__card error-visual__card--primary">
-            <img
-              src="/images/lo-studio-panebarco-teams.png"
-              alt=""
-              loading="eager"
-              decoding="async"
-            />
+          <div class="col-12 col-lg-6 order-1 order-lg-2">
+            <div class="error-404-copy text-center text-lg-start">
+              <p class="error-404-kicker">Errore di rotta</p>
+              <h1 id="error404Title">Oops! 404</h1>
+              <p class="error-404-lead">
+                La pagina che stai cercando non &egrave; stata trovata. Potrebbe essere stata spostata
+                oppure il link non essere pi&ugrave; valido.
+              </p>
+
+              <div class="error-404-actions justify-content-center justify-content-lg-start">
+                <a href={homeHref} class="btn btn-cta btn-cta--blue btn-pill">Torna alla home</a>
+                <a href={contactsHref} class="btn btn-cta btn-cta--orange btn-pill">Contattaci</a>
+              </div>
+            </div>
           </div>
-          <div class="error-visual__sticker">ci siamo, ma qui no</div>
         </div>
       </div>
     </section>
@@ -50,208 +51,116 @@ const lang = "it" as const;
 </Layout>
 
 <style>
-  .error-page {
-    background:
-      radial-gradient(circle at top left, rgba(0, 159, 227, 0.2), transparent 32%),
-      radial-gradient(circle at 85% 20%, rgba(243, 171, 40, 0.16), transparent 20%),
-      linear-gradient(180deg, #050505 0%, #111 100%);
+  .error-404-page {
+    min-height: 100svh;
+    display: flex;
   }
 
-  .error-hero {
-    position: relative;
-    overflow: clip;
-    padding: clamp(7rem, 15vw, 10.5rem) 0 clamp(3rem, 7vw, 5rem);
-    color: #fff;
+  .error-404-section {
+    flex: 1;
+    display: grid;
+    align-items: center;
+    padding-top: clamp(6.5rem, 10vw, 8rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
   }
 
-  .error-hero__backdrop {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%),
-      linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.55) 100%);
-    pointer-events: none;
+  .error-404-card {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: clamp(1.75rem, 3vw, 2.5rem);
+    box-shadow:
+      0 1rem 2.5rem rgba(15, 23, 42, 0.08),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
   }
 
-  .error-shell {
+  .error-404-visual {
+    min-height: clamp(20rem, 34vw, 34rem);
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding:
+      clamp(1.5rem, 3vw, 2.75rem)
+      clamp(1rem, 2.5vw, 2rem)
+      0;
+  }
+
+  .error-404-visual img {
+    display: block;
+    width: min(100%, clamp(18rem, 35vw, 34rem));
+    height: auto;
+    object-fit: contain;
+  }
+
+  .error-404-copy {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
-    gap: clamp(2rem, 4vw, 4rem);
-    align-items: center;
+    padding:
+      clamp(2rem, 4vw, 4rem)
+      clamp(1.5rem, 4vw, 4rem)
+      clamp(2rem, 4vw, 4rem);
   }
 
-  .error-copy {
-    max-width: 42rem;
-  }
-
-  .error-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 0 1rem;
-    font-size: 0.92rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
+  .error-404-kicker {
+    margin: 0 0 0.9rem;
+    color: rgba(var(--bs-primary-rgb), 0.92);
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
-  .error-kicker::before {
-    content: "";
-    width: 2.8rem;
-    height: 0.18rem;
-    border-radius: 999px;
-    background: currentColor;
-  }
-
-  .error-kicker {
-    color: #f3ab28;
-  }
-
-  .error-title {
-    display: grid;
-    gap: 0.2rem;
+  .error-404-copy h1 {
     margin: 0;
   }
 
-  .error-title__ghost {
-    font-family: "Nunito", sans-serif;
-    font-size: clamp(5.2rem, 17vw, 12rem);
-    line-height: 0.84;
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.16);
+  .error-404-lead {
+    margin: 1.4rem 0 0;
+    font-size: clamp(1rem, 0.94rem + 0.45vw, 1.25rem);
+    line-height: 1.65;
+    color: rgba(15, 23, 42, 0.82);
   }
 
-  .error-title__main {
-    margin-top: -0.55rem;
-    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
-    font-size: clamp(2.7rem, 7vw, 5.6rem);
-    line-height: 0.92;
-    font-weight: 900;
-    text-transform: uppercase;
-    max-width: 11ch;
-  }
-
-  .error-lead {
-    max-width: 36rem;
-    margin: 1.5rem 0 0;
-    font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: clamp(1.05rem, 1rem + 0.7vw, 1.45rem);
-    font-weight: 300;
-    line-height: 1.55;
-    color: rgba(255, 255, 255, 0.88);
-  }
-
-  .error-actions {
+  .error-404-actions {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-wrap: wrap;
     gap: 0.9rem;
     margin-top: 2rem;
   }
 
-  .error-visual {
-    position: relative;
-    min-height: clamp(24rem, 48vw, 36rem);
-  }
-
-  .error-visual__card {
-    position: absolute;
-    overflow: hidden;
-    border-radius: 1.8rem;
-    box-shadow: 0 1.4rem 3rem rgba(0, 0, 0, 0.28);
-  }
-
-  .error-visual__card img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .error-visual__card--primary {
-    top: 0;
-    right: 0;
-    width: min(100%, 30rem);
-    background: linear-gradient(180deg, #0ea6e9 0%, #005a80 100%);
-    padding: 1rem 1rem 0;
-    transform: rotate(-4deg);
-  }
-
-  .error-visual__sticker {
-    position: absolute;
-    left: 1.5rem;
-    top: 3rem;
-    z-index: 2;
-    padding: 0.7rem 1.05rem 0.8rem;
-    border-radius: 999px;
-    background: #f3ab28;
-    color: #101010;
-    font-family: "Margarine", "Sofia Sans", sans-serif;
-    font-size: clamp(1rem, 1.2vw + 0.8rem, 1.35rem);
-    line-height: 1;
-    transform: rotate(-8deg);
-    box-shadow: 0 1rem 1.6rem rgba(0, 0, 0, 0.24);
-  }
-
   @media (max-width: 991.98px) {
-    .error-shell {
-      grid-template-columns: 1fr;
-    }
-
-    .error-copy {
-      max-width: none;
-    }
-
-    .error-visual {
-      min-height: clamp(18rem, 62vw, 28rem);
-      max-width: 38rem;
-      width: 100%;
+    .error-404-card {
+      max-width: 46rem;
       margin-inline: auto;
-      margin-top: 2.2rem;
-      margin-bottom: 2.4rem;
+    }
+
+    .error-404-visual {
+      min-height: auto;
+      padding-bottom: 0;
+    }
+
+    .error-404-visual img {
+      width: min(100%, 28rem);
+    }
+
+    .error-404-lead {
+      margin-inline: auto;
     }
   }
 
-  @media (max-width: 639.98px) {
-    .error-page {
-      background:
-        radial-gradient(circle at top left, rgba(0, 159, 227, 0.2), transparent 34%),
-        linear-gradient(180deg, #050505 0%, #111 100%);
+  @media (max-width: 575.98px) {
+    .error-404-section {
+      padding-top: 5.8rem;
     }
 
-    .error-hero {
-      padding-top: 6.6rem;
+    .error-404-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .error-title__main {
-      max-width: 8ch;
-    }
-
-    .error-actions {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .error-actions .btn {
+    .error-404-actions .btn {
       width: 100%;
-    }
-
-    .error-visual {
-      min-height: 17rem;
-      margin-top: 1.8rem;
-      margin-bottom: 2rem;
-    }
-
-    .error-visual__card--primary {
-      width: min(100%, 18rem);
-      right: 0.35rem;
-      padding: 0.75rem 0.75rem 0;
-    }
-
-    .error-visual__sticker {
-      left: 0.6rem;
-      top: 1rem;
-      padding-inline: 0.8rem;
     }
   }
 </style>

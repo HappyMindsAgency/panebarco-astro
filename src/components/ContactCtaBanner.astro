@@ -23,7 +23,10 @@ const {
 ---
 
 <!-- CTA finale riusabile per uniformare struttura e comportamento tra le pagine servizio. -->
-<div class="contact-cta-card position-relative rounded-4" style={`--contact-cta-bg:${background};`}>
+<div
+  class="contact-cta-card position-relative rounded-4"
+  style={`--contact-cta-bg:${background};`}
+>
   <img
     class="contact-cta-figure"
     src={figureSrc}
@@ -54,12 +57,14 @@ const {
   .contact-cta-figure {
     position: absolute;
     left: clamp(1.2rem, 4.2vw, 4.8rem);
-    bottom: 0;
+    top: 0;
+    bottom: auto;
     width: clamp(11.5rem, 24vw, 18.5rem);
     height: auto;
     display: block;
     pointer-events: none;
     user-select: none;
+    transform: translateY(-30%);
   }
 
   .contact-cta-copy {
@@ -78,36 +83,53 @@ const {
 
   @media (max-width: 991.98px) {
     .contact-cta-card {
-      min-height: clamp(10.8rem, 31vw, 14.4rem);
-      padding-left: calc(clamp(0.9rem, 2.6vw, 2.4rem) + clamp(8.8rem, 27vw, 13rem) + clamp(1.2rem, 2.4vw, 2rem));
+      display: block;
+      min-height: auto;
+      padding:
+        clamp(4.8rem, 10vw, 6.4rem)
+        clamp(0.9rem, 2.6vw, 2.4rem)
+        clamp(1.2rem, 2.8vw, 2rem);
     }
 
     .contact-cta-figure {
-      width: clamp(8.8rem, 27vw, 13rem);
-      left: clamp(0.9rem, 2.6vw, 2.4rem);
+      position: absolute;
+      width: clamp(6.8rem, 18vw, 9.5rem);
+      left: 50%;
+      top: 0;
+      bottom: auto;
+      display: block;
+      margin: 0;
+      transform: translate(-50%, -52%);
     }
 
     .contact-cta-copy {
-      max-width: clamp(18rem, 48vw, 34rem);
-      margin-left: clamp(0.8rem, 1.6vw, 1.2rem);
+      max-width: none;
+      margin-left: 0;
     }
   }
 
   @media (max-width: 767.98px) {
     .contact-cta-card {
-      min-height: clamp(6.8rem, 25vw, 8.5rem);
-      padding: 0.8rem 1rem 0.8rem calc(clamp(0.35rem, 1.5vw, 0.9rem) + clamp(4.9rem, 18vw, 6.4rem) + 1.15rem);
+      display: block;
+      min-height: auto;
+      padding: 4.5rem 1rem 1rem;
     }
 
     .contact-cta-figure {
-      width: clamp(4.9rem, 18vw, 6.4rem);
-      left: clamp(0.35rem, 1.5vw, 0.9rem);
+      position: absolute;
+      width: clamp(5.8rem, 24vw, 7.4rem);
+      left: 50%;
+      top: 0;
+      bottom: auto;
+      display: block;
+      margin: 0;
+      transform: translate(-50%, -50%);
     }
 
     .contact-cta-copy {
       width: 100%;
       max-width: none;
-      margin-left: 0.7rem;
+      margin-left: 0;
     }
   }
 </style>
