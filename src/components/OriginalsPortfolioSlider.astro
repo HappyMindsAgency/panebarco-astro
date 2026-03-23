@@ -36,12 +36,16 @@ const slides = [
     href: originalCandiesPath,
   },
 ] as const;
+
+const originalsIntro =
+  "Lo spazio in cui coltiviamo storie originali, personaggi e mondi narrativi che possono crescere tra sviluppo, scrittura e produzione.";
 ---
 
 <section id={sectionId} class={sectionClass}>
   <div class={containerClass}>
     <div class="originals-showcase-brand">
       <img class="originals-title-logo" src="/images/panebarco originals logo.png" alt="Panebarco Originals" />
+      <p class="originals-showcase-brand__intro">{originalsIntro}</p>
     </div>
 
     <div
@@ -277,6 +281,8 @@ const slides = [
 <style>
   .originals-showcase-brand {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     margin-bottom: clamp(1.2rem, 2vw, 2rem);
   }
@@ -284,6 +290,14 @@ const slides = [
   .originals-showcase-brand .originals-title-logo {
     width: min(21rem, 58vw);
     margin-bottom: 0;
+  }
+
+  .originals-showcase-brand__intro {
+    margin: 0.95rem 0 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 700;
+    line-height: 1.55;
+    text-align: center;
   }
 
   .portfolio-originals-slider {

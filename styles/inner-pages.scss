@@ -1779,8 +1779,7 @@ body.inner-page {
   }
 
   .story-mutant-page .story-mutant-media__intro {
-    max-width: 62rem;
-    margin: 0 auto clamp(1.35rem, 2.6vw, 2rem);
+    margin: 0 0 clamp(1.35rem, 2.6vw, 2rem);
   }
 
   .story-mutant-page .story-mutant-media__intro h2 {
@@ -2292,8 +2291,7 @@ body.inner-page {
   }
 
   .services-page .services-originals-band__intro {
-    max-width: 62rem;
-    margin: 0 auto clamp(1.5rem, 3vw, 2.4rem);
+    margin: 0 0 clamp(1.5rem, 3vw, 2.4rem);
     text-align: center;
   }
 
@@ -2314,14 +2312,7 @@ body.inner-page {
   .extras-page .extras-section-intro,
   .portfolio-page .portfolio-section-intro,
   .originals-page .portfolio-section-intro {
-    margin: 0.95rem auto 0;
-    max-width: 60ch;
-  }
-
-  .extras-page .extras-section-intro--left,
-  .portfolio-page .portfolio-section-intro--left {
-    margin-inline: 0;
-    max-width: 54ch;
+    margin: 0.95rem 0 0;
   }
 
   .portfolio-page .portfolio-section-heading,
@@ -2338,15 +2329,6 @@ body.inner-page {
   .originals-page .portfolio-section-heading .page-title-uniform,
   .originals-page .portfolio-section-heading .portfolio-section-intro {
     max-width: none;
-  }
-
-  .originals-page .portfolio-section-intro {
-    margin-inline: auto;
-    max-width: 60ch;
-  }
-
-  .portfolio-page .portfolio-section-intro--left {
-    max-width: 58ch;
   }
 
   @media (min-width: 992px) {
