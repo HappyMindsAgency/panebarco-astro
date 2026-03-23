@@ -3655,6 +3655,70 @@ body.inner-page {
     text-transform: uppercase;
   }
 
+  .portfolio-page .portfolio-filter-reset-row {
+    display: flex;
+    justify-content: flex-start;
+    width: calc((100% - 2.5rem) / 2);
+    margin-top: 1rem;
+  }
+
+  .portfolio-page .portfolio-filter-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.2rem;
+    padding: 0.4rem 0.8rem 0.45rem;
+    border: 1px solid rgba(95, 111, 128, 0.22);
+    border-radius: 999px;
+    background: rgba(95, 111, 128, 0.08);
+    color: rgba(71, 83, 96, 0.92);
+    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
+    font-size: 0.84rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: none;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .portfolio-page .portfolio-filter-reset i {
+    font-size: 0.92rem;
+    transition: transform 0.3s ease;
+  }
+
+  .portfolio-page .portfolio-filter-reset:hover:not(:disabled) {
+    transform: translateY(-0.06rem);
+    border-color: rgba(95, 111, 128, 0.3);
+    background: rgba(95, 111, 128, 0.14);
+    box-shadow: 0 0.25rem 0.7rem rgba(0, 0, 0, 0.12);
+  }
+
+  .portfolio-page .portfolio-filter-reset:hover:not(:disabled) i,
+  .portfolio-page .portfolio-filter-reset:focus-visible i {
+    transform: rotate(90deg);
+  }
+
+  .portfolio-page .portfolio-filter-reset:focus-visible {
+    outline: none;
+    transform: translateY(-0.06rem);
+    box-shadow:
+      0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.14),
+      0 0.25rem 0.7rem rgba(0, 0, 0, 0.14);
+  }
+
+  .portfolio-page .portfolio-filter-reset:disabled {
+    opacity: 0.5;
+    cursor: default;
+    box-shadow: none;
+  }
+
   .portfolio-page .portfolio-filter-field:first-child .portfolio-filter-label {
     color: var(--portfolio-filter-category-text);
   }
@@ -3772,6 +3836,11 @@ body.inner-page {
     .portfolio-page .portfolio-filter-form {
       grid-template-columns: 1fr;
     }
+
+    .portfolio-page .portfolio-filter-reset-row {
+      width: 100%;
+      margin-top: 0.9rem;
+    }
   }
 
   @media (max-width: 767.98px) {
@@ -3791,6 +3860,17 @@ body.inner-page {
     .portfolio-page .portfolio-filter-list {
       gap: 0.55rem;
       justify-content: center;
+    }
+
+    .portfolio-page .portfolio-filter-reset-row {
+      justify-content: center;
+      margin-top: 0.72rem;
+    }
+
+    .portfolio-page .portfolio-filter-reset {
+      min-height: 2.05rem;
+      padding: 0.38rem 0.72rem 0.42rem;
+      font-size: 0.78rem;
     }
 
     .portfolio-page .portfolio-filter-chip {

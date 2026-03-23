@@ -2,8 +2,6 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
-import PortfolioShowcase from "../../components/PortfolioShowcase.astro";
-import { getPortfolioShowcaseContent } from "../../data/portfolio-showcase";
 import { originalsProjects } from "../../data/originals";
 import { portfolioProjects as portfolioDetailProjects } from "../../data/portfolio";
 import { buildPath, joinLocalizedPath } from "../../i18n/routing";
@@ -11,8 +9,6 @@ import { buildPath, joinLocalizedPath } from "../../i18n/routing";
 const lang = "it" as const;
 const portfolioBearsPath = joinLocalizedPath(buildPath("portfolio", lang), portfolioDetailProjects[0].slug.it);
 const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
-const portfolioShowcase = getPortfolioShowcaseContent(lang, { linkAll: true });
-const portfolioShowcaseItems = portfolioShowcase.items.filter((item) => item.slot !== "wide");
 const portfolioOriginalSlides = [
   {
     title: "Caramelle",
@@ -234,6 +230,17 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
               </div>
             </fieldset>
           </div>
+          <div class="portfolio-filter-reset-row">
+            <button
+              class="portfolio-filter-reset"
+              type="button"
+              data-portfolio-reset
+              aria-label="Azzera tutti i filtri del portfolio"
+            >
+              <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+              <span>Reset</span>
+            </button>
+          </div>
         </div>
 
         <div class="row g-4 mt-2 mt-lg-3" data-portfolio-grid>
@@ -269,15 +276,6 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
       </div>
     </section>
 
-    <PortfolioShowcase
-      sectionClass="section-space section-space--tight pt-0"
-      containerClass="container portfolio-container"
-      title={portfolioShowcase.title}
-      stickerSrc={portfolioShowcase.stickerSrc}
-      stickerAlt={portfolioShowcase.stickerAlt}
-      items={portfolioShowcaseItems}
-    />
-
     <section class="section-space section-space--tight mt-4 mt-md-5 mt-lg-5 pt-2 pt-md-3 pt-lg-4">
       <div class="container">
         <ContactCtaBanner
@@ -301,6 +299,22 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
           var chips = root.querySelectorAll("[data-filter-chip]");
           var cards = root.querySelectorAll("[data-portfolio-card]");
           var emptyState = root.querySelector("[data-portfolio-empty]");
+          var resetButton = root.querySelector("[data-portfolio-reset]");
+
+          function resetFilters() {
+            activeFilters.service = "Tutti";
+            activeFilters.type = "Tutti";
+            syncFilterChips();
+            updateCards();
+          }
+
+          function syncResetButton() {
+            if (!resetButton) return;
+
+            var isDefaultState = activeFilters.service === "Tutti" && activeFilters.type === "Tutti";
+            resetButton.disabled = isDefaultState;
+            resetButton.setAttribute("aria-disabled", isDefaultState ? "true" : "false");
+          }
 
           function syncFilterChips() {
             chips.forEach(function (chip) {
@@ -311,6 +325,8 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
               chip.classList.toggle("is-active", isActive);
               chip.setAttribute("aria-pressed", isActive ? "true" : "false");
             });
+
+            syncResetButton();
           }
 
           function updateCards() {
@@ -344,6 +360,12 @@ const typeFilters = ["Tutti", "Story-driven", "Divulgativo", "Promozionale", "Em
               activeFilters[group] = value || "Tutti";
               syncFilterChips();
               updateCards();
+            });
+          }
+
+          if (resetButton) {
+            resetButton.addEventListener("click", function () {
+              resetFilters();
             });
           }
 
