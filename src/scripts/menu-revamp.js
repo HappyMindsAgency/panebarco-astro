@@ -6,6 +6,8 @@
 
     const menuBtn = document.querySelector(".menu-trigger");
     const topHeader = document.querySelector(".top-header");
+    const logoImage = document.querySelector(".hero-logo img");
+    const menuIcon = menuBtn ? menuBtn.querySelector(".menu-trigger-icon") : null;
     const overlay = document.getElementById("menuOverlayRevamp");
     const closeBtn = document.getElementById("menuOverlayRevampClose");
     const bubble = document.getElementById("menuOverlayRevampBubble");
@@ -33,7 +35,15 @@
       if (!topHeader) return;
       const isScrolled = window.scrollY > 8;
       topHeader.classList.toggle("is-scrolled", isScrolled);
-      topHeader.classList.toggle("shadow", isScrolled);
+
+      [logoImage, menuIcon].forEach(function (element) {
+        if (!(element instanceof HTMLImageElement)) return;
+
+        const nextSrc = isScrolled ? element.dataset.stickySrc : element.dataset.defaultSrc;
+        if (nextSrc && element.getAttribute("src") !== nextSrc) {
+          element.setAttribute("src", nextSrc);
+        }
+      });
     }
 
     function setMenuCompensation() {

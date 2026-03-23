@@ -34,7 +34,8 @@ const {
 // darkmode=false -> logo scuro  + hamburger nero  (per sfondi chiari)
 const imgLogo = logoSrc ?? (darkmode ? logoLight.src : logoDark.src);
 const menuIcon = menuIconSrc ?? (darkmode ? menuWhite.src : menuBlack.src);
-
+const stickyLogo = logoDark.src;
+const stickyMenuIcon = menuBlack.src;
 
 ---
 
@@ -43,7 +44,14 @@ const menuIcon = menuIconSrc ?? (darkmode ? menuWhite.src : menuBlack.src);
     <div class="hero-nav">
       <button class="menu-trigger" type="button" aria-label={customLabel("a11y.openMenu", lang)}>
         {menuIcon ? (
-          <img class="menu-trigger-icon" src={menuIcon} alt="" aria-hidden="true" />
+          <img
+            class="menu-trigger-icon"
+            src={menuIcon}
+            data-default-src={menuIcon}
+            data-sticky-src={stickyMenuIcon}
+            alt=""
+            aria-hidden="true"
+          />
         ) : (
           <>
             <span></span>
@@ -54,7 +62,7 @@ const menuIcon = menuIconSrc ?? (darkmode ? menuWhite.src : menuBlack.src);
       </button>
       {showLogo && (
         <a href={logoHref} class="hero-logo text-decoration-none" aria-label={logoAlt}>
-          <img src={imgLogo} alt={logoAlt} />
+          <img src={imgLogo} data-default-src={imgLogo} data-sticky-src={stickyLogo} alt={logoAlt} />
         </a>
       )}
     </div>

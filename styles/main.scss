@@ -168,9 +168,10 @@ h2 {
     }
 
     .top-header.is-scrolled {
-      background-color: var(--bs-success);
-      -webkit-backdrop-filter: blur(10px) saturate(130%);
-      backdrop-filter: blur(10px) saturate(130%);
+      background-color: #fff;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
       padding: $spacer 0;
     }
 
