@@ -919,10 +919,16 @@ h2 {
     }
 
     .hero-cta:hover,
-    .hero-cta:focus-visible,
+    .hero-cta:focus-visible {
+      background: var(--cta-blue);
+      color: var(--cta-white);
+      border-color: transparent;
+      box-shadow: none;
+    }
+
     .hero-cta:active {
-      background: #30997b;
-      color: #ffffff;
+      background: var(--cta-orange);
+      color: var(--cta-ink);
       border-color: transparent;
       box-shadow: none;
     }
