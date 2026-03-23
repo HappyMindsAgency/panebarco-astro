@@ -65,7 +65,7 @@ const modeBubbleSets = {
   lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
-  <main class="commercials-page studio-page">
+  <main class="commercials-page commercials-page--post studio-page">
     <HeroStyStudio
       backgroundVideoSrc="/images/1021768637.mp4"
       bgWord="FINISHING"
@@ -99,8 +99,7 @@ const modeBubbleSets = {
     <section class="section-space section-space--tight pt-0">
       <div class="container">
         <div class="row">
-          <div class="col-12">
-            <h2 class="page-title-uniform text-primary mb-5 text-lg-center">QUATTRO MODI DI INTERVENIRE.</h2>
+          <div class="col-12 mt-3 mt-md-5">
             {communicationModes.map((mode, index) => {
               const scenes = modeImageSets[mode];
               const bubble = modeBubbleSets[mode];

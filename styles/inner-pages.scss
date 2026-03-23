@@ -614,10 +614,10 @@ body.inner-page {
 
   .oscars-page .oscars-belief-sticker__subtitle {
     margin-top: 0.28rem;
-    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
+    font-family: "Margarine", cursive;
     font-size: clamp(0.8rem, 0.72rem + 0.2vw, 1rem);
     line-height: 1;
-    font-weight: 800;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.01em;
   }
@@ -3165,6 +3165,19 @@ body.inner-page {
       padding-top: 2.8rem;
     }
 
+    .extras-page .extras-figma-thought-card__sticker {
+      min-height: 2.85rem;
+      padding: 0.56rem 1.12rem 0.46rem;
+      border-radius: 0.92rem;
+      font-size: clamp(1rem, 0.88rem + 0.52vw, 1.22rem);
+    }
+
+    .extras-page .extras-figma-thought-card__sticker::after {
+      left: 0.96rem;
+      bottom: -0.5rem;
+      border-width: 0.56rem 0.5rem 0 0;
+    }
+
     .extras-page .extras-figma-library {
       background:
         linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.82) 100%),
@@ -5372,8 +5385,10 @@ body.inner-page {
       column-gap: clamp(#{$spacer * 0.45}, 2.2vw, #{$spacer});
     }
 
-    .commercials-page .commercial-mode-bubble {
-      width: clamp(8.2rem, 23vw, 11.2rem);
+    .commercials-page--commercials .commercial-mode-bubble,
+    .commercials-page--post .commercial-mode-bubble,
+    .commercials-page--service .commercial-mode-bubble {
+      width: clamp(9.2rem, 28vw, 12.6rem);
     }
 
     .extras-page .extras-social-library__stack {
@@ -5972,8 +5987,10 @@ body.inner-page {
       white-space: nowrap;
     }
 
-    .commercials-page .commercial-mode-bubble {
-      width: clamp(7rem, 34vw, 9.8rem);
+    .commercials-page--commercials .commercial-mode-bubble,
+    .commercials-page--post .commercial-mode-bubble,
+    .commercials-page--service .commercial-mode-bubble {
+      width: clamp(8.4rem, 40vw, 11.2rem);
       transform: translateY(0.28rem) rotate(-7deg) scale(0.92);
     }
 
