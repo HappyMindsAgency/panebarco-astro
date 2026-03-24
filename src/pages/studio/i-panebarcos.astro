@@ -23,26 +23,34 @@ const pageContent = {
       {
         name: "Marianna",
         role: "Produzione e regia",
+        microText: "Tiene insieme produzione, regia e traiettoria dei progetti.",
         avatar: "/images/teams-avatar-che-fate-01.png",
         photo: "/images/lo-studio-panebarcos-01.jpg",
+        linkedinUrl: "",
       },
       {
         name: "Camilla",
         role: "Organizzazione e cura",
+        microText: "Coordina flussi, persone e dettagli che fanno stare bene il lavoro.",
         avatar: "/images/teams-avatar-che-fate-03.png",
         photo: "/images/lo-studio-panebarcos-02.jpg",
+        linkedinUrl: "",
       },
       {
         name: "Matteo",
         role: "Sviluppo e coordinamento",
+        microText: "Segue sviluppo, processi e raccordo operativo tra idee e squadra.",
         avatar: "/images/teams-avatar-che-fate-02.png",
         photo: "/images/lo-studio-panebarcos-03.jpg",
+        linkedinUrl: "",
       },
       {
         name: "Daniele",
         role: "Visione e disegno",
+        microText: "Delinea l'immaginario Panebarco tra segno, visione e direzione creativa.",
         avatar: "/images/avatar-che-fate-00.png",
         photo: "/images/lo-studio-panebarcos-04.jpg",
+        linkedinUrl: "",
       },
     ],
     networkMembers: [
@@ -101,26 +109,34 @@ const pageContent = {
       {
         name: "Marianna",
         role: "Production and direction",
+        microText: "She keeps production, direction and the overall project path aligned.",
         avatar: "/images/teams-avatar-che-fate-01.png",
         photo: "/images/lo-studio-panebarcos-01.jpg",
+        linkedinUrl: "",
       },
       {
         name: "Camilla",
         role: "Organization and care",
+        microText: "She coordinates people, workflows and the details that keep work balanced.",
         avatar: "/images/teams-avatar-che-fate-03.png",
         photo: "/images/lo-studio-panebarcos-02.jpg",
+        linkedinUrl: "",
       },
       {
         name: "Matteo",
         role: "Development and coordination",
+        microText: "He follows development, processes and the operational link across the team.",
         avatar: "/images/teams-avatar-che-fate-02.png",
         photo: "/images/lo-studio-panebarcos-03.jpg",
+        linkedinUrl: "",
       },
       {
         name: "Daniele",
         role: "Vision and drawing",
+        microText: "He shapes Panebarco's imagery through drawing, vision and creative direction.",
         avatar: "/images/avatar-che-fate-00.png",
         photo: "/images/lo-studio-panebarcos-04.jpg",
+        linkedinUrl: "",
       },
     ],
     networkMembers: [
@@ -231,8 +247,26 @@ const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMemb
                         <img src={member.avatar} alt="" />
                       </span>
                     )}
-                    <h3>{member.name}</h3>
-                    <p>{member.role}</p>
+                    <div class="panebarcos-family-card__head">
+                      <h3>{member.name}</h3>
+                      {member.linkedinUrl ? (
+                        <a
+                          class="panebarcos-family-card__linkedin"
+                          href={member.linkedinUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Profilo LinkedIn di ${member.name}`}
+                        >
+                          <i class="bi bi-linkedin"></i>
+                        </a>
+                      ) : (
+                        <span class="panebarcos-family-card__linkedin" aria-hidden="true">
+                          <i class="bi bi-linkedin"></i>
+                        </span>
+                      )}
+                    </div>
+                    <p class="panebarcos-family-card__role">{member.role}</p>
+                    <p class="panebarcos-family-card__micro">{member.microText}</p>
                   </div>
                 </article>
               </div>
