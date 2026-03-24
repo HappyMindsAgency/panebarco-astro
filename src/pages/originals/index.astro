@@ -3,85 +3,72 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import OriginalsPortfolioSlider from "../../components/OriginalsPortfolioSlider.astro";
 import { buildPath } from "../../i18n/routing";
+import { getOriginalsPageContent } from "../../lib/site-content";
 
 const lang = "it" as const;
-
-const developmentAreas = [
-  {
-    theme: "shorts",
-    title: "Cortometraggi",
-    summary: "Formati compatti e autoriali pensati per festival, ricerca visiva e nascita di nuove IP.",
+const originalsFallback = {
+  header: {
+    bgWord: "PRODUZIONI INDIPENDENTI",
+    title: "ORIGINALS",
+    subtitle: "Format originali sviluppati dentro la nostra casa creativa",
+    backgroundVideoSrc: "/images/1021768637.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
   },
-  {
-    theme: "series",
-    title: "Serie animate",
-    summary: "Progetti seriali con personaggi forti, architetture narrative elastiche e mondi pronti a espandersi.",
+  explore: {
+    title: "Esplora i progetti",
+    summary: "Filtra il portfolio per area di servizio o per tipologia di video e scorri una griglia piu ampia di lavori, frame e casi correlati.",
+    items: [
+      { theme: "shorts", title: "Cortometraggi", summary: "Formati compatti e autoriali pensati per festival, ricerca visiva e nascita di nuove IP.", image: "", imageAlt: "Cortometraggi" },
+      { theme: "series", title: "Serie animate", summary: "Progetti seriali con personaggi forti, architetture narrative elastiche e mondi pronti a espandersi.", image: "", imageAlt: "Serie animate" },
+      { theme: "features", title: "Lungometraggi", summary: "Sviluppi lunghi dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.", image: "", imageAlt: "Lungometraggi" },
+      { theme: "crossmedia", title: "Progetti crossmediali", summary: "Idee che possono vivere su piu piattaforme tra audiovisivo, editoria, educational e licensing.", image: "", imageAlt: "Progetti crossmediali" },
+    ],
   },
-  {
-    theme: "features",
-    title: "Lungometraggi",
-    summary: "Sviluppi lunghi dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.",
-  },
-  {
-    theme: "crossmedia",
-    title: "Progetti crossmediali",
-    summary: "Idee che possono vivere su piu piattaforme tra audiovisivo, editoria, educational e licensing.",
-  },
-] as const;
-
-const finalCtas = [
-  {
+  highlightedOriginals: [
+    { title: "Caramelle", subtitle: "Serie animate", image: "/images/originals-cover-01-700x395.jpg", slug: "caramelle" },
+    { title: "Marta e la morte", subtitle: "Lungometraggi", image: "/images/originals-cover-02-270x395.jpg", slug: "marta-e-la-morte" },
+    { title: "#Nostoppingnora", subtitle: "Short formats", image: "/images/originals-cover-03-270x395.jpg", slug: "nostoppingnora" },
+  ],
+  ctaOscar: {
     theme: "cyan",
+    titleClass: "fw-bold",
     title: "CTA Ci vediamo agli oscar",
-    titleClass: "fw-bold",
     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris massa.",
-    href: buildPath("studioOscars", lang),
-    buttonLabel: "Partnership",
+    button: { label: "Partnership", href: buildPath("studioOscars", lang) },
   },
-  {
+  ctaContact: {
     theme: "violet",
-    title: "CTA Contattaci",
     titleClass: "fw-bold",
+    title: "CTA Contattaci",
     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mauris massa.",
-    href: buildPath("studioOscars", lang),
-    buttonLabel: "Scrivici",
+    button: { label: "Scrivici", href: buildPath("contacts", lang) },
   },
+};
+
+const originalsContent = await getOriginalsPageContent({ lang, fallback: originalsFallback });
+const finalCtas = [
+  { ...originalsContent.ctaOscar, href: originalsContent.ctaOscar.button.href, buttonLabel: originalsContent.ctaOscar.button.label },
+  { ...originalsContent.ctaContact, href: originalsContent.ctaContact.button.href, buttonLabel: originalsContent.ctaContact.button.label },
 ] as const;
 ---
 
-<Layout
-  title="Originals - Panebarco"
-  useInnerStyles={true}
-  lang={lang}
-  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
->
+<Layout title="Originals - Panebarco" useInnerStyles={true} lang={lang} headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}>
   <main class="studio-page originals-page">
-    <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="PRODUZIONI INDIPENDENTI"
-      title="ORIGINALS"
-      subtitle="Format originali sviluppati dentro la nostra casa creativa"
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
-      className="hero-sty-studio page-hero page-hero--studio"
-      showSideImage={false}
-    />
+    <HeroStyStudio backgroundVideoSrc={originalsContent.header.backgroundVideoSrc} bgWord={originalsContent.header.bgWord} title={originalsContent.header.title} subtitle={originalsContent.header.subtitle} sideImageSrc={originalsContent.header.sideImageSrc} sideImageAlt={originalsContent.header.sideImageAlt} className="hero-sty-studio page-hero page-hero--studio" showSideImage={false} />
 
     <div class="originals-scroll-shell" data-originals-scroll-shell>
       <section class="page-main-offset section-space section-space--soft originals-pillars" aria-labelledby="originalsPillarsTitle">
         <div class="container">
           <div class="row mb-3 mb-lg-4">
             <div class="col-12 portfolio-section-heading">
-              <h2 id="originalsPillarsTitle" class="page-title-uniform">Esplora i progetti</h2>
-              <p class="portfolio-section-intro">
-                Filtra il portfolio per area di servizio o per tipologia di video e scorri una griglia più ampia di lavori,
-                frame e casi correlati.
-              </p>
+              <h2 id="originalsPillarsTitle" class="page-title-uniform">{originalsContent.explore.title}</h2>
+              <p class="portfolio-section-intro">{originalsContent.explore.summary}</p>
             </div>
           </div>
 
           <div class="row g-4 originals-pillars-grid">
-            {developmentAreas.map((area, index) => (
+            {originalsContent.explore.items.map((area, index) => (
               <div class="col-12 col-md-6 col-xl-3">
                 <article class:list={["originals-pillar-card", `originals-pillar-card--${area.theme}`]} tabindex="0">
                   <div class="originals-pillar-card__media" aria-hidden="true"></div>
@@ -100,7 +87,7 @@ const finalCtas = [
         </div>
       </section>
 
-      <OriginalsPortfolioSlider />
+      <OriginalsPortfolioSlider lang={lang} slides={originalsContent.highlightedOriginals} />
 
       <section class="section-space section-space--tight originals-dual-cta" aria-labelledby="originalsFinalCtaTitle">
         <div class="container">
@@ -125,45 +112,24 @@ const finalCtas = [
   <script is:inline>
     (function () {
       var cleanupOriginalsPage = window.__panebarcoOriginalsPageCleanup || function () {};
-
-      function clamp(value, min, max) {
-        return Math.min(Math.max(value, min), max);
-      }
-
-      function mix(start, end, progress) {
-        return Math.round(start + (end - start) * progress);
-      }
-
-      function mixColor(from, to, progress) {
-        return "rgb(" + mix(from[0], to[0], progress) + ", " + mix(from[1], to[1], progress) + ", " + mix(from[2], to[2], progress) + ")";
-      }
-
-      function mixAlpha(from, to, progress) {
-        return String(from + (to - from) * progress);
-      }
-
+      function clamp(value, min, max) { return Math.min(Math.max(value, min), max); }
+      function mix(start, end, progress) { return Math.round(start + (end - start) * progress); }
+      function mixColor(from, to, progress) { return "rgb(" + mix(from[0], to[0], progress) + ", " + mix(from[1], to[1], progress) + ", " + mix(from[2], to[2], progress) + ")"; }
+      function mixAlpha(from, to, progress) { return String(from + (to - from) * progress); }
       function initOriginalsPage() {
         cleanupOriginalsPage();
-
         var cleanups = [];
-
         document.querySelectorAll("[data-originals-scroll-shell]").forEach(function (shell) {
           var ticking = false;
-
           function computeProgress() {
             var rect = shell.getBoundingClientRect();
             var shellTop = window.scrollY + rect.top;
             var shellHeight = shell.offsetHeight;
             var start = shellTop - window.innerHeight * 0.08;
             var end = shellTop + shellHeight - window.innerHeight * 0.52;
-
-            if (end <= start) {
-              end = start + 1;
-            }
-
+            if (end <= start) end = start + 1;
             return clamp((window.scrollY - start) / (end - start), 0, 1);
           }
-
           function applyTheme(progress) {
             shell.style.setProperty("--originals-shell-bg", mixColor([245, 247, 250], [10, 14, 24], progress));
             shell.style.setProperty("--originals-shell-ink", mixColor([15, 23, 42], [244, 247, 250], progress));
@@ -173,46 +139,24 @@ const finalCtas = [
             shell.style.setProperty("--originals-shell-border-alpha", mixAlpha(0.08, 0.22, progress));
             shell.style.setProperty("--originals-shell-shadow-alpha", mixAlpha(0.08, 0.34, progress));
           }
-
-          function renderTheme() {
-            ticking = false;
-            applyTheme(computeProgress());
-          }
-
-          function requestThemeFrame() {
-            if (ticking) return;
-            ticking = true;
-            window.requestAnimationFrame(renderTheme);
-          }
-
+          function renderTheme() { ticking = false; applyTheme(computeProgress()); }
+          function requestThemeFrame() { if (ticking) return; ticking = true; window.requestAnimationFrame(renderTheme); }
           window.addEventListener("scroll", requestThemeFrame, { passive: true });
           window.addEventListener("resize", requestThemeFrame);
           requestThemeFrame();
-
           cleanups.push(function () {
             window.removeEventListener("scroll", requestThemeFrame);
             window.removeEventListener("resize", requestThemeFrame);
           });
         });
-
-        cleanupOriginalsPage = function () {
-          cleanups.forEach(function (cleanup) {
-            cleanup();
-          });
-        };
-
+        cleanupOriginalsPage = function () { cleanups.forEach(function (cleanup) { cleanup(); }); };
         window.__panebarcoOriginalsPageCleanup = cleanupOriginalsPage;
       }
-
       if (!window.__panebarcoOriginalsPageBound) {
-        document.addEventListener("astro:before-swap", function () {
-          cleanupOriginalsPage();
-        });
-
+        document.addEventListener("astro:before-swap", function () { cleanupOriginalsPage(); });
         document.addEventListener("astro:page-load", initOriginalsPage);
         window.__panebarcoOriginalsPageBound = true;
       }
-
       initOriginalsPage();
     })();
   </script>

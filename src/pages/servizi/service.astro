@@ -2,61 +2,202 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import ServiceModesSection from "../../components/ServiceModesSection.astro";
+import { getServiceDetailContent } from "../../lib/services-content";
+import { buildPath } from "../../i18n/routing";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
 
 const lang = "it" as const;
 
-const communicationModes = [
-  "Sviluppare",
-  "Produrre",
-  "Coordinare",
-  "Accompagnare",
-] as const;
+const serviceFallback = {
+  header: {
+    bgWord: "SERVICE",
+    title: "SERVICE",
+    subtitle: "Supporto creativo, produttivo e operativo lungo tutto il processo",
+    backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
+  },
+  intro: {
+    title: "Service che entra nel flusso e lo tiene insieme",
+    paragraphs: [
+      "Affianchiamo produzioni, agenzie e partner creativi quando serve una squadra capace di entrare nel processo con metodo, flessibilita e continuita, senza appesantire il lavoro.",
+      "Possiamo intervenire nello sviluppo, nella produzione di contenuti, nel coordinamento operativo e nella gestione del lavoro condiviso, adattandoci al contesto e ai bisogni reali del progetto.",
+    ],
+  },
+  modes: [
+    {
+      title: "Sviluppare",
+      description:
+        "Entriamo nel progetto quando serve una base solida: concept, organizzazione e impostazione del lavoro per far partire bene ogni fase.",
+      bubble: "/images/raccontare.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/spiegare-01.png",
+          imageAlt: "Sviluppare scena 1",
+          title: "Sviluppare 01",
+          summary: "Frame dal progetto sviluppare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/raccontare-02.jpg",
+          imageAlt: "Sviluppare scena 2",
+          title: "Sviluppare 02",
+          summary: "Frame dal progetto sviluppare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/promuovere-03.png",
+          imageAlt: "Sviluppare scena 3",
+          title: "Sviluppare 03",
+          summary: "Frame dal progetto sviluppare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/coinvolgere-03.jpg",
+          imageAlt: "Sviluppare scena 4",
+          title: "Sviluppare 04",
+          summary: "Frame dal progetto sviluppare.",
+          tags: ["Service"],
+        },
+      ],
+    },
+    {
+      title: "Produrre",
+      description:
+        "Affianchiamo produzioni e partner nella realizzazione di contenuti 2D e 3D, con un supporto operativo che tiene insieme tempi, qualita e continuita.",
+      bubble: "/images/spiegare.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/promuovere-03.png",
+          imageAlt: "Produrre scena 1",
+          title: "Produrre 01",
+          summary: "Frame dal progetto produrre.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/spiegare-02.png",
+          imageAlt: "Produrre scena 2",
+          title: "Produrre 02",
+          summary: "Frame dal progetto produrre.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/raccontare-03.jpg",
+          imageAlt: "Produrre scena 3",
+          title: "Produrre 03",
+          summary: "Frame dal progetto produrre.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/coinvolgere-02.jpg",
+          imageAlt: "Produrre scena 4",
+          title: "Produrre 04",
+          summary: "Frame dal progetto produrre.",
+          tags: ["Service"],
+        },
+      ],
+    },
+    {
+      title: "Coordinare",
+      description:
+        "Gestiamo il lavoro condiviso tra team interni, collaboratori e partner esterni, mantenendo il flusso leggibile e sostenibile per tutti.",
+      bubble: "/images/promuovere.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/coinvolgere-03.jpg",
+          imageAlt: "Coordinare scena 1",
+          title: "Coordinare 01",
+          summary: "Frame dal progetto coordinare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/raccontare-04.jpg",
+          imageAlt: "Coordinare scena 2",
+          title: "Coordinare 02",
+          summary: "Frame dal progetto coordinare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/spiegare-03.png",
+          imageAlt: "Coordinare scena 3",
+          title: "Coordinare 03",
+          summary: "Frame dal progetto coordinare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/promuovere-02.png",
+          imageAlt: "Coordinare scena 4",
+          title: "Coordinare 04",
+          summary: "Frame dal progetto coordinare.",
+          tags: ["Service"],
+        },
+      ],
+    },
+    {
+      title: "Accompagnare",
+      description:
+        "Restiamo dentro il processo anche quando cambia forma, con un supporto pratico che segue il progetto fino alla consegna.",
+      bubble: "/images/coinvolgere.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/raccontare-02.jpg",
+          imageAlt: "Accompagnare scena 1",
+          title: "Accompagnare 01",
+          summary: "Frame dal progetto accompagnare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/coinvolgere-01.jpg",
+          imageAlt: "Accompagnare scena 2",
+          title: "Accompagnare 02",
+          summary: "Frame dal progetto accompagnare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/spiegare-04.png",
+          imageAlt: "Accompagnare scena 3",
+          title: "Accompagnare 03",
+          summary: "Frame dal progetto accompagnare.",
+          tags: ["Service"],
+        },
+        {
+          image: "/images/promuovere-01.png",
+          imageAlt: "Accompagnare scena 4",
+          title: "Accompagnare 04",
+          summary: "Frame dal progetto accompagnare.",
+          tags: ["Service"],
+        },
+      ],
+    },
+  ],
+  tag: "Service",
+  cta: {
+    kicker: "Hai bisogno di una squadra che entri nel flusso?",
+    title: "TI AFFIANCHIAMO NOI.",
+    figureSrc: "/images/lo-animiamo-noi.png",
+    figureAlt: "Mascotte Panebarco",
+    background: "#9f5ea3",
+    button: {
+      label: "Contattaci",
+      href: buildPath("contacts", lang),
+    },
+  },
+};
 
-const modeDescriptions = {
-  Sviluppare:
-    "Entriamo nel progetto quando serve una base solida: concept, organizzazione e impostazione del lavoro per far partire bene ogni fase.",
-  Produrre:
-    "Affianchiamo produzioni e partner nella realizzazione di contenuti 2D e 3D, con un supporto operativo che tiene insieme tempi, qualita e continuita.",
-  Coordinare:
-    "Gestiamo il lavoro condiviso tra team interni, collaboratori e partner esterni, mantenendo il flusso leggibile e sostenibile per tutti.",
-  Accompagnare:
-    "Restiamo dentro il processo anche quando cambia forma, con un supporto pratico che segue il progetto fino alla consegna.",
-} as const;
-
-const modeImageSets = {
-  Sviluppare: [
-    "/images/spiegare-01.png",
-    "/images/raccontare-02.jpg",
-    "/images/promuovere-03.png",
-    "/images/coinvolgere-03.jpg",
-  ],
-  Produrre: [
-    "/images/promuovere-03.png",
-    "/images/spiegare-02.png",
-    "/images/raccontare-03.jpg",
-    "/images/coinvolgere-02.jpg",
-  ],
-  Coordinare: [
-    "/images/coinvolgere-03.jpg",
-    "/images/raccontare-04.jpg",
-    "/images/spiegare-03.png",
-    "/images/promuovere-02.png",
-  ],
-  Accompagnare: [
-    "/images/raccontare-02.jpg",
-    "/images/coinvolgere-01.jpg",
-    "/images/spiegare-04.png",
-    "/images/promuovere-01.png",
-  ],
-} as const;
-
-const modeBubbleSets = {
-  Sviluppare: "/images/raccontare.png",
-  Produrre: "/images/spiegare.png",
-  Coordinare: "/images/promuovere.png",
-  Accompagnare: "/images/coinvolgere.png",
-} as const;
+const serviceContent = await getServiceDetailContent({
+  resource: "pagina-service",
+  lang,
+  fallback: serviceFallback,
+});
 ---
 
 <Layout
@@ -67,12 +208,12 @@ const modeBubbleSets = {
 >
   <main class="commercials-page commercials-page--service studio-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/panebarco-studio-video.mp4"
-      bgWord="SERVICE"
-      title="SERVICE"
-      subtitle="Supporto creativo, produttivo e operativo lungo tutto il processo"
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
+      backgroundVideoSrc={serviceContent.header.backgroundVideoSrc}
+      bgWord={serviceContent.header.bgWord}
+      title={serviceContent.header.title}
+      subtitle={serviceContent.header.subtitle}
+      sideImageSrc={serviceContent.header.sideImageSrc}
+      sideImageAlt={serviceContent.header.sideImageAlt}
       showSideImage={false}
     />
 
@@ -81,134 +222,27 @@ const modeBubbleSets = {
         <div class="container">
           <div class="row">
             <div class="col-12 text-lg-center text-start">
-              <h2 class="page-title-uniform mb-4 text-body">Service che entra nel flusso e lo tiene insieme</h2>
-              <p class="mb-4">
-                Affianchiamo produzioni, agenzie e partner creativi quando serve una squadra capace di entrare nel processo
-                con metodo, flessibilita e continuita, senza appesantire il lavoro.
-              </p>
-              <p class="mb-0">
-                Possiamo intervenire nello sviluppo, nella produzione di contenuti, nel coordinamento operativo e nella
-                gestione del lavoro condiviso, adattandoci al contesto e ai bisogni reali del progetto.
-              </p>
+              <h2 class="page-title-uniform mb-4 text-body">{serviceContent.intro.title}</h2>
+              <p class="mb-4">{serviceContent.intro.paragraphs?.[0] ?? serviceFallback.intro.paragraphs[0]}</p>
+              <p class="mb-0">{serviceContent.intro.paragraphs?.[1] ?? serviceFallback.intro.paragraphs[1]}</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section-space section-space--tight pt-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 mt-3 mt-md-5">
-            {communicationModes.map((mode, index) => {
-              const scenes = modeImageSets[mode];
-              const bubble = modeBubbleSets[mode];
+    <ServiceModesSection modes={serviceContent.modes} defaultTag={serviceContent.tag || serviceFallback.tag} />
 
-              return (
-                <article class:list={[index > 0 && "mt-5 mt-lg-6 pt-3 pt-lg-4", index === communicationModes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
-                  <div class="commercial-mode-heading" data-commercial-mode-heading>
-                    <h3 class="fw-bold text-body display-5 display-lg-4">{mode}</h3>
-                    {bubble && (
-                      <img
-                        class="commercial-mode-bubble"
-                        src={bubble}
-                        alt=""
-                        aria-hidden="true"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )}
-                  </div>
-                  <p>{modeDescriptions[mode]}</p>
-
-                  <div class="row g-3">
-                    <div class="col-12 col-lg-8">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 1`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[0]}
-                          alt={`${mode} scena 1`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Service</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 01</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 2`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[1]}
-                          alt={`${mode} scena 2`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Service</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 02</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 3`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[2]}
-                          alt={`${mode} scena 3`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Service</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 03</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-12 col-lg-8">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 4`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[3]}
-                          alt={`${mode} scena 4`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Service</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 04</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                  </div>
-
-                </article>
-              );
-            })}
-
-            <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
-              <ContactCtaBanner
-                kicker="Hai bisogno di una squadra che entri nel flusso?"
-                title="TI AFFIANCHIAMO NOI."
-              />
-            </section>
-          </div>
-        </div>
-      </div>
+    <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
+      <ContactCtaBanner
+        kicker={serviceContent.cta.kicker}
+        title={serviceContent.cta.title}
+        href={serviceContent.cta.button.href}
+        buttonLabel={serviceContent.cta.button.label}
+        figureSrc={serviceContent.cta.figureSrc}
+        figureAlt={serviceContent.cta.figureAlt}
+        background={serviceContent.cta.background}
+      />
     </section>
   </main>
   <script type="module" src={commercialsPageScriptUrl}></script>

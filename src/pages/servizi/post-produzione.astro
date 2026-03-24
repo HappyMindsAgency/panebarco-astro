@@ -2,61 +2,208 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import ServiceModesSection from "../../components/ServiceModesSection.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
+import { buildPath } from "../../i18n/routing";
+import { getServiceDetailContent } from "../../lib/services-content";
 
-const lang = "it" as const;
+const locale = "it" as const;
+const lang = locale;
 
-const communicationModes = [
-  "Integrare",
-  "Trasformare",
-  "Rifinire",
-  "Potenziare",
-] as const;
-
-const modeDescriptions = {
-  Integrare:
-    "3D, VFX e live action lavorano insieme per far convivere livelli diversi nello stesso frame con naturalezza, ritmo e precisione.",
-  Trasformare:
-    "Interveniamo sull'immagine per cambiare percezione, intensita e impatto visivo attraverso compositing, effetti e lavorazioni dedicate.",
-  Rifinire:
-    "Color, look and feel e finishing definiscono la tenuta finale del progetto, dando coerenza a ogni passaggio della post-produzione.",
-  Potenziare:
-    "A volte il nostro lavoro non si vede, ma si sente: interventi invisibili che sostengono narrazione, atmosfera e continuita.",
-} as const;
-
-const modeImageSets = {
-  Integrare: [
-    "/images/compositing-e-visual-effects-01.jpg",
-    "/images/rendering-a-livelli-02.jpg",
-    "/images/background-e-props-02.jpg",
-    "/images/rendering-finale-02.jpg",
+const fallbackContent = {
+  header: {
+    bgWord: "FINISHING",
+    title: "POST-PRODUZIONE",
+    subtitle: "Integrare, trasformare, rifinire e potenziare le immagini",
+    backgroundVideoSrc: "/images/1021768637.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
+    showSideImage: false,
+  },
+  intro: {
+    title: "Lorem ipsum dolor sit amet",
+    paragraphs: [
+      "Entriamo nella fase finale del progetto quando serve continuita visiva, controllo tecnico e una lavorazione capace di tenere insieme riprese, elementi digitali, compositing e finishing.",
+      "Affianchiamo produzioni, studi e agenzie su interventi di 3D, VFX, integrazione live action, color grading e rifinitura finale, con un approccio pratico che lavora sul dettaglio senza perdere di vista il risultato.",
+    ],
+    content: "",
+  },
+  modes: [
+    {
+      title: "Integrare",
+      description:
+        "3D, VFX e live action lavorano insieme per far convivere livelli diversi nello stesso frame con naturalezza, ritmo e precisione.",
+      bubble: "/images/raccontare.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/compositing-e-visual-effects-01.jpg",
+          imageAlt: "Integrare scena 1",
+          title: "Integrare 01",
+          summary: "Frame dal progetto integrare.",
+          tags: ["Integrare", "Post"],
+        },
+        {
+          image: "/images/rendering-a-livelli-02.jpg",
+          imageAlt: "Integrare scena 2",
+          title: "Integrare 02",
+          summary: "Frame dal progetto integrare.",
+          tags: ["Integrare", "Post"],
+        },
+        {
+          image: "/images/background-e-props-02.jpg",
+          imageAlt: "Integrare scena 3",
+          title: "Integrare 03",
+          summary: "Frame dal progetto integrare.",
+          tags: ["Integrare", "Post"],
+        },
+        {
+          image: "/images/rendering-finale-02.jpg",
+          imageAlt: "Integrare scena 4",
+          title: "Integrare 04",
+          summary: "Frame dal progetto integrare.",
+          tags: ["Integrare", "Post"],
+        },
+      ],
+    },
+    {
+      title: "Trasformare",
+      description:
+        "Interveniamo sull'immagine per cambiare percezione, intensita e impatto visivo attraverso compositing, effetti e lavorazioni dedicate.",
+      bubble: "/images/spiegare.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/rendering-a-livelli-01.jpg",
+          imageAlt: "Trasformare scena 1",
+          title: "Trasformare 01",
+          summary: "Frame dal progetto trasformare.",
+          tags: ["Trasformare", "Post"],
+        },
+        {
+          image: "/images/storyboard-e-animatic-01.jpg",
+          imageAlt: "Trasformare scena 2",
+          title: "Trasformare 02",
+          summary: "Frame dal progetto trasformare.",
+          tags: ["Trasformare", "Post"],
+        },
+        {
+          image: "/images/compositing-e-visual-effects-01.jpg",
+          imageAlt: "Trasformare scena 3",
+          title: "Trasformare 03",
+          summary: "Frame dal progetto trasformare.",
+          tags: ["Trasformare", "Post"],
+        },
+        {
+          image: "/images/rendering-a-livelli-02.jpg",
+          imageAlt: "Trasformare scena 4",
+          title: "Trasformare 04",
+          summary: "Frame dal progetto trasformare.",
+          tags: ["Trasformare", "Post"],
+        },
+      ],
+    },
+    {
+      title: "Rifinire",
+      description:
+        "Color, look and feel e finishing definiscono la tenuta finale del progetto, dando coerenza a ogni passaggio della post-produzione.",
+      bubble: "/images/promuovere.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/rendering-finale-01.jpg",
+          imageAlt: "Rifinire scena 1",
+          title: "Rifinire 01",
+          summary: "Frame dal progetto rifinire.",
+          tags: ["Rifinire", "Post"],
+        },
+        {
+          image: "/images/rendering-finale-02.jpg",
+          imageAlt: "Rifinire scena 2",
+          title: "Rifinire 02",
+          summary: "Frame dal progetto rifinire.",
+          tags: ["Rifinire", "Post"],
+        },
+        {
+          image: "/images/background-e-props-02.jpg",
+          imageAlt: "Rifinire scena 3",
+          title: "Rifinire 03",
+          summary: "Frame dal progetto rifinire.",
+          tags: ["Rifinire", "Post"],
+        },
+        {
+          image: "/images/compositing-e-visual-effects-01.jpg",
+          imageAlt: "Rifinire scena 4",
+          title: "Rifinire 04",
+          summary: "Frame dal progetto rifinire.",
+          tags: ["Rifinire", "Post"],
+        },
+      ],
+    },
+    {
+      title: "Potenziare",
+      description:
+        "A volte il nostro lavoro non si vede, ma si sente: interventi invisibili che sostengono narrazione, atmosfera e continuita.",
+      bubble: "/images/coinvolgere.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/background-e-props-02.jpg",
+          imageAlt: "Potenziare scena 1",
+          title: "Potenziare 01",
+          summary: "Frame dal progetto potenziare.",
+          tags: ["Potenziare", "Post"],
+        },
+        {
+          image: "/images/compositing-e-visual-effects-01.jpg",
+          imageAlt: "Potenziare scena 2",
+          title: "Potenziare 02",
+          summary: "Frame dal progetto potenziare.",
+          tags: ["Potenziare", "Post"],
+        },
+        {
+          image: "/images/rendering-a-livelli-01.jpg",
+          imageAlt: "Potenziare scena 3",
+          title: "Potenziare 03",
+          summary: "Frame dal progetto potenziare.",
+          tags: ["Potenziare", "Post"],
+        },
+        {
+          image: "/images/rendering-finale-01.jpg",
+          imageAlt: "Potenziare scena 4",
+          title: "Potenziare 04",
+          summary: "Frame dal progetto potenziare.",
+          tags: ["Potenziare", "Post"],
+        },
+      ],
+    },
   ],
-  Trasformare: [
-    "/images/rendering-a-livelli-01.jpg",
-    "/images/storyboard-e-animatic-01.jpg",
-    "/images/compositing-e-visual-effects-01.jpg",
-    "/images/rendering-a-livelli-02.jpg",
-  ],
-  Rifinire: [
-    "/images/rendering-finale-01.jpg",
-    "/images/rendering-finale-02.jpg",
-    "/images/background-e-props-02.jpg",
-    "/images/compositing-e-visual-effects-01.jpg",
-  ],
-  Potenziare: [
-    "/images/background-e-props-02.jpg",
-    "/images/compositing-e-visual-effects-01.jpg",
-    "/images/rendering-a-livelli-01.jpg",
-    "/images/rendering-finale-01.jpg",
-  ],
-} as const;
+  cta: {
+    kicker: "Hai gia il materiale o il progetto e in corso?",
+    title: "LO RIFINIAMO NOI.",
+    figureSrc: "/images/lo-animiamo-noi.png",
+    figureAlt: "Mascotte Panebarco",
+    background: "#9f5ea3",
+    button: {
+      label: "Contattaci",
+      href: buildPath("contacts", lang),
+    },
+  },
+};
 
-const modeBubbleSets = {
-  Integrare: "/images/raccontare.png",
-  Trasformare: "/images/spiegare.png",
-  Rifinire: "/images/promuovere.png",
-  Potenziare: "/images/coinvolgere.png",
-} as const;
+const pageContent = await getServiceDetailContent({
+  resource: "pagina-post-produzione",
+  lang: locale,
+  fallback: fallbackContent,
+});
+
+const introParagraphs = pageContent.intro.paragraphs.length
+  ? pageContent.intro.paragraphs
+  : fallbackContent.intro.paragraphs;
 ---
 
 <Layout
@@ -67,13 +214,13 @@ const modeBubbleSets = {
 >
   <main class="commercials-page commercials-page--post studio-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="FINISHING"
-      title="POST-PRODUZIONE"
-      subtitle="Integrare, trasformare, rifinire e potenziare le immagini"
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
-      showSideImage={false}
+      backgroundVideoSrc={pageContent.header.backgroundVideoSrc}
+      bgWord={pageContent.header.bgWord}
+      title={pageContent.header.title}
+      subtitle={pageContent.header.subtitle}
+      sideImageSrc={pageContent.header.sideImageSrc}
+      sideImageAlt={pageContent.header.sideImageAlt}
+      showSideImage={pageContent.header.showSideImage}
     />
 
     <section class="page-main page-main--studio">
@@ -81,134 +228,28 @@ const modeBubbleSets = {
         <div class="container">
           <div class="row">
             <div class="col-12 text-lg-center text-start">
-              <h2 class="page-title-uniform mb-4 text-body">Lorem ipsum dolor sit amet</h2>
-              <p class="mb-4">
-                Entriamo nella fase finale del progetto quando serve continuita visiva, controllo tecnico e una lavorazione
-                capace di tenere insieme riprese, elementi digitali, compositing e finishing.
-              </p>
-              <p class="mb-0">
-                Affianchiamo produzioni, studi e agenzie su interventi di 3D, VFX, integrazione live action, color grading
-                e rifinitura finale, con un approccio pratico che lavora sul dettaglio senza perdere di vista il risultato.
-              </p>
+              <h2 class="page-title-uniform mb-4 text-body">{pageContent.intro.title}</h2>
+              {introParagraphs.map((paragraph, index) => (
+                <p class:list={[index === introParagraphs.length - 1 ? "mb-0" : "mb-4"]}>{paragraph}</p>
+              ))}
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section-space section-space--tight pt-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 mt-3 mt-md-5">
-            {communicationModes.map((mode, index) => {
-              const scenes = modeImageSets[mode];
-              const bubble = modeBubbleSets[mode];
+    <ServiceModesSection modes={pageContent.modes} defaultTag={pageContent.tag || "Post"} />
 
-              return (
-                <article class:list={[index > 0 && "mt-5 mt-lg-6 pt-3 pt-lg-4", index === communicationModes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
-                  <div class="commercial-mode-heading" data-commercial-mode-heading>
-                    <h3 class="fw-bold text-body display-5 display-lg-4">{mode}</h3>
-                    {bubble && (
-                      <img
-                        class="commercial-mode-bubble"
-                        src={bubble}
-                        alt=""
-                        aria-hidden="true"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )}
-                  </div>
-                  <p>{modeDescriptions[mode]}</p>
-
-                  <div class="row g-3">
-                    <div class="col-12 col-lg-8">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 1`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[0]}
-                          alt={`${mode} scena 1`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Post</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 01</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 2`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[1]}
-                          alt={`${mode} scena 2`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Post</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 02</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-12 col-lg-4">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 3`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[2]}
-                          alt={`${mode} scena 3`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Post</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 03</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-12 col-lg-8">
-                      <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 4`}>
-                        <img
-                          class="img-fluid w-100"
-                          src={scenes[3]}
-                          alt={`${mode} scena 4`}
-                          style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                        />
-                        <div class="commercials-media-tags" aria-hidden="true">
-                          <span class="commercials-media-tag">{mode}</span>
-                          <span class="commercials-media-tag">Post</span>
-                        </div>
-                        <div class="commercials-media-overlay" aria-hidden="true">
-                          <h4>{mode} 04</h4>
-                          <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                        </div>
-                      </article>
-                    </div>
-                  </div>
-
-                </article>
-              );
-            })}
-
-            <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
-              <ContactCtaBanner
-                kicker="Hai gia il materiale o il progetto e in corso?"
-                title="LO RIFINIAMO NOI."
-              />
-            </section>
-          </div>
-        </div>
-      </div>
+    <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
+      <ContactCtaBanner
+        kicker={pageContent.cta.kicker}
+        title={pageContent.cta.title}
+        href={pageContent.cta.button.href}
+        buttonLabel={pageContent.cta.button.label}
+        figureSrc={pageContent.cta.figureSrc}
+        figureAlt={pageContent.cta.figureAlt}
+        background={pageContent.cta.background}
+      />
     </section>
   </main>
   <script type="module" src={commercialsPageScriptUrl}></script>

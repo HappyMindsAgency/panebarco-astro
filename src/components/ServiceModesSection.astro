@@ -1,0 +1,82 @@
+---
+interface Scene {
+  image: string;
+  imageAlt: string;
+  title: string;
+  summary: string;
+  tags: string[];
+}
+
+interface Mode {
+  title: string;
+  description: string;
+  bubble?: string;
+  scenes: Scene[];
+  topLayout?: string;
+  bottomLayout?: string;
+}
+
+interface Props {
+  modes: Mode[];
+  defaultTag?: string;
+}
+
+const { modes = [], defaultTag = "" } = Astro.props;
+---
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 mt-md-5">
+      {modes.map((mode, index) => (
+        <article class:list={[index > 0 && "mt-5 mt-lg-6 pt-3 pt-lg-4", index === modes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
+          <div class="commercial-mode-heading" data-commercial-mode-heading>
+            <h3 class="fw-bold text-body display-5 display-lg-4">{mode.title}</h3>
+            {mode.bubble && (
+              <img
+                class="commercial-mode-bubble"
+                src={mode.bubble}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+          <p>{mode.description}</p>
+
+          <div class="row g-3">
+            {mode.scenes.map((scene, sceneIndex) => (
+              <div
+                class:list={[
+                  "col-12",
+                  sceneIndex === 0 && (mode.topLayout || "col-lg-8"),
+                  sceneIndex === 1 && (mode.bottomLayout || "col-lg-4"),
+                  sceneIndex === 2 && (mode.bottomLayout || "col-lg-4"),
+                  sceneIndex === 3 && (mode.topLayout || "col-lg-8"),
+                ]}
+              >
+                <article class="commercials-media-card" tabindex="0" aria-label={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}>
+                  <img
+                    class="img-fluid w-100"
+                    src={scene.image}
+                    alt={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}
+                    style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
+                  />
+                  <div class="commercials-media-tags" aria-hidden="true">
+                    {(scene.tags?.length ? scene.tags : [mode.title, defaultTag]).filter(Boolean).slice(0, 2).map((tag) => (
+                      <span class="commercials-media-tag">{tag}</span>
+                    ))}
+                  </div>
+                  <div class="commercials-media-overlay" aria-hidden="true">
+                    <h4>{scene.title || `${mode.title} ${String(sceneIndex + 1).padStart(2, "0")}`}</h4>
+                    <p>{scene.summary}</p>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</div>

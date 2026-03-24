@@ -2,122 +2,171 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import mainScriptUrl from "../../scripts/main.js?url";
-import { originalsProjects } from "../../data/originals";
 import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+import { getLabel, getServicesOriginalSlides, getServicesPageContent } from "../../lib/services-content";
 
 const lang = "it" as const;
-const originalCandiesPath = joinLocalizedPath(buildPath("originals", lang), originalsProjects[0].slug.it);
-const servicesIntro =
-  "Lavoriamo tra commercials, post-produzione e service con un approccio che si adatta al progetto: possiamo entrare nello sviluppo, rafforzare un impianto visivo, sostenere la produzione o rifinire quello che gia esiste, scegliendo ogni volta l'intervento piu utile.";
-
-const serviceAreas = [
-  {
-    title: "Commercials",
-    href: buildPath("servicesCommercials", lang),
-    image: "/images/portfolio-cover-03-695x391.jpg",
-    imageAlt: "Frame del progetto Vita dura per gli Orsi Marsicani",
-    summary:
-      "Nel panorama dei corti, di serie, spot e video per il digitale, sviluppiamo storie e formati che sanno stare bene nel mondo del brand senza sembrare pubblicita.",
-    bullets: [
-      "Commercials",
-      "Story-driven",
-      "Expainer",
-      "Adv & social",
-    ],
-    buttonLabel: "Scopri di piu",
+const clientsLabel = getLabel("I nostri clienti", lang);
+const originalsCtaLabel = getLabel("Scopri gli originals", lang);
+const servicesFallback = {
+  header: {
+    bgWord: "COSE",
+    title: "SERVIZI",
+    subtitle: "Cose che sappiamo fare",
+    backgroundVideoSrc: "/images/1021768637.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
   },
-  {
-    title: "Post-produzione",
-    href: buildPath("servicesPost", lang),
-    image: "/images/rendering-a-livelli-02.jpg",
-    imageAlt: "Monitor con lavorazione di post-produzione",
-    summary:
-      "Nella post portiamo ordine dentro quello che succede, con finishing, 3D, VFX, compositing e integrazione live action pensati per far tornare tutto.",
-    bullets: [
-      "Color & finish",
-      "3D e VFX",
-      "Compositing",
-      "Motion graphics",
+  intro: {
+    title: "Servizi",
+    content:
+      "Lavoriamo tra commercials, post-produzione e service con un approccio che si adatta al progetto: possiamo entrare nello sviluppo, rafforzare un impianto visivo, sostenere la produzione o rifinire quello che gia esiste, scegliendo ogni volta l'intervento piu utile.",
+    paragraphs: [
+      "Lavoriamo tra commercials, post-produzione e service con un approccio che si adatta al progetto: possiamo entrare nello sviluppo, rafforzare un impianto visivo, sostenere la produzione o rifinire quello che gia esiste, scegliendo ogni volta l'intervento piu utile.",
     ],
-    buttonLabel: "Scopri di piu",
+    mediaSrc: "/images/lo-studio-panebarco-teams.png",
+    mediaAlt: "Team Panebarco",
+    hasMedia: false,
   },
-  {
-    title: "Service",
-    href: buildPath("servicesService", lang),
-    image: "/images/portfolio-cover-04-695x391.jpg",
-    imageAlt: "Frame illustrato del progetto di service",
-    summary:
-      "Nel servizio entriamo dove altri hanno bisogno di mani, pipeline e staff tecnico. Produzione, set, supporto operativo: ci adattiamo ai flussi, senza far rumore.",
-    bullets: [
-      "Produzione",
-      "Supporto set",
-      "Pipeline",
-      "Supervisione",
-    ],
-    buttonLabel: "Scopri di piu",
+  serviceCards: [
+    {
+      title: "Commercials",
+      href: buildPath("servicesCommercials", lang),
+      image: "/images/portfolio-cover-03-695x391.jpg",
+      imageAlt: "Frame del progetto Vita dura per gli Orsi Marsicani",
+      summary:
+        "Nel panorama dei corti, di serie, spot e video per il digitale, sviluppiamo storie e formati che sanno stare bene nel mondo del brand senza sembrare pubblicita.",
+      bullets: ["Commercials", "Story-driven", "Expainer", "Adv & social"],
+      buttonLabel: getLabel("Scopri di piu", lang),
+    },
+    {
+      title: "Post-produzione",
+      href: buildPath("servicesPost", lang),
+      image: "/images/rendering-a-livelli-02.jpg",
+      imageAlt: "Monitor con lavorazione di post-produzione",
+      summary:
+        "Nella post portiamo ordine dentro quello che succede, con finishing, 3D, VFX, compositing e integrazione live action pensati per far tornare tutto.",
+      bullets: ["Color & finish", "3D e VFX", "Compositing", "Motion graphics"],
+      buttonLabel: getLabel("Scopri di piu", lang),
+    },
+    {
+      title: "Service",
+      href: buildPath("servicesService", lang),
+      image: "/images/portfolio-cover-04-695x391.jpg",
+      imageAlt: "Frame illustrato del progetto di service",
+      summary:
+        "Nel servizio entriamo dove altri hanno bisogno di mani, pipeline e staff tecnico. Produzione, set, supporto operativo: ci adattiamo ai flussi, senza far rumore.",
+      bullets: ["Produzione", "Supporto set", "Pipeline", "Supervisione"],
+      buttonLabel: getLabel("Scopri di piu", lang),
+    },
+    {
+      title: "... e tanto altro",
+      href: buildPath("servicesMore", lang),
+      image: "/images/hero-commercials.png",
+      imageAlt: "Collage di progetti speciali Panebarco",
+      summary:
+        "Ci sono progetti che non stanno dentro un'etichetta sola: formati ibridi, contenuti editoriali, librerie sociali e idee laterali che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.",
+      bullets: ["Progetti speciali", "Contenuti editoriali", "Social library", "Newsletter & format"],
+      buttonLabel: getLabel("Scopri di piu", lang),
+    },
+  ],
+  clientNames: [
+    "Warner Bros",
+    "Netflix",
+    "Disney+",
+    "RAI",
+    "Mediaset",
+    "Sky",
+    "Amazon",
+    "Apple TV+",
+    "Warner Bros",
+    "Netflix",
+    "Disney+",
+    "RAI",
+  ],
+  originalsIntro:
+    "Panebarco Originals e lo spazio in cui sviluppiamo storie nostre: mondi, personaggi e formati che nascono da un immaginario autoriale e crescono tra ricerca visiva, scrittura e produzione.",
+  oscarCta: {
+    title: "CI VEDIAMO AGLI OSCAR",
+    subtitle: "Spoiler sul finale?",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim",
+    image: "/images/lo-studio-oscar.png",
+    imageAlt: "Personaggi con Oscar",
+    button: {
+      label: "Conosci i Panebarcos",
+      href: buildPath("studioOscars", lang),
+    },
   },
-  {
-    title: "... e tanto altro",
-    href: buildPath("servicesMore", lang),
-    image: "/images/hero-commercials.png",
-    imageAlt: "Collage di progetti speciali Panebarco",
-    summary:
-      "Ci sono progetti che non stanno dentro un'etichetta sola: formati ibridi, contenuti editoriali, librerie sociali e idee laterali che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.",
-    bullets: [
-      "Progetti speciali",
-      "Contenuti editoriali",
-      "Social library",
-      "Newsletter & format",
-    ],
-    buttonLabel: "Scopri di piu",
-  },
-] as const;
+};
 
-const clientNames = [
-  "Warner Bros",
-  "Netflix",
-  "Disney+",
-  "RAI",
-  "Mediaset",
-  "Sky",
-  "Amazon",
-  "Apple TV+",
-  "Warner Bros",
-  "Netflix",
-  "Disney+",
-  "RAI",
-] as const;
+const servicesPage = await getServicesPageContent({
+  lang,
+  fallback: servicesFallback,
+});
 
-const repeatedClientNames = Array.from({ length: 3 }, (_, groupIndex) =>
-  clientNames.map((name) => ({
-    name,
-    isDuplicate: groupIndex > 0,
-  }))
-).flat();
+const servicesOriginalSlides = await getServicesOriginalSlides({
+  lang,
+  fallback: [
+    {
+      title: "Caramelle",
+      subtitle: "Serie animate",
+      image: "/images/originals-cover-01-700x395.jpg",
+      slug: "caramelle",
+    },
+    {
+      title: "Marta e la morte",
+      subtitle: "Lungometraggi",
+      image: "/images/originals-cover-02-270x395.jpg",
+      slug: "marta-e-la-morte",
+    },
+    {
+      title: "#Nostoppingnora",
+      subtitle: "Short formats",
+      image: "/images/originals-cover-03-270x395.jpg",
+      slug: "nostoppingnora",
+    },
+  ],
+});
 
-const portfolioOriginalSlides = [
+const originalSlidesFallback = [
   {
     title: "Caramelle",
     subtitle: "Serie animate",
     image: "/images/originals-cover-01-700x395.jpg",
-    href: originalCandiesPath,
+    slug: "caramelle",
   },
   {
     title: "Marta e la morte",
     subtitle: "Lungometraggi",
     image: "/images/originals-cover-02-270x395.jpg",
-    href: originalCandiesPath,
+    slug: "marta-e-la-morte",
   },
   {
     title: "#Nostoppingnora",
     subtitle: "Short formats",
     image: "/images/originals-cover-03-270x395.jpg",
-    href: originalCandiesPath,
+    slug: "nostoppingnora",
   },
-] as const;
+];
 
-const originalsIntro =
-  "Panebarco Originals e lo spazio in cui sviluppiamo storie nostre: mondi, personaggi e formati che nascono da un immaginario autoriale e crescono tra ricerca visiva, scrittura e produzione.";
+const repeatedClientNames = Array.from({ length: 3 }, (_, groupIndex) =>
+  servicesPage.clientNames.map((name) => ({
+    name,
+    isDuplicate: groupIndex > 0,
+  }))
+).flat();
+
+const portfolioOriginalSlides = originalSlidesFallback.map((fallbackSlide, index) => {
+  const slide = servicesOriginalSlides[index] || fallbackSlide;
+
+  return {
+    title: slide.title,
+    subtitle: slide.subtitle,
+    image: slide.image,
+    href: joinLocalizedPath(buildPath("originals", lang), slide.slug || fallbackSlide.slug),
+  };
+});
 ---
 
 <Layout
@@ -128,12 +177,12 @@ const originalsIntro =
 >
     <main class="studio-page services-page">
       <HeroStyStudio
-        backgroundVideoSrc="/images/1021768637.mp4"
-        bgWord="COSE"
-        title="SERVIZI"
-        subtitle="Cose che sappiamo fare"
-        sideImageSrc="/images/lo-studio-panebarco-teams.png"
-        sideImageAlt="Team Panebarco"
+        backgroundVideoSrc={servicesPage.header.backgroundVideoSrc}
+        bgWord={servicesPage.header.bgWord}
+        title={servicesPage.header.title}
+        subtitle={servicesPage.header.subtitle}
+        sideImageSrc={servicesPage.header.sideImageSrc}
+        sideImageAlt={servicesPage.header.sideImageAlt}
         className="hero-sty-studio page-hero page-hero--studio"
         showSideImage={false}
       />
@@ -143,7 +192,7 @@ const originalsIntro =
           <div class="container">
             <div class="row">
               <div class="col-12 text-lg-center text-start services-intro-copy">
-                <p class="mb-0">{servicesIntro}</p>
+                <p class="mb-0">{servicesPage.intro.paragraphs?.[0] || servicesPage.intro.content}</p>
               </div>
             </div>
           </div>
@@ -153,7 +202,7 @@ const originalsIntro =
       <section id="servizi" class="section-space section-space--soft pt-0 services-home-cards services-figma-list">
         <div class="container">
           <div class="services-figma-list__rows">
-            {serviceAreas.map((service, index) => (
+            {servicesPage.serviceCards.map((service, index) => (
               <article class="services-figma-row">
                 <div class:list={["services-figma-row__media", index % 2 === 1 && "order-lg-2"]}>
                   <img src={service.image} alt={service.imageAlt} loading="lazy" decoding="async" />
@@ -182,7 +231,7 @@ const originalsIntro =
       <section class="services-clients section-space section-space--soft" aria-labelledby="servicesClientsTitle">
         <div class="container">
           <div class="text-center services-clients-head">
-            <h2 id="servicesClientsTitle" class="page-title-uniform">I nostri clienti</h2>
+            <h2 id="servicesClientsTitle" class="page-title-uniform">{clientsLabel}</h2>
           </div>
         </div>
 
@@ -204,7 +253,7 @@ const originalsIntro =
           </div>
 
           <div class="services-originals-band__intro">
-            <p>{originalsIntro}</p>
+            <p>{servicesPage.originalsIntro}</p>
           </div>
 
           <div class="portfolio-originals-slider__shell position-relative" data-portfolio-slider data-portfolio-start="0">
@@ -247,7 +296,7 @@ const originalsIntro =
           </div>
 
           <div class="services-originals-band__cta">
-            <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("originals", lang)}>Scopri gli originals</a>
+            <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("originals", lang)}>{originalsCtaLabel}</a>
           </div>
         </div>
       </section>
@@ -256,18 +305,15 @@ const originalsIntro =
         <div class="container">
           <div class="row g-4 g-lg-5 align-items-start align-items-lg-center studio-oscar-grid">
             <div class="col-12 col-lg-5 studio-oscar-art">
-              <img class="img-fluid d-block mx-auto mx-lg-0" src="/images/lo-studio-oscar.png" alt="Personaggi con Oscar">
+              <img class="img-fluid d-block mx-auto mx-lg-0" src={servicesPage.oscarCta.image} alt={servicesPage.oscarCta.imageAlt}>
             </div>
             <div class="col-12 col-lg-7 studio-oscar-copy text-start">
               <h2 class="page-title-uniform">
-                Spoiler sul finale?
-                <span>CI VEDIAMO AGLI OSCAR</span>
+                {servicesPage.oscarCta.subtitle}
+                <span>{servicesPage.oscarCta.title}</span>
               </h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod
-                tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
-              </p>
-              <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("studioOscars", lang)}>Conosci i Panebarcos</a>
+              <p>{servicesPage.oscarCta.content}</p>
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={servicesPage.oscarCta.button.href}>{servicesPage.oscarCta.button.label}</a>
             </div>
           </div>
         </div>

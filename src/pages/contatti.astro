@@ -3,73 +3,52 @@ import Layout from "../layouts/Layout.astro";
 import HeroStyStudio from "../components/HeroStyStudio.astro";
 import contactsPageScriptUrl from "../scripts/pages/contacts.js?url";
 import { buildPath } from "../i18n/routing";
+import { getContactsPageContent } from "../lib/site-content";
 
 const lang = "it" as const;
-
-const contactDetails = {
-  address: ["Via Molino, 9", "48121 Ravenna, Italia"],
-  phones: ["+39 0544 35012", "+39 338 3693558"],
-  email: "info@panebarco.it",
-} as const;
-
-const contactCards = [
-  {
-    icon: "bi-envelope-paper-heart",
-    title: "Email",
-    text: "Per brief, richieste o una prima chiacchierata, scrivici quando vuoi.",
-    href: `mailto:${contactDetails.email}`,
-    linkLabel: contactDetails.email,
-    secondaryLink: null,
+const contactsFallback = {
+  header: {
+    bgWord: "RACCONTACI",
+    title: "CONTATTI",
+    subtitle: "Parlaci del tuo progetto: lo animiamo insieme",
+    backgroundVideoSrc: "/images/1021768637.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
   },
-  {
-    icon: "bi-telephone-forward",
-    title: "Telefono",
-    text: "Se preferisci sentirci al volo, qui trovi i numeri del nostro studio.",
-    href: `tel:${contactDetails.phones[0].replace(/\s+/g, "")}`,
-    linkLabel: contactDetails.phones[0],
-    secondaryLink: {
-      href: `tel:${contactDetails.phones[1].replace(/\s+/g, "")}`,
-      label: contactDetails.phones[1],
-    },
+  contactDetails: {
+    address: ["Via Molino, 9", "48121 Ravenna, Italia"],
+    phones: ["+39 0544 35012", "+39 338 3693558"],
+    email: "info@panebarco.it",
   },
-  {
-    icon: "bi-geo-alt",
-    title: "Indirizzo",
-    text: "La nostra tana è a Ravenna: passa a trovarci, meglio ancora se con un progetto.",
-    href: "https://maps.google.com/?q=Via+Molino+9,+48121+Ravenna,+Italia",
-    linkLabel: `${contactDetails.address[0]}, ${contactDetails.address[1]}`,
-    secondaryLink: null,
+  contactSection: {
+    title: "Mettiamo a fuoco la prossima storia insieme",
+    lead: "Che tu abbia un progetto da sviluppare, un'idea da far crescere o voglia entrare in orbita con noi, qui trovi il modo giusto per iniziare la conversazione.",
+    cards: [
+      { icon: "bi-envelope-paper-heart", title: "Email", text: "Per brief, richieste o una prima chiacchierata, scrivici quando vuoi." },
+      { icon: "bi-telephone-forward", title: "Telefono", text: "Se preferisci sentirci al volo, qui trovi i numeri del nostro studio." },
+      { icon: "bi-geo-alt", title: "Indirizzo", text: "La nostra tana e a Ravenna: passa a trovarci, meglio ancora se con un progetto." },
+    ],
   },
-] as const;
+  formSection: {
+    title: "Scegli il modo in cui vuoi contattarci",
+    lead: "Usa il form giusto per mandarci un brief, raccontarci un'esigenza produttiva oppure presentarti per una collaborazione futura.",
+  },
+};
 
+const contactsContent = await getContactsPageContent({ lang, fallback: contactsFallback });
+const contactDetails = contactsFallback.contactDetails;
+const contactCards = contactsContent.contactSection.cards;
 ---
 
-<Layout
-  title="Contatti - Panebarco"
-  useInnerStyles={true}
-  lang={lang}
-  headerProps={{ containerClass: "hero-fluid" }}
->
+<Layout title="Contatti - Panebarco" useInnerStyles={true} lang={lang} headerProps={{ containerClass: "hero-fluid" }}>
   <main class="studio-page contacts-page">
-    <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="RACCONTACI"
-      title="CONTATTI"
-      subtitle="Parlaci del tuo progetto: lo animiamo insieme"
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
-      className="hero-sty-studio page-hero page-hero--studio"
-      showSideImage={false}
-    />
+    <HeroStyStudio backgroundVideoSrc={contactsContent.header.backgroundVideoSrc} bgWord={contactsContent.header.bgWord} title={contactsContent.header.title} subtitle={contactsContent.header.subtitle} sideImageSrc={contactsContent.header.sideImageSrc} sideImageAlt={contactsContent.header.sideImageAlt} className="hero-sty-studio page-hero page-hero--studio" showSideImage={false} />
 
     <section class="page-main page-main--studio contacts-content">
       <div class="container">
         <section class="contacts-intro contacts-block text-center" aria-labelledby="contactsIntroTitle">
-          <h2 id="contactsIntroTitle" class="page-title-uniform">Mettiamo a fuoco la prossima storia insieme</h2>
-          <p class="contacts-intro__lead mx-auto mb-0">
-            Che tu abbia un progetto da sviluppare, un’idea da far crescere o voglia entrare in orbita con noi,
-            qui trovi il modo giusto per iniziare la conversazione.
-          </p>
+          <h2 id="contactsIntroTitle" class="page-title-uniform">{contactsContent.contactSection.title}</h2>
+          <p class="contacts-intro__lead mx-auto mb-0">{contactsContent.contactSection.lead}</p>
         </section>
 
         <section class="contact-section contacts-block" aria-labelledby="contactsCardsTitle">
@@ -95,12 +74,8 @@ const contactCards = [
                     </address>
                   ) : (
                     <div class="contacts-info-card__links">
-                      <a href={item.href} target={item.href.startsWith("https") ? "_blank" : undefined} rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}>
-                        {item.linkLabel}
-                      </a>
-                      {item.secondaryLink && (
-                        <a href={item.secondaryLink.href}>{item.secondaryLink.label}</a>
-                      )}
+                      <a href={item.href} target={item.href.startsWith("https") ? "_blank" : undefined} rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}>{item.linkLabel}</a>
+                      {item.secondaryLink && <a href={item.secondaryLink.href}>{item.secondaryLink.label}</a>}
                     </div>
                   )}
                 </div>
@@ -111,72 +86,38 @@ const contactCards = [
 
         <section class="contacts-form-section contacts-block" aria-labelledby="contactsFormTitle">
           <div class="contacts-section-head contacts-section-head--center text-start mt-5">
-            <h2 id="contactsFormTitle" class="page-title-uniform pt-5 mt-5">Scegli il modo in cui vuoi contattarci</h2>
-            <p class="mb-0">
-              Usa il form giusto per mandarci un brief, raccontarci un’esigenza produttiva oppure presentarti
-              per una collaborazione futura.
-            </p>
+            <h2 id="contactsFormTitle" class="page-title-uniform pt-5 mt-5">{contactsContent.formSection.title}</h2>
+            <p class="mb-0">{contactsContent.formSection.lead}</p>
           </div>
 
           <div class="contacts-tabs-shell" data-contacts-tabs>
             <div class="contacts-tabs-nav" role="tablist" aria-label="Seleziona il tipo di richiesta">
-              <button
-                class="contacts-tab-button is-active"
-                type="button"
-                id="contacts-tab-contact"
-                role="tab"
-                aria-selected="true"
-                aria-controls="contacts-panel-contact"
-                data-contacts-tab="contact"
-              >
+              <button class="contacts-tab-button is-active" type="button" id="contacts-tab-contact" role="tab" aria-selected="true" aria-controls="contacts-panel-contact" data-contacts-tab="contact">
                 <i class="bi bi-send" aria-hidden="true"></i>
                 <span>Contattaci</span>
               </button>
-              <button
-                class="contacts-tab-button"
-                type="button"
-                id="contacts-tab-collab"
-                role="tab"
-                aria-selected="false"
-                aria-controls="contacts-panel-collab"
-                data-contacts-tab="collab"
-                tabindex="-1"
-              >
+              <button class="contacts-tab-button" type="button" id="contacts-tab-collab" role="tab" aria-selected="false" aria-controls="contacts-panel-collab" data-contacts-tab="collab" tabindex="-1">
                 <i class="bi bi-people" aria-hidden="true"></i>
                 <span>Collabora</span>
               </button>
             </div>
 
-            <section
-              class="contacts-tab-panel is-active"
-              id="contacts-panel-contact"
-              role="tabpanel"
-              aria-labelledby="contacts-tab-contact"
-              data-contacts-panel="contact"
-            >
+            <section class="contacts-tab-panel is-active" id="contacts-panel-contact" role="tabpanel" aria-labelledby="contacts-tab-contact" data-contacts-panel="contact">
               <div class="contacts-tab-card">
                 <div class="row g-3 g-xl-4 align-items-start align-items-lg-stretch">
                   <div class="col-12 col-lg-4 col-xl-4">
                     <aside class="contacts-tab-visual contacts-tab-visual--contact h-100">
                       <div class="contacts-tab-visual__head">
-                        <img
-                          class="contacts-tab-balloon"
-                          src="/images/contatti-raccontaci.png"
-                          alt="Raccontaci il tuo progetto"
-                        />
+                        <img class="contacts-tab-balloon" src="/images/contatti-raccontaci.png" alt="Raccontaci il tuo progetto" />
                       </div>
-
                       <div class="contacts-tab-visual__bottom">
                         <div class="contacts-tab-visual__stage">
                           <div class="contacts-tab-visual__portrait" aria-hidden="true">
                             <img src="/images/teams-avatar-che-fate-01.png" alt="" />
                           </div>
                         </div>
-
                         <div class="contacts-visual-note">
-                          <p>
-                            Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.
-                          </p>
+                          <p>Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.</p>
                         </div>
                       </div>
                     </aside>
@@ -196,7 +137,7 @@ const contactCards = [
                           </div>
                           <div class="col-12 col-md-6">
                             <label class="form-label" for="contactCompany">Azienda</label>
-                            <input class="form-control" id="contactCompany" name="company" type="text" autocomplete="organization" placeholder="Studio, brand o realtà da cui scrivi" />
+                            <input class="form-control" id="contactCompany" name="company" type="text" autocomplete="organization" placeholder="Studio, brand o realta da cui scrivi" />
                           </div>
                           <div class="col-12 col-md-6">
                             <label class="form-label" for="contactPhone">Telefono</label>
@@ -204,28 +145,17 @@ const contactCards = [
                           </div>
                           <div class="col-12">
                             <label class="form-label" for="contactMessage">Messaggio</label>
-                            <textarea
-                              class="form-control"
-                              id="contactMessage"
-                              name="message"
-                              rows="5"
-                              placeholder="Raccontaci il progetto, dove siete arrivati e come possiamo esservi utili."
-                            ></textarea>
+                            <textarea class="form-control" id="contactMessage" name="message" rows="5" placeholder="Raccontaci il progetto, dove siete arrivati e come possiamo esservi utili."></textarea>
                           </div>
                           <div class="col-12">
                             <div class="contacts-consent">
                               <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="accepted" id="contactConsent" name="consent" required />
-                                <label class="form-check-label" for="contactConsent">
-                                  Ho letto e accetto l’
-                                  <a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.
-                                </label>
+                                <label class="form-check-label" for="contactConsent">Ho letto e accetto l'<a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.</label>
                               </div>
                               <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="newsletter" id="contactNewsletter" name="newsletter" />
-                                <label class="form-check-label" for="contactNewsletter">
-                                  Voglio ricevere news, progetti e aggiornamenti di Pane Barco.
-                                </label>
+                                <label class="form-check-label" for="contactNewsletter">Voglio ricevere news, progetti e aggiornamenti di Pane Barco.</label>
                               </div>
                             </div>
                           </div>
@@ -240,37 +170,22 @@ const contactCards = [
               </div>
             </section>
 
-            <section
-              class="contacts-tab-panel"
-              id="contacts-panel-collab"
-              role="tabpanel"
-              aria-labelledby="contacts-tab-collab"
-              data-contacts-panel="collab"
-              hidden
-            >
+            <section class="contacts-tab-panel" id="contacts-panel-collab" role="tabpanel" aria-labelledby="contacts-tab-collab" data-contacts-panel="collab" hidden>
               <div class="contacts-tab-card">
                 <div class="row g-3 g-xl-4 align-items-start align-items-lg-stretch">
                   <div class="col-12 col-lg-4 col-xl-4">
                     <aside class="contacts-tab-visual contacts-tab-visual--contact collabora h-100">
                       <div class="contacts-tab-visual__head">
-                        <img
-                          class="contacts-tab-balloon"
-                          src="/images/contatti-raccontaci.png"
-                          alt="Raccontaci il tuo progetto"
-                        />
+                        <img class="contacts-tab-balloon" src="/images/contatti-raccontaci.png" alt="Raccontaci il tuo progetto" />
                       </div>
-
                       <div class="contacts-tab-visual__bottom">
                         <div class="contacts-tab-visual__stage">
                           <div class="contacts-tab-visual__portrait" aria-hidden="true">
                             <img src="/images/teams-avatar-camilla-04.png" alt="" />
                           </div>
                         </div>
-
                         <div class="contacts-visual-note">
-                          <p>
-                            Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.
-                          </p>
+                          <p>Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.</p>
                         </div>
                       </div>
                     </aside>
@@ -298,28 +213,17 @@ const contactCards = [
                           </div>
                           <div class="col-12">
                             <label class="form-label" for="collabPresentation">Presentazione</label>
-                            <textarea
-                              class="form-control"
-                              id="collabPresentation"
-                              name="presentation"
-                              rows="5"
-                              placeholder="Dicci chi sei, come lavori e su quali progetti ti piacerebbe collaborare."
-                            ></textarea>
+                            <textarea class="form-control" id="collabPresentation" name="presentation" rows="5" placeholder="Dicci chi sei, come lavori e su quali progetti ti piacerebbe collaborare."></textarea>
                           </div>
                           <div class="col-12">
                             <div class="contacts-consent">
                               <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="accepted" id="collabConsent" name="consent" required />
-                                <label class="form-check-label" for="collabConsent">
-                                  Ho letto e accetto l’
-                                  <a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.
-                                </label>
+                                <label class="form-check-label" for="collabConsent">Ho letto e accetto l'<a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.</label>
                               </div>
                               <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="newsletter" id="collabNewsletter" name="newsletter" />
-                                <label class="form-check-label" for="collabNewsletter">
-                                  Voglio ricevere aggiornamenti e novità dal mondo Pane Barco.
-                                </label>
+                                <label class="form-check-label" for="collabNewsletter">Voglio ricevere aggiornamenti e novita dal mondo Pane Barco.</label>
                               </div>
                             </div>
                           </div>

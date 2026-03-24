@@ -2,53 +2,205 @@
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
+import ServiceModesSection from "../../components/ServiceModesSection.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
+import { buildPath } from "../../i18n/routing";
+import { getServiceDetailContent } from "../../lib/services-content";
 
 const lang = "it" as const;
 
-// I 4 cluster narrativi mostrati nella sezione "modi per comunicare".
-const communicationModes = [
-  "Raccontare",
-  "Spiegare",
-  "Promuovere",
-  "Coinvolgere",
-];
+const fallback = {
+  header: {
+    bgWord: "SERVIZI",
+    title: "COMMERCIALS",
+    subtitle: "Lorem ipsum dolor sit amet",
+    backgroundVideoSrc: "/images/panebarco-commercial-video.mp4",
+    sideImageSrc: "/images/hero-commercials.png",
+    sideImageAlt: "Hero commercials",
+  },
+  intro: {
+    title: "Lorem ipsum dolor sit amet",
+    paragraphs: [
+      "Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    ],
+  },
+  modes: [
+    {
+      title: "Raccontare",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis voluptate neque eget felis posuere mattis, sed et enim at nulla iaculis interdum. Suspendisse sed elit at sem rutrum molestie.",
+      bubble: "/images/raccontare.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/raccontare-01.jpg",
+          imageAlt: "Raccontare scena 1",
+          title: "Raccontare 01",
+          summary: "Frame dal progetto raccontare.",
+          tags: ["Raccontare", "Commercial"],
+        },
+        {
+          image: "/images/raccontare-02.jpg",
+          imageAlt: "Raccontare scena 2",
+          title: "Raccontare 02",
+          summary: "Frame dal progetto raccontare.",
+          tags: ["Raccontare", "Commercial"],
+        },
+        {
+          image: "/images/raccontare-03.jpg",
+          imageAlt: "Raccontare scena 3",
+          title: "Raccontare 03",
+          summary: "Frame dal progetto raccontare.",
+          tags: ["Raccontare", "Commercial"],
+        },
+        {
+          image: "/images/raccontare-04.jpg",
+          imageAlt: "Raccontare scena 4",
+          title: "Raccontare 04",
+          summary: "Frame dal progetto raccontare.",
+          tags: ["Raccontare", "Commercial"],
+        },
+      ],
+    },
+    {
+      title: "Spiegare",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis voluptate neque eget felis posuere mattis, sed et enim at nulla iaculis interdum. Suspendisse sed elit at sem rutrum molestie.",
+      bubble: "/images/spiegare.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/spiegare-01.png",
+          imageAlt: "Spiegare scena 1",
+          title: "Spiegare 01",
+          summary: "Frame dal progetto spiegare.",
+          tags: ["Spiegare", "Commercial"],
+        },
+        {
+          image: "/images/spiegare-02.png",
+          imageAlt: "Spiegare scena 2",
+          title: "Spiegare 02",
+          summary: "Frame dal progetto spiegare.",
+          tags: ["Spiegare", "Commercial"],
+        },
+        {
+          image: "/images/spiegare-03.png",
+          imageAlt: "Spiegare scena 3",
+          title: "Spiegare 03",
+          summary: "Frame dal progetto spiegare.",
+          tags: ["Spiegare", "Commercial"],
+        },
+        {
+          image: "/images/spiegare-04.png",
+          imageAlt: "Spiegare scena 4",
+          title: "Spiegare 04",
+          summary: "Frame dal progetto spiegare.",
+          tags: ["Spiegare", "Commercial"],
+        },
+      ],
+    },
+    {
+      title: "Promuovere",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis voluptate neque eget felis posuere mattis, sed et enim at nulla iaculis interdum. Suspendisse sed elit at sem rutrum molestie.",
+      bubble: "/images/promuovere.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/promuovere-01.png",
+          imageAlt: "Promuovere scena 1",
+          title: "Promuovere 01",
+          summary: "Frame dal progetto promuovere.",
+          tags: ["Promuovere", "Commercial"],
+        },
+        {
+          image: "/images/promuovere-02.png",
+          imageAlt: "Promuovere scena 2",
+          title: "Promuovere 02",
+          summary: "Frame dal progetto promuovere.",
+          tags: ["Promuovere", "Commercial"],
+        },
+        {
+          image: "/images/promuovere-03.png",
+          imageAlt: "Promuovere scena 3",
+          title: "Promuovere 03",
+          summary: "Frame dal progetto promuovere.",
+          tags: ["Promuovere", "Commercial"],
+        },
+        {
+          image: "/images/promuovere-04.png",
+          imageAlt: "Promuovere scena 4",
+          title: "Promuovere 04",
+          summary: "Frame dal progetto promuovere.",
+          tags: ["Promuovere", "Commercial"],
+        },
+      ],
+    },
+    {
+      title: "Coinvolgere",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis voluptate neque eget felis posuere mattis, sed et enim at nulla iaculis interdum. Suspendisse sed elit at sem rutrum molestie.",
+      bubble: "/images/coinvolgere.png",
+      topLayout: "col-lg-8",
+      bottomLayout: "col-lg-4",
+      scenes: [
+        {
+          image: "/images/coinvolgere-01.jpg",
+          imageAlt: "Coinvolgere scena 1",
+          title: "Coinvolgere 01",
+          summary: "Frame dal progetto coinvolgere.",
+          tags: ["Coinvolgere", "Commercial"],
+        },
+        {
+          image: "/images/coinvolgere-02.jpg",
+          imageAlt: "Coinvolgere scena 2",
+          title: "Coinvolgere 02",
+          summary: "Frame dal progetto coinvolgere.",
+          tags: ["Coinvolgere", "Commercial"],
+        },
+        {
+          image: "/images/coinvolgere-03.jpg",
+          imageAlt: "Coinvolgere scena 3",
+          title: "Coinvolgere 03",
+          summary: "Frame dal progetto coinvolgere.",
+          tags: ["Coinvolgere", "Commercial"],
+        },
+        {
+          image: "/images/coinvolgere-04.jpg",
+          imageAlt: "Coinvolgere scena 4",
+          title: "Coinvolgere 04",
+          summary: "Frame dal progetto coinvolgere.",
+          tags: ["Coinvolgere", "Commercial"],
+        },
+      ],
+    },
+  ],
+  cta: {
+    kicker: "Hai un progetto in mente?",
+    title: "LO ANIMIAMO NOI.",
+    figureSrc: "/images/lo-animiamo-noi.png",
+    figureAlt: "Mascotte Panebarco",
+    background: "#9f5ea3",
+    button: {
+      label: "Contattaci",
+      href: buildPath("contacts", lang),
+    },
+  },
+};
 
-// Libreria immagini per ciascun cluster; ogni blocco usa 4 frame.
-const modeImageSets = {
-  Raccontare: [
-    "/images/raccontare-01.jpg",
-    "/images/raccontare-02.jpg",
-    "/images/raccontare-03.jpg",
-    "/images/raccontare-04.jpg",
-  ],
-  Spiegare: [
-    "/images/spiegare-01.png",
-    "/images/spiegare-02.png",
-    "/images/spiegare-03.png",
-    "/images/spiegare-04.png",
-  ],
-  Promuovere: [
-    "/images/promuovere-01.png",
-    "/images/promuovere-02.png",
-    "/images/promuovere-03.png",
-    "/images/promuovere-04.png",
-  ],
-  Coinvolgere: [
-    "/images/coinvolgere-01.jpg",
-    "/images/coinvolgere-02.jpg",
-    "/images/coinvolgere-03.jpg",
-    "/images/coinvolgere-04.jpg",
-  ],
-} as const;
+const commercialContent = await getServiceDetailContent({
+  resource: "pagina-commercials",
+  lang,
+  fallback,
+});
 
-// Sticker grafico associato al titolo di ciascun cluster.
-const modeBubbleSets = {
-  Raccontare: "/images/raccontare.png",
-  Spiegare: "/images/spiegare.png",
-  Promuovere: "/images/promuovere.png",
-  Coinvolgere: "/images/coinvolgere.png",
-} as const;
+const introParagraphs = commercialContent.intro.paragraphs.length
+  ? commercialContent.intro.paragraphs
+  : fallback.intro.paragraphs;
 ---
 
 <Layout
@@ -58,172 +210,42 @@ const modeBubbleSets = {
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="commercials-page commercials-page--commercials studio-page">
-    <!-- Hero di pagina con componente riutilizzabile -->
     <HeroStyStudio
-      backgroundVideoSrc="/images/panebarco-commercial-video.mp4"
-      bgWord="SERVIZI"
-      title="COMMERCIALS"
-      subtitle="Lorem ipsum dolor sit amet"
-      sideImageSrc="/images/hero-commercials.png"
-      sideImageAlt="Hero commercials"
+      backgroundVideoSrc={commercialContent.header.backgroundVideoSrc}
+      bgWord={commercialContent.header.bgWord}
+      title={commercialContent.header.title}
+      subtitle={commercialContent.header.subtitle}
+      sideImageSrc={commercialContent.header.sideImageSrc}
+      sideImageAlt={commercialContent.header.sideImageAlt}
       showSideImage={false}
     />
 
-    <!-- Intro editoriale della sezione commercials -->
     <section class="page-main page-main--studio">
       <div class="w-100">
         <div class="container">
           <div class="row">
             <div class="col-12 text-lg-center text-start">
-              <h2 class="page-title-uniform mb-4 text-body">Lorem ipsum dolor sit amet</h2>
-              <p class="mb-4">
-                Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id
-                est laborum.
-              </p>
-              <p class="mb-0">
-                Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id
-                est laborum.
-              </p>
+              <h2 class="page-title-uniform mb-4 text-body">{commercialContent.intro.title}</h2>
+              <p class="mb-4">{introParagraphs[0] ?? fallback.intro.paragraphs[0]}</p>
+              <p class="mb-0">{introParagraphs[1] ?? introParagraphs[0] ?? fallback.intro.paragraphs[1]}</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Griglia dinamica: un blocco per ogni modalità comunicativa -->
-    <section class="section-space section-space--tight pt-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 mt-3 mt-md-5">
-            {communicationModes.map((mode, index) => {
-              const scenes = modeImageSets[mode as keyof typeof modeImageSets] ?? [
-                `https://placehold.co/620x300/png?text=${mode}+01`,
-                `https://placehold.co/620x300/png?text=${mode}+02`,
-                `https://placehold.co/460x280/png?text=${mode}+03`,
-                `https://placehold.co/760x340/png?text=${mode}+04`,
-              ];
-              const bubble = modeBubbleSets[mode as keyof typeof modeBubbleSets];
-              const useEditorialSplit =
-                mode === "Raccontare" || mode === "Spiegare" || mode === "Promuovere" || mode === "Coinvolgere";
-              const topRowImageStyle = useEditorialSplit
-                ? "height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                : "height: 300px; object-fit: cover;";
-              const bottomRowImageStyle = useEditorialSplit
-                ? "height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                : "height: 240px; object-fit: cover;";
+    <ServiceModesSection modes={commercialContent.modes} defaultTag="Commercial" />
 
-              return (
-              <article class:list={[index > 0 && "mt-5 mt-lg-6 pt-3 pt-lg-4", index === communicationModes.length - 1 && "mb-4 pb-4 mb-md-5 pb-md-4"]}>
-                <!-- Titolo modalità + bubble decorativa animata -->
-                <div class="commercial-mode-heading" data-commercial-mode-heading>
-                  <h3 class="fw-bold text-body display-5 display-lg-4">{mode}</h3>
-                  {bubble && (
-                    <img
-                      class="commercial-mode-bubble"
-                      src={bubble}
-                      alt=""
-                      aria-hidden="true"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis voluptate neque eget felis posuere
-                  mattis, sed et enim at nulla iaculis interdum. Suspendisse sed elit at sem rutrum molestie.
-                </p>
-
-                <!-- Set di 4 card media con overlay informativo al focus/hover -->
-                <div class="row g-3">
-                  <div class:list={["col-12", useEditorialSplit ? "col-lg-8" : "col-md-6"]}>
-                    <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 1`}>
-                      <img
-                        class="img-fluid w-100"
-                        src={scenes[0]}
-                        alt={`${mode} scena 1`}
-                        style={topRowImageStyle}
-                      />
-                      <div class="commercials-media-tags" aria-hidden="true">
-                        <span class="commercials-media-tag">{mode}</span>
-                        <span class="commercials-media-tag">Commercial</span>
-                      </div>
-                      <div class="commercials-media-overlay" aria-hidden="true">
-                        <h4>{mode} 01</h4>
-                        <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                      </div>
-                    </article>
-                  </div>
-                  <div class:list={["col-12", useEditorialSplit ? "col-lg-4" : "col-md-6"]}>
-                    <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 2`}>
-                      <img
-                        class="img-fluid w-100"
-                        src={scenes[1]}
-                        alt={`${mode} scena 2`}
-                        style={topRowImageStyle}
-                      />
-                      <div class="commercials-media-tags" aria-hidden="true">
-                        <span class="commercials-media-tag">{mode}</span>
-                        <span class="commercials-media-tag">Commercial</span>
-                      </div>
-                      <div class="commercials-media-overlay" aria-hidden="true">
-                        <h4>{mode} 02</h4>
-                        <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                      </div>
-                    </article>
-                  </div>
-                  <div class:list={["col-12", useEditorialSplit ? "col-lg-4" : "col-md-5"]}>
-                    <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 3`}>
-                      <img
-                        class="img-fluid w-100"
-                        src={scenes[2]}
-                        alt={`${mode} scena 3`}
-                        style={bottomRowImageStyle}
-                      />
-                      <div class="commercials-media-tags" aria-hidden="true">
-                        <span class="commercials-media-tag">{mode}</span>
-                        <span class="commercials-media-tag">Commercial</span>
-                      </div>
-                      <div class="commercials-media-overlay" aria-hidden="true">
-                        <h4>{mode} 03</h4>
-                        <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                      </div>
-                    </article>
-                  </div>
-                  <div class:list={["col-12", useEditorialSplit ? "col-lg-8" : "col-md-7"]}>
-                    <article class="commercials-media-card" tabindex="0" aria-label={`${mode} scena 4`}>
-                      <img
-                        class="img-fluid w-100"
-                        src={scenes[3]}
-                        alt={`${mode} scena 4`}
-                        style={bottomRowImageStyle}
-                      />
-                      <div class="commercials-media-tags" aria-hidden="true">
-                        <span class="commercials-media-tag">{mode}</span>
-                        <span class="commercials-media-tag">Commercial</span>
-                      </div>
-                      <div class="commercials-media-overlay" aria-hidden="true">
-                        <h4>{mode} 04</h4>
-                        <p>Frame dal progetto {mode.toLowerCase()}.</p>
-                      </div>
-                    </article>
-                  </div>
-                </div>
-
-              </article>
-            )})}
-
-            <!-- CTA finale verso pagina contatti -->
-            <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
-              <ContactCtaBanner
-                kicker="Hai un progetto in mente?"
-                title="LO ANIMIAMO NOI."
-              />
-            </section>
-          </div>
-        </div>
-      </div>
+    <section class="mt-5 mt-lg-6 pt-4 pt-lg-5">
+      <ContactCtaBanner
+        kicker={commercialContent.cta.kicker}
+        title={commercialContent.cta.title}
+        href={commercialContent.cta.button.href}
+        buttonLabel={commercialContent.cta.button.label}
+        figureSrc={commercialContent.cta.figureSrc}
+        figureAlt={commercialContent.cta.figureAlt}
+        background={commercialContent.cta.background}
+      />
     </section>
   </main>
   <script type="module" src={commercialsPageScriptUrl}></script>

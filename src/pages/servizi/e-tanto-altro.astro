@@ -1,11 +1,17 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import { buildPath } from "../../i18n/routing";
+import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+import { getCollectionDocuments, getSingleDocument } from "../../lib/strapi-client";
+import { getImageFormat, getStrapiMediaUrl } from "../../lib/utility-function";
+import customLabel from "../../lib/utility-customlabel";
 
 const lang = "it" as const;
+const specialProjectsLabel = customLabel("Progetti speciali", lang);
+const thoughtsLabel = customLabel("Pensieri che ci frullano in testa", lang);
+const discussLabel = customLabel("Parliamone", lang);
 
-const specialProjects = [
+const fallbackSpecialProjects = [
   {
     title: "Curiosita e formati laterali",
     href: buildPath("paneblog", lang),
@@ -44,13 +50,13 @@ const specialProjects = [
   },
 ] as const;
 
-const thoughtCards = [
+const fallbackThoughtCards = [
   {
     label: "Paneblog",
     href: buildPath("paneblog", lang),
     summary:
       "Note veloci da set, studio e lavorazioni: cose raccolte al volo, ma spesso decisive per capire come evolve un progetto.",
-    cta: "Scopri di piu",
+    cta: customLabel("Scopri di piu", lang),
     stickerClass: "extras-figma-thought-card__sticker--red",
   },
   {
@@ -58,7 +64,7 @@ const thoughtCards = [
     href: buildPath("paneblogTravelDiary", lang),
     summary:
       "Note veloci da set, studio e lavorazioni: cose raccolte al volo, ma spesso decisive per capire come evolve un progetto.",
-    cta: "Accedi ora",
+    cta: customLabel("Accedi ora", lang),
     stickerClass: "extras-figma-thought-card__sticker--blue",
   },
   {
@@ -66,13 +72,202 @@ const thoughtCards = [
     href: buildPath("contacts", lang),
     summary:
       "Aggiornamenti essenziali su nuove uscite, materiali utili e direzioni che vale la pena seguire senza troppo rumore intorno.",
-    cta: "Accedi ora",
+    cta: customLabel("Accedi ora", lang),
     stickerClass: "extras-figma-thought-card__sticker--violet",
   },
 ] as const;
 
-const socialLibraryBackdrop = "/images/panebarco-social-library.jpg";
-const newsletterFigure = "/images/lo-animiamo-noi.png";
+const fallbackSocialLibrary = {
+  eyebrow: "PSL",
+  title: "Panebarco Social Library",
+  body:
+    "Una raccolta in movimento di contenuti, frammenti e materiali da riattivare nel tempo: una libreria viva per raccontare meglio il lavoro, costruire continuita e far circolare ogni progetto oltre il set.",
+  ctaLabel: customLabel("Scopri di piu", lang),
+  ctaHref: buildPath("contacts", lang),
+  background: "/images/panebarco-social-library.jpg",
+};
+
+const fallbackNewsletter = {
+  kicker: "Vuoi ricevere gli aggiornamenti?",
+  title: "ISCRIVITI ALLA NEWSLETTER.",
+  buttonLabel: "Contattaci",
+  figureSrc: "/images/lo-animiamo-noi.png",
+  figureAlt: "Mascotte Panebarco",
+  background: "#30997b",
+};
+
+const servicePageQuery = {
+  locale: lang,
+  status: "published",
+  populate: {
+    header: {
+      populate: {
+        videoBackground: true,
+        imgTeam: true,
+      },
+    },
+    intro: {
+      populate: {
+        media: true,
+      },
+    },
+    pensieri: {
+      populate: {
+        cover: true,
+      },
+    },
+    ctaLibrary: {
+      populate: {
+        cover: true,
+        pulsante: true,
+      },
+    },
+    cta: {
+      populate: {
+        cover: true,
+        pulsante: true,
+      },
+    },
+  },
+} as const;
+
+function asArray(value) {
+  return Array.isArray(value) ? value : value ? [value] : [];
+}
+
+function stripHtml(value) {
+  return String(value || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function richTextParagraphs(value) {
+  const html = String(value || "");
+  const paragraphs = Array.from(html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi), (match) => stripHtml(match[1])).filter(Boolean);
+
+  if (paragraphs.length) return paragraphs;
+
+  const plainText = stripHtml(html);
+  if (!plainText) return [];
+
+  return plainText.split(/\n{2,}/).map((item) => item.trim()).filter(Boolean);
+}
+
+function getMediaSrc(media, fallback = "") {
+  if (!media) return fallback;
+  return getImageFormat(media, "large") || getStrapiMediaUrl(media.url) || fallback;
+}
+
+function getMediaAlt(media, fallback = "") {
+  return stripHtml(media?.alternativeText || media?.caption || fallback);
+}
+
+function getButtonLabel(button, fallback = "") {
+  return stripHtml(button?.etichetta || button?.title || fallback) || fallback;
+}
+
+function getButtonHref(button, fallback = "") {
+  return stripHtml(button?.url || fallback) || fallback;
+}
+
+const [pageResponse, specialProjectsResponse] = await Promise.all([
+  getSingleDocument("pagina-tanto-altro", servicePageQuery),
+  getCollectionDocuments("progetti", {
+    locale: lang,
+    status: "published",
+    sort: ["inEvidenza:desc", "updatedAt:desc"],
+    pagination: { page: 1, pageSize: 4 },
+    fields: ["titolo", "slug", "intro"],
+    populate: {
+      cover: true,
+      tipologie_progetto: {
+        fields: ["titolo"],
+      },
+    },
+  }),
+]);
+
+const page = pageResponse?.data || {};
+
+const header = {
+  backgroundVideoSrc: getMediaSrc(page.header?.videoBackground, "/images/panebarco-commercial-video.mp4"),
+  bgWord: stripHtml(page.header?.titoloTana || "SERVIZI"),
+  title: stripHtml(page.header?.titolo || "E TANTO ALTRO"),
+  subtitle: stripHtml(page.header?.sottotitolo || "Idee al confine tra cartoon e realta"),
+  sideImageSrc: getMediaSrc(page.header?.imgTeam, "/images/hero-commercials.png"),
+  sideImageAlt: getMediaAlt(page.header?.imgTeam, "Hero e tanto altro"),
+};
+
+const introParagraphs = richTextParagraphs(page.intro?.contenuto);
+const intro = {
+  title: stripHtml(page.intro?.titolo || "Qui finiscono le etichette e iniziano le deviazioni interessanti."),
+  firstParagraph:
+    introParagraphs[0] ||
+    "Amiamo definirci bottega multimediale: un luogo in cui ogni progetto nasce su misura, ma anche uno spazio attraversato da idee, persone, formati e curiosita che non stanno in una sola categoria.",
+  secondParagraph:
+    introParagraphs[1] ||
+    "Questa pagina raccoglie proprio quel margine fertile: progetti speciali, contenuti editoriali, materiali da archivio e strumenti narrativi che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.",
+};
+
+const specialProjectsCollection = asArray(specialProjectsResponse?.data);
+const specialProjects = fallbackSpecialProjects.map((fallbackProject, index) => {
+  const project = specialProjectsCollection[index] || {};
+  const slug = stripHtml(project.slug || "");
+  const href = slug ? joinLocalizedPath(buildPath("portfolio", lang), slug) : fallbackProject.href;
+  const introSummary = stripHtml(project.intro || "");
+  const projectTags = asArray(project.tipologie_progetto)
+    .map((item) => stripHtml(item?.titolo || ""))
+    .filter(Boolean);
+  const tags = projectTags.length ? projectTags.slice(0, 2) : fallbackProject.tags;
+
+  return {
+    title: stripHtml(project.titolo || fallbackProject.title),
+    href,
+    image: getMediaSrc(project.cover, fallbackProject.image),
+    alt: getMediaAlt(project.cover, fallbackProject.alt || fallbackProject.title),
+    summary: introSummary || fallbackProject.summary,
+    slot: fallbackProject.slot,
+    tags,
+  };
+});
+
+const thoughts = fallbackThoughtCards.map((fallbackCard, index) => {
+  const item = asArray(page.pensieri)[index] || {};
+  const title = stripHtml(item.titolo || "");
+  const label = item.tag && stripHtml(item.tags || "") ? stripHtml(item.tags) : title || fallbackCard.label;
+  const summary = stripHtml(item.contenuto || "") || fallbackCard.summary;
+  const href = stripHtml(item.url || "") || fallbackCard.href;
+
+  return {
+    label,
+    href,
+    summary,
+    cta: fallbackCard.cta,
+    stickerClass: fallbackCard.stickerClass,
+  };
+});
+
+const ctaLibrary = page.ctaLibrary || {};
+const ctaLibraryData = {
+  eyebrow: stripHtml(ctaLibrary.sottotitolo || fallbackSocialLibrary.eyebrow),
+  title: stripHtml(ctaLibrary.titolo || fallbackSocialLibrary.title),
+  body: stripHtml(ctaLibrary.contenuto || fallbackSocialLibrary.body),
+  ctaLabel: getButtonLabel(ctaLibrary.pulsante, fallbackSocialLibrary.ctaLabel),
+  ctaHref: getButtonHref(ctaLibrary.pulsante, fallbackSocialLibrary.ctaHref),
+  background: getMediaSrc(ctaLibrary.cover, fallbackSocialLibrary.background),
+};
+
+const cta = page.cta || {};
+const newsletterData = {
+  kicker: stripHtml(cta.sottotitolo || fallbackNewsletter.kicker),
+  title: stripHtml(cta.titolo || fallbackNewsletter.title),
+  buttonLabel: getButtonLabel(cta.pulsante, fallbackNewsletter.buttonLabel),
+  figureSrc: getMediaSrc(cta.cover, fallbackNewsletter.figureSrc),
+  figureAlt: getMediaAlt(cta.cover, fallbackNewsletter.figureAlt),
+  background: stripHtml(cta.bgColor || fallbackNewsletter.background),
+};
 ---
 
 <Layout
@@ -83,12 +278,12 @@ const newsletterFigure = "/images/lo-animiamo-noi.png";
 >
   <main class="studio-page extras-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/panebarco-commercial-video.mp4"
-      bgWord="SERVIZI"
-      title="E TANTO ALTRO"
-      subtitle="Idee al confine tra cartoon e realta"
-      sideImageSrc="/images/hero-commercials.png"
-      sideImageAlt="Hero e tanto altro"
+      backgroundVideoSrc={header.backgroundVideoSrc}
+      bgWord={header.bgWord}
+      title={header.title}
+      subtitle={header.subtitle}
+      sideImageSrc={header.sideImageSrc}
+      sideImageAlt={header.sideImageAlt}
       showSideImage={false}
     />
 
@@ -97,15 +292,9 @@ const newsletterFigure = "/images/lo-animiamo-noi.png";
         <div class="container">
           <div class="row">
             <div class="col-12 text-lg-center text-start">
-              <h2 class="page-title-uniform mb-4 text-body">Qui finiscono le etichette e iniziano le deviazioni interessanti.</h2>
-              <p class="mb-4">
-                Amiamo definirci bottega multimediale: un luogo in cui ogni progetto nasce su misura, ma anche uno spazio
-                attraversato da idee, persone, formati e curiosita che non stanno in una sola categoria.
-              </p>
-              <p class="mb-0">
-                Questa pagina raccoglie proprio quel margine fertile: progetti speciali, contenuti editoriali, materiali da
-                archivio e strumenti narrativi che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.
-              </p>
+              <h2 class="page-title-uniform mb-4 text-body">{intro.title}</h2>
+              <p class="mb-4">{intro.firstParagraph}</p>
+              <p class="mb-0">{intro.secondParagraph}</p>
             </div>
           </div>
         </div>
@@ -115,10 +304,10 @@ const newsletterFigure = "/images/lo-animiamo-noi.png";
     <section class="extras-figma-projects" aria-labelledby="specialProjectsTitle">
       <div class="container portfolio-container extras-figma-projects__container" data-portfolio-showcase>
         <div class="extras-figma-projects__heading">
-          <h2 id="specialProjectsTitle" class="page-title-uniform">Progetti speciali</h2>
+          <h2 id="specialProjectsTitle" class="page-title-uniform">{specialProjectsLabel}</h2>
           <p>
-            Formati ibridi, racconti laterali e contenuti che nascono per esplorare nuove direzioni senza perdere la
-            mano artigianale del nostro modo di lavorare.
+            {stripHtml(page.progettiSpeciali || "") ||
+              "Formati ibridi, racconti laterali e contenuti che nascono per esplorare nuove direzioni senza perdere la mano artigianale del nostro modo di lavorare."}
           </p>
         </div>
 
@@ -145,17 +334,17 @@ const newsletterFigure = "/images/lo-animiamo-noi.png";
         </div>
 
         <div class="extras-figma-projects__cta">
-          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Parliamone</a>
+          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>{discussLabel}</a>
         </div>
       </div>
     </section>
 
     <section class="extras-figma-thoughts" aria-labelledby="extrasThoughtsTitle">
       <div class="container">
-        <h2 id="extrasThoughtsTitle" class="extras-figma-thoughts__title">Pensieri che ci frullano in testa</h2>
+        <h2 id="extrasThoughtsTitle" class="extras-figma-thoughts__title">{thoughtsLabel}</h2>
 
         <div class="extras-figma-thoughts__grid">
-          {thoughtCards.map((item) => (
+          {thoughts.map((item) => (
             <article class="extras-figma-thought-card">
               <a class:list={["extras-figma-thought-card__sticker", item.stickerClass]} href={item.href}>
                 {item.label}
@@ -170,33 +359,32 @@ const newsletterFigure = "/images/lo-animiamo-noi.png";
       </div>
     </section>
 
-    <section class="extras-figma-library" style={`--extras-library-image: url('${socialLibraryBackdrop}');`}>
+    <section class="extras-figma-library" style={`--extras-library-image: url('${ctaLibraryData.background}');`}>
       <div class="container">
         <div class="extras-figma-library__content">
-          <p class="extras-figma-library__eyebrow">PSL</p>
-          <h2 class="extras-figma-library__title">Panebarco Social Library</h2>
-          <p class="extras-figma-library__body">
-            Una raccolta in movimento di contenuti, frammenti e materiali da riattivare nel tempo: una libreria viva per
-            raccontare meglio il lavoro, costruire continuita e far circolare ogni progetto oltre il set.
-          </p>
-          <a class="btn btn-cta btn-cta--blue btn-pill extras-figma-library__cta" href={buildPath("contacts", lang)}>Scopri di piu</a>
+          <p class="extras-figma-library__eyebrow">{ctaLibraryData.eyebrow}</p>
+          <h2 class="extras-figma-library__title">{ctaLibraryData.title}</h2>
+          <p class="extras-figma-library__body">{ctaLibraryData.body}</p>
+          <a class="btn btn-cta btn-cta--blue btn-pill extras-figma-library__cta" href={ctaLibraryData.ctaHref}>
+            {ctaLibraryData.ctaLabel}
+          </a>
         </div>
       </div>
     </section>
 
     <div class="container pt-md-5 mt-5 mb-5">
-      <section class="extras-newsletter-card">
+      <section class="extras-newsletter-card" style={`background: ${newsletterData.background};`}>
         <div class="extras-newsletter-card__copy">
-          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
+          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">{newsletterData.kicker}</p>
           <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
-            ISCRIVITI ALLA NEWSLETTER.
+            {newsletterData.title}
           </h2>
-          <a class="btn btn-cta btn-cta--orange btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
+          <a class="btn btn-cta btn-cta--orange btn-pill" href={buildPath("contacts", lang)}>{newsletterData.buttonLabel}</a>
         </div>
         <img
           class="extras-newsletter-card__figure"
-          src={newsletterFigure}
-          alt="Mascotte Panebarco"
+          src={newsletterData.figureSrc}
+          alt={newsletterData.figureAlt}
           loading="lazy"
           decoding="async"
         />
