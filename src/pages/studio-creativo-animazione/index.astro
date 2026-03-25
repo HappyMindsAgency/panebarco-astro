@@ -25,6 +25,10 @@ const studioFallback = {
     ],
     mediaSrc: "/images/lo-studio-img-intro.png",
     mediaAlt: "Illustrazione intro lo studio",
+    button: {
+      label: "Leggi la storia",
+      href: buildPath("studioStory", lang),
+    },
   },
   protagonists: {
     title: "I protagonisti siamo tutti noi... i Panebarcos",
@@ -85,8 +89,8 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
             <div class="col-12 col-lg-7 studio-story-copy">
               <h2 class="page-title-uniform">{studioContent.intro.title}</h2>
               <RitchText block={studioContent.intro.content} className="studio-intro-richtext" />
-              <a class="btn btn-cta btn-cta--blue btn-pill mt-3" href={buildPath("studioStory", lang)}>
-                Leggi la storia
+              <a class="btn btn-cta btn-cta--blue btn-pill mt-3" href={studioContent.intro.button.href}>
+                {studioContent.intro.button.label}
               </a>
             </div>
             <div class="col-12 col-lg-5 studio-story-art text-lg-end">

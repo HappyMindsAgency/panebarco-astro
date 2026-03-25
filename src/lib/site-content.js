@@ -238,12 +238,17 @@ function mapHomeServiceCards(items = [], fallbackItems = []) {
 
 function mapStudioIntro(intro, fallback = {}) {
   const content = pickFirst(intro?.contenuto, asArray(fallback.paragraphs).join("\n\n"));
+  const button = mapButton(intro?.pulsante, fallback.button?.label, fallback.button?.href);
 
   return {
     title: pickFirst(intro?.titolo, fallback.title),
     content,
     mediaSrc: resolveMediaUrl(intro?.media, "large", fallback.mediaSrc),
     mediaAlt: pickFirst(intro?.media?.alternativeText, fallback.mediaAlt),
+    button: {
+      label: button.label,
+      href: button.href,
+    },
   };
 }
 
@@ -469,13 +474,14 @@ export async function getStudioPageContent({ lang = DEFAULT_LANG, fallback }) {
     populate: {
       header: {
         populate: {
-          videoBackground: true,
+          mediaBackground: true,
           imgTeam: true,
         },
       },
       intro: {
         populate: {
           media: true,
+          pulsante: true,
         },
       },
       sliderProtagonisti: true,
