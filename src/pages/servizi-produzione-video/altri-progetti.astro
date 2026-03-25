@@ -18,8 +18,8 @@ const fallbackSpecialProjects = [
     image: "/images/portfolio-cover-01-695x391.jpg",
     alt: "Storyboard e contenuti laterali Panebarco",
     summary: "Contenuti nati per sperimentare formati ibridi, linguaggi piu leggeri e materiali che possono vivere anche oltre il progetto principale.",
-    slot: "top-left",
-    tags: ["Editoriale", "Format"],
+    slot: "top-left" as const,
+    tags: ["Editoriale", "Format"] as const,
   },
   {
     title: "Progetti editoriali e racconto",
@@ -27,8 +27,8 @@ const fallbackSpecialProjects = [
     image: "/images/portfolio-cover-02-695x391.jpg",
     alt: "Personaggio in una scena editoriale Panebarco",
     summary: "Appunti visivi, backstage e narrazioni corte pensate per dare continuita al tono dei progetti anche fuori dal set.",
-    slot: "top-right",
-    tags: ["Storytelling", "Backstage"],
+    slot: "top-right" as const,
+    tags: ["Storytelling", "Backstage"] as const,
   },
   {
     title: "Esperimenti visivi",
@@ -36,8 +36,8 @@ const fallbackSpecialProjects = [
     image: "/images/portfolio-cover-03-695x391.jpg",
     alt: "Personaggio illustrato colorato Panebarco",
     summary: "Piccoli test, variazioni di stile e prove di immaginario che ci aiutano a far evolvere il linguaggio del laboratorio.",
-    slot: "bottom-left",
-    tags: ["Visual", "R&D"],
+    slot: "bottom-left" as const,
+    tags: ["Visual", "R&D"] as const,
   },
   {
     title: "Contenuti da archivio vivo",
@@ -45,8 +45,8 @@ const fallbackSpecialProjects = [
     image: "/images/portfolio-cover-04-695x391.jpg",
     alt: "Ritratto character-driven Panebarco",
     summary: "Materiali modulari che restano utili nel tempo, si riattivano facilmente e alimentano una libreria di contenuti sempre pronta a muoversi.",
-    slot: "bottom-right",
-    tags: ["Library", "Content"],
+    slot: "bottom-right" as const,
+    tags: ["Library", "Content"] as const,
   },
 ] as const;
 
