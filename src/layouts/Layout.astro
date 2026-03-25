@@ -4,6 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../../styles/main.scss";
 import "../../styles/footer.scss";
+import Favicon from "../../public/images/favicon/favicon-96x96.png";
+import FaviconSvg from "../../public/images/favicon/favicon.svg?url";
+import FaviconIco from "../../public/images/favicon/favicon.ico?url";
+import AppleTouchIcon from "../../public/images/favicon/apple-touch-icon.png";
+import SiteWebmanifest from "../../public/images/favicon/site.webmanifest?url";
 import innerStylesUrl from "../../styles/inner-pages.scss?url";
 import menuScriptUrl from "../scripts/menu-revamp.js?url";
 import SiteHeader from "../components/SiteHeader.astro";
@@ -40,6 +45,14 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href={Favicon.src} sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href={FaviconSvg} />
+    <link rel="shortcut icon" href={FaviconIco} />
+    <link rel="apple-touch-icon" sizes="180x180" href={AppleTouchIcon.src} />
+    <link rel="manifest" href={SiteWebmanifest} />
+
+
     <ClientRouter />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
