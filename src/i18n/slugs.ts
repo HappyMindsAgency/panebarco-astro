@@ -6,76 +6,80 @@ export const localizedSlugs = {
     en: "",
   },
   studio: {
-    it: "studio",
-    en: "studio",
+    it: "studio-creativo-animazione",
+    en: "animation-studio",
   },
   studioStory: {
-    it: "studio/storia-di-un-azienda-mutante",
-    en: "studio/storia-di-un-azienda-mutante",
+    it: "studio-creativo-animazione/storia-chi-siamo",
+    en: "animation-studio/our-story",
   },
   studioTeam: {
-    it: "studio/i-panebarcos",
-    en: "studio/i-panebarcos",
+    it: "studio-creativo-animazione/team-creativo-panebarco",
+    en: "animation-studio/our-team",
   },
   studioOscars: {
-    it: "studio/ci-vediamo-agli-oscar",
-    en: "studio/ci-vediamo-agli-oscar",
+    it: "studio-creativo-animazione/visione-creativa",
+    en: "animation-studio/our-vision",
   },
   services: {
-    it: "servizi",
-    en: "servizi",
+    it: "servizi-produzione-video",
+    en: "animated-video-production",
   },
   servicesCommercials: {
-    it: "servizi/commercials",
-    en: "servizi/commercials",
+    it: "servizi-produzione-video/produzione-video-promozionali",
+    en: "animated-video-production/animated-commercials",
   },
   servicesPost: {
-    it: "servizi/post-produzione",
-    en: "servizi/post-produzione",
+    it: "servizi-produzione-video/post-produzione-video",
+    en: "animated-video-production/post-production-vfx",
   },
   servicesService: {
-    it: "servizi/service",
-    en: "servizi/service",
+    it: "servizi-produzione-video/service-produzione-esecutiva",
+    en: "animated-video-production/animation-service-executive-production",
   },
   servicesMore: {
-    it: "servizi/e-tanto-altro",
-    en: "servizi/e-tanto-altro",
+    it: "servizi-produzione-video/altri-progetti",
+    en: "animated-video-production/special-projects",
   },
   portfolio: {
     it: "portfolio",
     en: "portfolio",
   },
   originals: {
-    it: "originals",
+    it: "produzioni-originali",
     en: "originals",
   },
   paneblog: {
     it: "paneblog",
-    en: "paneblog",
+    en: "blog",
   },
   paneblogTravelDiary: {
     it: "paneblog/diario-di-viaggio",
-    en: "paneblog/diario-di-viaggio",
+    en: "blog/travel-diary",
   },
   contacts: {
     it: "contatti",
-    en: "contatti",
+    en: "contact-us",
   },
   privacyPolicy: {
-    it: "informativa-privacy-policy",
-    en: "informativa-privacy-policy",
+    it: "privacy-policy",
+    en: "privacy-policy",
   },
   privacyPolicyNewsletter: {
-    it: "informativa-privacy-policy-newsletter",
-    en: "informativa-privacy-policy-newsletter",
+    it: "privacy-policy-newsletter",
+    en: "privacy-policy-newsletter",
   },
   privacyPolicyPsl: {
-    it: "informativa-privacy-policy-social-library",
-    en: "informativa-privacy-policy-social-library",
+    it: "privacy-policy-social-library",
+    en: "privacy-policy-social-library",
   },
   cookiePolicy: {
-    it: "informativa-cookies-privacy",
-    en: "informativa-cookies-privacy",
+    it: "cookie-policy",
+    en: "cookie-policy",
+  },
+  socialLibrary: {
+    it: "social-library",
+    en: "social-library",
   },
 } as const;
 
