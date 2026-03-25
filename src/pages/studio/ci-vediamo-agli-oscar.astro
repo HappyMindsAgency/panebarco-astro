@@ -1,114 +1,102 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import { buildPath } from "../../i18n/routing";
+import RitchText from "../../components/RitchText.astro";
+import { getLangFromPath } from "../../i18n/routing";
+import { getOscarsPageContent } from "../../lib/site-content";
+import type { ContactBannerContent, OscarsPageContent } from "../../lib/site-content.types";
 
-const lang = "it" as const;
-const newsletterFigure = "/images/cta-ci-vediamo-agli-oscar.png";
-const beliefStickers = [
-  { title: "Bellezza", subtitle: "come responsabilità", theme: "blue" },
-  { title: "Complessita", subtitle: "come valore", theme: "violet" },
-  { title: "Cura", subtitle: "come metodo", theme: "red" },
-  { title: "Indipendenza", subtitle: "creativà", theme: "green" },
-  { title: "Inclusivita", subtitle: "come scelta narrativa", theme: "cyan" },
-] as const;
-
-const pageContent = {
-  it: {
-    valuesTitle: "In cosa crediamo",
-    dreamTitle: "Cosa sogniamo",
-    dreamLead: "Per noi \"Ci vediamo agli Oscar\" è una battuta, un augurio e un orientamento insieme.",
-    dreamBody:
-      "Vuol dire puntare in alto senza perdere il lato artigianale del lavoro. Continuare a coltivare idee che maturano nel tempo, trovare i partner giusti e costruire progetti che possano stare accanto ai migliori, senza smettere di essere profondamente nostri.",
-    workTitle: "Come lavoriamo",
-    workSubtitle: "Il nostro metodo",
-    workAreas: [
-      {
-        kicker: "A",
-        title: "Tempo e maturazione delle idee",
-        body: "Ci interessa dare spazio ai progetti perché trovino la loro forma: ascoltare, correggere, far sedimentare e poi rilanciare.",
-      },
-      {
-        kicker: "B",
-        title: "Dialogo e collaborazione",
-        body: "Lavoriamo bene quando il confronto è reale: con chi scrive, con chi produce, con chi entra nel progetto portando un punto di vista utile.",
-      },
-      {
-        kicker: "C",
-        title: "Artigianalità e metodo",
-        body: "Non crediamo nelle scorciatoie spettacolari. Ci piace un processo chiaro, concreto, capace di unire intuizione e struttura.",
-      },
+const lang = getLangFromPath(Astro.url.pathname);
+const oscarsFallback = {
+  header: {
+    bgWord: "ROAD TO OSCAR",
+    title: "CI VEDIAMO AGLI OSCAR",
+    subtitle: "",
+    backgroundVideoSrc: "/images/1021768637.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
+  },
+  beliefs: {
+    title: "In cosa crediamo",
+    imageSrc: "/images/lo-studio-panebarco-teams.png",
+    imageAlt: "Team Panebarco",
+    items: [
+      { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "blue", bgColor: "#3394B2" },
+      { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "violet", bgColor: "#995791" },
+      { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "red", bgColor: "#B03D4F" },
+      { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "green", bgColor: "#30997B" },
+      { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "cyan", bgColor: "#3394B2" },
     ],
   },
-  en: {
-    valuesTitle: "What we believe in",
-    dreamTitle: "What we dream of",
-    dreamLead: "For us \"See you at the Oscars\" is a joke, a wish and a compass all at once.",
-    dreamBody:
-      "It means aiming high without losing the handmade side of the work. It means nurturing ideas over time, finding the right partners and building projects that can stand next to the best while remaining unmistakably ours.",
-    workTitle: "How we work",
-    workSubtitle: "Our method",
-    workAreas: [
-      {
-        kicker: "A",
-        title: "Time and maturation of ideas",
-        body: "We value giving projects enough room to find their shape: listening, revising, letting things settle and then pushing forward again.",
-      },
-      {
-        kicker: "B",
-        title: "Dialogue and collaboration",
-        body: "We work best when the conversation is real: with writers, producers and everyone who brings a useful point of view into the project.",
-      },
-      {
-        kicker: "C",
-        title: "Craft and method",
-        body: "We do not believe in flashy shortcuts. We prefer a clear, practical process able to combine intuition and structure.",
-      },
-    ],
+  dream: {
+    imageSrc: "/images/teams-valori.png",
+    imageAlt: "Team Panebarco insieme",
   },
-} as const;
+  workflow: {
+    title: "Come lavoriamo",
+    subtitle: "Il nostro metodo",
+    items: [],
+  },
+  cta: {
+    imageSrc: "/images/cta-ci-vediamo-agli-oscar.png",
+    imageAlt: "Mascotte Panebarco",
+  },
+  seo: {
+    title: "Ci vediamo agli Oscar - Panebarco",
+    description: "Ci vediamo agli Oscar",
+  },
+};
+function hasOscarsCta(
+  cta: OscarsPageContent["cta"]
+): cta is ContactBannerContent & { button: { label: string; href: string } } {
+  return Boolean(cta?.button?.label && cta?.button?.href && (cta.kicker || cta.title));
+}
 
-const content = pageContent[lang];
+const oscarsContent: OscarsPageContent = await getOscarsPageContent({ lang, fallback: oscarsFallback });
+const hasDreamContent = Boolean(oscarsContent.dream.title || oscarsContent.dream.content);
+const hasWorkflow = Array.isArray(oscarsContent.workflow.items) && oscarsContent.workflow.items.length > 0;
+const oscarsCta = hasOscarsCta(oscarsContent.cta) ? oscarsContent.cta : null;
 ---
 
 <Layout
-  title="Ci vediamo agli Oscar - Panebarco"
+  title={oscarsContent.seo.title}
+  description={oscarsContent.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ containerClass: "hero-fluid" }}
 >
   <main class="studio-page oscars-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="ROAD TO OSCAR"
-      title="CI VEDIAMO AGLI OSCAR"
-      subtitle=""
+      backgroundVideoSrc={oscarsContent.header.backgroundVideoSrc}
+      bgWord={oscarsContent.header.bgWord}
+      title={oscarsContent.header.title}
+      subtitle={oscarsContent.header.subtitle}
       showSideImage={false}
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
+      sideImageSrc={oscarsContent.header.sideImageSrc}
+      sideImageAlt={oscarsContent.header.sideImageAlt}
       className="hero-sty-studio page-hero page-hero--studio"
     />
 
     <section class="page-main page-main--studio oscars-beliefs" aria-labelledby="oscarsValuesTitle">
       <div class="container" data-oscars-block-reveal style="--oscars-reveal-delay:80ms;">
         <div class="oscars-section-head text-center">
-          <h2 id="oscarsValuesTitle" class="page-title-uniform">{content.valuesTitle}</h2>
+          <h2 id="oscarsValuesTitle" class="page-title-uniform">{oscarsContent.beliefs.title}</h2>
         </div>
 
         <div class="oscars-beliefs__layout">
           <div class="oscars-beliefs__art">
             <img
               class="img-fluid d-block mx-auto"
-              src="/images/lo-studio-panebarco-teams.png"
-              alt="Team Panebarco"
+              src={oscarsContent.beliefs.imageSrc}
+              alt={oscarsContent.beliefs.imageAlt}
               loading="lazy"
               decoding="async"
             />
           </div>
 
-          <div class="oscars-beliefs__stickers" aria-label={content.valuesTitle}>
-            {beliefStickers.map((item) => (
-              <div class:list={["oscars-belief-sticker", `oscars-belief-sticker--${item.theme}`]}>
+          <div class="oscars-beliefs__stickers" aria-label={oscarsContent.beliefs.title}>
+            {oscarsContent.beliefs.items.map((item) => (
+              <div class:list={["oscars-belief-sticker", `oscars-belief-sticker--${item.theme}`]} style={item.bgColor ? `background:${item.bgColor};` : undefined}>
                 <span class="oscars-belief-sticker__title">{item.title}</span>
                 <span class="oscars-belief-sticker__subtitle">{item.subtitle}</span>
               </div>
@@ -118,64 +106,75 @@ const content = pageContent[lang];
       </div>
     </section>
 
-    <section class="section-space oscars-dream" aria-labelledby="oscarsDreamTitle">
-      <div class="container">
-        <div class="oscars-dream-card" data-oscars-block-reveal style="--oscars-reveal-delay:120ms;">
-          <h2 id="oscarsDreamTitle" class="page-title-uniform oscars-dream-card__title">{content.dreamTitle}</h2>
-          <p class="oscars-dream-card__lead">{content.dreamLead}</p>
-          <p class="oscars-dream-card__body">{content.dreamBody}</p>
-          <div class="oscars-dream-card__art">
+    {hasDreamContent && (
+      <section class="section-space oscars-dream" aria-labelledby="oscarsDreamTitle">
+        <div class="container">
+          <div class="oscars-dream-card" data-oscars-block-reveal style="--oscars-reveal-delay:120ms;">
+            <h2 id="oscarsDreamTitle" class="page-title-uniform oscars-dream-card__title">{oscarsContent.dream.title}</h2>
+            <div class="oscars-dream-card__body">
+              <RitchText block={oscarsContent.dream.content} className="oscars-dream-richtext" />
+            </div>
+            <div class="oscars-dream-card__art">
+              <img
+                class="img-fluid d-block w-100"
+                src={oscarsContent.dream.imageSrc}
+                alt={oscarsContent.dream.imageAlt}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {hasWorkflow && (
+      <section class="section-space section-space--soft oscars-work" aria-labelledby="oscarsWorkTitle">
+        <div class="container" data-oscars-block-reveal style="--oscars-reveal-delay:140ms;">
+          <div class="oscars-section-head text-center">
+            <h2 id="oscarsWorkTitle" class="page-title-uniform">{oscarsContent.workflow.title}</h2>
+            <p class="oscars-work__subtitle">{oscarsContent.workflow.subtitle}</p>
+          </div>
+          <div class="oscars-work__stack">
+            {oscarsContent.workflow.items.map((area) => (
+              <article class="oscars-work-card">
+                <span class="oscars-work-card__badge" aria-hidden="true">{area.kicker}</span>
+                <div class="oscars-work-card__body py-4 py-lg-4">
+                  <span class="oscars-work-card__kicker">{area.kicker}</span>
+                  <h3>{area.title}</h3>
+                  <RitchText block={area.content} className="oscars-work-richtext" />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {oscarsCta && (
+      <div class="container pt-md-5 mt-5 mb-5">
+        <section class="extras-newsletter-card" style={oscarsCta.background ? `background:${oscarsCta.background};` : undefined}>
+          <div class="extras-newsletter-card__copy">
+            <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">{oscarsCta.kicker}</p>
+            <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
+              {oscarsCta.title}
+            </h2>
+            {oscarsCta.button.href && oscarsCta.button.label && (
+              <a class="btn btn-cta btn-cta--orange btn-pill" href={oscarsCta.button.href}>{oscarsCta.button.label}</a>
+            )}
+          </div>
+          {oscarsCta.imageSrc && (
             <img
-              class="img-fluid d-block w-100"
-              src="/images/teams-valori.png"
-              alt="Team Panebarco insieme"
+              class="extras-newsletter-card__figure"
+              src={oscarsCta.imageSrc}
+              alt={oscarsCta.imageAlt}
               loading="lazy"
               decoding="async"
             />
-          </div>
-        </div>
+          )}
+        </section>
       </div>
-    </section>
-
-    <section class="section-space section-space--soft oscars-work" aria-labelledby="oscarsWorkTitle">
-      <div class="container" data-oscars-block-reveal style="--oscars-reveal-delay:140ms;">
-        <div class="oscars-section-head text-center">
-          <h2 id="oscarsWorkTitle" class="page-title-uniform">{content.workTitle}</h2>
-          <p class="oscars-work__subtitle">{content.workSubtitle}</p>
-        </div>
-        <div class="oscars-work__stack">
-          {content.workAreas.map((area) => (
-            <article class="oscars-work-card">
-              <span class="oscars-work-card__badge" aria-hidden="true">{area.kicker}</span>
-              <div class="oscars-work-card__body py-4 py-lg-4">
-                <span class="oscars-work-card__kicker">{area.kicker}</span>
-                <h3>{area.title}</h3>
-                <p>{area.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <div class="container pt-md-5 mt-5 mb-5">
-      <section class="extras-newsletter-card">
-        <div class="extras-newsletter-card__copy">
-          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
-          <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
-            ISCRIVITI ALLA NEWSLETTER.
-          </h2>
-          <a class="btn btn-cta btn-cta--orange btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
-        </div>
-        <img
-          class="extras-newsletter-card__figure"
-          src={newsletterFigure}
-          alt="Mascotte Panebarco"
-          loading="lazy"
-          decoding="async"
-        />
-      </section>
-    </div>
+    )}
   </main>
 
   <script is:inline>
@@ -320,3 +319,20 @@ const content = pageContent[lang];
     })();
   </script>
 </Layout>
+
+<style>
+  :global(.oscars-dream-richtext),
+  :global(.oscars-work-richtext) {
+    color: inherit;
+  }
+
+  :global(.oscars-dream-richtext > :first-child),
+  :global(.oscars-work-richtext > :first-child) {
+    margin-top: 0;
+  }
+
+  :global(.oscars-dream-richtext p),
+  :global(.oscars-work-richtext p) {
+    margin-bottom: 1rem;
+  }
+</style>

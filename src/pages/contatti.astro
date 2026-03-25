@@ -38,6 +38,10 @@ const contactsFallback = {
 const contactsContent = await getContactsPageContent({ lang, fallback: contactsFallback });
 const contactDetails = contactsFallback.contactDetails;
 const contactCards = contactsContent.contactSection.cards;
+
+function isExternalHref(href?: string) {
+  return typeof href === "string" && href.startsWith("https");
+}
 ---
 
 <Layout title="Contatti - Panebarco" useInnerStyles={true} lang={lang} headerProps={{ containerClass: "hero-fluid" }}>
@@ -66,15 +70,27 @@ const contactCards = contactsContent.contactSection.cards;
                   <p>{item.text}</p>
                   {item.title === "Indirizzo" ? (
                     <address class="contacts-info-card__links mb-0">
-                      <a href={item.href} target={item.href.startsWith("https") ? "_blank" : undefined} rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}>
-                        {contactDetails.address[0]}
-                        <br />
-                        {contactDetails.address[1]}
-                      </a>
+                      {item.href ? (
+                        <a href={item.href} target={isExternalHref(item.href) ? "_blank" : undefined} rel={isExternalHref(item.href) ? "noopener noreferrer" : undefined}>
+                          {contactDetails.address[0]}
+                          <br />
+                          {contactDetails.address[1]}
+                        </a>
+                      ) : (
+                        <>
+                          {contactDetails.address[0]}
+                          <br />
+                          {contactDetails.address[1]}
+                        </>
+                      )}
                     </address>
                   ) : (
                     <div class="contacts-info-card__links">
-                      <a href={item.href} target={item.href.startsWith("https") ? "_blank" : undefined} rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}>{item.linkLabel}</a>
+                      {item.href ? (
+                        <a href={item.href} target={isExternalHref(item.href) ? "_blank" : undefined} rel={isExternalHref(item.href) ? "noopener noreferrer" : undefined}>{item.linkLabel}</a>
+                      ) : (
+                        <span>{item.linkLabel}</span>
+                      )}
                       {item.secondaryLink && <a href={item.secondaryLink.href}>{item.secondaryLink.label}</a>}
                     </div>
                   )}

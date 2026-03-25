@@ -3,43 +3,33 @@ import Layout from "../../layouts/Layout.astro";
 import ChatPopSlider from "../../components/ChatPopSlider.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+import { buildPath, getLangFromPath } from "../../i18n/routing";
+import { getPaneblogPageContent } from "../../lib/paneblog-content";
 
-const lang = "it" as const;
-const caramelleArticleHref = joinLocalizedPath(buildPath("paneblog", lang), "dietro-le-quinte-di-caramelle");
-
-const diarySlides = [
-  {
-    date: "21 FEB 2026",
-    title: "Diario di viaggio",
-    headline: "Dentro Caramelle: appunti di sviluppo, passaggi chiave e intuizioni raccolte lungo il percorso.",
-    summary:
-      "Un diario aperto sul processo: dalle prime ipotesi visive alla costruzione del tono, fino ai materiali che aiutano un progetto a prendere forma.",
-    image: "/images/paneblog-cover-01-356x217.png",
-    href: buildPath("paneblogTravelDiary", lang),
-    cta: "Apri il diario",
+const lang = getLangFromPath(Astro.url.pathname);
+const pageContent = await getPaneblogPageContent({
+  lang,
+  fallback: {
+    cta: {
+      background: "#9f5ea3",
+      buttonLabel: "Contattaci",
+      figureAlt: "Mascotte Panebarco",
+      figureSrc: "/images/lo-animiamo-noi.png",
+      href: buildPath("contacts", lang),
+      kicker: "Vuoi ricevere gli aggiornamenti?",
+      title: "ISCRIVITI ALLA NEWSLETTER.",
+    },
+    header: {
+      bgWord: "PRODUZIONI INDIPENDENTI",
+      subtitle: "Format originali sviluppati dentro la nostra casa creativa",
+      title: "PANEBLOG",
+    },
+    intro: {
+      body: "Un luogo piu editoriale del sito: flash news, dietro le quinte, note di produzione e storie raccolte lungo il viaggio",
+      title: "Diario di viaggio",
+    },
   },
-  {
-    date: "15 FEB 2026",
-    title: "Taccuino di produzione",
-    headline: "Workflow, scelte operative e prove interne che trasformano un'idea in pipeline reale.",
-    summary:
-      "Note rapide su organizzazione, strumenti e piccoli aggiustamenti di metodo che cambiano la tenuta di un progetto nel tempo.",
-    image: "/images/paneblog-cover-02-356x217.png",
-    href: buildPath("paneblog", lang),
-    cta: "Leggi l'articolo",
-  },
-  {
-    date: "08 FEB 2026",
-    title: "Dietro le quinte",
-    headline: "Quando regia, design e animazione smettono di stare in compartimenti separati.",
-    summary:
-      "Un blocco piu editoriale per raccontare connessioni, frizioni utili e dettagli di processo che di solito restano fuori dalla vista.",
-    image: "/images/paneblog-cover-03-356x217.png",
-    href: buildPath("paneblog", lang),
-    cta: "Scopri di piu",
-  },
-] as const;
+});
 
 const flashNews = [
   {
@@ -79,73 +69,21 @@ const diaryChatMessages = [
     text: "Una piccola deviazione di processo ci ha aperto una strada piu interessante per il progetto.",
   },
 ] as const;
-
-const articles = [
-  {
-    title: "Dietro le quinte di Caramelle",
-    date: "21 FEB 2026",
-    category: "Diario di viaggio",
-    image: "/images/paneblog-cover-01-356x217.png",
-    summary: "Un primo blocco di appunti visivi e narrativi raccolti durante lo sviluppo del progetto.",
-    href: caramelleArticleHref,
-  },
-  {
-    title: "Pipeline 3D: workflow interno",
-    date: "15 FEB 2026",
-    category: "Pipeline",
-    image: "/images/paneblog-cover-02-356x217.png",
-    summary: "Come organizziamo passaggi, materiali e revisioni quando il lavoro deve restare fluido e leggibile.",
-    href: buildPath("paneblog", lang),
-  },
-  {
-    title: "Regia e animazione: come si integrano",
-    date: "08 FEB 2026",
-    category: "Dietro le quinte",
-    image: "/images/paneblog-cover-03-356x217.png",
-    summary: "Una lettura piu trasversale del rapporto tra idea, messa in scena e costruzione del movimento.",
-    href: buildPath("paneblog", lang),
-  },
-  {
-    title: "Materiali di sviluppo per una serie animata",
-    date: "01 FEB 2026",
-    category: "Originals",
-    image: "/images/paneblog-cover-01-356x217.png",
-    summary: "Personaggi, pitch, tono e mondo narrativo: cosa serve davvero per dare continuita a una serie.",
-    href: buildPath("paneblog", lang),
-  },
-  {
-    title: "Dal brief al visual tone",
-    date: "26 GEN 2026",
-    category: "Processo",
-    image: "/images/paneblog-cover-02-356x217.png",
-    summary: "Un passaggio spesso invisibile, ma decisivo: mettere ordine tra riferimenti, linguaggio e direzione visiva.",
-    href: buildPath("paneblog", lang),
-  },
-  {
-    title: "Piccoli formati, grandi deviazioni",
-    date: "18 GEN 2026",
-    category: "Editoriale",
-    image: "/images/paneblog-cover-03-356x217.png",
-    summary: "Quando un contenuto laterale diventa utile per tenere vivo un progetto e allargarne la presenza.",
-    href: buildPath("paneblog", lang),
-  },
-] as const;
-
-const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipeline", "Originals", "Processo", "Editoriale"] as const;
 ---
 
 <Layout
-  title="Originals - Panebarco"
+  title={pageContent.seo.title}
+  description={pageContent.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page originals-page paneblog-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="PRODUZIONI INDIPENDENTI"
-      title="ORIGINALS"
-      subtitle="Format originali sviluppati dentro la nostra casa creativa"
+      backgroundVideoSrc={pageContent.header.backgroundVideoSrc}
+      bgWord={pageContent.header.bgWord}
+      title={pageContent.header.title}
+      subtitle={pageContent.header.subtitle}
       sideImageSrc="/images/lo-studio-panebarco-teams.png"
       sideImageAlt="Team Panebarco"
       className="hero-sty-studio page-hero page-hero--studio"
@@ -160,15 +98,14 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
         <div class="row justify-content-center text-center mb-4 mb-lg-5">
           <div class="col-12">
             <h2 id="paneblogMindTitle" class="section-title section-title-reveal paneblog-mind-title" data-paneblog-mind-title>
-              <span class="section-title-text">Diario di viaggio</span>
+              <span class="section-title-text">{pageContent.intro.title}</span>
               <span class="paneblog-mind-title__balloons" aria-hidden="true">
                 <span class="paneblog-mind-bubble paneblog-mind-bubble--green">Pensieri</span>
                 <span class="paneblog-mind-bubble paneblog-mind-bubble--red">Che ci frullano in testa</span>
               </span>
             </h2>
             <p class="paneblog-mind-subtitle mt-4">
-              Un luogo piu editoriale del sito: flash news, dietro le quinte, note di produzione e storie raccolte lungo il
-              viaggio
+              {pageContent.intro.body}
             </p>
           </div>
         </div>
@@ -192,7 +129,7 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
 
         <div class="paneblog-filters mb-4 mb-lg-5">
           <div class="d-flex flex-wrap justify-content-center gap-2">
-            {articleFilters.map((filter, index) => (
+            {pageContent.articleFilters.map((filter, index) => (
               <button
                 class:list={["paneblog-filter-chip", index === 0 && "is-active"]}
                 type="button"
@@ -205,10 +142,10 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
         </div>
 
         <div class="row g-4" data-paneblog-grid>
-          {articles.map((article) => (
+          {pageContent.articles.map((article) => (
             <div class="col-12 col-md-6 col-xl-4" data-article-card data-category={article.category}>
               <article class="card blog-card h-100">
-                <img src={article.image} alt={article.title} loading="lazy" decoding="async" />
+                <img src={article.image} alt={article.imageAlt} loading="lazy" decoding="async" />
                 <div class="card-body">
                   <p class="blog-date">{article.date}</p>
                   <p class="paneblog-article-category">{article.category}</p>
@@ -226,18 +163,109 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
         <div class="paneblog-empty-state d-none text-center mt-4" data-paneblog-empty>
           <p class="mb-0">Nessun articolo corrisponde al filtro selezionato.</p>
         </div>
+
+        <div class="text-center mt-4 d-none" data-paneblog-load-more-wrap>
+          <button class="paneblog-load-more-link" type="button" data-paneblog-load-more>
+            Carica altro <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </section>
 
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 pt-4 mb-5 paneblog-cta-shell">
         <ContactCtaBanner
-          kicker="Vuoi ricevere gli aggiornamenti?"
-          title="ISCRIVITI ALLA NEWSLETTER."
+          kicker={pageContent.cta.kicker}
+          title={pageContent.cta.title}
+          href={pageContent.cta.href}
+          buttonLabel={pageContent.cta.buttonLabel}
+          figureSrc={pageContent.cta.figureSrc}
+          figureAlt={pageContent.cta.figureAlt}
+          background={pageContent.cta.background}
         />
       </div>
   </main>
 
-  <script is:inline define:vars={{ diarySlides }}>
+  <style>
+    .paneblog-load-more-link {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: none;
+      border: 0;
+      outline: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0;
+      color: #009fe3;
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+    }
+
+    .paneblog-load-more-link:hover,
+    .paneblog-load-more-link:focus-visible {
+      color: #009fe3;
+      text-decoration: none;
+      opacity: 0.88;
+    }
+
+    .paneblog-load-more-link i {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .paneblog-cta-shell :global(.contact-cta-card) {
+      overflow: visible;
+      min-height: clamp(15rem, 23vw, 18.5rem);
+      padding-left: calc(clamp(1.2rem, 4.2vw, 4.8rem) + clamp(16rem, 30vw, 24rem) + clamp(1.2rem, 2.2vw, 2rem));
+    }
+
+    .paneblog-cta-shell :global(.contact-cta-figure) {
+      left: clamp(1.2rem, 4.2vw, 4.8rem);
+      bottom: 0;
+      top: auto;
+      width: clamp(16rem, 30vw, 24rem);
+      height: auto;
+      transform: none;
+      z-index: 2;
+    }
+
+    @media (max-width: 991.98px) {
+      .paneblog-cta-shell :global(.contact-cta-card) {
+        min-height: clamp(12rem, 28vw, 15.5rem);
+        padding-left: calc(clamp(0.9rem, 2.6vw, 2.4rem) + clamp(11rem, 27vw, 15rem) + clamp(1rem, 2vw, 1.6rem));
+      }
+
+      .paneblog-cta-shell :global(.contact-cta-figure) {
+        left: clamp(0.9rem, 2.6vw, 2.4rem);
+        width: clamp(11rem, 27vw, 15rem);
+        bottom: 0;
+        top: auto;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .paneblog-cta-shell :global(.contact-cta-card) {
+        min-height: clamp(8rem, 24vw, 10rem);
+        padding-left: calc(clamp(0.35rem, 1.5vw, 0.9rem) + clamp(6.8rem, 21vw, 8.6rem) + 1rem);
+      }
+
+      .paneblog-cta-shell :global(.contact-cta-figure) {
+        left: clamp(0.35rem, 1.5vw, 0.9rem);
+        width: clamp(6.8rem, 21vw, 8.6rem);
+        bottom: 0;
+        top: auto;
+        transform: none;
+      }
+    }
+  </style>
+
+  <script is:inline>
     (function () {
       function initPaneblogPage() {
         (function setupMindTitleReveal() {
@@ -453,23 +481,40 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
           root.dataset.bound = "true";
 
           var activeFilter = "Tutti";
+          var initialVisibleCount = 6;
+          var visibleLimit = initialVisibleCount;
           var buttons = root.querySelectorAll("[data-filter-value]");
           var cards = root.querySelectorAll("[data-article-card]");
           var emptyState = root.querySelector("[data-paneblog-empty]");
+          var loadMoreWrap = root.querySelector("[data-paneblog-load-more-wrap]");
+          var loadMoreButton = root.querySelector("[data-paneblog-load-more]");
 
           function updateCards() {
-            var visibleCount = 0;
+            var matchingCards = [];
 
             cards.forEach(function (card) {
               var category = card.getAttribute("data-category");
-              var isVisible = activeFilter === "Tutti" || activeFilter === category;
+              var matchesFilter = activeFilter === "Tutti" || activeFilter === category;
 
-              card.classList.toggle("d-none", !isVisible);
-              if (isVisible) visibleCount += 1;
+              if (matchesFilter) {
+                matchingCards.push(card);
+              }
+            });
+
+            cards.forEach(function (card) {
+              card.classList.add("d-none");
+            });
+
+            matchingCards.slice(0, visibleLimit).forEach(function (card) {
+              card.classList.remove("d-none");
             });
 
             if (emptyState) {
-              emptyState.classList.toggle("d-none", visibleCount > 0);
+              emptyState.classList.toggle("d-none", matchingCards.length > 0);
+            }
+
+            if (loadMoreWrap) {
+              loadMoreWrap.classList.toggle("d-none", matchingCards.length <= visibleLimit || matchingCards.length === 0);
             }
           }
 
@@ -484,9 +529,17 @@ const articleFilters = ["Tutti", "Diario di viaggio", "Dietro le quinte", "Pipel
                 btn.classList.toggle("is-active", btn === button);
               });
 
+              visibleLimit = initialVisibleCount;
               updateCards();
             });
           });
+
+          if (loadMoreButton) {
+            loadMoreButton.addEventListener("click", function () {
+              visibleLimit += initialVisibleCount;
+              updateCards();
+            });
+          }
 
           updateCards();
         });

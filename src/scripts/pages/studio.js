@@ -101,28 +101,84 @@
 
     const controller = new AbortController();
     const signal = controller.signal;
-    const images = [
-      "/images/lo-studio-panebarcos-01.jpg",
-      "/images/lo-studio-panebarcos-02.jpg",
-      "/images/lo-studio-panebarcos-03.jpg",
-      "/images/lo-studio-panebarcos-04.jpg",
-    ];
+    let images;
+    try {
+      images = JSON.parse(image.getAttribute("data-studio-panebarcos-images") || "[]");
+    } catch (_error) {
+      images = [];
+    }
 
-    let activeIndex = images.indexOf(image.getAttribute("src") || "");
+    if (!Array.isArray(images) || !images.length) {
+      images = [
+        { src: "/images/lo-studio-panebarcos-01.jpg", alt: "Il team Panebarcos in studio" },
+        { src: "/images/lo-studio-panebarcos-02.jpg", alt: "Il team Panebarcos in studio" },
+        { src: "/images/lo-studio-panebarcos-03.jpg", alt: "Il team Panebarcos in studio" },
+        { src: "/images/lo-studio-panebarcos-04.jpg", alt: "Il team Panebarcos in studio" },
+      ];
+    }
+
+    let activeIndex = images.findIndex(function (item) {
+      return item && item.src === (image.getAttribute("src") || "");
+    });
     if (activeIndex < 0) activeIndex = 0;
 
-    images.slice(1).forEach(function (src) {
+    images.slice(1).forEach(function (item) {
       const preloadImage = new Image();
-      preloadImage.src = src;
+      preloadImage.src = item.src;
     });
 
     trigger.addEventListener("click", function () {
       activeIndex = (activeIndex + 1) % images.length;
-      image.setAttribute("src", images[activeIndex]);
+      image.setAttribute("src", images[activeIndex].src);
+      image.setAttribute("alt", images[activeIndex].alt || image.getAttribute("alt") || "");
     }, { signal });
 
     cleanups.push(function () {
       controller.abort();
+    });
+  }
+
+  function setupPanebarcosReveal(cleanups) {
+    const items = Array.from(document.querySelectorAll("[data-panebarcos-reveal]"));
+    if (!items.length) return;
+
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      items.forEach(function (item) {
+        item.classList.add("is-in-view");
+      });
+      return;
+    }
+
+    let lastScrollY = window.scrollY;
+    const observer = new IntersectionObserver(
+      function (entries) {
+        const currentScrollY = window.scrollY;
+        const isScrollingUp = currentScrollY < lastScrollY;
+        lastScrollY = currentScrollY;
+
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in-view");
+            return;
+          }
+
+          if (isScrollingUp) {
+            entry.target.classList.remove("is-in-view");
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "-10% 0px -10% 0px",
+      }
+    );
+
+    items.forEach(function (item) {
+      observer.observe(item);
+    });
+
+    cleanups.push(function () {
+      observer.disconnect();
     });
   }
 
@@ -132,6 +188,7 @@
     const cleanups = [];
     setupTimeline(cleanups);
     setupPanebarcosSlider(cleanups);
+    setupPanebarcosReveal(cleanups);
 
     cleanupStudioPage = function () {
       cleanups.forEach(function (dispose) {

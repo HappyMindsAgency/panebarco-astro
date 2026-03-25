@@ -1,14 +1,68 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import OscarCtaSection from "../../components/OscarCtaSection.astro";
+import RitchText from "../../components/RitchText.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
-import { buildPath } from "../../i18n/routing";
+import { buildPath, getLangFromPath } from "../../i18n/routing";
+import { getStudioPageContent } from "../../lib/site-content";
 
-const lang = "it" as const;
+const lang = getLangFromPath(Astro.url.pathname);
+const studioFallback = {
+  header: {
+    bgWord: "LA TANA",
+    title: "LO STUDIO",
+    subtitle: "Idee al confine tra cartoon e realtà",
+    backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
+  },
+  intro: {
+    title: "Storia di un'azienda mutante",
+    paragraphs: [
+      "Duis in nibh egestas, facilisis magna ac, sagittis felis. Curabitur sagittis nisi non porttitor ullamcorper. Proin mattis, lacus eu condimentum dapibus, turpis lectus pellentesque mauris, vitae ornare nunc leo et justo.",
+      "Pellentesque tempus elementum aliquet. Etiam commodo elit ut mi tristique laoreet. Donec ac enim vestibulum, sagittis urna sit amet, posuere ex.",
+    ],
+    mediaSrc: "/images/lo-studio-img-intro.png",
+    mediaAlt: "Illustrazione intro lo studio",
+  },
+  protagonists: {
+    title: "I protagonisti siamo tutti noi... i Panebarcos",
+    paragraphs: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim",
+    ],
+    imageAlt: "Il team Panebarcos in studio",
+    images: [
+      { src: "/images/lo-studio-panebarcos-01.jpg", alt: "Il team Panebarcos in studio" },
+      { src: "/images/lo-studio-panebarcos-02.jpg", alt: "Il team Panebarcos in studio" },
+      { src: "/images/lo-studio-panebarcos-03.jpg", alt: "Il team Panebarcos in studio" },
+      { src: "/images/lo-studio-panebarcos-04.jpg", alt: "Il team Panebarcos in studio" },
+    ],
+  },
+  cta: {
+    kicker: "Spoiler sul finale?",
+    title: "CI VEDIAMO AGLI OSCAR",
+    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim",
+    imageSrc: "/images/lo-studio-oscar.png",
+    imageAlt: "Personaggi con Oscar",
+    button: {
+      label: "Conosci i Panebarcos",
+      href: buildPath("studioOscars", lang),
+    },
+  },
+  seo: {
+    title: "Studio - Panebarco",
+    description: "Studio Panebarco",
+  },
+};
+const studioContent = await getStudioPageContent({ lang, fallback: studioFallback });
+const protagonistImages = studioContent.protagonists.images;
+const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonists.images[0];
 ---
 
 <Layout
-  title="Studio - Panebarco"
+  title={studioContent.seo.title}
+  description={studioContent.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
@@ -16,12 +70,12 @@ const lang = "it" as const;
     <main class="studio-page">
       <!-- Hero dello Studio (componentizzata) -->
       <HeroStyStudio
-        backgroundVideoSrc="/images/panebarco-studio-video.mp4"
-        bgWord="LA TANA"
-        title="LO STUDIO"
-        subtitle="Idee al confine tra cartoon e realtà"
-        sideImageSrc="/images/lo-studio-panebarco-teams.png"
-        sideImageAlt="Team Panebarco"
+        backgroundVideoSrc={studioContent.header.backgroundVideoSrc}
+        bgWord={studioContent.header.bgWord}
+        title={studioContent.header.title}
+        subtitle={studioContent.header.subtitle}
+        sideImageSrc={studioContent.header.sideImageSrc}
+        sideImageAlt={studioContent.header.sideImageAlt}
       />
   
       <!-- Blocco storia introduttivo -->
@@ -29,24 +83,14 @@ const lang = "it" as const;
         <div class="container">
           <div class="row g-4 g-xl-5 align-items-end studio-story">
             <div class="col-12 col-lg-7 studio-story-copy">
-              <h2 class="page-title-uniform">Storia di un'azienda mutante</h2>
-              <p>
-                Duis in nibh egestas, facilisis magna ac, sagittis felis. Curabitur
-                sagittis nisi non porttitor ullamcorper. Proin mattis, lacus eu
-                condimentum dapibus, turpis lectus pellentesque mauris, vitae ornare
-                nunc leo et justo.
-              </p>
-              <p>
-                Pellentesque tempus elementum aliquet. Etiam commodo elit ut mi
-                tristique laoreet. Donec ac enim vestibulum, sagittis urna sit amet,
-                posuere ex.
-              </p>
+              <h2 class="page-title-uniform">{studioContent.intro.title}</h2>
+              <RitchText block={studioContent.intro.content} className="studio-intro-richtext" />
               <a class="btn btn-cta btn-cta--blue btn-pill mt-3" href={buildPath("studioStory", lang)}>
                 Leggi la storia
               </a>
             </div>
             <div class="col-12 col-lg-5 studio-story-art text-lg-end">
-              <img class="studio-story-intro-img img-fluid d-block ms-lg-auto" src="/images/lo-studio-img-intro.png" alt="Illustrazione intro lo studio">
+              <img class="studio-story-intro-img img-fluid d-block ms-lg-auto" src={studioContent.intro.mediaSrc} alt={studioContent.intro.mediaAlt}>
             </div>
           </div>
         </div>
@@ -169,11 +213,8 @@ const lang = "it" as const;
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12 col-xl-10 studio-panebarcos-intro-inner text-start text-md-center">
-              <h2 class="page-title-uniform">I protagonisti siamo tutti noi... i Panebarcos</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod
-                tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
-              </p>
+              <h2 class="page-title-uniform">{studioContent.protagonists.title}</h2>
+              <RitchText block={studioContent.protagonists.content} className="studio-panebarcos-richtext" />
             </div>
           </div>
         </div>
@@ -184,9 +225,10 @@ const lang = "it" as const;
           <img
             id="studioPanebarcosImage"
             class="img-fluid d-block w-100"
-            src="/images/lo-studio-panebarcos-01.jpg"
-            alt="Il team Panebarcos in studio"
+            src={protagonistFirstImage.src}
+            alt={protagonistFirstImage.alt}
             data-studio-panebarcos-image
+            data-studio-panebarcos-images={JSON.stringify(protagonistImages)}
           >
           <button
             class="studio-panebarcos-trigger position-absolute d-block m-2 m-md-4"
@@ -206,26 +248,43 @@ const lang = "it" as const;
         </div>
       </section>
 
-      <section class="studio-oscar-section section-space section-space--soft">
-        <div class="container">
-          <div class="row g-4 g-lg-5 align-items-start align-items-lg-center studio-oscar-grid">
-            <div class="col-12 col-lg-5 studio-oscar-art">
-              <img class="img-fluid d-block mx-auto mx-lg-0" src="/images/lo-studio-oscar.png" alt="Personaggi con Oscar">
-            </div>
-            <div class="col-12 col-lg-7 studio-oscar-copy text-start">
-              <h2 class="page-title-uniform">
-                Spoiler sul finale?
-                <span>CI VEDIAMO AGLI OSCAR</span>
-              </h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod
-                tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
-              </p>
-              <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("studioOscars", lang)}>Conosci i Panebarcos</a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <OscarCtaSection
+        heading={studioContent.cta.kicker}
+        highlight={studioContent.cta.title}
+        body={studioContent.cta.body}
+        href={studioContent.cta.button.href}
+        buttonLabel={studioContent.cta.button.label}
+        imageSrc={studioContent.cta.imageSrc}
+        imageAlt={studioContent.cta.imageAlt}
+      />
     </main>
     <script type="module" src={studioPageScriptUrl}></script>
 </Layout>
+
+<style>
+  :global(.studio-intro-richtext) {
+    color: inherit;
+  }
+
+  :global(.studio-intro-richtext h1),
+  :global(.studio-intro-richtext h2),
+  :global(.studio-intro-richtext h3),
+  :global(.studio-intro-richtext h4),
+  :global(.studio-intro-richtext h5),
+  :global(.studio-intro-richtext h6) {
+    color: inherit;
+  }
+
+  :global(.studio-panebarcos-richtext) {
+    color: inherit;
+  }
+
+  :global(.studio-panebarcos-richtext h1),
+  :global(.studio-panebarcos-richtext h2),
+  :global(.studio-panebarcos-richtext h3),
+  :global(.studio-panebarcos-richtext h4),
+  :global(.studio-panebarcos-richtext h5),
+  :global(.studio-panebarcos-richtext h6) {
+    color: inherit;
+  }
+</style>

@@ -1,45 +1,47 @@
 ---
-import { originalsProjects } from "../data/originals";
-import { buildPath, joinLocalizedPath } from "../i18n/routing";
-
 interface OriginalItem {
   title: string;
   image: string;
+  imageAlt?: string;
   link: string;
+  ariaLabel?: string;
 }
 
 interface Props {
   sectionId?: string;
   sectionClass?: string;
   containerClass?: string;
+  introText?: string;
+  items?: OriginalItem[];
 }
 
 const {
   sectionId = "originals",
   sectionClass = "dark-band originals-parallax",
   containerClass = "container originals-stage",
+  introText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  items = [
+    {
+      title: "Marta e la morte",
+      image: "/images/originals-cover-02-270x395.jpg",
+      imageAlt: "Frame del progetto Marta e la morte",
+      link: "/originals/marta-e-la-morte",
+    },
+    {
+      title: "Marta e la morte",
+      image: "/images/originals-cover-02-270x395.jpg",
+      imageAlt: "Frame del progetto Marta e la morte",
+      link: "/originals/marta-e-la-morte",
+    },
+    {
+      title: "Marta e la morte",
+      image: "/images/originals-cover-02-270x395.jpg",
+      imageAlt: "Frame del progetto Marta e la morte",
+      link: "/originals/marta-e-la-morte",
+    },
+  ],
 } = Astro.props;
-
-// Dataset minimo condiviso tra home e pagine interne per pilotare lo showcase.
-const featuredOriginalPath = joinLocalizedPath(buildPath("originals", "it"), originalsProjects[0].slug.it);
-
-const originals: OriginalItem[] = [
-  {
-    title: "Caramelle",
-    image: "/images/originals-cover-01-700x395.jpg",
-    link: featuredOriginalPath,
-  },
-  {
-    title: "Marta e la morte",
-    image: "/images/originals-cover-02-270x395.jpg",
-    link: featuredOriginalPath,
-  },
-  {
-    title: "#Nostoppingnora",
-    image: "/images/originals-cover-03-270x395.jpg",
-    link: featuredOriginalPath,
-  },
-];
+const originals: OriginalItem[] = items;
 
 const [featured, sideOne, sideTwo] = originals;
 ---
@@ -54,15 +56,14 @@ const [featured, sideOne, sideTwo] = originals;
       <h2 class="visually-hidden">Panebarco Originals</h2>
       <img class="originals-title-logo" src="/images/panebarco originals logo.png" alt="Panebarco Originals" />
       <p class="about-text text-white text-center mt-4 mb-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
+        {introText}
       </p>
       <div class="originals-carousel" data-originals-carousel data-originals-items={JSON.stringify(originals)}>
         <div class="originals-layout">
           <article
             class="original-featured"
             data-originals-featured
-            aria-label={featured.title}
+            aria-label={featured.ariaLabel || featured.title}
             style={`background-image:url('${featured.image}');`}
           >
             <div class="featured-content">
@@ -81,7 +82,7 @@ const [featured, sideOne, sideTwo] = originals;
           <article
             class="original-side-card"
             data-originals-side-one
-            aria-label={sideOne.title}
+            aria-label={sideOne.ariaLabel || sideOne.title}
             style={`background-image:url('${sideOne.image}');`}
           >
             <div class="side-content">
@@ -93,7 +94,7 @@ const [featured, sideOne, sideTwo] = originals;
           <article
             class="original-side-card"
             data-originals-side-two
-            aria-label={sideTwo.title}
+            aria-label={sideTwo.ariaLabel || sideTwo.title}
             style={`background-image:url('${sideTwo.image}');`}
           >
             <div class="side-content">
@@ -167,7 +168,7 @@ const [featured, sideOne, sideTwo] = originals;
 
         function setCard(cardEl, titleEl, item) {
           cardEl.style.backgroundImage = "url('" + item.image + "')";
-          cardEl.setAttribute("aria-label", item.title);
+          cardEl.setAttribute("aria-label", item.ariaLabel || item.title);
           titleEl.textContent = item.title;
         }
 
@@ -184,7 +185,7 @@ const [featured, sideOne, sideTwo] = originals;
           setCard(featuredCard, featuredTitle, featured);
           setCard(sideCard1, sideTitle1, sideOne);
           setCard(sideCard2, sideTitle2, sideTwo);
-          featuredBtn.setAttribute("href", featured.link || featuredOriginalPath);
+          featuredBtn.setAttribute("href", featured.link || "#");
 
           window.requestAnimationFrame(function () {
             [featuredCard, sideCard1, sideCard2].forEach(function (card) {

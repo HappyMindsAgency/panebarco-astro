@@ -1,70 +1,71 @@
 ---
+import CmsContentRenderer from "../components/cms/CmsContentRenderer.astro";
+import { getLangFromPath } from "../i18n/routing";
+import { getLegalPageContent } from "../lib/legal-content";
 import Layout from "../layouts/Layout.astro";
 
-const lang = "it" as const;
+const lang = getLangFromPath(Astro.url.pathname);
+const pageContent = await getLegalPageContent({ pageKey: "privacyPolicy", lang });
+const hasContent = pageContent.hasContent;
+const updatedPrefix = pageContent.locale === "en" ? "Last updated:" : "Ultimo aggiornamento:";
 ---
 
 <Layout
-  title="Informativa Privacy Policy - Panebarco"
+  title={pageContent.seo.title}
+  description={pageContent.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ darkmode: false }}
 >
-  <main class="py-5 mt-4 mt-md-5">
-    <section class="container py-5">
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-9 col-xl-8">
-          <h1 class="mb-4">Informativa Privacy Policy</h1>
-          <p class="mb-4 text-secondary">Ultimo aggiornamento: 19 marzo 2026</p>
-
-          <div class="mb-5">
-            <h2 class="h4 mb-3">Introduzione</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus
-              posuere velit aliquet. Donec id elit non mi porta gravida at eget metus.
-            </p>
-            <p class="mb-0">
-              Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Nulla vitae elit
-              libero, a pharetra augue.
-            </p>
-          </div>
-
-          <div class="mb-5">
-            <h2 class="h4 mb-3">Dati raccolti</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia bibendum nulla sed consectetur.
-              Vestibulum id ligula porta felis euismod semper.
-            </p>
-            <ul class="mb-0">
-              <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-              <li>Donec ullamcorper nulla non metus auctor fringilla.</li>
-              <li>Etiam porta sem malesuada magna mollis euismod.</li>
-            </ul>
-          </div>
-
-          <div class="mb-5">
-            <h2 class="h4 mb-3">Finalita del trattamento</h2>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at
-              lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-            </p>
-            <p class="mb-0">
-              Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus porttitor.
-            </p>
-          </div>
-
-          <div>
-            <h2 class="h4 mb-3">Diritti dell'interessato</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis risus eget urna mollis ornare vel eu
-              leo. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-            </p>
-            <p class="mb-0">
-              Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui.
-            </p>
+  {hasContent && (
+    <main class="py-5 mt-4 mt-md-5">
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-9 col-xl-8">
+            {pageContent.heading && <h1 class="legal-page-title mb-4">{pageContent.heading}</h1>}
+            {pageContent.updatedLabel && <p class="mb-4 text-secondary">{updatedPrefix} {pageContent.updatedLabel}</p>}
+            <CmsContentRenderer kind="richText" markdown={pageContent.body} className="legal-page-content" />
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
+  )}
 </Layout>
+
+<style>
+  .legal-page-title {
+    margin-top: 0;
+    color: #21262e;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: clamp(3.4rem, 8vw, 6.2rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+
+  @media (max-width: 767.98px) {
+    .legal-page-title {
+      font-size: clamp(2.8rem, 12vw, 4.2rem);
+    }
+  }
+
+  .legal-page-content :global(h2) {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.08;
+    margin: 2rem 0 1rem;
+  }
+
+  .legal-page-content :global(h3) {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.15;
+    margin: 1.6rem 0 0.85rem;
+  }
+
+  .legal-page-content :global(h4),
+  .legal-page-content :global(h5),
+  .legal-page-content :global(h6) {
+    font-size: 1.05rem;
+    line-height: 1.2;
+    margin: 1.35rem 0 0.75rem;
+  }
+</style>

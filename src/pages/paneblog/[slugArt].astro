@@ -1,170 +1,23 @@
 ---
+import CmsContentRenderer from "../../components/cms/CmsContentRenderer.astro";
 import Layout from "../../layouts/Layout.astro";
-import { buildPath, joinLocalizedPath } from "../../i18n/routing";
+import { buildPath, getLangFromPath } from "../../i18n/routing";
+import { getPaneblogArticlePageContent } from "../../lib/paneblog-content";
 
-const lang = "it" as const;
-const caramelleArticleHref = joinLocalizedPath(buildPath("paneblog", lang), "dietro-le-quinte-di-caramelle");
-const pipelineArticleHref = joinLocalizedPath(buildPath("paneblog", lang), "pipeline-3d-workflow-interno");
-const regiaArticleHref = joinLocalizedPath(buildPath("paneblog", lang), "regia-e-animazione-come-si-integrano");
+const lang = getLangFromPath(Astro.url.pathname);
+const slug = Astro.params.slugArt || "";
+const pageContent = slug ? await getPaneblogArticlePageContent({ lang, slug }) : null;
 
-const paneblogArticles = [
-  {
-    slug: "dietro-le-quinte-di-caramelle",
-    category: "Diario di viaggio",
-    publishedAt: "2026-02-21",
-    publishedLabel: "21 FEB 2026",
-    title: "Dietro le quinte di Caramelle",
-    description: "Appunti visivi, note di produzione e passaggi chiave raccolti durante lo sviluppo del progetto.",
-    heroImage: "/images/caramelle-intro.jpg",
-    heroAlt: "Scena introduttiva del progetto Caramelle",
-    inlineMediaImage: "/images/paneblog-cover-01-356x217.png",
-    inlineMediaAlt: "Anteprima del progetto Caramelle",
-    inlineMediaText:
-      "Caramelle e nato come un appunto rapido e si e trasformato presto in un terreno di test piu ricco del previsto. Alcune intuizioni sono arrivate subito, altre si sono chiarite solo lavorando su tono, ritmo e relazione tra i personaggi. Questo tipo di materiale non serve solo a fissare un'estetica: aiuta a capire dove sta davvero il cuore del progetto e cosa merita di essere spinto in avanti.",
-    author: {
-      name: "Marianna Panebarco",
-      avatar: "/images/avatar-che-fate-00.png",
-      avatarAlt: "Avatar di Marianna Panebarco",
-    },
-    content: {
-      firstBlock:
-        "Caramelle e nato come un appunto rapido e si e trasformato presto in un terreno di test piu ricco del previsto. Alcune intuizioni sono arrivate subito, altre si sono chiarite solo lavorando su tono, ritmo e relazione tra i personaggi. Questo tipo di materiale non serve solo a fissare un'estetica: aiuta a capire dove sta davvero il cuore del progetto e cosa merita di essere spinto in avanti.",
-      secondBlock:
-        "Nel corso dello sviluppo abbiamo raccolto note visive, alternative scartate e piccoli aggiustamenti di messa in scena che, visti insieme, raccontano molto meglio il percorso di quanto farebbe una singola immagine finale. Tenere traccia di questi passaggi ci permette di leggere con piu lucidita le decisioni prese e di capire quali elementi hanno costruito identita, equilibrio e continuita.",
-      subheading: "Un diario utile, non solo un archivio",
-      closingBlock:
-        "Il dietro le quinte diventa davvero interessante quando smette di essere solo documentazione. Qui entra in gioco come strumento di lavoro: un posto dove fissare scoperte, errori utili e connessioni che possono orientare i passaggi successivi. E anche il modo piu diretto per raccontare come un'idea prende forma senza semplificare troppo il processo.",
-    },
-  },
-  {
-    slug: "pipeline-3d-workflow-interno",
-    category: "Pipeline",
-    publishedAt: "2026-02-15",
-    publishedLabel: "15 FEB 2026",
-    title: "Pipeline 3D: workflow interno",
-    description: "Una lettura rapida del nostro flusso di lavoro, tra materiali, revisioni e continuita produttiva.",
-    heroImage: "/images/hero-dettaglio-fallback.jpg",
-    heroAlt: "Frame di lavorazione 3D Panebarco",
-    inlineMediaImage: "/images/paneblog-cover-02-356x217.png",
-    inlineMediaAlt: "Anteprima visiva del workflow interno",
-    inlineMediaText:
-      "Anche un'immagine secondaria puo diventare utile quando deve richiamare un passaggio specifico del processo. Qui serve come appunto visivo compatto: un richiamo rapido che accompagna il testo senza prendere il controllo della pagina.",
-    author: {
-      name: "Marianna Panebarco",
-      avatar: "/images/avatar-che-fate-00.png",
-      avatarAlt: "Avatar di Marianna Panebarco",
-    },
-    content: {
-      firstBlock:
-        "Ogni pipeline funziona davvero solo quando resta leggibile per chi la usa ogni giorno. Nel nostro caso questo significa ridurre attriti inutili, rendere chiari i passaggi e costruire un flusso che permetta di intervenire velocemente senza perdere ordine. Una buona organizzazione non irrigidisce il lavoro: crea spazio per decisioni migliori.",
-      secondBlock:
-        "Tra file condivisi, revisioni, naming e materiali di appoggio, molto del lavoro si gioca su dettagli che dall'esterno sembrano invisibili. Eppure sono proprio questi punti a determinare la tenuta del progetto nel tempo. Quando il sistema regge, anche il confronto creativo diventa piu semplice e meno dispersivo.",
-      subheading: "Metodo e continuita",
-      closingBlock:
-        "Raccontare il workflow interno significa mettere a fuoco le scelte operative che permettono a una produzione di restare fluida. Non e una lista di tool o regole, ma un equilibrio tra metodo, adattamento e capacita di lasciare aperto il processo dove serve davvero.",
-    },
-  },
-  {
-    slug: "regia-e-animazione-come-si-integrano",
-    category: "Dietro le quinte",
-    publishedAt: "2026-02-08",
-    publishedLabel: "08 FEB 2026",
-    title: "Regia e animazione: come si integrano",
-    description: "Uno sguardo editoriale sul rapporto tra idea, messa in scena e costruzione del movimento.",
-    heroImage: "/images/panebarco-social-library.jpg",
-    heroAlt: "Spazio Panebarco con materiali editoriali e reference visive",
-    inlineMediaImage: "/images/paneblog-cover-03-356x217.png",
-    inlineMediaAlt: "Anteprima editoriale dell'articolo",
-    inlineMediaText:
-      "In questa posizione l'immagine lavora come pausa breve ma precisa. Riduce la densita del testo, tiene il contenuto centrato e aggiunge un riferimento visivo leggero che resta coerente con il tono editoriale della pagina.",
-    author: {
-      name: "Marianna Panebarco",
-      avatar: "/images/avatar-che-fate-00.png",
-      avatarAlt: "Avatar di Marianna Panebarco",
-    },
-    content: {
-      firstBlock:
-        "Regia e animazione non sono due fasi separate che si passano il testimone. Funzionano meglio quando si influenzano a vicenda fin dall'inizio: una scelta di inquadratura puo cambiare il peso di un gesto, e una soluzione di movimento puo ridefinire il modo in cui una scena viene pensata e costruita.",
-      secondBlock:
-        "Nel lavoro quotidiano questo dialogo prende forma attraverso prove, correzioni e piccoli spostamenti di intenzione. Alcune scene trovano subito il proprio equilibrio, altre richiedono un confronto piu lungo tra ritmo, chiarezza e presenza dei personaggi. E in questa zona intermedia che il progetto guadagna precisione.",
-      subheading: "Quando il movimento riscrive la scena",
-      closingBlock:
-        "Osservare dove regia e animazione si sovrappongono aiuta a leggere meglio il carattere di un progetto. Non si tratta solo di far funzionare una scena, ma di capire come tono, energia e sguardo possano restare coerenti mentre il racconto prende corpo.",
-    },
-  },
-] as const;
-
-const relatedArticles = [
-  {
-    slug: "dietro-le-quinte-di-caramelle",
-    title: "Dietro le quinte di Caramelle",
-    date: "21 FEB 2026",
-    category: "Diario di viaggio",
-    image: "/images/paneblog-cover-01-356x217.png",
-    summary: "Un primo blocco di appunti visivi e narrativi raccolti durante lo sviluppo del progetto.",
-    href: caramelleArticleHref,
-  },
-  {
-    slug: "pipeline-3d-workflow-interno",
-    title: "Pipeline 3D: workflow interno",
-    date: "15 FEB 2026",
-    category: "Pipeline",
-    image: "/images/paneblog-cover-02-356x217.png",
-    summary: "Come organizziamo passaggi, materiali e revisioni quando il lavoro deve restare fluido e leggibile.",
-    href: pipelineArticleHref,
-  },
-  {
-    slug: "regia-e-animazione-come-si-integrano",
-    title: "Regia e animazione: come si integrano",
-    date: "08 FEB 2026",
-    category: "Dietro le quinte",
-    image: "/images/paneblog-cover-03-356x217.png",
-    summary: "Una lettura piu trasversale del rapporto tra idea, messa in scena e costruzione del movimento.",
-    href: regiaArticleHref,
-  },
-  {
-    slug: "materiali-di-sviluppo-per-una-serie-animata",
-    title: "Materiali di sviluppo per una serie animata",
-    date: "01 FEB 2026",
-    category: "Originals",
-    image: "/images/paneblog-cover-01-356x217.png",
-    summary: "Personaggi, pitch, tono e mondo narrativo: cosa serve davvero per dare continuita a una serie.",
-    href: buildPath("paneblog", lang),
-  },
-  {
-    slug: "dal-brief-al-visual-tone",
-    title: "Dal brief al visual tone",
-    date: "26 GEN 2026",
-    category: "Processo",
-    image: "/images/paneblog-cover-02-356x217.png",
-    summary: "Un passaggio spesso invisibile, ma decisivo: mettere ordine tra riferimenti, linguaggio e direzione visiva.",
-    href: buildPath("paneblog", lang),
-  },
-  {
-    slug: "piccoli-formati-grandi-deviazioni",
-    title: "Piccoli formati, grandi deviazioni",
-    date: "18 GEN 2026",
-    category: "Editoriale",
-    image: "/images/paneblog-cover-03-356x217.png",
-    summary: "Quando un contenuto laterale diventa utile per tenere vivo un progetto e allargarne la presenza.",
-    href: buildPath("paneblog", lang),
-  },
-] as const;
-
-export function getStaticPaths() {
-  return paneblogArticles.map((article) => ({
-    params: { slugArt: article.slug },
-    props: { article },
-  }));
+if (!pageContent) {
+  return Astro.redirect(buildPath("paneblog", lang));
 }
 
-const { article = paneblogArticles[0] } = Astro.props;
-const visibleRelatedArticles = relatedArticles.filter((item) => item.slug !== article.slug).slice(0, 3);
+const { article, relatedArticles } = pageContent;
 ---
 
 <Layout
-  title={`${article.title} - Paneblog`}
-  description={article.description}
+  title={article.seo.title}
+  description={article.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ darkmode: false }}
@@ -176,7 +29,7 @@ const visibleRelatedArticles = relatedArticles.filter((item) => item.slug !== ar
           <div class="article-intro-hero__meta" aria-label="Metadati articolo">
             <span class="article-intro-hero__category">{article.category}</span>
             <span class="article-intro-hero__separator" aria-hidden="true"></span>
-            <time class="article-intro-hero__date" datetime={article.publishedAt}>{article.publishedLabel}</time>
+            <time class="article-intro-hero__date" datetime={article.publishedAt}>{article.date}</time>
           </div>
 
           <h1 id="articleTitle" class="article-intro-hero__title">{article.title}</h1>
@@ -192,100 +45,48 @@ const visibleRelatedArticles = relatedArticles.filter((item) => item.slug !== ar
       <div class="container">
         <div class="article-content__inner">
           <h2 id="articleContentTitle" class="visually-hidden">Contenuto articolo</h2>
-
-          <p class="article-content__paragraph">{article.content.firstBlock}</p>
-          <p class="article-content__paragraph">{article.content.secondBlock}</p>
-          <h3 class="article-content__subheading">{article.content.subheading}</h3>
-          <p class="article-content__paragraph">{article.content.closingBlock}</p>
+          <CmsContentRenderer kind="richText" markdown={article.content} className="article-content__rich-text" />
         </div>
       </div>
     </section>
 
-    <section class="article-inline-media section-space section-space--tight" aria-labelledby="articleInlineMediaTitle">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="article-inline-media__inner">
-              <h2 id="articleInlineMediaTitle" class="visually-hidden">Immagine secondaria dell'articolo</h2>
+    {relatedArticles.length > 0 && (
+      <section class="article-related section-space section-space--tight" aria-labelledby="articleRelatedTitle">
+        <div class="container">
+          <div class="article-related__inner">
+            <div class="article-related__heading d-flex flex-wrap align-items-center gap-3 gap-md-4">
+              <h3 id="articleRelatedTitle" class="page-title-uniform article-related__title">Potrebbe interessarti</h3>
+              <img
+                class="article-related__sticker"
+                src="/images/paneblog-pensieri.png"
+                alt="Pensieri che ci frullano in testa"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
 
-              <figure class="article-inline-media__figure d-flex justify-content-center">
-                <img
-                  class="article-inline-media__image img-fluid"
-                  src={article.inlineMediaImage}
-                  alt={article.inlineMediaAlt}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
-
-              <div class="article-inline-media__copy">
-                <p class="article-content__paragraph article-inline-media__text">{article.inlineMediaText}</p>
-              </div>
+            <div class="row g-4 article-related__grid">
+              {relatedArticles.map((relatedArticle) => (
+                <div class="col-12 col-md-6 col-xl-4 article-related__col">
+                  <article class="card blog-card h-100">
+                    <img src={relatedArticle.image} alt={relatedArticle.imageAlt} loading="lazy" decoding="async" />
+                    <div class="card-body">
+                      <p class="blog-date">{relatedArticle.date}</p>
+                      <p class="paneblog-article-category">{relatedArticle.category}</p>
+                      <h3 class="blog-title">{relatedArticle.title}</h3>
+                      <p class="blog-abstract">{relatedArticle.summary}</p>
+                      <a class="blog-link" href={relatedArticle.href}>
+                        Leggi di piu <i class="bi bi-arrow-right"></i>
+                      </a>
+                    </div>
+                  </article>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="article-author section-space section-space--tight" aria-labelledby="articleAuthorTitle">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="article-author__inner">
-              <h2 id="articleAuthorTitle" class="visually-hidden">Autore articolo</h2>
-              <div class="article-author__divider" aria-hidden="true"></div>
-
-              <div class="article-author__card d-flex align-items-center">
-                <img
-                  class="article-author__avatar rounded-circle"
-                  src={article.author.avatar}
-                  alt={article.author.avatarAlt}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span class="article-author__name">{article.author.name}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="article-related section-space section-space--tight" aria-labelledby="articleRelatedTitle">
-      <div class="container">
-        <div class="article-related__inner">
-          <div class="article-related__heading d-flex flex-wrap align-items-center gap-3 gap-md-4">
-            <h3 id="articleRelatedTitle" class="page-title-uniform article-related__title">Potrebbe interessarti</h3>
-            <img
-              class="article-related__sticker"
-              src="/images/paneblog-pensieri.png"
-              alt="Pensieri che ci frullano in testa"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-
-          <div class="row g-4 article-related__grid">
-            {visibleRelatedArticles.map((relatedArticle) => (
-              <div class="col-12 col-md-6 col-xl-4 article-related__col">
-                <article class="card blog-card h-100">
-                  <img src={relatedArticle.image} alt={relatedArticle.title} loading="lazy" decoding="async" />
-                  <div class="card-body">
-                    <p class="blog-date">{relatedArticle.date}</p>
-                    <p class="paneblog-article-category">{relatedArticle.category}</p>
-                    <h3 class="blog-title">{relatedArticle.title}</h3>
-                    <p class="blog-abstract">{relatedArticle.summary}</p>
-                    <a class="blog-link" href={relatedArticle.href}>
-                      Leggi di piu <i class="bi bi-arrow-right"></i>
-                    </a>
-                  </div>
-                </article>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    )}
   </main>
 </Layout>
 
@@ -300,7 +101,9 @@ const visibleRelatedArticles = relatedArticles.filter((item) => item.slug !== ar
     padding-top: clamp(7.6rem, 11vw, 9.8rem);
   }
 
-  .article-intro-hero__inner {
+  .article-intro-hero__inner,
+  .article-content__inner,
+  .article-related__inner {
     max-width: min(100%, 78rem);
     margin: 0 auto;
   }
@@ -360,116 +163,46 @@ const visibleRelatedArticles = relatedArticles.filter((item) => item.slug !== ar
 
   .article-content {
     padding-top: clamp(2.4rem, 4vw, 3.2rem);
-    padding-bottom: clamp(1.2rem, 2vw, 1.8rem);
-  }
-
-  .article-content__inner {
-    max-width: min(100%, 78rem);
-    margin: 0 auto;
-  }
-
-  .article-content__paragraph {
-    margin: 0;
-    font-family: var(--bs-body-font-family);
-    font-size: var(--type-body);
-    line-height: 1.5;
-    font-weight: 400;
-    color: var(--ink);
-  }
-
-  .article-content__paragraph + .article-content__paragraph {
-    margin-top: 1.7rem;
-  }
-
-  .article-content__subheading {
-    margin: clamp(2.5rem, 4vw, 3.25rem) 0 1rem;
-    max-width: none;
-    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
-    font-size: clamp(1.8rem, 1.3rem + 1vw, 2.45rem);
-    line-height: 1;
-    font-weight: 900;
-    color: #009fe3;
-  }
-
-  .article-inline-media {
-    padding-top: 0;
     padding-bottom: clamp(2rem, 4vw, 3rem);
   }
 
-  .article-inline-media__inner {
-    max-width: min(100%, 78rem);
-    margin: 0 auto;
-  }
-
-  .article-inline-media__figure {
-    width: min(100%, 720px);
-    margin: 0 auto 1.5rem;
-    overflow: hidden;
-    border-radius: clamp(1rem, 1.8vw, 1.4rem);
-  }
-
-  .article-inline-media__image {
-    width: min(100%, 576px);
-    max-width: 576px;
-    height: 288px;
-    object-fit: cover;
-    border-radius: inherit;
-    box-shadow: 0 18px 46px rgba(18, 18, 18, 0.12);
-  }
-
-  .article-inline-media__copy {
-    max-width: min(100%, 78rem);
-    margin: 0 auto;
-  }
-
-  .article-inline-media__text {
+  :global(.article-content__rich-text p) {
     margin: 0;
-  }
-
-  .article-author {
-    padding-top: 0;
-    padding-bottom: clamp(2.2rem, 4vw, 3.4rem);
-  }
-
-  .article-author__inner {
-    max-width: min(100%, 78rem);
-    margin: 0 auto;
-  }
-
-  .article-author__divider {
-    width: 100%;
-    height: 1px;
-    margin-bottom: 1.5rem;
-    background: rgba(18, 18, 18, 0.1);
-  }
-
-  .article-author__card {
-    gap: 0.7rem;
-  }
-
-  .article-author__avatar {
-    width: 2.25rem;
-    height: 2.25rem;
-    object-fit: cover;
-    flex: 0 0 auto;
-  }
-
-  .article-author__name {
     font-family: var(--bs-body-font-family);
-    font-size: 0.78rem;
-    line-height: 1.2;
+    font-size: var(--type-body);
+    line-height: 1.6;
     font-weight: 400;
     color: var(--ink);
+  }
+
+  :global(.article-content__rich-text p + p) {
+    margin-top: 1.5rem;
+  }
+
+  :global(.article-content__rich-text h2),
+  :global(.article-content__rich-text h3) {
+    margin: 2.2rem 0 1rem;
+    font-family: "Sofia Sans Semi Condensed", "Sofia Sans", sans-serif;
+    font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.3rem);
+    line-height: 1;
+    font-weight: 900;
+    color: #009fe3;
+    text-transform: none;
+  }
+
+  :global(.article-content__rich-text ul),
+  :global(.article-content__rich-text ol) {
+    margin: 1.3rem 0 0;
+    padding-left: 1.4rem;
+  }
+
+  :global(.article-content__rich-text li + li) {
+    margin-top: 0.45rem;
   }
 
   .article-related {
     padding-top: clamp(0.5rem, 1vw, 1rem);
     padding-bottom: clamp(3rem, 5vw, 4.25rem);
-  }
-
-  .article-related__inner {
-    max-width: min(100%, 78rem);
-    margin: 0 auto;
   }
 
   .article-related__heading {
@@ -511,51 +244,8 @@ const visibleRelatedArticles = relatedArticles.filter((item) => item.slug !== ar
       box-shadow: 0 18px 46px rgba(18, 18, 18, 0.12);
     }
 
-    .article-content__paragraph {
+    :global(.article-content__rich-text p) {
       line-height: 1.8;
-    }
-
-    .article-inline-media__figure {
-      width: 100%;
-      margin-bottom: 1.25rem;
-    }
-
-    .article-inline-media__image {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 2 / 1;
-      max-width: none;
-    }
-
-    .article-inline-media__text {
-      line-height: 1.5;
-    }
-
-    .article-author__divider {
-      margin-bottom: 1.2rem;
-    }
-
-    .article-author__avatar {
-      width: 2rem;
-      height: 2rem;
-    }
-
-    .article-related__heading {
-      align-items: start !important;
-      gap: 0.75rem;
-    }
-
-    .article-related__sticker {
-      width: 8.5rem;
-    }
-
-    .article-related__grid {
-      --bs-gutter-x: 0;
-      margin-inline: 0;
-    }
-
-    .article-related__col {
-      padding-inline: 0;
     }
   }
 </style>

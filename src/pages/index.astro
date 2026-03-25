@@ -5,70 +5,158 @@ import OriginalsShowcase from "../components/OriginalsShowcase.astro";
 import PortfolioShowcase from "../components/PortfolioShowcase.astro";
 import ServicesShowcase from "../components/ServicesShowcase.astro";
 import mainScriptUrl from "../scripts/main.js?url";
-import { getPortfolioShowcaseContent } from "../data/portfolio-showcase";
-import { buildPath } from "../i18n/routing";
+import { buildPath, getLangFromPath } from "../i18n/routing";
+import { getHomeOriginalsShowcaseContent, getHomePageContent, getPortfolioShowcaseContent } from "../lib/site-content";
+import { getPaneblogPreviewArticles } from "../lib/paneblog-content";
 
-const lang = "it" as const;
-const portfolioShowcase = getPortfolioShowcaseContent(lang);
+const lang = getLangFromPath(Astro.url.pathname);
+const homeFallback = {
+  header: {
+    title: "Ciao!",
+    subtitle: "Animazione, creatività e un pizzico di magia digitale.",
+    videoSrc: "/images/1021768637.mp4",
+    cta: {
+      label: "Scopri cosa facciamo",
+      href: buildPath("originals", lang),
+    },
+  },
+  intro: {
+    title: "SIAMO",
+    typingWords: [
+      "i Panebarcos",
+      "uno studio di animazione",
+      "una casa di produzione indipendente",
+      "un’agenzia creativa",
+      "una bottega multimediale",
+      "una famiglia tra cartoon e realtà",
+    ],
+    paragraphs: [
+      "Sviluppiamo progetti originali e affianchiamo altre produzioni con service, vfx e post-produzione, lavorando in modo artigianale, senza scorciatoie e con molta cura.",
+      "A portare avanti tutto questo dal 1995, c'è una famiglia un po' stramba, sospesa tra cartoon e realtà, che da Ravenna continua a fare questo mestiere con la stessa curiosità di sempre.",
+    ],
+    imageSrc: "/images/siamo-teams.png",
+    imageAlt: "I Panebarcos",
+    button: {
+      label: "SCOPRI IL TEAM",
+      href: buildPath("studioTeam", lang),
+    },
+  },
+  services: {
+    title: "SERVIZI",
+    stickerSrc: "/images/cose che sappiamo fare.png",
+    stickerAlt: "Cose che sappiamo fare",
+    items: Array.from({ length: 4 }, () => ({
+      title: "Post produzione",
+      href: buildPath("servicesPost", lang),
+      image: "/images/servizi-cover-02-340x487.jpg",
+      summary: "Lorem ipsum",
+    })),
+  },
+  originals: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  seo: {
+    title: "Panebarco - Homepage",
+    description: "Homepage Panebarco",
+  },
+};
+const homeContent = await getHomePageContent({ lang, fallback: homeFallback });
+const originalsShowcase = await getHomeOriginalsShowcaseContent({
+  lang,
+  fallback: {
+    baseHref: buildPath("originals", lang),
+    items: Array.from({ length: 3 }, () => ({
+      title: "Marta e la morte",
+      image: "/images/originals-cover-02-270x395.jpg",
+      imageAlt: "Frame del progetto Marta e la morte",
+      slug: "marta-e-la-morte",
+      link: `${buildPath("originals", lang)}/marta-e-la-morte`,
+    })),
+  },
+});
+const portfolioShowcaseFallback = {
+  title: "PORTFOLIO",
+  stickerSrc: "/images/cose belle che abbiamo fatto.png",
+  stickerAlt: "",
+  ctaLabel: "SCOPRI DI PIÙ",
+  ctaHref: buildPath("portfolio", lang),
+  baseHref: buildPath("portfolio", lang),
+  items: ["top-left", "top-right", "bottom-left", "bottom-right", "wide"].map((slot) => ({
+    title: "Vita dura per gli Orsi Marsicani",
+    summary: "Service e intervento digitale integrati dentro uno spot dove la tecnica resta al servizio della scena.",
+    image: "/images/portfolio-cover-03-695x391.jpg",
+    imageAlt: "Frame del progetto Vita dura per gli Orsi Marsicani",
+    slot,
+    tags: ["Regia", "2D"],
+    href: undefined,
+  })),
+};
+const portfolioShowcase = await getPortfolioShowcaseContent({
+  lang,
+  fallback: portfolioShowcaseFallback,
+});
+const homePaneblogArticles = await getPaneblogPreviewArticles({
+  lang,
+  limit: 3,
+});
 ---
 
 <Layout
-  title="Panebarco - Homepage"
-  description="Homepage Panebarco"
+  title={homeContent.seo.title}
+  description={homeContent.seo.description}
   lang={lang}
   headerProps={{ darkmode: false }}
 >
     <main>
-      <HeroStyHome id="studio" className="hero-wrap" showSlider={true} />
+      <HeroStyHome
+        id="studio"
+        className="hero-wrap"
+        showSlider={true}
+        title={homeContent.header.title}
+        subtitle={homeContent.header.subtitle}
+        videoSrc={homeContent.header.videoSrc}
+        ctaLabel={homeContent.header.cta.label}
+        ctaHref={homeContent.header.cta.href}
+      />
   
       <!-- Sezione "Siamo" con testo istituzionale e CTA -->
       <section class="section-space">
         <div class="container">
           <h2 class="section-title">
-            SIAMO <br>
+            {homeContent.intro.title} <br>
             <span
               id="typing-text"
               class="accent typing-text"
-              data-words="i Panebarcos|uno studio di animazione|una casa di produzione indipendente|un&rsquo;agenzia creativa|una bottega multimediale|una famiglia tra cartoon e realt&agrave;"
+              data-words={homeContent.intro.typingWords.join("|")}
               aria-live="polite"
             ></span>
           </h2>
           <div class="row g-4 align-items-center">
             <div class="col-lg-6">
-              <p class="about-text">
-                Sviluppiamo progetti originali e affianchiamo altre produzioni con
-                service, vfx e post-produzione, lavorando in modo artigianale,
-                senza scorciatoie e con molta cura. 
-              </p>
-              <p>
-                A portare avanti tutto questo dal 1995, c&rsquo;&egrave; una
-                famiglia un po&rsquo; stramba, sospesa tra cartoon e realt&agrave;,
-                che da Ravenna continua a fare questo mestiere con la stessa
-                curiosit&agrave; di sempre.
-              </p>
-              <p>
-                A portare avanti tutto questo dal 1995, c&rsquo;&egrave; una
-                famiglia un po&rsquo; stramba, sospesa tra cartoon e realt&agrave;,
-                che da Ravenna continua a fare questo mestiere con la stessa
-                curiosit&agrave; di sempre.
-              </p>
+              {homeContent.intro.paragraphs.map((paragraph, index) => (
+                <p class:list={[index === 0 && "about-text"]}>{paragraph}</p>
+              ))}
               <div class="d-flex flex-wrap gap-2 mt-4 justify-content-center justify-content-lg-start">
-                <a href={buildPath("studioTeam", lang)} class="btn btn-cta btn-cta--blue btn-pill">SCOPRI IL TEAM</a>
+                <a href={homeContent.intro.button.href} class="btn btn-cta btn-cta--blue btn-pill">{homeContent.intro.button.label}</a>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="team-blob">
-                <img src="/images/siamo-teams.png" alt="I Panebarcos">
+                <img src={homeContent.intro.imageSrc} alt={homeContent.intro.imageAlt}>
               </div>
             </div>
           </div>
         </div>
       </section>
   
-      <ServicesShowcase lang={lang} />
+      <ServicesShowcase
+        lang={lang}
+        title={homeContent.services.title}
+        stickerSrc={homeContent.services.stickerSrc}
+        stickerAlt={homeContent.services.stickerAlt}
+        items={homeContent.services.items}
+      />
   
       <!-- Slider Panebarco Originals -->
-      <OriginalsShowcase />
+      <OriginalsShowcase introText={homeContent.originals} items={originalsShowcase.items} />
   
       <PortfolioShowcase
         sectionId="portfolio"
@@ -90,45 +178,21 @@ const portfolioShowcase = getPortfolioShowcaseContent(lang);
           <img class="section-title-sticker" src="/images/pensieri che ci frullano in testa.png" alt="" aria-hidden="true">
         </h2>
           <div class="row g-3">
-            <div class="col-12 col-sm-6 col-lg-4">
-              <article class="card blog-card h-100">
-                <img src="/images/paneblog-cover-01-356x217.png" alt="Articolo blog 1">
-                <div class="card-body">
-                  <h3 class="blog-title">Dietro le quinte di Caramelle</h3>
-                  <p class="blog-date">21 FEB 2026</p>
-                  <p class="blog-abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in cursus erat.</p>
-                  <a class="blog-link" href={buildPath("paneblogTravelDiary", lang)}>
-                    Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </article>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <article class="card blog-card h-100">
-                <img src="/images/paneblog-cover-02-356x217.png" alt="Articolo blog 2">
-                <div class="card-body">
-                  <h3 class="blog-title">Pipeline 3D: workflow interno</h3>
-                  <p class="blog-date">15 FEB 2026</p>
-                  <p class="blog-abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in cursus erat.</p>
-                  <a class="blog-link" href={buildPath("paneblog", lang)}>
-                    Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </article>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <article class="card blog-card h-100">
-                <img src="/images/paneblog-cover-03-356x217.png" alt="Articolo blog 3">
-                <div class="card-body">
-                  <h3 class="blog-title">Regia e animazione: come si integrano</h3>
-                  <p class="blog-date">08 FEB 2026</p>
-                  <p class="blog-abstract">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in cursus erat.</p>
-                  <a class="blog-link" href={buildPath("paneblog", lang)}>
-                    Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </article>
-            </div>
+            {homePaneblogArticles.map((article) => (
+              <div class="col-12 col-sm-6 col-lg-4">
+                <article class="card blog-card h-100">
+                  <img src={article.image} alt={article.imageAlt}>
+                  <div class="card-body">
+                    <h3 class="blog-title">{article.title}</h3>
+                    <p class="blog-date">{article.date}</p>
+                    <p class="blog-abstract">{article.summary}</p>
+                    <a class="blog-link" href={article.href}>
+                      Leggi di pi&ugrave; <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </article>
+              </div>
+            ))}
           </div>
           <div class="text-center mt-4">
             <a href={buildPath("paneblog", lang)} class="btn btn-cta btn-cta--blue btn-pill">LEGGI IL PANEBLOG</a>

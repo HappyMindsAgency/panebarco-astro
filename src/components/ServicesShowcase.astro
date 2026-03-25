@@ -7,6 +7,15 @@ interface Props {
   sectionId?: string;
   sectionClass?: string;
   containerClass?: string;
+  title?: string;
+  stickerSrc?: string;
+  stickerAlt?: string;
+  items?: Array<{
+    title: string;
+    href: string;
+    image: string;
+    summary: string;
+  }>;
 }
 
 const {
@@ -14,6 +23,10 @@ const {
   sectionId = "servizi",
   sectionClass = "section-space section-space--soft services-home-cards",
   containerClass = "container",
+  title,
+  stickerSrc,
+  stickerAlt,
+  items,
 } = Astro.props;
 
 const content = {
@@ -82,16 +95,20 @@ const content = {
 } as const;
 
 const showcase = content[lang];
+const showcaseTitle = title ?? showcase.title;
+const showcaseStickerSrc = stickerSrc ?? showcase.stickerSrc;
+const showcaseStickerAlt = stickerAlt ?? showcase.stickerAlt;
+const showcaseItems = items?.length ? items : showcase.items;
 ---
 
 <section id={sectionId} class={sectionClass}>
   <div class={containerClass}>
     <h2 class="section-title section-title-reveal" data-services-showcase-title data-reveal-managed="self">
-      <span class="section-title-text">{showcase.title}</span>
-      <img class="section-title-sticker" src={showcase.stickerSrc} alt="" aria-hidden="true" />
+      <span class="section-title-text">{showcaseTitle}</span>
+      <img class="section-title-sticker" src={showcaseStickerSrc} alt={showcaseStickerAlt} aria-hidden="true" />
     </h2>
     <div class="row g-4 services-box-grid">
-      {showcase.items.map((service) => (
+      {showcaseItems.map((service) => (
         <div class="col-12 col-md-6 col-lg-3">
           <a
             class="services-box-link d-block text-decoration-none"

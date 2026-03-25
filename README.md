@@ -2,6 +2,40 @@
 
 Sito Astro per Panebarco.
 
+## Binding Strapi
+- Il client CMS condiviso e in [src/lib/strapi-client.js](/Users/violaolagrafica/Documents/GitHub/panebarco-astro/src/lib/strapi-client.js).
+- Espone:
+  - `getSingleDocument(resource, query)`
+  - `getCollectionDocuments(resource, query)`
+- Legge `STRAPI_API_URL` e `AUTH_READONLY` dalle env e usa `@strapi/client`.
+- Le query si passano come oggetto, non come query string concatenata a mano.
+- In produzione usa una cache in-memory per richieste identiche.
+- Esempio:
+
+```js
+const pageResponse = await getSingleDocument("pagina-privacy-policy-newsletter", {
+  locale: "it",
+  status: "published",
+  fields: ["documentId", "locale", "updatedAt", "contenuto", "nomePagina"],
+  populate: {
+    seo: {
+      fields: ["metaTitle", "metaDescription"],
+    },
+    localizations: {
+      fields: ["documentId", "locale"],
+    },
+  },
+});
+```
+
+Per le informative:
+- l'adapter e in [src/lib/legal-content.js](/Users/violaolagrafica/Documents/GitHub/panebarco-astro/src/lib/legal-content.js)
+- la risoluzione lingua parte dalla route con [src/i18n/routing.ts](/Users/violaolagrafica/Documents/GitHub/panebarco-astro/src/i18n/routing.ts)
+- i path traducibili stanno in [src/i18n/slugs.ts](/Users/violaolagrafica/Documents/GitHub/panebarco-astro/src/i18n/slugs.ts)
+- il modulo `legal-content` usa lo stesso client Strapi del resto del progetto e restituisce dati gia pronti per la pagina
+- il rendering del rich text passa da [src/components/cms/CmsContentRenderer.astro](/Users/violaolagrafica/Documents/GitHub/panebarco-astro/src/components/cms/CmsContentRenderer.astro), che oggi usa [src/components/RitchText.astro](/Users/violaolagrafica/Documents/GitHub/panebarco-astro/src/components/RitchText.astro)
+- le quattro route legal mantengono il proprio markup e delegano solo dati e query al binding centralizzato
+
 ## HeroStyHome (src/components/HeroStyHome.astro)
 Props principali:
 - `videoSrc`: mp4 di sfondo. Se definito (anche stringa vuota) il video ha priorità.

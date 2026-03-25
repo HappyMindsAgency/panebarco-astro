@@ -56,7 +56,21 @@ export function formatDateBadge(dateString) {
 
 export function getStrapiMediaUrl(mediaUrlString) {
     if (!mediaUrlString) return '';
-    return `${import.meta.env.STRAPI_URL}${mediaUrlString}`;
+
+    const mediaUrl = String(mediaUrlString).trim();
+
+    if (/^https?:\/\//i.test(mediaUrl)) {
+        return mediaUrl;
+    }
+
+    if (mediaUrl.startsWith('//')) {
+        return `https:${mediaUrl}`;
+    }
+
+    const baseUrl = String(import.meta.env.STRAPI_URL || import.meta.env.STRAPI_API_URL || '').replace(/\/+$/, '');
+    const normalizedPath = mediaUrl.startsWith('/') ? mediaUrl : `/${mediaUrl}`;
+
+    return `${baseUrl}${normalizedPath}`;
 }
 
 /**

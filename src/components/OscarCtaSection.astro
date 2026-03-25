@@ -33,7 +33,7 @@ const {
           {heading}
           <span>{highlight}</span>
         </h2>
-        <p>{body}</p>
+        {body && <p>{body}</p>}
         <a class="btn btn-cta btn-cta--blue btn-pill" href={href}>{buttonLabel}</a>
       </div>
     </div>

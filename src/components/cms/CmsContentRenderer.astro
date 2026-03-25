@@ -1,0 +1,51 @@
+---
+import RitchText from "../RitchText.astro";
+
+interface Props {
+  className?: string;
+  kind?: "richText";
+  markdown?: string;
+  paragraphStyle?: string;
+}
+
+const { className = "", kind = "richText", markdown = "", paragraphStyle = "" } = Astro.props;
+const hasContent = Boolean(markdown.trim());
+---
+
+{kind === "richText" && hasContent && (
+  <RitchText block={markdown} className={className} pstyle={paragraphStyle} />
+)}
+
+<style>
+  :global(.legal-page-content h2) {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: clamp(2.09rem, 3.74vw, 2.88rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: 0;
+    margin: 2.45rem 0 1.28rem;
+    text-transform: none;
+  }
+
+  :global(.legal-page-content h3) {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: clamp(1.61rem, 2.74vw, 2.02rem);
+    font-weight: 700;
+    line-height: 1.17;
+    letter-spacing: 0;
+    margin: 2rem 0 1.05rem;
+    text-transform: none;
+  }
+
+  :global(.legal-page-content h4),
+  :global(.legal-page-content h5),
+  :global(.legal-page-content h6) {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.44rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 1.65rem 0 0.85rem;
+    text-transform: none;
+  }
+</style>

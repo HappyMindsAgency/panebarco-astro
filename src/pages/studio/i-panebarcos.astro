@@ -1,386 +1,179 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
-import OscarCtaSection from "../../components/OscarCtaSection.astro";
-import { buildPath } from "../../i18n/routing";
+import RitchText from "../../components/RitchText.astro";
+import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
+import { getLangFromPath } from "../../i18n/routing";
+import { getPanebarcosPageContent } from "../../lib/site-content";
+import type { ContactBannerContent, PanebarcosPageContent } from "../../lib/site-content.types";
 
-const lang = "it" as const;
-const showNetworkListing = false;
-const showFamilyAvatars = false;
-
-const pageContent = {
-  it: {
-    heroSubtitle: "Famiglia, bottega e lavoro condiviso",
-    introTitle: "Una famiglia creativa, una bottega che lavora insieme",
-    introParagraphs: [
-      "Panebarco nasce come una storia di famiglia, ma cresce come una bottega aperta: un nucleo stabile che condivide metodo, immaginario e responsabilita, capace di restare compatto anche quando i progetti cambiano forma.",
-      "Dentro questo spazio convivono visione autoriale, organizzazione produttiva e un modo molto concreto di lavorare insieme. E intorno alla famiglia si muove una rete di collaboratori, partner e professionisti che nel tempo sono diventati, a loro volta, Panebarcos.",
-    ],
-    familyTitle: "La famiglia",
-    familyBody:
-      "Un nucleo creativo che tiene insieme visione, organizzazione e continuita del lavoro. Qui la bottega prende forma ogni giorno, tra affetto, mestiere e responsabilita condivise.",
-    familyMembers: [
-      {
-        name: "Marianna",
-        role: "Produzione e regia",
-        microText: "Tiene insieme produzione, regia e traiettoria dei progetti.",
-        avatar: "/images/teams-avatar-che-fate-01.png",
-        photo: "/images/lo-studio-panebarcos-01.jpg",
-        linkedinUrl: "",
-      },
-      {
-        name: "Camilla",
-        role: "Organizzazione e cura",
-        microText: "Coordina flussi, persone e dettagli che fanno stare bene il lavoro.",
-        avatar: "/images/teams-avatar-che-fate-03.png",
-        photo: "/images/lo-studio-panebarcos-02.jpg",
-        linkedinUrl: "",
-      },
-      {
-        name: "Matteo",
-        role: "Sviluppo e coordinamento",
-        microText: "Segue sviluppo, processi e raccordo operativo tra idee e squadra.",
-        avatar: "/images/teams-avatar-che-fate-02.png",
-        photo: "/images/lo-studio-panebarcos-03.jpg",
-        linkedinUrl: "",
-      },
-      {
-        name: "Daniele",
-        role: "Visione e disegno",
-        microText: "Delinea l'immaginario Panebarco tra segno, visione e direzione creativa.",
-        avatar: "/images/avatar-che-fate-00.png",
-        photo: "/images/lo-studio-panebarcos-04.jpg",
-        linkedinUrl: "",
-      },
-    ],
-    networkMembers: [
-      { name: "Alessandro Ricci", role: "Storyboard Artist", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Chiara Bassi", role: "Character Designer", photo: "/images/lo-studio-panebarcos-03.jpg" },
-      { name: "Marco Pini", role: "3D Artist", photo: "/images/lo-studio-panebarcos-02.jpg" },
-      { name: "Laura Santi", role: "Motion Designer", photo: "/images/lo-studio-panebarcos-04.jpg" },
-      { name: "Giulia Riva", role: "Compositing", photo: "/images/lo-studio-panebarcos.jpg" },
-      { name: "Davide Conti", role: "Sound Design", photo: "/images/lo-studio-panebarcos-03.jpg" },
-    ],
-    networkListTitle: "...e tanti altri Panebarcos",
-    networkListIntro: "Il nostro network di talenti che collaborano con noi su ogni progetto.",
-    networkListMembers: [
-      { name: "Andrea Russo", role: "Sound Designer", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Martina Gallo", role: "Colorista", photo: "/images/lo-studio-panebarcos-02.jpg" },
-      { name: "Federico Conti", role: "Compositor", photo: "/images/lo-studio-panebarcos-04.jpg" },
-      { name: "Sara Villa", role: "Sceneggiatrice", photo: "/images/lo-studio-panebarcos.jpg" },
-      { name: "Roberto Mancini", role: "Rigger", photo: "/images/lo-studio-panebarcos-03.jpg" },
-      { name: "Valentina Bianchi", role: "VFX Artist", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Giorgio Neri", role: "Editor", photo: "/images/lo-studio-panebarcos.jpg" },
-      { name: "Anna De Luca", role: "Illustratrice", photo: "/images/lo-studio-panebarcos-02.jpg" },
-      { name: "Matteo Greco", role: "3D Artist", photo: "/images/lo-studio-panebarcos-03.jpg" },
-      { name: "Laura Marchetti", role: "Producer", photo: "/images/lo-studio-panebarcos-04.jpg" },
-      { name: "Simone Ferrara", role: "Concept Artist", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Francesca Lombardi", role: "Animatrice", photo: "/images/lo-studio-panebarcos-02.jpg" },
-    ],
-    workTitle: "Come lavoriamo",
-    workAreas: [
-      {
-        title: "Curiosita",
-        body: "Sperimentiamo linguaggi e tecniche per dare forma a idee originali.",
-      },
-      {
-        title: "Artigianalita",
-        body: "Ogni dettaglio viene rifinito con attenzione, senza scorciatoie.",
-      },
-      {
-        title: "Collaborazione",
-        body: "Lavoriamo in squadra con clienti e partner per costruire storie forti.",
-      },
-    ],
-    oscarBody:
-      "Dietro i progetti ci sono persone, legami e un modo di lavorare che continua a evolversi senza perdere il lato artigianale.",
+const lang = getLangFromPath(Astro.url.pathname);
+const panebarcosFallback = {
+  header: {
+    backgroundVideoSrc: "/images/1021768637.mp4",
   },
-  en: {
-    heroSubtitle: "Family, workshop and shared work",
-    introTitle: "A creative family, a workshop built on working together",
-    introParagraphs: [
-      "Panebarco starts as a family story and grows as an open workshop: a stable core sharing methods, imagination and responsibility, able to stay cohesive even when projects change shape.",
-      "Inside this space, authorial vision, production organization and a very practical way of working together coexist. Around the family, a wider network of collaborators and partners has become part of the Panebarcos too.",
-    ],
-    familyTitle: "The family",
-    familyBody:
-      "A creative core holding together vision, organization and continuity of the work. This is where the workshop takes shape every day, through affection, craft and shared responsibility.",
-    familyMembers: [
-      {
-        name: "Marianna",
-        role: "Production and direction",
-        microText: "She keeps production, direction and the overall project path aligned.",
-        avatar: "/images/teams-avatar-che-fate-01.png",
-        photo: "/images/lo-studio-panebarcos-01.jpg",
-        linkedinUrl: "",
-      },
-      {
-        name: "Camilla",
-        role: "Organization and care",
-        microText: "She coordinates people, workflows and the details that keep work balanced.",
-        avatar: "/images/teams-avatar-che-fate-03.png",
-        photo: "/images/lo-studio-panebarcos-02.jpg",
-        linkedinUrl: "",
-      },
-      {
-        name: "Matteo",
-        role: "Development and coordination",
-        microText: "He follows development, processes and the operational link across the team.",
-        avatar: "/images/teams-avatar-che-fate-02.png",
-        photo: "/images/lo-studio-panebarcos-03.jpg",
-        linkedinUrl: "",
-      },
-      {
-        name: "Daniele",
-        role: "Vision and drawing",
-        microText: "He shapes Panebarco's imagery through drawing, vision and creative direction.",
-        avatar: "/images/avatar-che-fate-00.png",
-        photo: "/images/lo-studio-panebarcos-04.jpg",
-        linkedinUrl: "",
-      },
-    ],
-    networkMembers: [
-      { name: "Alessandro Ricci", role: "Storyboard Artist", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Chiara Bassi", role: "Character Designer", photo: "/images/lo-studio-panebarcos-03.jpg" },
-      { name: "Marco Pini", role: "3D Artist", photo: "/images/lo-studio-panebarcos-02.jpg" },
-      { name: "Laura Santi", role: "Motion Designer", photo: "/images/lo-studio-panebarcos-04.jpg" },
-      { name: "Giulia Riva", role: "Compositing", photo: "/images/lo-studio-panebarcos.jpg" },
-      { name: "Davide Conti", role: "Sound Design", photo: "/images/lo-studio-panebarcos-03.jpg" },
-    ],
-    networkListTitle: "...and many other Panebarcos",
-    networkListIntro: "Our network of talents collaborating with us across every project.",
-    networkListMembers: [
-      { name: "Andrea Russo", role: "Sound Designer", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Martina Gallo", role: "Colorist", photo: "/images/lo-studio-panebarcos-02.jpg" },
-      { name: "Federico Conti", role: "Compositor", photo: "/images/lo-studio-panebarcos-04.jpg" },
-      { name: "Sara Villa", role: "Screenwriter", photo: "/images/lo-studio-panebarcos.jpg" },
-      { name: "Roberto Mancini", role: "Rigger", photo: "/images/lo-studio-panebarcos-03.jpg" },
-      { name: "Valentina Bianchi", role: "VFX Artist", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Giorgio Neri", role: "Editor", photo: "/images/lo-studio-panebarcos.jpg" },
-      { name: "Anna De Luca", role: "Illustrator", photo: "/images/lo-studio-panebarcos-02.jpg" },
-      { name: "Matteo Greco", role: "3D Artist", photo: "/images/lo-studio-panebarcos-03.jpg" },
-      { name: "Laura Marchetti", role: "Producer", photo: "/images/lo-studio-panebarcos-04.jpg" },
-      { name: "Simone Ferrara", role: "Concept Artist", photo: "/images/lo-studio-panebarcos-01.jpg" },
-      { name: "Francesca Lombardi", role: "Animator", photo: "/images/lo-studio-panebarcos-02.jpg" },
-    ],
-    workTitle: "How we work",
-    workAreas: [
-      {
-        title: "Curiosity",
-        body: "We experiment with languages and techniques to shape original ideas.",
-      },
-      {
-        title: "Craft",
-        body: "Every detail is refined with care, without shortcuts.",
-      },
-      {
-        title: "Collaboration",
-        body: "We work in teams with clients and partners to build strong stories.",
-      },
-    ],
-    oscarBody:
-      "Behind the projects there are people, relationships and a way of working that keeps evolving without losing its handmade character.",
+  intro: {
+    mediaSrc: "/images/lo-studio-panebarco-teams.png",
+    mediaAlt: "I Panebarcos",
   },
-} as const;
+  team: {},
+  cta: {
+    imageSrc: "/images/lo-studio-oscar.png",
+    imageAlt: "Personaggi con Oscar",
+  },
+  seo: {
+    title: "I Panebarcos - Panebarco",
+    description: "I Panebarcos - Panebarco",
+  },
+};
 
-const content = pageContent[lang];
-const duplicatedFamilyMembers = [...content.familyMembers, ...content.familyMembers];
+function hasPanebarcosCta(
+  cta: PanebarcosPageContent["cta"]
+): cta is ContactBannerContent & { button: { label: string; href: string } } {
+  return Boolean(cta?.button?.label && cta?.button?.href && (cta.kicker || cta.title));
+}
+
+const panebarcosContent: PanebarcosPageContent = await getPanebarcosPageContent({ lang, fallback: panebarcosFallback });
+const hasIntro = Boolean(
+  panebarcosContent.intro.title ||
+  panebarcosContent.intro.content ||
+  panebarcosContent.intro.mediaSrc
+);
+const hasSections = panebarcosContent.sections.length > 0;
+const panebarcosCta = hasPanebarcosCta(panebarcosContent.cta) ? panebarcosContent.cta : null;
 ---
 
 <Layout
-  title="I Panebarcos - Panebarco"
+  title={panebarcosContent.seo.title}
+  description={panebarcosContent.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ containerClass: "hero-fluid" }}
 >
   <main class="studio-page studio-team-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/1021768637.mp4"
-      bgWord="LA FAMIGLIA"
-      title="I PANEBARCOS"
-      subtitle={content.heroSubtitle}
+      backgroundVideoSrc={panebarcosContent.header.backgroundVideoSrc}
+      bgWord={panebarcosContent.header.bgWord}
+      title={panebarcosContent.header.title}
+      subtitle={panebarcosContent.header.subtitle}
       showSideImage={false}
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
+      sideImageSrc={panebarcosContent.header.sideImageSrc}
+      sideImageAlt={panebarcosContent.header.sideImageAlt}
       className="hero-sty-studio page-hero page-hero--studio"
     />
 
-    <!-- Intro della pagina con testo editoriale e immagine del team. -->
-    <section class="page-main page-main--studio panebarcos-page-intro">
-      <div class="container">
-        <div class="row g-4 g-xl-5 align-items-center">
-          <div class="col-12 col-xl-7">
-            <div class="panebarcos-page-intro__copy studio-story-copy">
-              <h2 class="page-title-uniform">{content.introTitle}</h2>
-              {content.introParagraphs.map((paragraph) => <p>{paragraph}</p>)}
-            </div>
-          </div>
-          <div class="col-12 col-xl-5">
-            <div class="panebarcos-page-intro__art">
-              <img class="img-fluid d-block mx-auto" src="/images/lo-studio-panebarco-teams.png" alt="I Panebarcos" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sezione principale con cards del team e, opzionalmente, network esteso. -->
-    <section class="section-space section-space--soft panebarcos-groups" aria-label="Team e network Panebarco">
-      <div class="container">
-        <div class="panebarcos-family-block">
-          <h2 class="panebarcos-family-block__title page-title-uniform text-body">Il team</h2>
-
-          <div class="row g-4 panebarcos-family-grid">
-            {duplicatedFamilyMembers.map((member, index) => (
-              <div class="col-12 col-sm-6 col-xl-3">
-                <article
-                  class="panebarcos-family-card h-100"
-                  data-panebarcos-reveal
-                  style={`--panebarcos-reveal-delay:${index * 110}ms;`}
-                >
-                  <div class="panebarcos-family-card__media">
-                    <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
-                  </div>
-                  <div class="panebarcos-family-card__body">
-                    {showFamilyAvatars && (
-                      <span class="panebarcos-family-card__avatar" aria-hidden="true">
-                        <img src={member.avatar} alt="" />
-                      </span>
-                    )}
-                    <div class="panebarcos-family-card__head">
-                      <h3>{member.name}</h3>
-                      {member.linkedinUrl ? (
-                        <a
-                          class="panebarcos-family-card__linkedin"
-                          href={member.linkedinUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          aria-label={`Profilo LinkedIn di ${member.name}`}
-                        >
-                          <i class="bi bi-linkedin"></i>
-                        </a>
-                      ) : (
-                        <span class="panebarcos-family-card__linkedin" aria-hidden="true">
-                          <i class="bi bi-linkedin"></i>
-                        </span>
-                      )}
-                    </div>
-                    <p class="panebarcos-family-card__role">{member.role}</p>
-                    <p class="panebarcos-family-card__micro">{member.microText}</p>
-                  </div>
-                </article>
+    {hasIntro && (
+      <section class="page-main page-main--studio panebarcos-page-intro">
+        <div class="container">
+          <div class="row g-4 g-xl-5 align-items-center">
+            <div class="col-12 col-xl-7">
+              <div class="panebarcos-page-intro__copy studio-story-copy">
+                {panebarcosContent.intro.title && <h2 class="page-title-uniform">{panebarcosContent.intro.title}</h2>}
+                {panebarcosContent.intro.content && <RitchText block={panebarcosContent.intro.content} className="panebarcos-intro-richtext" />}
               </div>
-            ))}
+            </div>
+            <div class="col-12 col-xl-5">
+              <div class="panebarcos-page-intro__art">
+                {panebarcosContent.intro.mediaSrc && (
+                  <img class="img-fluid d-block mx-auto" src={panebarcosContent.intro.mediaSrc} alt={panebarcosContent.intro.mediaAlt} />
+                )}
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+    )}
 
-        <!-- E tanti altri panebarcos -->
-        {showNetworkListing && (
-          <!-- Blocco network collaboratori, tenuto dietro flag per attivazione temporanea. -->
-          <section class="panebarcos-network-listing mt-5 mt-xl-6" aria-labelledby="panebarcosNetworkListingTitle">
-            <div class="panebarcos-network-listing__intro">
-              <h2 id="panebarcosNetworkListingTitle" class="page-title-uniform text-body">{content.networkListTitle}</h2>
-              <p class="text-body">{content.networkListIntro}</p>
-            </div>
+    {hasSections && (
+      <section class="section-space section-space--soft panebarcos-groups" aria-label="Team Panebarco">
+        <div class="container">
+          {panebarcosContent.sections.map((section, sectionIndex) => (
+            <section class:list={["panebarcos-family-block", sectionIndex > 0 && "mt-5 mt-xl-6"]}>
+              <div class="panebarcos-family-block__head">
+                {section.title && <h2 class="panebarcos-family-block__title page-title-uniform text-body">{section.title}</h2>}
+                {section.subtitle && <p>{section.subtitle}</p>}
+              </div>
 
-            <div class="row g-4 g-xl-4 mt-4 mt-xl-5 panebarcos-network-grid">
-              {content.networkMembers.map((member, index) => (
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-2">
-                  <article
-                    class="panebarcos-network-person h-100"
-                    data-panebarcos-reveal
-                    style={`--panebarcos-reveal-delay:${(index + 4) * 85}ms;`}
-                  >
-                    <div class="panebarcos-network-person__media">
-                      <img class="img-fluid d-block" src={member.photo} alt="" aria-hidden="true" />
-                    </div>
-                    <div class="panebarcos-network-person__overlay">
-                      <h3>{member.name}</h3>
-                      <p>{member.role}</p>
-                      <span class="panebarcos-network-person__badge" aria-hidden="true">
-                        <i class="bi bi-linkedin"></i>
-                      </span>
-                    </div>
-                  </article>
+              {section.content && (
+                <div class="panebarcos-network-listing__intro">
+                  <RitchText block={section.content} className="panebarcos-group-richtext" />
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+              )}
+
+              {section.members.length > 0 && (
+                <div class="row g-4 panebarcos-family-grid">
+                  {section.members.map((member, memberIndex) => (
+                    <div class="col-12 col-sm-6 col-xl-3">
+                      <article
+                        class="panebarcos-family-card h-100"
+                        data-panebarcos-reveal
+                        style={`--panebarcos-reveal-delay:${(sectionIndex * 4 + memberIndex) * 110}ms;`}
+                      >
+                        {member.imageSrc && (
+                          <div class="panebarcos-family-card__media">
+                            <img class="img-fluid d-block" src={member.imageSrc} alt={member.imageAlt} />
+                          </div>
+                        )}
+                          <div class="panebarcos-family-card__body">
+                            <div class="panebarcos-family-card__head">
+                              {member.name && <h3>{member.name}</h3>}
+                              {member.linkedin && (
+                                <a
+                                  class="panebarcos-family-card__linkedin"
+                                  href={member.linkedin}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label={`LinkedIn di ${member.name || "team member"}`}
+                                >
+                                  <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                </a>
+                              )}
+                            </div>
+                            {member.role && <p class="panebarcos-family-card__role">{member.role}</p>}
+                            {member.roleTana && <RitchText block={member.roleTana} className="panebarcos-family-card__role-tana" />}
+                            {member.intro && <RitchText block={member.intro} className="panebarcos-family-card__micro" />}
+                          </div>
+                        </article>
+                      </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {panebarcosCta && (
+      <div class="container pt-md-5 mt-5 mb-5">
+        <section class="extras-newsletter-card" style={panebarcosCta.background ? `background:${panebarcosCta.background};` : undefined}>
+          <div class="extras-newsletter-card__copy">
+            {panebarcosCta.kicker && (
+              <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">{panebarcosCta.kicker}</p>
+            )}
+            {panebarcosCta.title && (
+              <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
+                {panebarcosCta.title}
+              </h2>
+            )}
+            {panebarcosCta.button.href && panebarcosCta.button.label && (
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={panebarcosCta.button.href}>
+                {panebarcosCta.button.label}
+              </a>
+            )}
+          </div>
+          {panebarcosCta.imageSrc && (
+            <img
+              class="extras-newsletter-card__figure"
+              src={panebarcosCta.imageSrc}
+              alt={panebarcosCta.imageAlt}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </section>
       </div>
-    </section>
-
-    <!-- CTA finale verso la pagina "Ci vediamo agli Oscar". -->
-    <OscarCtaSection
-      heading="Spoiler sul finale?"
-      highlight="CI VEDIAMO AGLI OSCAR"
-      body={content.oscarBody}
-      href={buildPath("studioOscars", lang)}
-      buttonLabel="Ci vediamo agli Oscar"
-    />
+    )}
   </main>
-
-  <script is:inline>
-    (function () {
-      var cleanupPanebarcosTeam = window.__cleanupPanebarcosTeam || function () {};
-
-      function setupPanebarcosReveal(cleanups) {
-        var revealItems = document.querySelectorAll("[data-panebarcos-reveal]");
-        if (!revealItems.length) return;
-
-        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          revealItems.forEach(function (item) {
-            item.classList.add("is-in-view");
-          });
-          return;
-        }
-
-        var observer = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              entry.target.classList.toggle("is-in-view", entry.isIntersecting);
-            });
-          },
-          {
-            threshold: 0.18,
-            rootMargin: "0px 0px -10% 0px",
-          }
-        );
-
-        revealItems.forEach(function (item) {
-          observer.observe(item);
-        });
-
-        cleanups.push(function () {
-          observer.disconnect();
-        });
-      }
-
-      function initPanebarcosTeam() {
-        cleanupPanebarcosTeam();
-
-        var cleanups = [];
-        setupPanebarcosReveal(cleanups);
-
-        cleanupPanebarcosTeam = function () {
-          cleanups.forEach(function (dispose) {
-            dispose();
-          });
-        };
-
-        window.__cleanupPanebarcosTeam = cleanupPanebarcosTeam;
-      }
-
-      if (!window.__panebarcosTeamBound) {
-        document.addEventListener("astro:before-swap", function () {
-          cleanupPanebarcosTeam();
-        });
-
-        document.addEventListener("astro:page-load", initPanebarcosTeam);
-        window.__panebarcosTeamBound = true;
-      }
-
-      initPanebarcosTeam();
-    })();
-  </script>
+  <script type="module" src={studioPageScriptUrl}></script>
 </Layout>

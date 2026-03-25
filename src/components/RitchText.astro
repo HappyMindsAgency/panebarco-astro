@@ -1,8 +1,8 @@
 ---
-import { marked } from "marked";
+import { micromark } from "micromark";
 const { block, className, pstyle }  = Astro.props;
 const innerClassName = className ? className : "";
-const content = block ? marked(block) : "nothing";
+const content = block ? micromark(block) : "";
 ---
 {block && 
 <div class={`block-richtext custombody ${innerClassName}`} set:html={content}></div>

@@ -65,6 +65,14 @@ export const localizedSlugs = {
     it: "informativa-privacy-policy",
     en: "informativa-privacy-policy",
   },
+  privacyPolicyNewsletter: {
+    it: "informativa-privacy-policy-newsletter",
+    en: "informativa-privacy-policy-newsletter",
+  },
+  privacyPolicyPsl: {
+    it: "informativa-privacy-policy-social-library",
+    en: "informativa-privacy-policy-social-library",
+  },
   cookiePolicy: {
     it: "informativa-cookies-privacy",
     en: "informativa-cookies-privacy",

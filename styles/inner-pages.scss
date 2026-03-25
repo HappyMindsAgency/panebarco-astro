@@ -1120,13 +1120,21 @@ body.inner-page {
 
   .studio-team-page .panebarcos-family-card__role {
     margin: 0;
-    color: rgba(17, 24, 39, 0.88);
+    color: var(--ink);
     font-weight: 700;
+  }
+
+  .studio-team-page .panebarcos-family-card__role-tana {
+    margin: 0.55rem 0 0;
+    color: var(--ink);
+    font-size: 0.98rem;
+    line-height: 1.35;
+    font-weight: 800;
   }
 
   .studio-team-page .panebarcos-family-card__micro {
     margin: 0.95rem 0 0;
-    color: rgba(17, 24, 39, 0.7);
+    color: var(--ink);
     font-size: 0.93rem;
     line-height: 1.4;
     font-weight: 500;

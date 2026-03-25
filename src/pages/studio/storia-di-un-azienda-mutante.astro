@@ -1,219 +1,253 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import RitchText from "../../components/RitchText.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
-import { buildPath } from "../../i18n/routing";
+import { getLangFromPath } from "../../i18n/routing";
+import { getStoryMutantPageContent } from "../../lib/site-content";
+import type { ContactBannerContent, StoryMutantPageContent } from "../../lib/site-content.types";
 
-const lang = "it" as const;
-
-const mediaGallery = {
-  title: "Contenuti multimediali",
-  intro:
-    "Un solo contenuto, ma centrale: un passaggio video che racconta bene il nostro modo di cambiare linguaggio, restando riconoscibili.",
-  video: {
-    title: "Approfondimento studio",
-    embedSrc: "https://www.youtube-nocookie.com/embed/W_smIq9Xscw",
+const lang = getLangFromPath(Astro.url.pathname);
+const storyFallback = {
+  header: {
+    bgWord: "LA TANA",
+    title: "STORIA DI UN'AZIENDA MUTANTE",
+    subtitle: "Supporto creativo, produttivo e operativo lungo tutto il processo",
+    backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
+    sideImageSrc: "/images/lo-studio-panebarco-teams.png",
+    sideImageAlt: "Team Panebarco",
   },
-} as const;
+  intro: {
+    mediaSrc: "/images/lo-studio-img-intro.png",
+    mediaAlt: "Illustrazione intro lo studio",
+  },
+  timeline: {
+    title: "Questa e la storia di un'azienda mutante",
+    imageSrc: "/images/lo-studi-storia-panebarco.png",
+    imageAlt: "Illustrazione storia Panebarco",
+  },
+  cta: {
+    imageSrc: "/images/cta-ci-vediamo-agli-oscar.png",
+    imageAlt: "Mascotte Panebarco",
+  },
+  seo: {
+    title: "Storia di un'azienda mutante - Panebarco",
+    description: "Storia di un'azienda mutante - Panebarco",
+  },
+};
+function hasStoryCta(
+  cta: StoryMutantPageContent["cta"]
+): cta is ContactBannerContent & { button: { label: string; href: string } } {
+  return Boolean(cta?.button?.label && cta?.button?.href && (cta.kicker || cta.title));
+}
 
-const newsletterFigure = "/images/lo-studio-panebarco-teams.png";
+const storyContent: StoryMutantPageContent = await getStoryMutantPageContent({ lang, fallback: storyFallback });
+const hasIntro = Boolean(
+  storyContent.intro.title ||
+  storyContent.intro.content ||
+  storyContent.intro.mediaSrc
+);
+const hasTimeline = Boolean(
+  storyContent.timeline.title ||
+  storyContent.timeline.content ||
+  storyContent.timeline.cards.length
+);
+const hasMediaGallery = Boolean(
+  storyContent.mediaGallery.title ||
+  storyContent.mediaGallery.content ||
+  storyContent.mediaGallery.videos.length
+);
+const storyCta = hasStoryCta(storyContent.cta) ? storyContent.cta : null;
 ---
 
 <Layout
-  title="Storia di un'azienda mutante - Panebarco"
+  title={storyContent.seo.title}
+  description={storyContent.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
 >
   <main class="studio-page story-mutant-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/panebarco-studio-video.mp4"
-      bgWord="LA TANA"
-      title="STORIA DI UN'AZIENDA MUTANTE"
-      subtitle="Supporto creativo, produttivo e operativo lungo tutto il processo"
+      backgroundVideoSrc={storyContent.header.backgroundVideoSrc}
+      bgWord={storyContent.header.bgWord}
+      title={storyContent.header.title}
+      subtitle={storyContent.header.subtitle}
       showSideImage={false}
-      sideImageSrc="/images/lo-studio-panebarco-teams.png"
-      sideImageAlt="Team Panebarco"
+      sideImageSrc={storyContent.header.sideImageSrc}
+      sideImageAlt={storyContent.header.sideImageAlt}
     />
 
-    <section class="page-main page-main--studio">
-      <div class="container">
-        <div class="row g-4 g-xl-5 align-items-end studio-story">
-          <div class="col-12 col-lg-7 studio-story-copy">
-            <h2 class="page-title-uniform">Storia di un'azienda mutante</h2>
-            <p>
-              Duis in nibh egestas, facilisis magna ac, sagittis felis. Curabitur
-              sagittis nisi non porttitor ullamcorper. Proin mattis, lacus eu
-              condimentum dapibus, turpis lectus pellentesque mauris, vitae ornare
-              nunc leo et justo.
-            </p>
-            <p>
-              Pellentesque tempus elementum aliquet. Etiam commodo elit ut mi
-              tristique laoreet. Donec ac enim vestibulum, sagittis urna sit amet,
-              posuere ex.
-            </p>
-          </div>
-          <div class="col-12 col-lg-5 studio-story-art text-lg-end">
-            <img class="studio-story-intro-img img-fluid d-block ms-lg-auto" src="/images/lo-studio-img-intro.png" alt="Illustrazione intro lo studio" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="studio-timeline section-space">
-      <div class="container">
-        <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">Questa e la storia di un'azienda mutante</h2>
-        <div class="studio-timeline-track" data-studio-timeline>
-          <button
-            class="studio-timeline-arrow studio-timeline-arrow--prev"
-            type="button"
-            aria-label="Anno precedente"
-            data-timeline-prev
-          >
-            <img src="/images/freccia-sinistra.png" alt="" aria-hidden="true" />
-          </button>
-
-          <div class="studio-timeline-viewport" id="studioTimelineViewport" aria-labelledby="studioTimelineTitle">
-            <div class="studio-timeline-slides">
-              <article class="studio-timeline-card is-active">
-                <div class="row g-3 g-lg-4 align-items-center">
-                  <div class="col-12 col-md-6 studio-timeline-year">
-                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione 1976" />
-                  </div>
-                  <div class="col-12 col-md-6 studio-timeline-copy">
-                    <h3>Gli inizi</h3>
-                    <p>
-                      Nell'aprile 1976 Daniele pubblica il suo primo fumetto sulla rivista Il Mago, mentre in famiglia
-                      comincia anche un'altra storia: quella di Marianna. Sono anni in cui il segno su carta e il
-                      racconto disegnato definiscono il primo nucleo del mestiere.
-                    </p>
-                    <p>
-                      Per quasi vent'anni il lavoro cresce dentro il fumetto e l'illustrazione, costruendo una base
-                      narrativa forte che restera anche nelle trasformazioni successive.
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <article class="studio-timeline-card">
-                <div class="row g-3 g-lg-4 align-items-center">
-                  <div class="col-12 col-md-6 studio-timeline-year">
-                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione 1995" />
-                  </div>
-                  <div class="col-12 col-md-6 studio-timeline-copy">
-                    <h3>La svolta del 1995</h3>
-                    <p>
-                      Nel 1995 nasce Panebarco &amp; C.: l'idea non e solo produrre immagini, ma portare le storie fuori
-                      dalla pagina e trasformarle in esperienze interattive e multimediali.
-                    </p>
-                    <p>
-                      E qui che la bottega cambia scala: il disegno resta il cuore, ma i linguaggi si allargano e il
-                      lavoro prende una direzione piu ibrida.
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <article class="studio-timeline-card">
-                <div class="row g-3 g-lg-4 align-items-center">
-                  <div class="col-12 col-md-6 studio-timeline-year">
-                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione 2005" />
-                  </div>
-                  <div class="col-12 col-md-6 studio-timeline-copy">
-                    <h3>Una storia di famiglia</h3>
-                    <p>
-                      Nel 2005 Marianna, Matteo e Camilla entrano in azienda. L'impresa si rinnova dall'interno e
-                      diventa sempre di piu una casa creativa familiare, capace di tenere insieme continuita e mutazione.
-                    </p>
-                    <p>
-                      Nuovi ruoli, nuove sensibilita e una gestione condivisa portano Panebarco verso produzioni sempre
-                      piu articolate tra 2D, 3D, video e sviluppo originale.
-                    </p>
-                  </div>
-                </div>
-              </article>
-
-              <article class="studio-timeline-card">
-                <div class="row g-3 g-lg-4 align-items-center">
-                  <div class="col-12 col-md-6 studio-timeline-year">
-                    <img class="img-fluid d-block" src="/images/lo-studi-storia-panebarco.png" alt="Illustrazione oggi" />
-                  </div>
-                  <div class="col-12 col-md-6 studio-timeline-copy">
-                    <h3>Le mutazioni di oggi</h3>
-                    <p>
-                      Oggi Panebarco sviluppa animazione, contenuti branded, service, post-produzione e progetti
-                      originali, mantenendo un'identita che resta bottega anche quando i formati cambiano.
-                    </p>
-                    <p>
-                      E mentre la nuova generazione guida l'impresa, Daniele continua a tornare al fumetto: segno che le
-                      trasformazioni migliori non cancellano l'origine, la rilanciano.
-                    </p>
-                  </div>
-                </div>
-              </article>
+    {hasIntro && (
+      <section class="page-main page-main--studio">
+        <div class="container">
+          <div class="row g-4 g-xl-5 align-items-end studio-story">
+            <div class="col-12 col-lg-7 studio-story-copy">
+              {storyContent.intro.title && <h2 class="page-title-uniform">{storyContent.intro.title}</h2>}
+              {storyContent.intro.content && <RitchText block={storyContent.intro.content} className="story-mutant-intro-richtext" />}
             </div>
-          </div>
-
-          <button
-            class="studio-timeline-arrow studio-timeline-arrow--next"
-            type="button"
-            aria-label="Anno successivo"
-            data-timeline-next
-          >
-            <img src="/images/freccia-destra.png" alt="" aria-hidden="true" />
-          </button>
-        </div>
-
-        <div class="studio-timeline-dots" role="tablist" aria-label="Seleziona una fase della storia">
-          <button class="studio-timeline-dot is-active" type="button" aria-label="Vai agli inizi" data-timeline-dot="0"></button>
-          <button class="studio-timeline-dot" type="button" aria-label="Vai al 1995" data-timeline-dot="1"></button>
-          <button class="studio-timeline-dot" type="button" aria-label="Vai al 2005" data-timeline-dot="2"></button>
-          <button class="studio-timeline-dot" type="button" aria-label="Vai a oggi" data-timeline-dot="3"></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-space section-space--soft story-mutant-media">
-      <div class="container">
-        <div class="story-mutant-media__intro text-lg-center text-start">
-          <h2 class="page-title-uniform">{mediaGallery.title}</h2>
-          <p>{mediaGallery.intro}</p>
-        </div>
-        <div class="story-mutant-media__content">
-          <div class="story-mutant-media__video story-mutant-media__video--single">
-            <div class="ratio ratio-16x9 overflow-hidden rounded-4">
-              <iframe
-                src={mediaGallery.video.embedSrc}
-                title={mediaGallery.video.title}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                referrerpolicy="strict-origin-when-cross-origin"
-              ></iframe>
+            <div class="col-12 col-lg-5 studio-story-art text-lg-end">
+              {storyContent.intro.mediaSrc && (
+                <img
+                  class="studio-story-intro-img img-fluid d-block ms-lg-auto"
+                  src={storyContent.intro.mediaSrc}
+                  alt={storyContent.intro.mediaAlt}
+                />
+              )}
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <div class="container pt-md-5 mt-5 mb-5">
-      <section class="extras-newsletter-card">
-        <div class="extras-newsletter-card__copy">
-          <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">Vuoi ricevere gli aggiornamenti?</p>
-          <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
-            ISCRIVITI ALLA NEWSLETTER.
-          </h2>
-          <a class="btn btn-cta btn-cta--blue btn-pill" href={buildPath("contacts", lang)}>Contattaci</a>
-        </div>
-        <img
-          class="extras-newsletter-card__figure"
-          src={newsletterFigure}
-          alt="Mascotte Panebarco"
-          loading="lazy"
-          decoding="async"
-        />
       </section>
-    </div>
+    )}
+
+    {hasTimeline && (
+      <section class="studio-timeline section-space">
+        <div class="container">
+          {storyContent.timeline.title && (
+            <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">{storyContent.timeline.title}</h2>
+          )}
+          {storyContent.timeline.content && (
+            <div class="studio-timeline-intro">
+              <RitchText block={storyContent.timeline.content} className="story-mutant-timeline-richtext" />
+            </div>
+          )}
+
+          {storyContent.timeline.cards.length > 0 && (
+            <>
+              <div class="studio-timeline-track" data-studio-timeline>
+                <button
+                  class="studio-timeline-arrow studio-timeline-arrow--prev"
+                  type="button"
+                  aria-label="Anno precedente"
+                  data-timeline-prev
+                >
+                  <img src="/images/freccia-sinistra.png" alt="" aria-hidden="true" />
+                </button>
+
+                <div class="studio-timeline-viewport" id="studioTimelineViewport" aria-labelledby="studioTimelineTitle">
+                  <div class="studio-timeline-slides">
+                    {storyContent.timeline.cards.map((card, index) => (
+                      <article class:list={["studio-timeline-card", index === 0 && "is-active"]}>
+                        <div class="row g-3 g-lg-4 align-items-center">
+                          <div class="col-12 col-md-6 studio-timeline-year">
+                            {card.imageSrc && (
+                              <img class="img-fluid d-block" src={card.imageSrc} alt={card.imageAlt} />
+                            )}
+                          </div>
+                          <div class="col-12 col-md-6 studio-timeline-copy">
+                            {card.title && <h3>{card.title}</h3>}
+                            {card.content && <RitchText block={card.content} className="story-mutant-card-richtext" />}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  class="studio-timeline-arrow studio-timeline-arrow--next"
+                  type="button"
+                  aria-label="Anno successivo"
+                  data-timeline-next
+                >
+                  <img src="/images/freccia-destra.png" alt="" aria-hidden="true" />
+                </button>
+              </div>
+
+              <div class="studio-timeline-dots" role="tablist" aria-label="Seleziona una fase della storia">
+                {storyContent.timeline.cards.map((card, index) => (
+                  <button
+                    class:list={["studio-timeline-dot", index === 0 && "is-active"]}
+                    type="button"
+                    aria-label={`Vai a ${card.title || `fase ${index + 1}`}`}
+                    data-timeline-dot={index}
+                  ></button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+    )}
+
+    {hasMediaGallery && (
+      <section class="section-space section-space--soft story-mutant-media">
+        <div class="container">
+          <div class="story-mutant-media__intro text-lg-center text-start">
+            {storyContent.mediaGallery.title && <h2 class="page-title-uniform">{storyContent.mediaGallery.title}</h2>}
+            {storyContent.mediaGallery.content && <RitchText block={storyContent.mediaGallery.content} className="story-mutant-media-richtext" />}
+          </div>
+
+          {storyContent.mediaGallery.videos.length > 0 && (
+            <div class="story-mutant-media__content">
+              {storyContent.mediaGallery.videos.length === 1 ? (
+                <div class="story-mutant-media__video story-mutant-media__video--single">
+                  <div class="ratio ratio-16x9 overflow-hidden rounded-4">
+                    <iframe
+                      src={storyContent.mediaGallery.videos[0].embedSrc}
+                      title={storyContent.mediaGallery.videos[0].title}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"
+                    ></iframe>
+                  </div>
+                </div>
+              ) : (
+                <div class="row g-4">
+                  {storyContent.mediaGallery.videos.map((video) => (
+                    <div class="col-12 col-lg-6">
+                      <div class="story-mutant-media__video">
+                        <div class="ratio ratio-16x9 overflow-hidden rounded-4">
+                          <iframe
+                            src={video.embedSrc}
+                            title={video.title}
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin"
+                          ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    {storyCta && (
+      <div class="container pt-md-5 mt-5 mb-5">
+        <section class="extras-newsletter-card" style={storyCta.background ? `background:${storyCta.background};` : undefined}>
+          <div class="extras-newsletter-card__copy">
+            {storyCta.kicker && (
+              <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">{storyCta.kicker}</p>
+            )}
+            {storyCta.title && (
+              <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
+                {storyCta.title}
+              </h2>
+            )}
+            {storyCta.button.href && storyCta.button.label && (
+              <a class="btn btn-cta btn-cta--blue btn-pill" href={storyCta.button.href}>{storyCta.button.label}</a>
+            )}
+          </div>
+          {storyCta.imageSrc && (
+            <img
+              class="extras-newsletter-card__figure"
+              src={storyCta.imageSrc}
+              alt={storyCta.imageAlt}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </section>
+      </div>
+    )}
+  </main>
 
   <script type="module" src={studioPageScriptUrl}></script>
 </Layout>
