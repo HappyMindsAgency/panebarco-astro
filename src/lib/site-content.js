@@ -528,7 +528,7 @@ export async function getOscarsPageContent({ lang = DEFAULT_LANG, fallback }) {
     populate: {
       header: {
         populate: {
-          videoBackground: true,
+          mediaBackground: true,
           imgTeam: true,
         },
       },
@@ -585,7 +585,7 @@ export async function getStoryMutantPageContent({ lang = DEFAULT_LANG, fallback 
     populate: {
       header: {
         populate: {
-          videoBackground: true,
+          mediaBackground: true,
           imgTeam: true,
         },
       },
