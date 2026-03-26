@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import OscarCtaSection from "../../components/OscarCtaSection.astro";
 import RitchText from "../../components/RitchText.astro";
 import studioPageScriptUrl from "../../scripts/pages/studio.js?url";
 import { getLangFromPath } from "../../i18n/routing";
@@ -145,34 +146,15 @@ const panebarcosCta = hasPanebarcosCta(panebarcosContent.cta) ? panebarcosConten
     )}
 
     {panebarcosCta && (
-      <div class="container pt-md-5 mt-5 mb-5">
-        <section class="extras-newsletter-card" style={panebarcosCta.background ? `background:${panebarcosCta.background};` : undefined}>
-          <div class="extras-newsletter-card__copy">
-            {panebarcosCta.kicker && (
-              <p class="extras-newsletter-card__kicker mb-0 fw-bold fs-2 fs-lg-1 lh-1">{panebarcosCta.kicker}</p>
-            )}
-            {panebarcosCta.title && (
-              <h2 class="extras-newsletter-card__title mt-1 mb-0 text-white fw-bolder text-uppercase display-5 display-lg-4 lh-1">
-                {panebarcosCta.title}
-              </h2>
-            )}
-            {panebarcosCta.button.href && panebarcosCta.button.label && (
-              <a class="btn btn-cta btn-cta--blue btn-pill" href={panebarcosCta.button.href}>
-                {panebarcosCta.button.label}
-              </a>
-            )}
-          </div>
-          {panebarcosCta.imageSrc && (
-            <img
-              class="extras-newsletter-card__figure"
-              src={panebarcosCta.imageSrc}
-              alt={panebarcosCta.imageAlt}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-        </section>
-      </div>
+      <OscarCtaSection
+        heading={panebarcosCta.kicker}
+        highlight={panebarcosCta.title}
+        body=""
+        href={panebarcosCta.button.href}
+        buttonLabel={panebarcosCta.button.label}
+        imageSrc={panebarcosCta.imageSrc}
+        imageAlt={panebarcosCta.imageAlt}
+      />
     )}
   </main>
   <script type="module" src={studioPageScriptUrl}></script>
