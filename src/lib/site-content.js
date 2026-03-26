@@ -1016,7 +1016,7 @@ export async function getPortfolioDetailContent({ lang = DEFAULT_LANG, slug }) {
     status: "published",
     filters: { slug: { $eq: slug } },
     pagination: { page: 1, pageSize: 1 },
-    fields: ["documentId", "titolo", "slug", "intro", "credits", "anno"],
+    fields: ["documentId", "titolo", "slug", "intro", "contenutoImport", "credits", "anno"],
     populate: {
       cover: true,
       seo: { fields: ["metaTitle", "metaDescription"] },
@@ -1052,6 +1052,7 @@ export async function getPortfolioDetailContent({ lang = DEFAULT_LANG, slug }) {
     tags: [...categories, ...types],
     meta: project.anno ? `Inizio produzione ${project.anno}` : "",
     introParagraphs: splitRichTextParagraphs(project.intro),
+    importedContentHtml: pickFirst(project.contenutoImport),
     videos,
     creditsHtml: pickFirst(project.credits),
     seo: {

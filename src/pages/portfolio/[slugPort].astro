@@ -55,9 +55,21 @@ if (!project) {
               ))}
             </div>
 
-            <p class="portfolio-detail-body mt-3 mt-md-5 pt-5 mb-3">{project.introParagraphs[0]}</p>
-            <p class="portfolio-detail-body mb-4">{project.introParagraphs[1]}</p>
-            <p class="portfolio-detail-body mb-4">{project.introParagraphs[2]}</p>
+            {project.introParagraphs[0] && (
+              <p class="portfolio-detail-body mt-3 mt-md-5 pt-5 mb-3">{project.introParagraphs[0]}</p>
+            )}
+            {project.introParagraphs[1] && (
+              <p class="portfolio-detail-body mb-4">{project.introParagraphs[1]}</p>
+            )}
+            {project.introParagraphs[2] && (
+              <p class="portfolio-detail-body mb-4">{project.introParagraphs[2]}</p>
+            )}
+
+            {project.importedContentHtml && (
+              <div class="portfolio-detail-imported-content mb-4">
+                <Fragment set:html={project.importedContentHtml} />
+              </div>
+            )}
 
             {project.videos[0] && (
               <div class="ratio ratio-16x9 overflow-hidden mb-4">
@@ -72,7 +84,9 @@ if (!project) {
               </div>
             )}
 
-            <p class="portfolio-detail-body mt-5 mb-5">{project.introParagraphs[2]}</p>
+            {project.introParagraphs[2] && (
+              <p class="portfolio-detail-body mt-5 mb-5">{project.introParagraphs[2]}</p>
+            )}
 
             {project.videos[1] && (
               <div class="ratio ratio-16x9 overflow-hidden">
@@ -118,5 +132,18 @@ if (!project) {
     line-height: 1.5;
     font-weight: 400;
     color: var(--ink);
+  }
+
+  .portfolio-detail-page .portfolio-detail-imported-content {
+    color: var(--ink);
+  }
+
+  .portfolio-detail-page .portfolio-detail-imported-content :global(p) {
+    font-family: var(--bs-body-font-family);
+    font-size: var(--type-body);
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
   }
 </style>
