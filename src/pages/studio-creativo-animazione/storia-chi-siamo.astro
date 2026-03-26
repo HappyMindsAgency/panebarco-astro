@@ -183,14 +183,23 @@ const storyCta = hasStoryCta(storyContent.cta) ? storyContent.cta : null;
               {storyContent.mediaGallery.videos.length === 1 ? (
                 <div class="story-mutant-media__video story-mutant-media__video--single">
                   <div class="ratio ratio-16x9 overflow-hidden rounded-4">
-                    <iframe
-                      src={storyContent.mediaGallery.videos[0].embedSrc}
-                      title={storyContent.mediaGallery.videos[0].title}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowfullscreen
-                      referrerpolicy="strict-origin-when-cross-origin"
-                    ></iframe>
+                    {storyContent.mediaGallery.videos[0].videoSrc ? (
+                      <video controls playsinline preload="metadata" title={storyContent.mediaGallery.videos[0].title}>
+                        <source
+                          src={storyContent.mediaGallery.videos[0].videoSrc}
+                          type={storyContent.mediaGallery.videos[0].mimeType || "video/mp4"}
+                        />
+                      </video>
+                    ) : (
+                      <iframe
+                        src={storyContent.mediaGallery.videos[0].embedSrc}
+                        title={storyContent.mediaGallery.videos[0].title}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
+                      ></iframe>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -199,14 +208,20 @@ const storyCta = hasStoryCta(storyContent.cta) ? storyContent.cta : null;
                     <div class="col-12 col-lg-6">
                       <div class="story-mutant-media__video">
                         <div class="ratio ratio-16x9 overflow-hidden rounded-4">
-                          <iframe
-                            src={video.embedSrc}
-                            title={video.title}
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
-                            referrerpolicy="strict-origin-when-cross-origin"
-                          ></iframe>
+                          {video.videoSrc ? (
+                            <video controls playsinline preload="metadata" title={video.title}>
+                              <source src={video.videoSrc} type={video.mimeType || "video/mp4"} />
+                            </video>
+                          ) : (
+                            <iframe
+                              src={video.embedSrc}
+                              title={video.title}
+                              loading="lazy"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowfullscreen
+                              referrerpolicy="strict-origin-when-cross-origin"
+                            ></iframe>
+                          )}
                         </div>
                       </div>
                     </div>

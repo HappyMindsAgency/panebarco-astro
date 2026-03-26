@@ -624,7 +624,11 @@ export async function getStoryMutantPageContent({ lang = DEFAULT_LANG, fallback 
       },
       raccoltaVideo: {
         populate: {
-          video: true,
+          video: {
+            populate: {
+              video: true,
+            },
+          },
         },
       },
       cta: {
@@ -646,7 +650,9 @@ export async function getStoryMutantPageContent({ lang = DEFAULT_LANG, fallback 
   const videos = asArray(videoCollection?.video).map((item, index) => ({
     title: pickFirst(item?.titolo, `${pickFirst(videoCollection?.titolo, "Video")} ${index + 1}`),
     embedSrc: extractEmbedSrc(item?.embed),
-  })).filter((item) => item.embedSrc);
+    videoSrc: getStrapiMediaUrl(item?.video?.url),
+    mimeType: pickFirst(item?.video?.mime),
+  })).filter((item) => item.embedSrc || item.videoSrc);
 
   return {
     header: mapHeader(page?.header, fallback.header),

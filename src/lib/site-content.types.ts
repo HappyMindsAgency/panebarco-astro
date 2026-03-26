@@ -119,6 +119,8 @@ export interface StoryTimelineContent {
 export interface StoryMediaVideoContent {
   title: string;
   embedSrc: string;
+  videoSrc?: string;
+  mimeType?: string;
 }
 
 export interface StoryMediaGalleryContent {
