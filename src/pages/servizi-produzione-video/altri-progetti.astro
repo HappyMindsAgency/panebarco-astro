@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import RitchText from "../../components/RitchText.astro";
 import { buildPath, joinLocalizedPath } from "../../i18n/routing";
 import { getCollectionDocuments, getSingleDocument } from "../../lib/strapi-client";
 import { getImageFormat, getStrapiMediaUrl } from "../../lib/utility-function";
@@ -102,7 +103,7 @@ const servicePageQuery = {
   populate: {
     header: {
       populate: {
-        videoBackground: true,
+        mediaBackground: true,
         imgTeam: true,
       },
     },
@@ -111,9 +112,14 @@ const servicePageQuery = {
         media: true,
       },
     },
+    progettiSpeciali: {
+      populate: {
+        pulsante: true,
+      },
+    },
     pensieri: {
       populate: {
-        cover: true,
+        pulsante: true,
       },
     },
     ctaLibrary: {
@@ -152,7 +158,7 @@ function richTextParagraphs(value) {
   const plainText = stripHtml(html);
   if (!plainText) return [];
 
-  return plainText.split(/\n{2,}/).map((item) => item.trim()).filter(Boolean);
+  return plainText.split(/\n+/).map((item) => item.trim()).filter(Boolean);
 }
 
 function getMediaSrc(media, fallback = "") {
@@ -192,7 +198,7 @@ const [pageResponse, specialProjectsResponse] = await Promise.all([
 const page = pageResponse?.data || {};
 
 const header = {
-  backgroundVideoSrc: getMediaSrc(page.header?.videoBackground, "/images/panebarco-commercial-video.mp4"),
+  backgroundVideoSrc: getMediaSrc(page.header?.mediaBackground, "/images/panebarco-commercial-video.mp4"),
   bgWord: stripHtml(page.header?.titoloTana || "SERVIZI"),
   title: stripHtml(page.header?.titolo || "E TANTO ALTRO"),
   subtitle: stripHtml(page.header?.sottotitolo || "Idee al confine tra cartoon e realta"),
@@ -200,15 +206,9 @@ const header = {
   sideImageAlt: getMediaAlt(page.header?.imgTeam, "Hero e tanto altro"),
 };
 
-const introParagraphs = richTextParagraphs(page.intro?.contenuto);
 const intro = {
-  title: stripHtml(page.intro?.titolo || "Qui finiscono le etichette e iniziano le deviazioni interessanti."),
-  firstParagraph:
-    introParagraphs[0] ||
-    "Amiamo definirci bottega multimediale: un luogo in cui ogni progetto nasce su misura, ma anche uno spazio attraversato da idee, persone, formati e curiosita che non stanno in una sola categoria.",
-  secondParagraph:
-    introParagraphs[1] ||
-    "Questa pagina raccoglie proprio quel margine fertile: progetti speciali, contenuti editoriali, materiali da archivio e strumenti narrativi che tengono vivo il laboratorio anche fuori dai percorsi piu canonici.",
+  title: stripHtml(page.intro?.titolo || ""),
+  content: String(page.intro?.contenuto || ""),
 };
 
 const specialProjectsCollection = asArray(specialProjectsResponse?.data);
@@ -236,27 +236,28 @@ const specialProjects = fallbackSpecialProjects.map((fallbackProject, index) => 
 const thoughts = fallbackThoughtCards.map((fallbackCard, index) => {
   const item = asArray(page.pensieri)[index] || {};
   const title = stripHtml(item.titolo || "");
-  const label = item.tag && stripHtml(item.tags || "") ? stripHtml(item.tags) : title || fallbackCard.label;
+  const label = title || fallbackCard.label;
   const summary = stripHtml(item.contenuto || "") || fallbackCard.summary;
-  const href = stripHtml(item.url || "") || fallbackCard.href;
+  const href = getButtonHref(item.pulsante, fallbackCard.href);
+  const cta = getButtonLabel(item.pulsante, fallbackCard.cta);
 
   return {
     label,
     href,
     summary,
-    cta: fallbackCard.cta,
+    cta,
     stickerClass: fallbackCard.stickerClass,
   };
 });
 
 const ctaLibrary = page.ctaLibrary || {};
 const ctaLibraryData = {
-  eyebrow: stripHtml(ctaLibrary.sottotitolo || fallbackSocialLibrary.eyebrow),
-  title: stripHtml(ctaLibrary.titolo || fallbackSocialLibrary.title),
-  body: stripHtml(ctaLibrary.contenuto || fallbackSocialLibrary.body),
-  ctaLabel: getButtonLabel(ctaLibrary.pulsante, fallbackSocialLibrary.ctaLabel),
-  ctaHref: getButtonHref(ctaLibrary.pulsante, fallbackSocialLibrary.ctaHref),
-  background: getMediaSrc(ctaLibrary.cover, fallbackSocialLibrary.background),
+  eyebrow: stripHtml(ctaLibrary.sottotitolo || ""),
+  title: stripHtml(ctaLibrary.titolo || ""),
+  body: stripHtml(ctaLibrary.contenuto || ""),
+  ctaLabel: getButtonLabel(ctaLibrary.pulsante, ""),
+  ctaHref: getButtonHref(ctaLibrary.pulsante, ""),
+  background: getMediaSrc(ctaLibrary.cover, ""),
 };
 
 const cta = page.cta || {};
@@ -292,9 +293,8 @@ const newsletterData = {
         <div class="container">
           <div class="row">
             <div class="col-12 text-lg-center text-start">
-              <h2 class="page-title-uniform mb-4 text-body">{intro.title}</h2>
-              <p class="mb-4">{intro.firstParagraph}</p>
-              <p class="mb-0">{intro.secondParagraph}</p>
+              {intro.title && <h2 class="page-title-uniform mb-4 text-body">{intro.title}</h2>}
+              {intro.content && <RitchText block={intro.content} className="extras-intro-richtext" />}
             </div>
           </div>
         </div>
@@ -305,10 +305,9 @@ const newsletterData = {
       <div class="container portfolio-container extras-figma-projects__container" data-portfolio-showcase>
         <div class="extras-figma-projects__heading">
           <h2 id="specialProjectsTitle" class="page-title-uniform">{specialProjectsLabel}</h2>
-          <p>
-            {stripHtml(page.progettiSpeciali || "") ||
-              "Formati ibridi, racconti laterali e contenuti che nascono per esplorare nuove direzioni senza perdere la mano artigianale del nostro modo di lavorare."}
-          </p>
+          {page.progettiSpeciali?.contenuto && (
+            <RitchText block={page.progettiSpeciali.contenuto} className="extras-special-projects-richtext" />
+          )}
         </div>
 
         <div class="portfolio-grid">
@@ -359,15 +358,17 @@ const newsletterData = {
       </div>
     </section>
 
-    <section class="extras-figma-library" style={`--extras-library-image: url('${ctaLibraryData.background}');`}>
+    <section class="extras-figma-library" style={ctaLibraryData.background ? `--extras-library-image: url('${ctaLibraryData.background}');` : undefined}>
       <div class="container">
         <div class="extras-figma-library__content">
-          <p class="extras-figma-library__eyebrow">{ctaLibraryData.eyebrow}</p>
-          <h2 class="extras-figma-library__title">{ctaLibraryData.title}</h2>
-          <p class="extras-figma-library__body">{ctaLibraryData.body}</p>
-          <a class="btn btn-cta btn-cta--blue btn-pill extras-figma-library__cta" href={ctaLibraryData.ctaHref}>
-            {ctaLibraryData.ctaLabel}
-          </a>
+          {ctaLibraryData.eyebrow && <p class="extras-figma-library__eyebrow">{ctaLibraryData.eyebrow}</p>}
+          {ctaLibraryData.title && <h2 class="extras-figma-library__title">{ctaLibraryData.title}</h2>}
+          {ctaLibraryData.body && <RitchText block={ctaLibraryData.body} className="extras-figma-library__body" />}
+          {ctaLibraryData.ctaHref && ctaLibraryData.ctaLabel && (
+            <a class="btn btn-cta btn-cta--blue btn-pill extras-figma-library__cta" href={ctaLibraryData.ctaHref}>
+              {ctaLibraryData.ctaLabel}
+            </a>
+          )}
         </div>
       </div>
     </section>

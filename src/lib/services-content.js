@@ -209,10 +209,19 @@ function mapProjects(projects = [], lang, fallbackCategory) {
 
 function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
   const compositItems = asArray(container?.composit);
+  const itemsToMap = compositItems.length ? compositItems : fallbackModes;
 
-  return fallbackModes.map((fallbackMode, index) => {
-    const item = compositItems[index] || {};
-    const projects = mapProjects(asArray(item?.progetti), pickFirst(container?.locale, DEFAULT_LANG), fallbackTag || fallbackMode.title);
+  return itemsToMap.map((item, index) => {
+    const itemTitle = pickFirst(item?.titolo);
+    const fallbackMode =
+      fallbackModes.find((mode) => pickFirst(mode?.title).toLowerCase() === itemTitle.toLowerCase()) ||
+      fallbackModes[index] ||
+      {};
+    const projects = mapProjects(
+      asArray(item?.progetti),
+      pickFirst(container?.locale, DEFAULT_LANG),
+      fallbackTag || itemTitle || fallbackMode.title
+    );
 
     return {
       title: pickFirst(item?.titolo, fallbackMode.title),
