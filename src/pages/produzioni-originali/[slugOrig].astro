@@ -14,45 +14,14 @@ if (!original) {
   return Astro.redirect(buildPath("originals", lang));
 }
 
-const introHtml = micromark(original.intro || "");
-const creditsHtml = micromark(original.credits || "");
 const introParagraphs = (original.intro || "")
   .split(/\n{2,}/)
   .map((p: string) => p.replace(/^#+\s+/, "").replace(/[*_]/g, "").trim())
   .filter(Boolean);
 
-const sliderExtraSlides = [
-  [
-    { src: "https://placehold.co/900x675/png?text=Sketch+01", alt: "Sketch 1" },
-    { src: "https://placehold.co/900x675/png?text=Sketch+02", alt: "Sketch 2" },
-    { src: "https://placehold.co/900x675/png?text=Sketch+03", alt: "Sketch 3" },
-  ],
-  [
-    { src: "https://placehold.co/900x675/png?text=Prop+01", alt: "Prop 1" },
-    { src: "https://placehold.co/900x675/png?text=Prop+02", alt: "Prop 2" },
-    { src: "https://placehold.co/900x675/png?text=Prop+03", alt: "Prop 3" },
-  ],
-];
-
-const backgroundPropsSlides = [
-  [
-    { src: "/images/background-e-props-01.jpg", alt: "Background e Props 1" },
-    { src: "/images/background-e-props-02.jpg", alt: "Background e Props 2" },
-    { src: "/images/background-e-props-03.jpg", alt: "Background e Props 3" },
-  ],
-  ...sliderExtraSlides,
-];
-const backgroundPropsCards = backgroundPropsSlides.flat();
-
-const renderingLevelsSlides = [
-  [
-    { src: "/images/rendering-a-livelli-01.jpg", alt: "Rendering a livelli 1" },
-    { src: "/images/rendering-a-livelli-02.jpg", alt: "Rendering a livelli 2" },
-    { src: "/images/rendering-a-livelli-03.jpg", alt: "Rendering a livelli 3" },
-  ],
-  ...sliderExtraSlides,
-];
-const renderingLevelsCards = renderingLevelsSlides.flat();
+const creditsHtml = original.credits ? micromark(original.credits) : "";
+const hasHeaderMeta = Boolean(original.settoreTitolo || original.titolo || original.anno || original.tipologia);
+const hasIntro = introParagraphs.length > 0;
 ---
 
 <Layout
@@ -64,402 +33,79 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
     containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5",
   }}
 >
-  <HeroStyDettaglio
-    className="originals-hero"
-    imageSrc={original.cover || "/images/caramelle-intro.jpg"}
-    imageAlt={original.coverAlt || `Frame progetto ${original.titolo}`}
-  />
+  {original.cover && (
+    <HeroStyDettaglio
+      className="originals-hero"
+      imageSrc={original.cover}
+      imageAlt={original.coverAlt || `Frame progetto ${original.titolo}`}
+    />
+  )}
 
-  <section class="section-space section-space--soft intro-header">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-lg-8 col-xl-7">
-          {original.settoreTitolo && <p class="hero-eyebrow mb-1">{original.settoreTitolo.toUpperCase()}</p>}
-          <h1 class="heading-detail mb-1">{original.titolo}</h1>
-          {original.anno && <p class="hero-meta mb-3">INIZIO PRODUZIONE {original.anno}</p>}
-          <div class="d-flex flex-wrap gap-2 align-items-center">
-            <span class="pill pill-primary">Panebarco Originals</span>
-            {original.tipologia && <span class="pill pill-neutral">{original.tipologia}</span>}
+  {hasHeaderMeta && (
+    <section class="section-space section-space--soft intro-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-lg-8 col-xl-7">
+            {original.settoreTitolo && <p class="hero-eyebrow mb-1">{original.settoreTitolo.toUpperCase()}</p>}
+            {original.titolo && <h1 class="heading-detail mb-1">{original.titolo}</h1>}
+            {original.anno && <p class="hero-meta mb-3">INIZIO PRODUZIONE {original.anno}</p>}
+            {original.tipologia && (
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="pill pill-primary">Panebarco Originals</span>
+                <span class="pill pill-neutral">{original.tipologia}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <main class="original-detail-page pb-5">
-    <!-- Sinossi -->
-    <section class="section-space section-space--soft">
-      <div class="container">
-        <div class="row">
-          <div class=”col-12 col-xl-12”>
-            {introParagraphs[0] && <p class=”lead text-white mb-3 fw-bold”>{introParagraphs[0]}</p>}
-            {introParagraphs[1] && <p class=”text-white mb-3 fw-bold”>{introParagraphs[1]}</p>}
-            {introParagraphs[2] && <p class=”text-white mb-0 fw-bold”>{introParagraphs[2]}</p>}
+    {hasIntro && (
+      <section class="section-space section-space--soft">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-xl-12">
+              {introParagraphs.map((paragraph, index) => (
+                <p class:list={[index === 0 ? "lead" : null, "text-white", index === introParagraphs.length - 1 ? "mb-0" : "mb-3", "fw-bold"]}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
 
-    <!-- Still principale -->
-    <section id="guarda-il-corto" class="section-space section-space--tight">
-      <div class="container">
-        <div class="ratio ratio-16x9  shadow-lg overflow-hidden">
-          <img
-            class="w-100 h-100 object-fit-cover"
-            src={original.cover || "/images/caramelle-intro.jpg"}
-            alt={`Still principale ${original.titolo}`}
-          />
+    {original.cover && (
+      <section id="guarda-il-corto" class="section-space section-space--tight">
+        <div class="container">
+          <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
+            <img
+              class="w-100 h-100 object-fit-cover"
+              src={original.cover}
+              alt={original.coverAlt || `Still principale ${original.titolo}`}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
 
-    <!-- Personaggi -->
-    <section class="section-space">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">Personaggi</h2>
-        <p class="mb-4 text-white mb-0 fw-bold">
-          Voluptatem laudantium in in. Nam natus magni quaerat et dolores facere deserunt. Ut consequatur perspiciatis eaque dolor et. Dolor natus voluptatem nobis similique. Suscipit molestiae vel vel sint sint earum fuga. Amet recusandae sunt. Voluptatum tempora voluptatem odit id harum aut quo perferendis. Sit voluptas similique.
-        </p>
-        <div class="row g-3 row-cols-1 row-cols-sm-2 row-cols-lg-3 originals-characters-grid">
-          <div class="col">
-            <div class="ratio ratio-4x3 char-card">
-              <img class="w-100 h-100 object-fit-cover" src="/images/personaggi-01.jpg" alt="Personaggio 1" />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-4x3 char-card">
-              <img class="w-100 h-100 object-fit-cover" src="/images/personaggi-02.jpg" alt="Personaggio 2" />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-4x3 char-card">
-              <img class="w-100 h-100 object-fit-cover" src="/images/personaggi-03.jpg" alt="Personaggio 3" />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-4x3 char-card">
-              <img class="w-100 h-100 object-fit-cover" src="/images/personaggi-04.jpg" alt="Personaggio 4" />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-4x3 char-card">
-              <img class="w-100 h-100 object-fit-cover" src="/images/personaggi-05.jpg" alt="Personaggio 5" />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-4x3 char-card">
-              <img class="w-100 h-100 object-fit-cover" src="/images/personaggi-06.jpg" alt="Personaggio 6" />
+    {original.credits && (
+      <section class="section-space section-space--soft credits-section">
+        <div class="container">
+          <hr class="credits-divider mt-0 mb-5" />
+          <div class="row">
+            <div class="col-12 col-xl-11 credits-copy">
+              <h2 class="page-title-uniform text-white text-uppercase mb-4">Credits</h2>
+              <Fragment set:html={creditsHtml} />
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Background e Props -->
-    <section class="section-space section-space--soft">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">Background e Props</h2>
-        <div
-          id="renderingLevelsCarouselDesktop"
-          class="carousel slide frecce-slider-dettaglio js-bgprops-carousel d-none d-md-block"
-          data-bs-ride="false"
-          data-bs-touch="true"
-        >
-          <div class="carousel-inner">
-            {backgroundPropsSlides.map((slide, slideIndex) => (
-              <div class:list={["carousel-item", slideIndex === 0 && "active"]}>
-                <div class="row g-3 mx-0">
-                  {slide.map((card) => (
-                    <div class="col-4">
-                      <div class="ratio ratio-4x3 bgprops-card rounded-0">
-                        <img src={card.src} class="w-100 h-100 object-fit-cover" alt={card.alt} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#renderingLevelsCarouselDesktop" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#renderingLevelsCarouselDesktop" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-          <div class="carousel-indicators mt-3">
-            {backgroundPropsSlides.map((_, slideIndex) => (
-              <button
-                type="button"
-                data-bs-target="#renderingLevelsCarouselDesktop"
-                data-bs-slide-to={slideIndex}
-                class:list={[slideIndex === 0 && "active"]}
-                aria-label={`Slide ${slideIndex + 1}`}
-              ></button>
-            ))}
-          </div>
-        </div>
-
-        <div
-          id="renderingLevelsCarouselMobile"
-          class="carousel slide frecce-slider-dettaglio js-bgprops-carousel d-md-none"
-          data-bs-ride="false"
-          data-bs-touch="true"
-        >
-          <div class="carousel-inner">
-            {backgroundPropsCards.map((card, cardIndex) => (
-              <div class:list={["carousel-item px-2", cardIndex === 0 && "active"]}>
-                <div class="ratio ratio-4x3 bgprops-card rounded-0">
-                  <img src={card.src} class="w-100 h-100 object-fit-cover" alt={card.alt} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#renderingLevelsCarouselMobile" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#renderingLevelsCarouselMobile" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Storyboard & Animatic -->
-    <section class="section-space section-space--tight">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">
-          Storyboard & Animatic
-        </h2>
-        <p>Voluptatem laudantium in in. Nam natus magni quaerat et dolores facere deserunt. Ut consequatur perspiciatis eaque dolor et. Dolor natus voluptatem nobis similique. Suscipit molestiae vel vel sint sint earum fuga.   Amet recusandae sunt. Voluptatum tempora voluptatem odit id harum aut quo perferendis. Sit voluptas similique.</p>
-        <div class="row g-3 row-cols-1 row-cols-md-3">
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/storyboard-e-animatic-01.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Distribuzione 1"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Rendering a livelli -->
-     <section class="section-space section-space--soft">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">Rendering a livelli</h2>
-        <div
-          id="bgPropsCarouselDesktop"
-          class="carousel slide frecce-slider-dettaglio js-bgprops-carousel d-none d-md-block"
-          data-bs-ride="false"
-          data-bs-touch="true"
-        >
-          <div class="carousel-inner">
-            {renderingLevelsSlides.map((slide, slideIndex) => (
-              <div class:list={["carousel-item", slideIndex === 0 && "active"]}>
-                <div class="row g-3 mx-0">
-                  {slide.map((card) => (
-                    <div class="col-4">
-                      <div class="ratio ratio-4x3 bgprops-card rounded-0">
-                        <img src={card.src} class="w-100 h-100 object-fit-cover" alt={card.alt} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#bgPropsCarouselDesktop" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#bgPropsCarouselDesktop" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-          <div class="carousel-indicators mt-3">
-            {renderingLevelsSlides.map((_, slideIndex) => (
-              <button
-                type="button"
-                data-bs-target="#bgPropsCarouselDesktop"
-                data-bs-slide-to={slideIndex}
-                class:list={[slideIndex === 0 && "active"]}
-                aria-label={`Slide ${slideIndex + 1}`}
-              ></button>
-            ))}
-          </div>
-        </div>
-
-        <div
-          id="bgPropsCarouselMobile"
-          class="carousel slide frecce-slider-dettaglio js-bgprops-carousel d-md-none"
-          data-bs-ride="false"
-          data-bs-touch="true"
-        >
-          <div class="carousel-inner">
-            {renderingLevelsCards.map((card, cardIndex) => (
-              <div class:list={["carousel-item px-2", cardIndex === 0 && "active"]}>
-                <div class="ratio ratio-4x3 bgprops-card rounded-0">
-                  <img src={card.src} class="w-100 h-100 object-fit-cover" alt={card.alt} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#bgPropsCarouselMobile" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#bgPropsCarouselMobile" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Compositing e Visual Effects -->
-    <section class="section-space section-space--tight">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">
-          Compositing e Visual Effects
-        </h2>
-        <div class="row g-3 row-cols-1 row-cols-md-3">
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/compositing-e-visual-effects-01.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Comp 1"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Rendering finale -->
-    <section class="section-space section-space--tight">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">
-          Rendering finale
-        </h2>
-        <p>Eos illum cupiditate aspernatur. Distinctio porro laborum. Reiciendis ad ipsa et hic maiores consectetur quo ipsum et.   Sapiente est eveniet illo et explicabo in. Amet eligendi sequi dignissimos quo. Natus tempore suscipit nihil neque. Et praesentium consequatur similique perspiciatis ipsum cupiditate tempora et. Nemo sequi in excepturi repudiandae dicta. Dicta a reiciendis aspernatur fuga.   Deserunt illum cupiditate omnis ipsa. Ut fugit impedit ut exercitationem fugit cum recusandae quia. Hic sunt ut recusandae fugit.</p>
-        <div class="row g-3 row-cols-1 row-cols-md-3">
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/rendering-finale-01.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Comp 1"
-              />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/rendering-finale-02.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Comp 2"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Distribuzione -->
-    <section class="section-space section-space--tight">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">
-          Distribuzione
-        </h2>
-        <p>Voluptatem laudantium in in. Nam natus magni quaerat et dolores facere deserunt. Ut consequatur perspiciatis eaque dolor et. Dolor natus voluptatem nobis similique. Suscipit molestiae vel vel sint sint earum fuga.   Amet recusandae sunt. Voluptatum tempora voluptatem odit id harum aut quo perferendis. Sit voluptas similique.</p>
-        <div class="row g-3 row-cols-1 row-cols-md-3">
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/distribuzione-01.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Comp 1"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Curiosità -->
-    <section class="section-space section-space--tight">
-      <div class="container">
-        <h2 class="page-title-uniform text-white mb-4">
-          Curiosità
-        </h2>
-        <p>Voluptatem laudantium in in. Nam natus magni quaerat et dolores facere deserunt. Ut consequatur perspiciatis eaque dolor et. Dolor natus voluptatem nobis similique. Suscipit molestiae vel vel sint sint earum fuga.   Amet recusandae sunt. Voluptatum tempora voluptatem odit id harum aut quo perferendis. Sit voluptas similique.</p>
-        <div class="row g-3 row-cols-1 row-cols-md-3">
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/curiosita-01.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Curiosità 1"
-              />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/curiosita-02.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Curiosità 2"
-              />
-            </div>
-          </div>
-          <div class="col">
-            <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
-              <img
-                src="/images/curiosita-03.jpg"
-                class="w-100 h-100 object-fit-cover"
-                alt="Curiosità 3"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Credits -->
-    <section class="section-space section-space--soft credits-section">
-      <div class="container">
-        <hr class="credits-divider mt-0 mb-5" />
-        <div class="row">
-          <div class=”col-12 col-xl-11 credits-copy”>
-            <h2 class=”page-title-uniform text-white text-uppercase mb-4”>Credits</h2>
-            <Fragment set:html={creditsHtml} />
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    )}
   </main>
-
-  <script>
-    import { Carousel } from "bootstrap";
-    ["bgPropsCarouselDesktop", "bgPropsCarouselMobile"].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        Carousel.getOrCreateInstance(el, {
-          interval: false,
-          ride: false,
-          wrap: true,
-          touch: true,
-        });
-      }
-    });
-  </script>
 </Layout>
 
 <style lang="scss">
@@ -521,51 +167,4 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
       border-radius: 0.5rem;
     }
   }
-
-  /* Personaggi cards */
-  .originals-characters-grid .char-card {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background: #111;
-  }
-
-  .originals-characters-grid .char-card.no-radius {
-    border-radius: 0;
-  }
-
-  .originals-characters-grid .char-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .originals-characters-grid .ratio-square {
-    aspect-ratio: 1 / 1;
-  }
-
-  .originals-characters-grid .ratio-wide {
-    aspect-ratio: 4 / 3;
-  }
-
-  .originals-characters-grid .ratio-wide-short {
-    aspect-ratio: 16 / 9;
-  }
-
-  .originals-characters-grid .ratio-tall {
-    aspect-ratio: 3 / 4;
-  }
-
-  /* Background e Props slider */
-  .bgprops-card {
-    background: #0f0f10;
-    overflow: hidden;
-  }
-
-  .bgprops-card img {
-    object-fit: cover;
-  }
-
-
 </style>
