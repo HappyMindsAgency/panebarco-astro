@@ -217,14 +217,17 @@ function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
     return {
       title: pickFirst(item?.titolo, fallbackMode.title),
       description: pickFirst(item?.contenuto, fallbackMode.description),
-      scenes: [0, 1, 2, 3].map((sceneIndex) => ({
-        image: pickFirst(projects[sceneIndex]?.image, fallbackMode.scenes?.[sceneIndex]?.image),
-        imageAlt: pickFirst(projects[sceneIndex]?.imageAlt, fallbackMode.scenes?.[sceneIndex]?.imageAlt),
-        title: pickFirst(projects[sceneIndex]?.title, fallbackMode.scenes?.[sceneIndex]?.title),
-        summary: pickFirst(projects[sceneIndex]?.summary, fallbackMode.scenes?.[sceneIndex]?.summary),
-        tags: projects[sceneIndex]?.tags?.length ? projects[sceneIndex].tags : fallbackMode.scenes?.[sceneIndex]?.tags || [],
-        href: projects[sceneIndex]?.href,
-      })),
+      scenes: Array.from(
+        { length: projects.length > 0 ? projects.length : (fallbackMode.scenes?.length || 0) },
+        (_, sceneIndex) => ({
+          image: pickFirst(projects[sceneIndex]?.image, fallbackMode.scenes?.[sceneIndex]?.image),
+          imageAlt: pickFirst(projects[sceneIndex]?.imageAlt, fallbackMode.scenes?.[sceneIndex]?.imageAlt),
+          title: pickFirst(projects[sceneIndex]?.title, fallbackMode.scenes?.[sceneIndex]?.title),
+          summary: pickFirst(projects[sceneIndex]?.summary, fallbackMode.scenes?.[sceneIndex]?.summary),
+          tags: projects[sceneIndex]?.tags?.length ? projects[sceneIndex].tags : fallbackMode.scenes?.[sceneIndex]?.tags || [],
+          href: projects[sceneIndex]?.href,
+        })
+      ),
       bubble: pickFirst(fallbackMode.bubble),
       topLayout: fallbackMode.topLayout,
       bottomLayout: fallbackMode.bottomLayout,
