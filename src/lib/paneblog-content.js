@@ -82,7 +82,7 @@ function mapHeader(header, fallback = {}) {
     bgWord: pickFirst(header?.titoloTana, fallback.bgWord),
     title: pickFirst(header?.titolo, fallback.title),
     subtitle: pickFirst(header?.sottotitolo, fallback.subtitle),
-    backgroundVideoSrc: resolveMediaUrl(header?.videoBackground, "large", fallback.backgroundVideoSrc),
+    backgroundVideoSrc: resolveMediaUrl(header?.mediaBackground, "large", fallback.backgroundVideoSrc),
     sideImageSrc: resolveMediaUrl(header?.imgTeam, "large", fallback.sideImageSrc),
     sideImageAlt: pickFirst(header?.imgTeam?.alternativeText, fallback.sideImageAlt),
     showSideImage: Boolean(header?.imgTeamBool && resolveMediaUrl(header?.imgTeam)),
@@ -122,6 +122,57 @@ function mapArticleDetail(article, lang) {
   };
 }
 
+const FLASH_NEWS_CHARACTERS = [
+  { character: "Maya", avatar: "/images/teams-avatar-che-fate-01.png" },
+  { character: "Luca", avatar: "/images/teams-avatar-che-fate-02.png" },
+  { character: "Nora", avatar: "/images/teams-avatar-che-fate-03.png" },
+];
+
+function formatDateDDMMYYYY(value) {
+  if (!value) return "";
+
+  try {
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) return "";
+
+    const d = String(date.getDate()).padStart(2, "0");
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const y = date.getFullYear();
+
+    return `${d}/${m}/${y}`;
+  } catch (_error) {
+    return "";
+  }
+}
+
+export async function getFlashNewsContent({ lang = DEFAULT_LANG, limit = 3 } = {}) {
+  const response = await getCollectionDocuments("flash-news", {
+    locale: lang,
+    status: "published",
+    sort: ["data:desc", "publishedAt:desc"],
+    pagination: { page: 1, pageSize: limit },
+    fields: ["documentId", "titolo", "contenuto", "data", "publishedAt"],
+  });
+
+  const items = asArray(response?.data);
+
+  if (!items.length) return [];
+
+  return items.map((item, index) => {
+    const char = FLASH_NEWS_CHARACTERS[index % FLASH_NEWS_CHARACTERS.length];
+    const rawDate = item?.data || item?.publishedAt;
+
+    return {
+      date: formatDateDDMMYYYY(rawDate),
+      character: char.character,
+      avatar: char.avatar,
+      title: pickFirst(item?.titolo, "Flash news"),
+      text: truncateText(item?.contenuto, 120),
+    };
+  });
+}
+
 export async function getPaneblogPreviewArticles({ lang = DEFAULT_LANG, limit = 3, fallback = [] } = {}) {
   const response = await getCollectionDocuments("articoli", {
     locale: lang,
@@ -153,7 +204,7 @@ export async function getPaneblogPageContent({ lang = DEFAULT_LANG, fallback = {
       populate: {
         header: {
           populate: {
-            videoBackground: true,
+            mediaBackground: true,
             imgTeam: true,
           },
         },
@@ -212,7 +263,6 @@ export async function getPaneblogPageContent({ lang = DEFAULT_LANG, fallback = {
       title: pickFirst(page?.intro?.titolo, fallback.intro?.title, "Diario di viaggio"),
       body: introParagraphs[0] || pickFirst(page?.intro?.contenuto, fallback.intro?.body, ""),
     },
-    raw: page,
     seo: {
       description: pickFirst(page?.seo?.metaDescription),
       title: pickFirst(page?.seo?.metaTitle, page?.header?.titolo, page?.nomePagina, "Paneblog - Panebarco"),

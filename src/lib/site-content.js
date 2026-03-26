@@ -3,6 +3,29 @@ import { getCollectionDocuments, getSingleDocument } from "./strapi-client";
 import { getImageFormat, getStrapiMediaUrl } from "./utility-function";
 
 const DEFAULT_LANG = "it";
+const STRAPI_MAX_PAGE_SIZE = 100;
+
+async function getAllCollectionDocuments(resource, query = {}) {
+  const firstResponse = await getCollectionDocuments(resource, {
+    ...query,
+    pagination: { page: 1, pageSize: STRAPI_MAX_PAGE_SIZE },
+  });
+  const allData = [...asArray(firstResponse?.data)];
+  const pageCount = firstResponse?.meta?.pagination?.pageCount ?? 1;
+  if (pageCount > 1) {
+    const remaining = Array.from({ length: pageCount - 1 }, (_, i) => i + 2);
+    const responses = await Promise.all(
+      remaining.map((page) =>
+        getCollectionDocuments(resource, {
+          ...query,
+          pagination: { page, pageSize: STRAPI_MAX_PAGE_SIZE },
+        })
+      )
+    );
+    responses.forEach((r) => allData.push(...asArray(r?.data)));
+  }
+  return { data: allData, meta: firstResponse?.meta ?? {} };
+}
 
 function asArray(value) {
   return Array.isArray(value) ? value : value ? [value] : [];
@@ -68,7 +91,7 @@ function mapHeader(header, fallback = {}) {
     bgWord: pickFirst(header?.titoloTana, fallback.bgWord),
     title: pickFirst(header?.titolo, fallback.title),
     subtitle: pickFirst(header?.sottotitolo, fallback.subtitle),
-    backgroundVideoSrc: resolveMediaUrl(header?.videoBackground || header?.mediaBackground, "large", fallback.backgroundVideoSrc),
+    backgroundVideoSrc: resolveMediaUrl(header?.mediaBackground, "large", fallback.backgroundVideoSrc),
     sideImageSrc: resolveMediaUrl(header?.imgTeam, "large", fallback.sideImageSrc),
     sideImageAlt: pickFirst(header?.imgTeam?.alternativeText, fallback.sideImageAlt),
     showSideImage: Boolean(header?.imgTeamBool && resolveMediaUrl(header?.imgTeam)),
@@ -694,14 +717,14 @@ export async function getPanebarcosPageContent({ lang = DEFAULT_LANG, fallback }
 }
 
 export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback }) {
-  const [pageResponse, originalsResponse] = await Promise.all([
+  const [pageResponse, originalsResponse, catalogueResponse] = await Promise.all([
     getSingleDocument("pagina-portfolio", {
       locale: lang,
       status: "published",
       populate: {
         header: {
           populate: {
-            videoBackground: true,
+            mediaBackground: true,
             imgTeam: true,
           },
         },
@@ -736,12 +759,27 @@ export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback })
         tipologie_progetto: true,
       },
     }),
+    getAllCollectionDocuments("progetti", {
+      locale: lang,
+      status: "published",
+      sort: ["updatedAt:desc"],
+      fields: ["documentId", "titolo", "slug", "intro"],
+      populate: {
+        cover: true,
+        categorie_progetto: { fields: ["titolo"] },
+        tipologie_progetto: { fields: ["titolo"] },
+      },
+    }),
   ]);
 
   const page = pageResponse?.data || {};
   const introParagraphs = splitRichTextParagraphs(page?.intro?.contenuto);
   const highlightProjects = asArray(page?.progettiEvidenza).length
     ? asArray(page?.progettiEvidenza).map((project, index) => mapPortfolioProject(project, fallback.highlightProjects[index]))
+    : fallback.highlightProjects;
+  const catalogueItems = asArray(catalogueResponse?.data);
+  const catalogueProjects = catalogueItems.length
+    ? catalogueItems.map((project) => mapPortfolioProject(project))
     : fallback.highlightProjects;
 
   return {
@@ -751,6 +789,7 @@ export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback })
       paragraphs: introParagraphs.length ? introParagraphs : fallback.intro.paragraphs,
     },
     highlightProjects,
+    catalogueProjects,
     originalsSlides: asArray(originalsResponse?.data).length
       ? asArray(originalsResponse?.data).map((item, index) => mapOriginalSlide(item, fallback.originalsSlides[index]))
       : fallback.originalsSlides,
@@ -855,7 +894,7 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
     populate: {
       header: {
         populate: {
-          videoBackground: true,
+          mediaBackground: true,
           imgTeam: true,
         },
       },
@@ -922,6 +961,101 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
   };
 }
 
+export async function getOriginalDetailContent({ lang = DEFAULT_LANG, slug }) {
+  const response = await getCollectionDocuments("originals", {
+    locale: lang,
+    status: "published",
+    filters: {
+      slug: { $eq: slug },
+    },
+    pagination: { page: 1, pageSize: 1 },
+    fields: ["documentId", "titolo", "slug", "intro", "credits", "anno"],
+    populate: {
+      cover: true,
+      seo: { fields: ["metaTitle", "metaDescription"] },
+      settore: { fields: ["titolo"] },
+      tipologie_progetto: { fields: ["titolo"] },
+      mainVideo: {
+        populate: { anteprima: true },
+      },
+    },
+  });
+
+  const original = asArray(response?.data)[0] || null;
+
+  if (!original) return null;
+
+  const tipologie = asArray(original.tipologie_progetto).map((t) => t?.titolo).filter(Boolean);
+
+  return {
+    titolo: pickFirst(original.titolo),
+    anno: pickFirst(original.anno),
+    cover: resolveMediaUrl(original.cover, "large"),
+    coverAlt: pickFirst(original.cover?.alternativeText, original.titolo),
+    intro: pickFirst(original.intro),
+    credits: pickFirst(original.credits),
+    settoreTitolo: pickFirst(original.settore?.titolo),
+    tipologia: pickFirst(tipologie[0]),
+    seo: {
+      title: pickFirst(original.seo?.metaTitle, original.titolo, "Panebarco Originals"),
+      description: pickFirst(original.seo?.metaDescription, original.titolo),
+    },
+    slug: pickFirst(original.slug),
+  };
+}
+
+export async function getPortfolioDetailContent({ lang = DEFAULT_LANG, slug }) {
+  const response = await getCollectionDocuments("progetti", {
+    locale: lang,
+    status: "published",
+    filters: { slug: { $eq: slug } },
+    pagination: { page: 1, pageSize: 1 },
+    fields: ["documentId", "titolo", "slug", "intro", "credits", "anno"],
+    populate: {
+      cover: true,
+      seo: { fields: ["metaTitle", "metaDescription"] },
+      categorie_progetto: { fields: ["titolo"] },
+      tipologie_progetto: { fields: ["titolo"] },
+      mainVideo: true,
+      corpo: { populate: "*" },
+    },
+  });
+
+  const project = asArray(response?.data)[0] || null;
+  if (!project) return null;
+
+  const categories = asArray(project.categorie_progetto).map((c) => c?.titolo).filter(Boolean);
+  const types = asArray(project.tipologie_progetto).map((t) => t?.titolo).filter(Boolean);
+
+  const videos = [];
+  const mainEmbedSrc = extractEmbedSrc(project.mainVideo?.embed);
+  if (mainEmbedSrc) videos.push({ src: mainEmbedSrc, title: pickFirst(project.titolo, "Video") });
+  asArray(project.corpo).forEach((item) => {
+    if (item?.__component === "shared.embed") {
+      const src = extractEmbedSrc(item?.embed);
+      if (src) videos.push({ src, title: pickFirst(project.titolo, "Video") });
+    }
+  });
+
+  return {
+    titolo: pickFirst(project.titolo),
+    anno: pickFirst(project.anno),
+    cover: resolveMediaUrl(project.cover, "large"),
+    coverAlt: pickFirst(project.cover?.alternativeText, project.titolo),
+    category: pickFirst(categories[0]),
+    tags: [...categories, ...types],
+    meta: project.anno ? `Inizio produzione ${project.anno}` : "",
+    introParagraphs: splitRichTextParagraphs(project.intro),
+    videos,
+    creditsHtml: pickFirst(project.credits),
+    seo: {
+      title: pickFirst(project.seo?.metaTitle, project.titolo, "Panebarco Portfolio"),
+      description: pickFirst(project.seo?.metaDescription, project.titolo),
+    },
+    slug: pickFirst(project.slug),
+  };
+}
+
 export async function getContactsPageContent({ lang = DEFAULT_LANG, fallback }) {
   const pageResponse = await getSingleDocument("pagina-contatti", {
     locale: lang,
@@ -929,7 +1063,7 @@ export async function getContactsPageContent({ lang = DEFAULT_LANG, fallback }) 
     populate: {
       header: {
         populate: {
-          videoBackground: true,
+          mediaBackground: true,
           imgTeam: true,
         },
       },

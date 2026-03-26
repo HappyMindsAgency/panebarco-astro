@@ -45,7 +45,7 @@ const portfolioFallback = {
 };
 
 const portfolioContent = await getPortfolioPageContent({ lang, fallback: portfolioFallback });
-const portfolioProjects = portfolioContent.highlightProjects.map((project) => ({ ...project, href: joinLocalizedPath(buildPath("portfolio", lang), project.slug) }));
+const portfolioProjects = portfolioContent.catalogueProjects.map((project) => ({ ...project, href: joinLocalizedPath(buildPath("portfolio", lang), project.slug) }));
 const portfolioOriginalSlides = portfolioContent.originalsSlides.map((slide) => ({ ...slide, href: joinLocalizedPath(buildPath("originals", lang), slide.slug) }));
 const serviceFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => project.serviceCategory).filter(Boolean))];
 const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => project.videoType).filter(Boolean))];
@@ -128,8 +128,8 @@ const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => proj
                     <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
                   </div>
                   <div class="portfolio-work-card__tags" aria-hidden="true">
-                    <span>{project.serviceCategory}</span>
-                    <span>{project.videoType}</span>
+                    {project.serviceCategory && <span>{project.serviceCategory}</span>}
+                    {project.videoType && <span>{project.videoType}</span>}
                   </div>
                   <div class="portfolio-work-card__overlay">
                     <h3>{project.title}</h3>
@@ -139,6 +139,12 @@ const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => proj
               </a>
             </div>
           ))}
+        </div>
+
+        <div class="text-center mt-4 mt-lg-5 d-none" data-portfolio-load-more>
+          <button class="btn btn-outline-dark rounded-pill px-4 py-2" type="button" data-portfolio-load-more-btn>
+            <span data-load-more-label>Carica altri 6</span>
+          </button>
         </div>
 
         <div class="portfolio-empty-state d-none text-center mt-4" data-portfolio-empty>
@@ -160,13 +166,19 @@ const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => proj
         document.querySelectorAll("[data-portfolio-root]").forEach(function (root) {
           if (root.dataset.bound === "true") return;
           root.dataset.bound = "true";
+          var PAGE_INITIAL = 9;
+          var PAGE_STEP = 6;
           var activeFilters = { service: "Tutti", type: "Tutti" };
+          var revealedCount = PAGE_INITIAL;
           var filterForm = root.querySelector("[data-portfolio-filter-form]");
           var chips = root.querySelectorAll("[data-filter-chip]");
           var cards = root.querySelectorAll("[data-portfolio-card]");
           var emptyState = root.querySelector("[data-portfolio-empty]");
           var resetButton = root.querySelector("[data-portfolio-reset]");
-          function resetFilters() { activeFilters.service = "Tutti"; activeFilters.type = "Tutti"; syncFilterChips(); updateCards(); }
+          var loadMoreWrapper = root.querySelector("[data-portfolio-load-more]");
+          var loadMoreBtn = root.querySelector("[data-portfolio-load-more-btn]");
+          var loadMoreLabel = root.querySelector("[data-load-more-label]");
+          function resetFilters() { activeFilters.service = "Tutti"; activeFilters.type = "Tutti"; revealedCount = PAGE_INITIAL; syncFilterChips(); updateCards(); }
           function syncResetButton() {
             if (!resetButton) return;
             var isDefaultState = activeFilters.service === "Tutti" && activeFilters.type === "Tutti";
@@ -184,17 +196,26 @@ const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => proj
             syncResetButton();
           }
           function updateCards() {
-            var visibleCount = 0;
+            var matchingCards = [];
             cards.forEach(function (card) {
               var service = card.getAttribute("data-service");
               var type = card.getAttribute("data-type");
               var matchesService = activeFilters.service === "Tutti" || activeFilters.service === service;
               var matchesType = activeFilters.type === "Tutti" || activeFilters.type === type;
-              var isVisible = matchesService && matchesType;
-              card.classList.toggle("d-none", !isVisible);
-              if (isVisible) visibleCount += 1;
+              if (matchesService && matchesType) {
+                matchingCards.push(card);
+              } else {
+                card.classList.add("d-none");
+              }
             });
-            if (emptyState) emptyState.classList.toggle("d-none", visibleCount > 0);
+            matchingCards.forEach(function (card, index) {
+              card.classList.toggle("d-none", index >= revealedCount);
+            });
+            var remaining = matchingCards.length - revealedCount;
+            var hasMore = remaining > 0;
+            if (loadMoreWrapper) loadMoreWrapper.classList.toggle("d-none", !hasMore);
+            if (loadMoreLabel) loadMoreLabel.textContent = "Carica altri " + Math.min(remaining, PAGE_STEP);
+            if (emptyState) emptyState.classList.toggle("d-none", matchingCards.length > 0);
           }
           if (filterForm) {
             filterForm.addEventListener("click", function (event) {
@@ -204,11 +225,13 @@ const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => proj
               var value = chip.getAttribute("data-filter-value");
               if (!group) return;
               activeFilters[group] = value || "Tutti";
+              revealedCount = PAGE_INITIAL;
               syncFilterChips();
               updateCards();
             });
           }
           if (resetButton) resetButton.addEventListener("click", function () { resetFilters(); });
+          if (loadMoreBtn) loadMoreBtn.addEventListener("click", function () { revealedCount += PAGE_STEP; updateCards(); });
           syncFilterChips();
           updateCards();
         });

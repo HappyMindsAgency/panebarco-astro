@@ -4,7 +4,7 @@ import ChatPopSlider from "../../components/ChatPopSlider.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import { buildPath, getLangFromPath } from "../../i18n/routing";
-import { getPaneblogPageContent } from "../../lib/paneblog-content";
+import { getFlashNewsContent, getPaneblogPageContent } from "../../lib/paneblog-content";
 
 const lang = getLangFromPath(Astro.url.pathname);
 const pageContent = await getPaneblogPageContent({
@@ -31,44 +31,33 @@ const pageContent = await getPaneblogPageContent({
   },
 });
 
-const flashNews = [
-  {
-    label: "Flash news",
-    title: "Nuovi appunti in arrivo dal Diario di viaggio.",
-  },
-  {
-    label: "Work in progress",
-    title: "Stiamo preparando una raccolta di materiali di sviluppo Originals.",
-  },
-  {
-    label: "Dal laboratorio",
-    title: "In arrivo un focus sui workflow usati tra storyboard, animatic e previs.",
-  },
-] as const;
+const flashNewsItems = await getFlashNewsContent({ lang, limit: 3 });
 
-const diaryChatMessages = [
-  {
-    date: "18/03/2026",
-    character: "Maya",
-    avatar: "/images/teams-avatar-che-fate-01.png",
-    title: "Flash dal diario",
-    text: "Oggi abbiamo salvato tre appunti utili da una reference trovata quasi per caso.",
-  },
-  {
-    date: "16/03/2026",
-    character: "Luca",
-    avatar: "/images/teams-avatar-che-fate-02.png",
-    title: "Nota di produzione",
-    text: "Abbiamo rimesso in fila timing, tono e materiali per capire cosa tenere vivo nel racconto.",
-  },
-  {
-    date: "12/03/2026",
-    character: "Nora",
-    avatar: "/images/teams-avatar-che-fate-03.png",
-    title: "Dietro le quinte",
-    text: "Una piccola deviazione di processo ci ha aperto una strada piu interessante per il progetto.",
-  },
-] as const;
+const diaryChatMessages = flashNewsItems.length
+  ? flashNewsItems
+  : [
+      {
+        date: "18/03/2026",
+        character: "Maya",
+        avatar: "/images/teams-avatar-che-fate-01.png",
+        title: "Flash dal diario",
+        text: "Oggi abbiamo salvato tre appunti utili da una reference trovata quasi per caso.",
+      },
+      {
+        date: "16/03/2026",
+        character: "Luca",
+        avatar: "/images/teams-avatar-che-fate-02.png",
+        title: "Nota di produzione",
+        text: "Abbiamo rimesso in fila timing, tono e materiali per capire cosa tenere vivo nel racconto.",
+      },
+      {
+        date: "12/03/2026",
+        character: "Nora",
+        avatar: "/images/teams-avatar-che-fate-03.png",
+        title: "Dietro le quinte",
+        text: "Una piccola deviazione di processo ci ha aperto una strada piu interessante per il progetto.",
+      },
+    ];
 ---
 
 <Layout
@@ -151,7 +140,7 @@ const diaryChatMessages = [
                   <p class="paneblog-article-category">{article.category}</p>
                   <h3 class="blog-title">{article.title}</h3>
                   <p class="blog-abstract">{article.summary}</p>
-                  <a class="blog-link" href={article.href}>
+                  <a class="blog-link stretched-link" href={article.href}>
                     Leggi di piu <i class="bi bi-arrow-right"></i>
                   </a>
                 </div>

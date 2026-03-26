@@ -2,7 +2,7 @@
 import { micromark } from "micromark";
 const { block, className, pstyle }  = Astro.props;
 const innerClassName = className ? className : "";
-const content = block ? micromark(block) : "";
+const content = block ? micromark(block, { allowDangerousHtml: true }) : "";
 ---
 {block && 
 <div class={`block-richtext custombody ${innerClassName}`} set:html={content}></div>

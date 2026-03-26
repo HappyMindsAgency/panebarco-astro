@@ -1,64 +1,65 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyHome from "../../components/HeroStyHome.astro";
-import { portfolioProjects } from "../../data/portfolio";
+import { buildPath } from "../../i18n/routing";
+import { getPortfolioDetailContent } from "../../lib/site-content";
 
 const lang = "it" as const;
 const slugPort = Astro.params.slugPort ?? "";
-const project = portfolioProjects.find((entry) => entry.slug.it === slugPort || entry.slug.en === slugPort);
+const project = slugPort ? await getPortfolioDetailContent({ lang, slug: slugPort }) : null;
 
 if (!project) {
-  Astro.response.status = 404;
+  return Astro.redirect(buildPath("portfolio", lang));
 }
 ---
 
 <Layout
-  title={project ? `${project.title} - Panebarco Portfolio` : "Portfolio - Pagina non trovata"}
-  description={project?.description ?? "Il progetto richiesto non e disponibile."}
+  title={project.seo.title}
+  description={project.seo.description}
   useInnerStyles={false}
   lang={lang}
   headerProps={{ darkmode: false }}
 >
-  {project ? (
-    <main class="portfolio-detail-page">
-      <HeroStyHome
-        id="portfolio-hero"
-        className="hero-wrap"
-        videoSrc={false}
-        imageSrc={project.heroImage}
-        showSlider={false}
-        showTitle={false}
-        showSubtitle={false}
-        showCta={false}
-      />
+  <main class="portfolio-detail-page">
+    <HeroStyHome
+      id="portfolio-hero"
+      className="hero-wrap"
+      videoSrc={false}
+      imageSrc={project.cover || "/images/hero-dettaglio-fallback.jpg"}
+      showSlider={false}
+      showTitle={false}
+      showSubtitle={false}
+      showCta={false}
+    />
 
-      <section class="portfolio-detail-content pb-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <p class="text-uppercase fw-bold text-body-secondary small mb-2">{project.category}</p>
-              <h1 class="heading-detail mb-2">{project.title}</h1>
-              <p class="text-uppercase fw-bold text-body-secondary small mb-3">{project.meta}</p>
+    <section class="portfolio-detail-content pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <p class="text-uppercase fw-bold text-body-secondary small mb-2">{project.category}</p>
+            <h1 class="heading-detail mb-2">{project.titolo}</h1>
+            <p class="text-uppercase fw-bold text-body-secondary small mb-3">{project.meta}</p>
 
-              <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
-                {project.tags.map((tag, index) => (
-                  <span
-                    class:list={[
-                      "badge fw-bold rounded-1 px-2 py-1",
-                      index === 0
-                        ? "text-bg-primary text-uppercase"
-                        : "bg-secondary-subtle text-dark-emphasis",
-                    ]}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+            <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
+              {project.tags.map((tag, index) => (
+                <span
+                  class:list={[
+                    "badge fw-bold rounded-1 px-2 py-1",
+                    index === 0
+                      ? "text-bg-primary text-uppercase"
+                      : "bg-secondary-subtle text-dark-emphasis",
+                  ]}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
 
-              <p class="portfolio-detail-body mt-3 mt-md-5 pt-5 mb-3">{project.intro[0]}</p>
-              <p class="portfolio-detail-body mb-4">{project.intro[1]}</p>
-              <p class="portfolio-detail-body mb-4">{project.intro[2]}</p>
+            <p class="portfolio-detail-body mt-3 mt-md-5 pt-5 mb-3">{project.introParagraphs[0]}</p>
+            <p class="portfolio-detail-body mb-4">{project.introParagraphs[1]}</p>
+            <p class="portfolio-detail-body mb-4">{project.introParagraphs[2]}</p>
 
+            {project.videos[0] && (
               <div class="ratio ratio-16x9 overflow-hidden mb-4">
                 <iframe
                   src={project.videos[0].src}
@@ -69,9 +70,11 @@ if (!project) {
                   allowfullscreen
                 ></iframe>
               </div>
+            )}
 
-              <p class="portfolio-detail-body mt-5 mb-5">{project.intro[2]}</p>
+            <p class="portfolio-detail-body mt-5 mb-5">{project.introParagraphs[2]}</p>
 
+            {project.videos[1] && (
               <div class="ratio ratio-16x9 overflow-hidden">
                 <iframe
                   src={project.videos[1].src}
@@ -82,7 +85,9 @@ if (!project) {
                   allowfullscreen
                 ></iframe>
               </div>
+            )}
 
+            {project.creditsHtml && (
               <section class="pt-5 mt-5">
                 <div class="row justify-content-center">
                   <div class="col-12 col-lg-10">
@@ -90,34 +95,16 @@ if (!project) {
                   </div>
                   <div class="col-12 col-lg-10">
                     <h2 class="h1 text-uppercase fw-bold mb-4">Credits</h2>
-
-                    {project.credits.map(([label, value], idx) => (
-                      <p class:list={["portfolio-detail-body", idx === project.credits.length - 1 ? "mb-0" : "mb-2"]}>
-                        <strong>{label}:</strong> {value}
-                      </p>
-                    ))}
+                    <Fragment set:html={project.creditsHtml} />
                   </div>
                 </div>
               </section>
-            </div>
+            )}
           </div>
         </div>
-      </section>
-    </main>
-  ) : (
-    <main class="portfolio-detail-page">
-      <section class="portfolio-detail-content py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <h1 class="heading-detail mb-3">Progetto non trovato</h1>
-              <p class="portfolio-detail-body mb-0">Nessun progetto corrisponde allo slug richiesto.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  )}
+      </div>
+    </section>
+  </main>
 </Layout>
 
 <style>

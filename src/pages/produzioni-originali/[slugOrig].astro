@@ -1,19 +1,25 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyDettaglio from "../../components/HeroStyDettaglio.astro";
-import { originalsProjects } from "../../data/originals";
 import { buildPath } from "../../i18n/routing";
+import { getOriginalDetailContent } from "../../lib/site-content";
+import { micromark } from "micromark";
 
 const lang = "it" as const;
-
 const slugOrig = Astro.params.slugOrig ?? "";
-const project =
-  originalsProjects.find((item) => item.slug.it === slugOrig) ??
-  Astro.props.project;
 
-if (!project) {
+const original = await getOriginalDetailContent({ lang, slug: slugOrig });
+
+if (!original) {
   return Astro.redirect(buildPath("originals", lang));
 }
+
+const introHtml = micromark(original.intro || "");
+const creditsHtml = micromark(original.credits || "");
+const introParagraphs = (original.intro || "")
+  .split(/\n{2,}/)
+  .map((p: string) => p.replace(/^#+\s+/, "").replace(/[*_]/g, "").trim())
+  .filter(Boolean);
 
 const sliderExtraSlides = [
   [
@@ -50,8 +56,8 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
 ---
 
 <Layout
-  title={`${project.title} - Panebarco Originals`}
-  description={`Dettaglio progetto Originals: ${project.title}`}
+  title={original.seo.title}
+  description={original.seo.description}
   useInnerStyles={true}
   lang={lang}
   headerProps={{
@@ -60,20 +66,20 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
 >
   <HeroStyDettaglio
     className="originals-hero"
-    imageSrc="/images/caramelle-intro.jpg"
-    imageAlt={`Frame progetto ${project.title}`}
+    imageSrc={original.cover || "/images/caramelle-intro.jpg"}
+    imageAlt={original.coverAlt || `Frame progetto ${original.titolo}`}
   />
 
   <section class="section-space section-space--soft intro-header">
     <div class="container">
       <div class="row">
         <div class="col-12 col-lg-8 col-xl-7">
-          <p class="hero-eyebrow mb-1">CINEMA E AUDIOVISIVO</p>
-          <h1 class="heading-detail mb-1">Caramelle</h1>
-          <p class="hero-meta mb-3">INIZIO PRODUZIONE 2025 · 12'</p>
+          {original.settoreTitolo && <p class="hero-eyebrow mb-1">{original.settoreTitolo.toUpperCase()}</p>}
+          <h1 class="heading-detail mb-1">{original.titolo}</h1>
+          {original.anno && <p class="hero-meta mb-3">INIZIO PRODUZIONE {original.anno}</p>}
           <div class="d-flex flex-wrap gap-2 align-items-center">
             <span class="pill pill-primary">Panebarco Originals</span>
-            <span class="pill pill-neutral">3D</span>
+            {original.tipologia && <span class="pill pill-neutral">{original.tipologia}</span>}
           </div>
         </div>
       </div>
@@ -85,31 +91,10 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
     <section class="section-space section-space--soft">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-xl-12">
-            <p class="lead text-white mb-3 fw-bold">
-              “Caramelle” è stato proiettato in anteprima ad ottobre all’interno
-              di Alice nella Città, sezione parallela della Festa del Cinema di
-              Roma aggiudicandosi il Premio del Pubblico come Miglior Corto.
-            </p>
-            <p class="text-white mb-3 fw-bold">
-              “Caramelle” nasce da una leggenda di Rimini. La storia parla di un
-              padre che scompare all’improvviso e la famiglia resta divisa fra
-              nostalgia, rabbia e incredulità, ma la figlia non smette di
-              trovare caramelle, proprio come quando lui era vivo e gliele
-              nascondeva in casa.
-            </p>
-            <p class="text-white mb-0 fw-bold">
-              La storia parla di un uomo che scompare all’improvviso e la
-              famiglia resta divisa fra nostalgia, rabbia e incredulità, ma la
-              figlia non smette di trovare caramelle in tutta la casa. Le trova
-              anche al mare, in mezzo alle conchiglie. Proprio come quando lui
-              era vivo e gliele nascondeva dappertutto. Un misterioso tappeto di
-              caramelle porta la bambina a scoprire cosa è accaduto. Il finale è
-              sorprendente e commovente, un crescendo emotivo che catapulta lo
-              spettatore all’interno di quel tappeto di caramelle colorate, fino
-              a scoprire che il mistero è l’intuizione che richiama cioè la
-              memoria affettiva personale.
-            </p>
+          <div class=”col-12 col-xl-12”>
+            {introParagraphs[0] && <p class=”lead text-white mb-3 fw-bold”>{introParagraphs[0]}</p>}
+            {introParagraphs[1] && <p class=”text-white mb-3 fw-bold”>{introParagraphs[1]}</p>}
+            {introParagraphs[2] && <p class=”text-white mb-0 fw-bold”>{introParagraphs[2]}</p>}
           </div>
         </div>
       </div>
@@ -121,8 +106,8 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
         <div class="ratio ratio-16x9  shadow-lg overflow-hidden">
           <img
             class="w-100 h-100 object-fit-cover"
-            src="/images/caramelle-intro.jpg"
-            alt={`Still principale ${project.title}`}
+            src={original.cover || "/images/caramelle-intro.jpg"}
+            alt={`Still principale ${original.titolo}`}
           />
         </div>
       </div>
@@ -452,31 +437,9 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
       <div class="container">
         <hr class="credits-divider mt-0 mb-5" />
         <div class="row">
-          <div class="col-12 col-xl-11 credits-copy">
-            <h2 class="page-title-uniform text-white text-uppercase mb-4">Credits</h2>
-            <p class="credits-title mb-3 fst-italic">“Caramelle”</p>
-            <p class="credits-text mb-2"><strong>regia</strong> di Matteo Panebarco</p>
-            <p class="credits-text mb-2">è una produzione Panebarco in associazione con Mediterraneo Cinematografica per una WeShort Originals.</p>
-            <p class="credits-text mb-5">Una distribuzione Prem1ere film.</p>
-            <p class="credits-text mb-4 mb-md-5">Il film è sostenuto dalla Regione Emilia Romagna attraverso Emilia-Romagna Film Commission, Ministero della Cultura e Comune di Ravenna.</p>
-            <div class="row g-4 g-md-5 align-items-end">
-              <div class="col-6 col-md-3 col-lg-2">
-                <img
-                  class="img-fluid"
-                  src="/images/logo-emilia-romagna-film-commision.png"
-                  alt="Emilia-Romagna Film Commission"
-                  loading="lazy"
-                />
-              </div>
-              <div class="col-6 col-md-5 col-lg-4">
-                <img
-                  class="img-fluid"
-                  src="/images/logo-ministero-della-cultura.png"
-                  alt="Ministero della Cultura"
-                  loading="lazy"
-                />
-              </div>
-            </div>
+          <div class=”col-12 col-xl-11 credits-copy”>
+            <h2 class=”page-title-uniform text-white text-uppercase mb-4”>Credits</h2>
+            <Fragment set:html={creditsHtml} />
           </div>
         </div>
       </div>
@@ -485,15 +448,17 @@ const renderingLevelsCards = renderingLevelsSlides.flat();
 
   <script>
     import { Carousel } from "bootstrap";
-    const el = document.getElementById("bgPropsCarousel");
-    if (el) {
-      Carousel.getOrCreateInstance(el, {
-        interval: false,
-        ride: false,
-        wrap: true,
-        touch: true,
-      });
-    }
+    ["bgPropsCarouselDesktop", "bgPropsCarouselMobile"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        Carousel.getOrCreateInstance(el, {
+          interval: false,
+          ride: false,
+          wrap: true,
+          touch: true,
+        });
+      }
+    });
   </script>
 </Layout>
 

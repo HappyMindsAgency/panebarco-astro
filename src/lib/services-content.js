@@ -14,7 +14,7 @@ const serviceRouteKeys = {
 const servicePopulate = {
   header: {
     populate: {
-      videoBackground: true,
+      mediaBackground: true,
       imgTeam: true,
     },
   },
@@ -50,7 +50,7 @@ const servicePopulate = {
 const baseServiceDetailPopulate = {
   header: {
     populate: {
-      videoBackground: true,
+      mediaBackground: true,
       imgTeam: true,
     },
   },
@@ -174,7 +174,7 @@ function mapHeader(header, fallback = {}) {
     bgWord: pickFirst(header?.titoloTana, fallback.bgWord),
     title: pickFirst(header?.titolo, fallback.title),
     subtitle: pickFirst(header?.sottotitolo, fallback.subtitle),
-    backgroundVideoSrc: resolveMediaUrl(header?.videoBackground, "large", fallback.backgroundVideoSrc),
+    backgroundVideoSrc: resolveMediaUrl(header?.mediaBackground, "large", fallback.backgroundVideoSrc),
     sideImageSrc: resolveMediaUrl(header?.imgTeam, "large", fallback.sideImageSrc),
     sideImageAlt: pickFirst(header?.imgTeam?.alternativeText, fallback.sideImageAlt),
     showSideImage: Boolean(header?.imgTeamBool && resolveMediaUrl(header?.imgTeam)),
@@ -319,7 +319,6 @@ export async function getServiceDetailContent({ resource, lang = DEFAULT_LANG, f
       background: pickFirst(page.cta?.bgColor, fallback.cta.background),
       button: mapButton(page.cta?.pulsante, fallback.cta.button.label, fallback.cta.button.href),
     },
-    raw: page,
   };
 }
 
