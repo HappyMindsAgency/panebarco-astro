@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HeroStyStudio from "../components/HeroStyStudio.astro";
+import RitchText from "../components/RitchText.astro";
+import { micromark } from "micromark";
 import contactsPageScriptUrl from "../scripts/pages/contacts.js?url";
 import { buildPath } from "../i18n/routing";
 import { getContactsPageContent } from "../lib/site-content";
@@ -42,6 +44,19 @@ const contactCards = contactsContent.contactSection.cards;
 function isExternalHref(href?: string) {
   return typeof href === "string" && href.startsWith("https");
 }
+
+function hasInlineLinks(value?: string) {
+  if (typeof value !== "string") return false;
+  return /<a\b|(?:mailto:|tel:|https?:\/\/)|\[[^\]]+\]\([^)]+\)/i.test(value);
+}
+
+function renderInlineRichText(value?: string) {
+  if (typeof value !== "string" || !value.trim()) return "";
+
+  return micromark(value, { allowDangerousHtml: true })
+    .replace(/^<p>/i, "")
+    .replace(/<\/p>\s*$/i, "");
+}
 ---
 
 <Layout title="Contatti - Panebarco" useInnerStyles={true} lang={lang} headerProps={{ containerClass: "hero-fluid" }}>
@@ -67,8 +82,8 @@ function isExternalHref(href?: string) {
                   <h3>{item.title}</h3>
                 </div>
                 <div class="contacts-info-card__body">
-                  <p>{item.text}</p>
-                  {item.title === "Indirizzo" ? (
+                  {item.text && <RitchText block={item.text} className="contacts-info-card__richtext" />}
+                  {!hasInlineLinks(item.text) && (item.title === "Indirizzo" ? (
                     <address class="contacts-info-card__links mb-0">
                       {item.href ? (
                         <a href={item.href} target={isExternalHref(item.href) ? "_blank" : undefined} rel={isExternalHref(item.href) ? "noopener noreferrer" : undefined}>
@@ -93,7 +108,7 @@ function isExternalHref(href?: string) {
                       )}
                       {item.secondaryLink && <a href={item.secondaryLink.href}>{item.secondaryLink.label}</a>}
                     </div>
-                  )}
+                  ))}
                 </div>
               </article>
             ))}
@@ -102,8 +117,16 @@ function isExternalHref(href?: string) {
 
         <section class="contacts-form-section contacts-block" aria-labelledby="contactsFormTitle">
           <div class="contacts-section-head contacts-section-head--center text-start mt-5">
-            <h2 id="contactsFormTitle" class="page-title-uniform pt-5 mt-5">{contactsContent.formSection.title}</h2>
-            <p class="mb-0">{contactsContent.formSection.lead}</p>
+            {contactsContent.formSection.content ? (
+              <div id="contactsFormTitle" class="pt-5 mt-5">
+                <RitchText block={contactsContent.formSection.content} className="contacts-form-section__intro" />
+              </div>
+            ) : (
+              <>
+                <h2 id="contactsFormTitle" class="page-title-uniform pt-5 mt-5" set:html={renderInlineRichText(contactsContent.formSection.title)}></h2>
+                {contactsContent.formSection.lead && <RitchText block={contactsContent.formSection.lead} className="mb-0" />}
+              </>
+            )}
           </div>
 
           <div class="contacts-tabs-shell" data-contacts-tabs>

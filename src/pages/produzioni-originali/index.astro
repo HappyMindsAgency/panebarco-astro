@@ -47,10 +47,11 @@ const originalsFallback = {
 };
 
 const originalsContent = await getOriginalsPageContent({ lang, fallback: originalsFallback });
-const finalCtas = [
-  { ...originalsContent.ctaOscar, href: originalsContent.ctaOscar.button.href, buttonLabel: originalsContent.ctaOscar.button.label },
-  { ...originalsContent.ctaContact, href: originalsContent.ctaContact.button.href, buttonLabel: originalsContent.ctaContact.button.label },
-] as const;
+const finalCtas = originalsContent.ctas.map((cta) => ({
+  ...cta,
+  href: cta.button.href,
+  buttonLabel: cta.button.label,
+})) as const;
 ---
 
 <Layout title="Originals - Panebarco" useInnerStyles={true} lang={lang} headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}>
@@ -63,7 +64,7 @@ const finalCtas = [
           <div class="row mb-3 mb-lg-4">
             <div class="col-12 portfolio-section-heading">
               <h2 id="originalsPillarsTitle" class="page-title-uniform">{originalsContent.explore.title}</h2>
-              <p class="portfolio-section-intro">{originalsContent.explore.summary}</p>
+              {originalsContent.explore.summary && <p class="portfolio-section-intro">{originalsContent.explore.summary}</p>}
             </div>
           </div>
 
@@ -77,7 +78,7 @@ const finalCtas = [
                     <p class="originals-pillar-card__index">0{index + 1}</p>
                     <h3>{area.title}</h3>
                     <div class="originals-pillar-card__description">
-                      <p>{area.summary}</p>
+                      {area.summary && <p>{area.summary}</p>}
                     </div>
                   </div>
                 </article>
@@ -97,8 +98,8 @@ const finalCtas = [
                 <article class:list={["originals-cta-card", `originals-cta-card--${cta.theme}`]}>
                   <div class="originals-cta-card__body">
                     <h3 class:list={[cta.titleClass]}>{cta.title}</h3>
-                    <p>{cta.body}</p>
-                    <a class="btn btn-cta btn-cta--orange btn-pill mt-3" href={cta.href}>{cta.buttonLabel}</a>
+                    {cta.body && <p>{cta.body}</p>}
+                    {cta.href && cta.buttonLabel && <a class="btn btn-cta btn-cta--orange btn-pill mt-3" href={cta.href}>{cta.buttonLabel}</a>}
                   </div>
                 </article>
               </div>

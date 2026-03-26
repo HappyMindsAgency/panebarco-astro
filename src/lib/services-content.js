@@ -222,18 +222,19 @@ function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
       pickFirst(container?.locale, DEFAULT_LANG),
       fallbackTag || itemTitle || fallbackMode.title
     );
+    const useSceneFallbacks = !compositItems.length;
 
     return {
       title: pickFirst(item?.titolo, fallbackMode.title),
       description: pickFirst(item?.contenuto, fallbackMode.description),
       scenes: Array.from(
-        { length: projects.length > 0 ? projects.length : (fallbackMode.scenes?.length || 0) },
+        { length: projects.length > 0 ? projects.length : (useSceneFallbacks ? (fallbackMode.scenes?.length || 0) : 0) },
         (_, sceneIndex) => ({
-          image: pickFirst(projects[sceneIndex]?.image, fallbackMode.scenes?.[sceneIndex]?.image),
-          imageAlt: pickFirst(projects[sceneIndex]?.imageAlt, fallbackMode.scenes?.[sceneIndex]?.imageAlt),
-          title: pickFirst(projects[sceneIndex]?.title, fallbackMode.scenes?.[sceneIndex]?.title),
-          summary: pickFirst(projects[sceneIndex]?.summary, fallbackMode.scenes?.[sceneIndex]?.summary),
-          tags: projects[sceneIndex]?.tags?.length ? projects[sceneIndex].tags : fallbackMode.scenes?.[sceneIndex]?.tags || [],
+          image: pickFirst(projects[sceneIndex]?.image, useSceneFallbacks ? fallbackMode.scenes?.[sceneIndex]?.image : ""),
+          imageAlt: pickFirst(projects[sceneIndex]?.imageAlt, useSceneFallbacks ? fallbackMode.scenes?.[sceneIndex]?.imageAlt : ""),
+          title: pickFirst(projects[sceneIndex]?.title, useSceneFallbacks ? fallbackMode.scenes?.[sceneIndex]?.title : ""),
+          summary: pickFirst(projects[sceneIndex]?.summary, useSceneFallbacks ? fallbackMode.scenes?.[sceneIndex]?.summary : ""),
+          tags: projects[sceneIndex]?.tags?.length ? projects[sceneIndex].tags : (useSceneFallbacks ? fallbackMode.scenes?.[sceneIndex]?.tags || [] : []),
           href: projects[sceneIndex]?.href,
         })
       ),

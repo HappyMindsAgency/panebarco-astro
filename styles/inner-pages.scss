@@ -2432,9 +2432,12 @@ body.inner-page {
   @media (min-width: 992px) {
     .portfolio-page .portfolio-section-heading .page-title-uniform,
     .portfolio-page .portfolio-section-heading .portfolio-section-intro,
-    .originals-page .portfolio-section-heading .page-title-uniform,
-    .originals-page .portfolio-section-heading .portfolio-section-intro {
+    .originals-page .portfolio-section-heading .page-title-uniform {
       white-space: nowrap;
+    }
+
+    .originals-page .portfolio-section-heading .portfolio-section-intro {
+      white-space: normal;
     }
   }
 
@@ -4908,6 +4911,39 @@ body.inner-page {
     margin-bottom: 0.95rem;
   }
 
+  .contacts-page .contacts-info-card__richtext {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0.95rem;
+    min-width: 0;
+  }
+
+  .contacts-page .contacts-info-card__richtext > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .contacts-page .contacts-info-card__richtext p,
+  .contacts-page .contacts-info-card__richtext ul,
+  .contacts-page .contacts-info-card__richtext ol {
+    margin-bottom: 0;
+  }
+
+  .contacts-page .contacts-info-card__richtext a {
+    color: var(--ink);
+    font-weight: 800;
+    text-decoration: none;
+    text-underline-offset: 0.18em;
+    overflow-wrap: anywhere;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .contacts-page .contacts-info-card__richtext a:hover,
+  .contacts-page .contacts-info-card__richtext a:focus-visible {
+    color: var(--bs-primary);
+    text-decoration: underline;
+  }
+
   .contacts-page .contacts-info-card__links {
     display: flex;
     flex-direction: column;
@@ -4940,6 +4976,42 @@ body.inner-page {
 
   .contacts-page .contacts-section-head {
     margin-bottom: 1.4rem;
+  }
+
+  .contacts-page .contacts-form-section__intro h1,
+  .contacts-page .contacts-form-section__intro h2,
+  .contacts-page .contacts-form-section__intro h3,
+  .contacts-page .contacts-form-section__intro h4,
+  .contacts-page .contacts-form-section__intro h5,
+  .contacts-page .contacts-form-section__intro h6 {
+    margin: 0 0 1rem;
+    padding-top: 3rem;
+    font-size: clamp(2.5rem, 4vw, 4.4rem);
+    line-height: 0.96;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .contacts-page .contacts-form-section__intro > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .contacts-page .contacts-form-section__intro p {
+    margin-bottom: 0;
+  }
+
+  .contacts-page .contacts-form-section__intro a {
+    color: var(--ink);
+    font-weight: 800;
+    text-decoration: none;
+    text-underline-offset: 0.18em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .contacts-page .contacts-form-section__intro a:hover,
+  .contacts-page .contacts-form-section__intro a:focus-visible {
+    color: var(--bs-primary);
+    text-decoration: underline;
   }
 
   .contacts-page .contacts-section-head--center {

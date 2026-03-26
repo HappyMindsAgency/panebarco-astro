@@ -894,49 +894,67 @@ export async function getHomeOriginalsShowcaseContent({ lang = DEFAULT_LANG, fal
 }
 
 export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback }) {
-  const pageResponse = await getSingleDocument("pagina-originals", {
-    locale: lang,
-    status: "published",
-    populate: {
-      header: {
-        populate: {
-          mediaBackground: true,
-          imgTeam: true,
-        },
-      },
-      esploraProgetti: {
-        populate: {
-          item: {
-            populate: {
-              cover: true,
-            },
+  const [pageResponse, catalogueOriginalsResponse] = await Promise.all([
+    getSingleDocument("pagina-originals", {
+      locale: lang,
+      status: "published",
+      populate: {
+        header: {
+          populate: {
+            mediaBackground: true,
+            imgTeam: true,
           },
-          pulsante: true,
+        },
+        esploraProgetti: {
+          populate: {
+            item: true,
+            pulsante: true,
+          },
+        },
+        originalsEvidenza: {
+          populate: {
+            originals: {
+              populate: {
+                cover: true,
+                tipologie_progetto: true,
+              },
+            },
+            pulsante: true,
+          },
+        },
+        cta: {
+          populate: {
+            pulsante: true,
+          },
+        },
+        seo: {
+          fields: ["metaTitle", "metaDescription"],
         },
       },
-      originalsEvidenza: {
-        populate: {
-          cover: true,
-          tipologie_progetto: true,
-        },
+    }),
+    getCollectionDocuments("originals", {
+      locale: lang,
+      status: "published",
+      sort: ["updatedAt:desc"],
+      pagination: { page: 1, pageSize: 5 },
+      fields: ["titolo", "slug"],
+      populate: {
+        cover: true,
+        tipologie_progetto: true,
       },
-      ctaOscar: {
-        populate: {
-          cover: true,
-          pulsante: true,
-        },
-      },
-      ctaContattaci: {
-        populate: {
-          cover: true,
-          pulsante: true,
-        },
-      },
-    },
-  });
+    }),
+  ]);
 
   const page = pageResponse?.data || {};
   const explore = page?.esploraProgetti || {};
+  const ctas = asArray(page?.cta);
+  const fallbackCtas = [fallback.ctaOscar, fallback.ctaContact];
+  const highlightedOriginalsSource = asArray(page?.originalsEvidenza?.originals).length
+    ? asArray(page?.originalsEvidenza?.originals)
+    : asArray(catalogueOriginalsResponse?.data);
+  const highlightedOriginals = highlightedOriginalsSource.length
+    ? highlightedOriginalsSource.map((item, index) => mapOriginalSlide(item, fallback.highlightedOriginals[index]))
+    : fallback.highlightedOriginals;
 
   return {
     header: mapHeader(page?.header, fallback.header),
@@ -944,26 +962,31 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
       title: pickFirst(explore?.titolo, fallback.explore.title),
       summary: pickFirst(explore?.contenuto, fallback.explore.summary),
       items: asArray(explore?.item).length
-        ? mapCardItems(asArray(explore?.item), fallback.explore.items)
+        ? asArray(explore?.item).map((item, index) => {
+          const fallbackItem = fallback.explore.items[index] || fallback.explore.items[0] || {};
+
+          return {
+            title: pickFirst(item?.titolo, fallbackItem.title),
+            summary: pickFirst(stripRichTextSyntax(item?.contenuto), fallbackItem.summary),
+            image: pickFirst(fallbackItem.image),
+            imageAlt: pickFirst(fallbackItem.imageAlt, fallbackItem.title),
+            theme: pickFirst(fallbackItem.theme),
+          };
+        })
         : fallback.explore.items,
     },
-    highlightedOriginals: asArray(page?.originalsEvidenza).length
-      ? asArray(page?.originalsEvidenza).map((item, index) => mapOriginalSlide(item, fallback.highlightedOriginals[index]))
-      : fallback.highlightedOriginals,
-    ctaOscar: {
-      theme: fallback.ctaOscar.theme,
-      titleClass: fallback.ctaOscar.titleClass,
-      title: pickFirst(page?.ctaOscar?.titolo, fallback.ctaOscar.title),
-      body: pickFirst(page?.ctaOscar?.contenuto, fallback.ctaOscar.body),
-      button: mapButton(page?.ctaOscar?.pulsante, fallback.ctaOscar.button.label, fallback.ctaOscar.button.href),
-    },
-    ctaContact: {
-      theme: fallback.ctaContact.theme,
-      titleClass: fallback.ctaContact.titleClass,
-      title: pickFirst(page?.ctaContattaci?.titolo, fallback.ctaContact.title),
-      body: pickFirst(page?.ctaContattaci?.sottotitolo, fallback.ctaContact.body),
-      button: mapButton(page?.ctaContattaci?.pulsante, fallback.ctaContact.button.label, fallback.ctaContact.button.href),
-    },
+    highlightedOriginals,
+    ctas: fallbackCtas.map((fallbackCta, index) => {
+      const cta = ctas[index] || {};
+
+      return {
+        theme: fallbackCta.theme,
+        titleClass: fallbackCta.titleClass,
+        title: pickFirst(cta?.titolo, fallbackCta.title),
+        body: pickFirst(cta?.contenuto, fallbackCta.body),
+        button: mapButton(cta?.pulsante, fallbackCta.button.label, fallbackCta.button.href),
+      };
+    }),
   };
 }
 
@@ -1089,7 +1112,8 @@ export async function getContactsPageContent({ lang = DEFAULT_LANG, fallback }) 
 
   const page = pageResponse?.data || {};
   const contacts = page?.contatti || {};
-  const formParagraphs = splitRichTextParagraphs(page?.contattaci);
+  const formContent = pickFirst(page?.contattaci);
+  const formParagraphs = splitRichTextParagraphs(formContent);
 
   return {
     header: mapHeader(page?.header, fallback.header),
@@ -1101,6 +1125,7 @@ export async function getContactsPageContent({ lang = DEFAULT_LANG, fallback }) 
         : mapContactCards([], fallback.contactSection.cards, fallback.contactDetails),
     },
     formSection: {
+      content: formContent,
       title: formParagraphs[0] || fallback.formSection.title,
       lead: formParagraphs[1] || fallback.formSection.lead,
     },
