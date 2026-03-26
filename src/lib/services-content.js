@@ -1,6 +1,7 @@
 import customLabel from "./utility-customlabel";
 import { getCollectionDocuments, getSingleDocument } from "./strapi-client";
 import { getImageFormat, getStrapiMediaUrl } from "./utility-function";
+import { buildPath, joinLocalizedPath } from "../i18n/routing";
 
 const DEFAULT_LANG = "it";
 
@@ -59,15 +60,11 @@ const baseServiceDetailPopulate = {
       media: true,
     },
   },
-  containerComposit: {
+  composit: {
     populate: {
-      composit: {
+      progetti: {
         populate: {
-          progetti: {
-            populate: {
-              cover: true,
-            },
-          },
+          cover: true,
         },
       },
       pulsante: true,
@@ -196,6 +193,7 @@ function mapIntro(intro, fallback = {}) {
 }
 
 function mapProjects(projects = [], lang, fallbackCategory) {
+  const portfolioBase = buildPath("portfolio", lang || DEFAULT_LANG);
   return projects.slice(0, 4).map((project, index) => ({
     title: pickFirst(project?.titolo, `${fallbackCategory} ${String(index + 1).padStart(2, "0")}`),
     summary: pickFirst(project?.intro, `Frame dal progetto ${fallbackCategory.toLowerCase()}.`),
@@ -205,6 +203,7 @@ function mapProjects(projects = [], lang, fallbackCategory) {
       fallbackCategory,
       ...(project?.tipologie_progetto || []).map((item) => item?.titolo).filter(Boolean),
     ].filter(Boolean).slice(0, 2),
+    href: project?.slug ? joinLocalizedPath(portfolioBase, project.slug) : undefined,
   }));
 }
 
@@ -224,6 +223,7 @@ function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
         title: pickFirst(projects[sceneIndex]?.title, fallbackMode.scenes?.[sceneIndex]?.title),
         summary: pickFirst(projects[sceneIndex]?.summary, fallbackMode.scenes?.[sceneIndex]?.summary),
         tags: projects[sceneIndex]?.tags?.length ? projects[sceneIndex].tags : fallbackMode.scenes?.[sceneIndex]?.tags || [],
+        href: projects[sceneIndex]?.href,
       })),
       bubble: pickFirst(fallbackMode.bubble),
       topLayout: fallbackMode.topLayout,
@@ -308,8 +308,7 @@ export async function getServiceDetailContent({ resource, lang = DEFAULT_LANG, f
   return {
     header: mapHeader(page.header, fallback.header),
     intro: mapIntro(page.intro, fallback.intro),
-    modes: mapCompositItems(page.containerComposit, fallback.modes, fallback.tag),
-    projectsHeading: pickFirst(page.containerComposit?.titolo, fallback.projectsHeading),
+    modes: mapCompositItems(page, fallback.modes, fallback.tag),
     tag: pickFirst(fallback.tag),
     cta: {
       kicker: pickFirst(page.cta?.sottotitolo, fallback.cta.kicker),

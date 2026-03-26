@@ -5,6 +5,7 @@ interface Scene {
   title: string;
   summary: string;
   tags: string[];
+  href?: string;
 }
 
 interface Mode {
@@ -55,23 +56,43 @@ const { modes = [], defaultTag = "" } = Astro.props;
                   sceneIndex === 3 && (mode.topLayout || "col-lg-8"),
                 ]}
               >
-                <article class="commercials-media-card" tabindex="0" aria-label={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}>
-                  <img
-                    class="img-fluid w-100"
-                    src={scene.image}
-                    alt={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}
-                    style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
-                  />
-                  <div class="commercials-media-tags" aria-hidden="true">
-                    {(scene.tags?.length ? scene.tags : [mode.title, defaultTag]).filter(Boolean).slice(0, 2).map((tag) => (
-                      <span class="commercials-media-tag">{tag}</span>
-                    ))}
-                  </div>
-                  <div class="commercials-media-overlay" aria-hidden="true">
-                    <h4>{scene.title || `${mode.title} ${String(sceneIndex + 1).padStart(2, "0")}`}</h4>
-                    <p>{scene.summary}</p>
-                  </div>
-                </article>
+                {scene.href ? (
+                  <a class="commercials-media-card text-decoration-none d-block" href={scene.href} aria-label={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}>
+                    <img
+                      class="img-fluid w-100"
+                      src={scene.image}
+                      alt={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}
+                      style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
+                    />
+                    <div class="commercials-media-tags" aria-hidden="true">
+                      {(scene.tags?.length ? scene.tags : [mode.title, defaultTag]).filter(Boolean).slice(0, 2).map((tag) => (
+                        <span class="commercials-media-tag">{tag}</span>
+                      ))}
+                    </div>
+                    <div class="commercials-media-overlay" aria-hidden="true">
+                      <h4>{scene.title || `${mode.title} ${String(sceneIndex + 1).padStart(2, "0")}`}</h4>
+                      <p>{scene.summary}</p>
+                    </div>
+                  </a>
+                ) : (
+                  <article class="commercials-media-card" tabindex="0" aria-label={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}>
+                    <img
+                      class="img-fluid w-100"
+                      src={scene.image}
+                      alt={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}
+                      style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
+                    />
+                    <div class="commercials-media-tags" aria-hidden="true">
+                      {(scene.tags?.length ? scene.tags : [mode.title, defaultTag]).filter(Boolean).slice(0, 2).map((tag) => (
+                        <span class="commercials-media-tag">{tag}</span>
+                      ))}
+                    </div>
+                    <div class="commercials-media-overlay" aria-hidden="true">
+                      <h4>{scene.title || `${mode.title} ${String(sceneIndex + 1).padStart(2, "0")}`}</h4>
+                      <p>{scene.summary}</p>
+                    </div>
+                  </article>
+                )}
               </div>
             ))}
           </div>
