@@ -1,0 +1,367 @@
+---
+import HeroStyStudio from "../components/HeroStyStudio.astro";
+import Layout from "../layouts/Layout.astro";
+
+const lang = "it" as const;
+---
+
+<Layout
+  title="Iscrizione newsletter confermata | Panebarco"
+  description="Conferma di iscrizione alla newsletter di Panebarco."
+  lang={lang}
+  useInnerStyles={true}
+  headerProps={{ darkmode: false, containerClass: "hero-fluid" }}
+>
+  <main class="studio-page services-page newsletter-page">
+    <HeroStyStudio
+      backgroundVideoSrc="/images/testata-newsletter-panebarco.jpg"
+      bgWord="ISCRIVITI"
+      title="NEWSLETTER"
+      subtitle="Resta aggiornato su progetti, novita e cose che ci frullano in testa."
+      sideImageSrc=""
+      sideImageAlt=""
+      className="hero-sty-studio page-hero page-hero--studio"
+      showSideImage={false}
+    />
+
+    <section class="page-main page-main--studio newsletter-main">
+      <div class="container">
+
+        <div id="mc_embed_shell" class="newsletter-mailchimp">
+          <div id="mc_embed_signup" class="newsletter-mailchimp-card">
+            <form
+              action="https://panebarco.us3.list-manage.com/subscribe/post?u=0e213d69c85205fef1d5887ef&amp;id=2c5ddb6b00&amp;f_id=00a83ae2f0"
+              method="post"
+              id="mc-embedded-subscribe-form"
+              name="mc-embedded-subscribe-form"
+              class="validate newsletter-mailchimp-form"
+              target="_blank"
+            >
+              <div id="mc_embed_signup_scroll" class="newsletter-mailchimp-grid">
+                <div class="indicates-required newsletter-mailchimp-required">
+                  <span class="asterisk">*</span> campi obbligatori
+                </div>
+
+                <div class="mc-field-group newsletter-mailchimp-field newsletter-mailchimp-field--full">
+                  <label for="mce-EMAIL">Email <span class="asterisk">*</span></label>
+                  <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required value="" />
+                </div>
+
+                <div class="mc-field-group newsletter-mailchimp-field">
+                  <label for="mce-FNAME">Nome</label>
+                  <input type="text" name="FNAME" class="text" id="mce-FNAME" value="" />
+                </div>
+
+                <div class="mc-field-group newsletter-mailchimp-field">
+                  <label for="mce-LNAME">Cognome</label>
+                  <input type="text" name="LNAME" class="text" id="mce-LNAME" value="" />
+                </div>
+
+                <fieldset class="mc-field-group input-group newsletter-mailchimp-consent">
+                  <legend>Consenso al trattamento <span class="asterisk">*</span></legend>
+                  <ul>
+                    <li>
+                      <input
+                        type="radio"
+                        name="MMERGE10"
+                        id="mce-MMERGE100"
+                        value="Acconsento al trattamento dei dati personali così come definito all'interno delle Privacy Policy"
+                      />
+                      <label for="mce-MMERGE100">
+                        Acconsento al trattamento dei dati personali così come definito all'interno delle Privacy Policy
+                      </label>
+                    </li>
+                  </ul>
+                </fieldset>
+
+                <div id="mce-responses" class="clear foot newsletter-mailchimp-responses">
+                  <div class="response" id="mce-error-response" style="display: none;"></div>
+                  <div class="response" id="mce-success-response" style="display: none;"></div>
+                </div>
+
+                <div aria-hidden="true" class="newsletter-mailchimp-honeypot">
+                  <input type="text" name="b_0e213d69c85205fef1d5887ef_2c5ddb6b00" tabindex="-1" value="" />
+                </div>
+
+                <div class="optionalParent newsletter-mailchimp-submit">
+                  <div class="clear foot newsletter-mailchimp-submit__inner">
+                    <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button btn btn-cta btn-cta--blue btn-pill" value="Iscriviti" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  (() => {
+    const selector = '.newsletter-mailchimp-consent input[type="radio"]';
+
+    function resolveRadio(target) {
+      if (!(target instanceof Element)) return null;
+
+      if (target.matches(selector)) {
+        return target;
+      }
+
+      const label = target.closest('label');
+      if (label instanceof HTMLLabelElement && label.htmlFor) {
+        const control = document.getElementById(label.htmlFor);
+        if (control instanceof HTMLInputElement && control.matches(selector)) {
+          return control;
+        }
+      }
+
+      return null;
+    }
+
+    document.addEventListener('pointerdown', (event) => {
+      const radio = resolveRadio(event.target);
+      if (!(radio instanceof HTMLInputElement)) return;
+      radio.dataset.wasChecked = radio.checked ? 'true' : 'false';
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== ' ' && event.key !== 'Enter') return;
+      const radio = resolveRadio(event.target);
+      if (!(radio instanceof HTMLInputElement)) return;
+      radio.dataset.wasChecked = radio.checked ? 'true' : 'false';
+    });
+
+    document.addEventListener('click', (event) => {
+      const radio = resolveRadio(event.target);
+      if (!(radio instanceof HTMLInputElement)) return;
+
+      if (radio.dataset.wasChecked === 'true') {
+        radio.checked = false;
+        radio.dataset.wasChecked = 'false';
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+        return;
+      }
+
+      radio.dataset.wasChecked = radio.checked ? 'true' : 'false';
+    });
+  })();
+</script>
+
+<style>
+  .newsletter-page .newsletter-main {
+    padding-top: clamp(5.8rem, 10vw, 8rem);
+  }
+
+  .newsletter-page .newsletter-intro-text {
+    max-width: none;
+    width: 100%;
+    margin: 0 0 clamp(1.2rem, 2vw, 1.6rem);
+    font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem);
+    line-height: 1.6;
+    color: rgba(15, 23, 42, 0.78);
+  }
+
+  .newsletter-page .newsletter-mailchimp-card {
+    padding: clamp(0.7rem, 1vw, 0.9rem);
+    border-radius: clamp(1.3rem, 1.8vw, 1.6rem);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      0 1rem 2.2rem rgba(15, 23, 42, 0.07),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+  }
+
+  .newsletter-page .newsletter-mailchimp-form {
+    margin: 0;
+  }
+
+  .newsletter-page .newsletter-mailchimp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1rem;
+    align-items: start;
+  }
+
+  .newsletter-page .newsletter-mailchimp-required,
+  .newsletter-page .newsletter-mailchimp-field--full,
+  .newsletter-page .newsletter-mailchimp-consent,
+  .newsletter-page .newsletter-mailchimp-responses,
+  .newsletter-page .newsletter-mailchimp-submit {
+    grid-column: 1 / -1;
+  }
+
+  .newsletter-page .newsletter-mailchimp-required {
+    margin: 0;
+    padding: 0.2rem 0 0.1rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: rgba(15, 23, 42, 0.56);
+  }
+
+  .newsletter-page .newsletter-mailchimp-field {
+    margin: 0;
+  }
+
+  .newsletter-page .newsletter-mailchimp-field label,
+  .newsletter-page .newsletter-mailchimp-consent legend {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .newsletter-page .newsletter-mailchimp-field input[type="text"],
+  .newsletter-page .newsletter-mailchimp-field input[type="email"] {
+    width: 100%;
+    border: 0;
+    border-radius: 1rem;
+    min-height: clamp(2.7rem, 3.2vw, 3rem);
+    padding: 0.62rem 0.9rem;
+    background: rgba(15, 23, 42, 0.025);
+    color: var(--ink);
+    box-shadow:
+      inset 0 0 0 1px rgba(15, 23, 42, 0.08),
+      0 0.45rem 1rem rgba(15, 23, 42, 0.02);
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .newsletter-page .newsletter-mailchimp-field input[type="text"]::placeholder,
+  .newsletter-page .newsletter-mailchimp-field input[type="email"]::placeholder {
+    color: rgba(15, 23, 42, 0.42);
+  }
+
+  .newsletter-page .newsletter-mailchimp-field input[type="text"]:focus,
+  .newsletter-page .newsletter-mailchimp-field input[type="email"]:focus {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow:
+      inset 0 0 0 1px rgba(var(--bs-primary-rgb), 0.34),
+      0 0 0 0.22rem rgba(var(--bs-primary-rgb), 0.12);
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  .newsletter-page .newsletter-mailchimp-consent {
+    min-width: 0;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .newsletter-page .newsletter-mailchimp-consent ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .newsletter-page .newsletter-mailchimp-consent li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+
+  .newsletter-page .newsletter-mailchimp-consent input[type="radio"] {
+    flex: 0 0 auto;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0.14rem 0 0;
+    accent-color: var(--bs-primary);
+  }
+
+  .newsletter-page .newsletter-mailchimp-consent label {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(15, 23, 42, 0.82);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+
+  .newsletter-page .newsletter-mailchimp-honeypot {
+    position: absolute;
+    left: -5000px;
+  }
+
+  .newsletter-page .newsletter-mailchimp-responses .response {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-radius: 1rem;
+    font-weight: 700;
+  }
+
+  .newsletter-page .newsletter-mailchimp-responses #mce-error-response {
+    background: rgba(220, 53, 69, 0.1);
+    color: #842029;
+  }
+
+  .newsletter-page .newsletter-mailchimp-responses #mce-success-response {
+    background: rgba(25, 135, 84, 0.12);
+    color: #0f5132;
+  }
+
+  .newsletter-page .newsletter-mailchimp-submit {
+    margin-top: 0.15rem;
+  }
+
+  .newsletter-page .newsletter-mailchimp-submit__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem 1.1rem;
+  }
+
+  .newsletter-page .newsletter-mailchimp-submit .button {
+    border: 0;
+    min-width: clamp(11rem, 22vw, 14rem);
+  }
+
+  .newsletter-page .newsletter-mailchimp-badge {
+    margin: 0;
+  }
+
+  .newsletter-page .newsletter-mailchimp-badge span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    opacity: 0.8;
+  }
+
+  .newsletter-page .newsletter-mailchimp-badge img {
+    width: 220px;
+    max-width: 100%;
+    height: 40px;
+    display: block;
+    padding: 2px 0;
+  }
+
+  @media (max-width: 767.98px) {
+    .newsletter-page .newsletter-main {
+      padding-top: clamp(4.6rem, 12vw, 5.8rem);
+    }
+
+    .newsletter-page .newsletter-mailchimp-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .newsletter-page .newsletter-mailchimp-submit__inner {
+      align-items: stretch;
+    }
+
+    .newsletter-page .newsletter-mailchimp-submit .button {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .newsletter-page .newsletter-mailchimp-badge {
+      width: 100%;
+    }
+  }
+</style>

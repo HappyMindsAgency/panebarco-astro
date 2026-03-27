@@ -87,7 +87,7 @@ const panebarcosCta = hasPanebarcosCta(panebarcosContent.cta) ? panebarcosConten
     )}
 
     {hasSections && (
-      <section class="section-space section-space--soft panebarcos-groups" aria-label="Team Panebarco">
+      <section id="team" class="section-space section-space--soft panebarcos-groups" aria-label="Team Panebarco">
         <div class="container">
           {panebarcosContent.sections.map((section, sectionIndex) => (
             <section class:list={["panebarcos-family-block", sectionIndex > 0 && "mt-5 mt-xl-6"]}>

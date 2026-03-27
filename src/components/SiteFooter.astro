@@ -10,6 +10,15 @@ interface Props {
 const {
   lang = "it",
 } = Astro.props;
+
+const footerHeading = customLabel("footer.heading", lang);
+const footerHeadingStrong = customLabel("footer.headingStrong", lang);
+const footerHeadingHighlight = lang === "it" && footerHeading.endsWith("progetto!")
+  ? "progetto!"
+  : "";
+const footerHeadingPrefix = footerHeadingHighlight
+  ? footerHeading.slice(0, -footerHeadingHighlight.length)
+  : footerHeading;
 ---
 
 <footer id="contatti" class="footer-cta">
@@ -42,7 +51,16 @@ const {
       </div>
 
       <div class="col-lg-5">
-        <h3 class="footer-heading">{customLabel("footer.heading", lang)}<br><span class="footer-heading-strong">{customLabel("footer.headingStrong", lang)}</span></h3>
+        <h3 class="footer-heading">
+          {footerHeadingPrefix}
+          {footerHeadingHighlight && <span class="footer-heading-strong">{footerHeadingHighlight}</span>}
+          {footerHeadingStrong && (
+            <>
+              <br />
+              <span class="footer-heading-strong">{footerHeadingStrong}</span>
+            </>
+          )}
+        </h3>
         <a href={buildPath("contacts", lang)} class="btn btn-cta btn-cta--orange btn-pill">{customLabel("footer.contactCta", lang)}</a>
       </div>
     </div>

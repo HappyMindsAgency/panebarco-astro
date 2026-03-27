@@ -95,7 +95,7 @@ const hasCta = normalizeBool(showCta, true);
             {hasSubtitle && <p>{subtitle}</p>}
             {hasCta && (
               <a href={ctaHref} class="btn btn-cta btn-cta--blue hero-cta">
-                <i class="bi bi-play-fill" aria-hidden="true" /> {ctaLabel}
+                {ctaLabel}
               </a>
             )}
           </div>
