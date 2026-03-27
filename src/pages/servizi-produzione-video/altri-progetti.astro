@@ -14,82 +14,73 @@ const discussLabel = customLabel("Parliamone", lang);
 
 const fallbackSpecialProjects = [
   {
-    title: "Lorem ipsum",
+    title: "",
     href: buildPath("paneblog", lang),
     image: "/images/portfolio-cover-01-695x391.jpg",
-    alt: "Lorem ipsum",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    alt: "",
+    summary: "",
     slot: "top-left" as const,
-    tags: ["Editoriale", "Format"] as const,
+    tags: [] as const,
   },
   {
-    title: "Lorem ipsum",
+    title: "",
     href: buildPath("paneblogTravelDiary", lang),
     image: "/images/portfolio-cover-02-695x391.jpg",
-    alt: "Lorem ipsum",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    alt: "",
+    summary: "",
     slot: "top-right" as const,
-    tags: ["Storytelling", "Backstage"] as const,
+    tags: [] as const,
   },
   {
-    title: "Lorem ipsum",
+    title: "",
     href: buildPath("portfolio", lang),
     image: "/images/portfolio-cover-03-695x391.jpg",
-    alt: "Lorem ipsum",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    alt: "",
+    summary: "",
     slot: "bottom-left" as const,
-    tags: ["Visual", "R&D"] as const,
+    tags: [] as const,
   },
   {
-    title: "Lorem ipsum",
+    title: "",
     href: buildPath("portfolio", lang),
     image: "/images/portfolio-cover-04-695x391.jpg",
-    alt: "Lorem ipsum",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    alt: "",
+    summary: "",
     slot: "bottom-right" as const,
-    tags: ["Library", "Content"] as const,
+    tags: [] as const,
   },
 ];
 
 const fallbackThoughtCards = [
   {
-    label: "Lorem ipsum",
+    label: "",
     href: buildPath("paneblog", lang),
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    summary: "",
     cta: customLabel("Scopri di piu", lang),
     stickerClass: "extras-figma-thought-card__sticker--red",
   },
   {
-    label: "Lorem ipsum dolor",
+    label: "",
     href: buildPath("paneblogTravelDiary", lang),
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    summary: "",
     cta: customLabel("Accedi ora", lang),
     stickerClass: "extras-figma-thought-card__sticker--blue",
   },
   {
-    label: "Lorem ipsum sit",
+    label: "",
     href: buildPath("contacts", lang),
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    summary: "",
     cta: customLabel("Accedi ora", lang),
     stickerClass: "extras-figma-thought-card__sticker--violet",
   },
 ] as const;
 
-/* const fallbackSocialLibrary = {
-  eyebrow: "Lorem",
-  title: "Lorem ipsum",
-  body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  ctaLabel: customLabel("Scopri di piu", lang),
-  ctaHref: buildPath("contacts", lang),
-  background: "/images/panebarco-social-library.jpg",
-}; */
-
 const fallbackNewsletter = {
   kicker: "",
-  title: "LOREM IPSUM.",
-  buttonLabel: "Lorem ipsum",
+  title: "",
+  buttonLabel: "",
   figureSrc: "/images/lo-animiamo-noi.png",
-  figureAlt: "Lorem ipsum",
+  figureAlt: "",
   background: "#30997b",
 };
 
@@ -145,18 +136,6 @@ function stripHtml(value) {
     .trim();
 }
 
-/* function richTextParagraphs(value) {
-  const html = String(value || "");
-  const paragraphs = Array.from(html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi), (match) => stripHtml(match[1])).filter(Boolean);
-
-  if (paragraphs.length) return paragraphs;
-
-  const plainText = stripHtml(html);
-  if (!plainText) return [];
-
-  return plainText.split(/\n+/).map((item) => item.trim()).filter(Boolean);
-} */
-
 function getMediaSrc(media, fallback = "") {
   if (!media) return fallback;
   return getImageFormat(media, "large") || getStrapiMediaUrl(media.url) || fallback;
@@ -195,11 +174,11 @@ const page = pageResponse?.data || {};
 
 const header = {
   backgroundVideoSrc: getMediaSrc(page.header?.mediaBackground, "/images/panebarco-commercial-video.mp4"),
-  bgWord: stripHtml(page.header?.titoloTana || "LOREM"),
-  title: stripHtml(page.header?.titolo || "LOREM IPSUM"),
-  subtitle: stripHtml(page.header?.sottotitolo || "Lorem ipsum dolor sit amet"),
+  bgWord: stripHtml(page.header?.titoloTana || ""),
+  title: stripHtml(page.header?.titolo || ""),
+  subtitle: stripHtml(page.header?.sottotitolo || ""),
   sideImageSrc: getMediaSrc(page.header?.imgTeam, "/images/hero-commercials.png"),
-  sideImageAlt: getMediaAlt(page.header?.imgTeam, "Lorem ipsum"),
+  sideImageAlt: getMediaAlt(page.header?.imgTeam, ""),
 };
 
 const intro = {

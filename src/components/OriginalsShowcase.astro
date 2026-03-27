@@ -20,34 +20,17 @@ const {
   sectionId = "originals",
   sectionClass = "dark-band originals-parallax",
   containerClass = "container originals-stage",
-  introText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  introText = "",
   showFeaturedCta = true,
-  items = [
-    {
-      title: "Marta e la morte",
-      image: "/images/originals-cover-02-270x395.jpg",
-      imageAlt: "Frame del progetto Marta e la morte",
-      link: "/originals/marta-e-la-morte",
-    },
-    {
-      title: "Marta e la morte",
-      image: "/images/originals-cover-02-270x395.jpg",
-      imageAlt: "Frame del progetto Marta e la morte",
-      link: "/originals/marta-e-la-morte",
-    },
-    {
-      title: "Marta e la morte",
-      image: "/images/originals-cover-02-270x395.jpg",
-      imageAlt: "Frame del progetto Marta e la morte",
-      link: "/originals/marta-e-la-morte",
-    },
-  ],
+  items = [],
 } = Astro.props;
 const originals: OriginalItem[] = items;
 
-const [featured, sideOne, sideTwo] = originals;
+const hasEnoughItems = originals.length >= 3;
+const [featured, sideOne, sideTwo] = hasEnoughItems ? originals : [null, null, null];
 ---
 
+{hasEnoughItems && (
 <section
   id={sectionId}
   class={sectionClass}
@@ -120,6 +103,7 @@ const [featured, sideOne, sideTwo] = originals;
     </div>
   </div>
 </section>
+)}
 
 <script is:inline>
   (function () {

@@ -140,20 +140,6 @@ function mapOriginalSlide(item, fallbackItem = {}) {
   };
 }
 
-function mapCardItems(items = [], fallbackItems = []) {
-  return fallbackItems.map((fallbackItem, index) => {
-    const item = items[index] || {};
-
-    return {
-      title: pickFirst(item?.titolo, fallbackItem.title),
-      summary: pickFirst(item?.contenuto, fallbackItem.summary),
-      image: resolveMediaUrl(item?.cover, "large", fallbackItem.image),
-      imageAlt: pickFirst(item?.cover?.alternativeText, fallbackItem.imageAlt, fallbackItem.title),
-      theme: fallbackItem.theme,
-    };
-  });
-}
-
 function mapContactCards(items = [], fallbackItems = [], contactDetails) {
   const detailMap = [
     {
@@ -496,7 +482,7 @@ export async function getHomePageContent({ lang = DEFAULT_LANG, fallback }) {
     intro: mapHomeIntro(page?.intro, fallback.intro),
     originals: pickFirst(stripRichTextSyntax(page?.originals), fallback.originals),
     services: {
-      title: pickFirst(fallback.services?.title, "SERVIZI"),
+      title: pickFirst(fallback.services?.title),
       stickerSrc: pickFirst(fallback.services?.stickerSrc),
       stickerAlt: pickFirst(fallback.services?.stickerAlt),
       items: asArray(page?.servizi).length
@@ -668,7 +654,7 @@ export async function getStoryMutantPageContent({ lang = DEFAULT_LANG, fallback 
   const timelineContent = pickFirst(page?.contenuto);
   const videoCollection = page?.raccoltaVideo;
   const videos = asArray(videoCollection?.video).map((item, index) => ({
-    title: pickFirst(item?.titolo, `${pickFirst(videoCollection?.titolo, "Video")} ${index + 1}`),
+    title: pickFirst(item?.titolo, `${pickFirst(videoCollection?.titolo)} ${index + 1}`),
     embedSrc: extractEmbedSrc(item?.embed),
     videoSrc: getStrapiMediaUrl(item?.video?.url),
     mimeType: pickFirst(item?.video?.mime),
@@ -848,7 +834,7 @@ export async function getPortfolioShowcaseContent({ lang = DEFAULT_LANG, fallbac
   const isItalian = lang === "it";
 
   return {
-    title: pickFirst(fallback.title, "PORTFOLIO"),
+    title: pickFirst(fallback.title),
     stickerSrc: pickFirst(fallback.stickerSrc),
     stickerAlt: pickFirst(fallback.stickerAlt),
     ctaLabel: pickFirst(fallback.ctaLabel),
@@ -1089,7 +1075,7 @@ export async function getOriginalDetailContent({ lang = DEFAULT_LANG, slug }) {
     settoreTitolo: pickFirst(original.settore?.titolo),
     tipologia: pickFirst(tipologie[0]),
     seo: {
-      title: pickFirst(original.seo?.metaTitle, original.titolo, "Panebarco Originals"),
+      title: pickFirst(original.seo?.metaTitle, original.titolo),
       description: pickFirst(original.seo?.metaDescription, original.titolo),
     },
     slug: pickFirst(original.slug),
@@ -1123,11 +1109,11 @@ export async function getPortfolioDetailContent({ lang = DEFAULT_LANG, slug }) {
 
   const videos = [];
   const mainEmbedSrc = extractEmbedSrc(project.mainVideo?.embed);
-  if (mainEmbedSrc) videos.push({ src: mainEmbedSrc, title: pickFirst(project.titolo, "Video") });
+  if (mainEmbedSrc) videos.push({ src: mainEmbedSrc, title: pickFirst(project.titolo) });
   asArray(project.corpo).forEach((item) => {
     if (item?.__component === "shared.embed") {
       const src = extractEmbedSrc(item?.embed);
-      if (src) videos.push({ src, title: pickFirst(project.titolo, "Video") });
+      if (src) videos.push({ src, title: pickFirst(project.titolo) });
     }
   });
 
@@ -1145,7 +1131,7 @@ export async function getPortfolioDetailContent({ lang = DEFAULT_LANG, slug }) {
     videos,
     creditsHtml: pickFirst(project.credits),
     seo: {
-      title: pickFirst(project.seo?.metaTitle, project.titolo, "Panebarco Portfolio"),
+      title: pickFirst(project.seo?.metaTitle, project.titolo),
       description: pickFirst(project.seo?.metaDescription, project.titolo),
     },
     slug: pickFirst(project.slug),

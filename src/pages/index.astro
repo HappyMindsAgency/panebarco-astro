@@ -12,50 +12,40 @@ import { getPaneblogPreviewArticles } from "../lib/paneblog-content";
 const lang = getLangFromPath(Astro.url.pathname);
 const homeFallback = {
   header: {
-    title: "Lorem ipsum",
-    subtitle: "Lorem ipsum dolor sit amet",
+    title: "",
+    subtitle: "",
     videoSrc: "/images/1021768637.mp4",
     cta: {
-      label: "Lorem ipsum",
+      label: "",
       href: buildPath("originals", lang),
     },
   },
   intro: {
-    title: "Lorem ipsum",
-    typingWords: [
-      "Lorem ipsum",
-      "Lorem ipsum dolor sit amet",
-      "Lorem ipsum dolor sit amet",
-      "Lorem ipsum dolor sit amet",
-      "Lorem ipsum dolor sit amet",
-      "Lorem ipsum dolor sit amet",
-    ],
-    paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ],
+    title: "",
+    typingWords: [],
+    paragraphs: [],
     imageSrc: "/images/siamo-teams.png",
-    imageAlt: "Lorem ipsum",
+    imageAlt: "",
     button: {
-      label: "Lorem ipsum",
+      label: "",
       href: buildPath("studioTeam", lang),
     },
   },
   services: {
-    title: "Servizi",
+    title: "",
     stickerSrc: "/images/cose che sappiamo fare.png",
-    stickerAlt: "Lorem ipsum",
+    stickerAlt: "",
     items: Array.from({ length: 4 }, () => ({
-      title: "Lorem ipsum",
+      title: "",
       href: buildPath("servicesPost", lang),
       image: "/images/servizi-cover-02-340x487.jpg",
-      summary: "Lorem ipsum",
+      summary: "",
     })),
   },
-  originals: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  originals: "",
   seo: {
-    title: "Lorem ipsum",
-    description: "Lorem ipsum dolor sit amet",
+    title: "",
+    description: "",
   },
 };
 const homeContent = await getHomePageContent({ lang, fallback: homeFallback });
@@ -63,13 +53,7 @@ const originalsShowcase = await getHomeOriginalsShowcaseContent({
   lang,
   fallback: {
     baseHref: buildPath("originals", lang),
-    items: Array.from({ length: 3 }, () => ({
-      title: "Lorem ipsum",
-      image: "/images/originals-cover-02-270x395.jpg",
-      imageAlt: "Lorem ipsum",
-      slug: "marta-e-la-morte",
-      link: `${buildPath("originals", lang)}/marta-e-la-morte`,
-    })),
+    items: [],
   },
 });
 const portfolioShowcaseFallback = {
@@ -80,12 +64,12 @@ const portfolioShowcaseFallback = {
   ctaHref: buildPath("portfolio", lang),
   baseHref: buildPath("portfolio", lang),
   items: ["top-left", "top-right", "bottom-left", "bottom-right", "wide"].map((slot) => ({
-    title: "Lorem ipsum",
-    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "",
+    summary: "",
     image: "/images/portfolio-cover-03-695x391.jpg",
-    imageAlt: "Lorem ipsum",
+    imageAlt: "",
     slot,
-    tags: ["Regia", "2D"],
+    tags: [],
     href: undefined,
   })),
 };

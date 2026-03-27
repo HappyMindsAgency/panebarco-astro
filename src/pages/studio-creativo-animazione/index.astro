@@ -10,53 +10,48 @@ import { getStudioPageContent } from "../../lib/site-content";
 const lang = getLangFromPath(Astro.url.pathname);
 const studioFallback = {
   header: {
-    bgWord: "LA TANA",
-    title: "Lorem ipsum",
-    subtitle: "Lorem ipsum dolor sit amet",
+    bgWord: "",
+    title: "",
+    subtitle: "",
     backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
     sideImageSrc: "/images/lo-studio-panebarco-teams.png",
-    sideImageAlt: "Lorem ipsum",
+    sideImageAlt: "",
   },
   intro: {
-    title: "Lorem ipsum dolor sit amet",
-    paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ],
+    title: "",
+    paragraphs: [],
     mediaSrc: "/images/lo-studio-img-intro.png",
-    mediaAlt: "Lorem ipsum",
+    mediaAlt: "",
     button: {
-      label: "Lorem ipsum",
+      label: "",
       href: buildPath("studioStory", lang),
     },
   },
   protagonists: {
-    title: "Lorem ipsum dolor sit amet",
-    paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ],
-    imageAlt: "Lorem ipsum",
+    title: "",
+    paragraphs: [],
+    imageAlt: "",
     images: [
-      { src: "/images/lo-studio-panebarcos-01.jpg", alt: "Lorem ipsum" },
-      { src: "/images/lo-studio-panebarcos-02.jpg", alt: "Lorem ipsum" },
-      { src: "/images/lo-studio-panebarcos-03.jpg", alt: "Lorem ipsum" },
-      { src: "/images/lo-studio-panebarcos-04.jpg", alt: "Lorem ipsum" },
+      { src: "/images/lo-studio-panebarcos-01.jpg", alt: "" },
+      { src: "/images/lo-studio-panebarcos-02.jpg", alt: "" },
+      { src: "/images/lo-studio-panebarcos-03.jpg", alt: "" },
+      { src: "/images/lo-studio-panebarcos-04.jpg", alt: "" },
     ],
   },
   cta: {
-    kicker: "Lorem ipsum",
-    title: "Lorem ipsum dolor sit amet",
-    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    kicker: "",
+    title: "",
+    body: "",
     imageSrc: "/images/lo-studio-oscar.png",
-    imageAlt: "Lorem ipsum",
+    imageAlt: "",
     button: {
-      label: "Lorem ipsum",
+      label: "",
       href: buildPath("studioOscars", lang),
     },
   },
   seo: {
-    title: "Lorem ipsum",
-    description: "Lorem ipsum dolor sit amet",
+    title: "",
+    description: "",
   },
 };
 const studioContent = await getStudioPageContent({ lang, fallback: studioFallback });
@@ -125,14 +120,6 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
                     </div>
                     <div class="col-12 col-md-6 studio-timeline-copy">
                       <h3>Gli inizi</h3>
-                      <p>
-                        Mauris nec orci sit amet nunc sodales pulvinar. Aliquam placerat, est a
-                        vestibulum eleifend, ante nisl rhoncus ante, eu lacinia dui sem ut arcu.
-                      </p>
-                      <p>
-                        Praesent aliquam interdum lectus, id imperdiet elit. Curabitur sagittis nisi
-                        non porttitor ullamcorper, in fermentum lorem aliquet.
-                      </p>
                     </div>
                   </div>
                 </article>
@@ -144,14 +131,6 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
                     </div>
                     <div class="col-12 col-md-6 studio-timeline-copy">
                       <h3>Crescita creativa</h3>
-                      <p>
-                        Pellentesque tempus elementum aliquet. Etiam commodo elit ut mi tristique
-                        laoreet. Donec ac enim vestibulum, sagittis urna sit amet, posuere ex.
-                      </p>
-                      <p>
-                        Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac
-                        facilisis in, egestas eget quam.
-                      </p>
                     </div>
                   </div>
                 </article>
@@ -163,14 +142,6 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
                     </div>
                     <div class="col-12 col-md-6 studio-timeline-copy">
                       <h3>Nuove produzioni</h3>
-                      <p>
-                        Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas
-                        faucibus mollis interdum, sed posuere consectetur est at lobortis.
-                      </p>
-                      <p>
-                        Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna
-                        mollis ornare vel eu leo.
-                      </p>
                     </div>
                   </div>
                 </article>
@@ -182,14 +153,6 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
                     </div>
                     <div class="col-12 col-md-6 studio-timeline-copy">
                       <h3>Nuove mutazioni</h3>
-                      <p>
-                        Donec sed odio dui. Sed posuere consectetur est at lobortis. Integer posuere
-                        erat a ante venenatis dapibus posuere velit aliquet.
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi leo risus,
-                        porta ac consectetur ac, vestibulum at eros.
-                      </p>
                     </div>
                   </div>
                 </article>

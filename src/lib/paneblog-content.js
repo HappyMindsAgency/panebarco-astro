@@ -94,13 +94,13 @@ function mapArticle(article, lang) {
   const slug = pickFirst(article?.slug);
 
   return {
-    category: pickFirst(categories[0], "Paneblog"),
+    category: pickFirst(categories[0]),
     date: formatDate(pickFirst(article?.publishedAt, article?.updatedAt)),
     href: slug ? joinLocalizedPath(buildPath("paneblog", lang), slug) : buildPath("paneblog", lang),
     image: resolveMediaUrl(article?.cover, "large", "/images/paneblog-cover-01-356x217.png"),
-    imageAlt: pickFirst(article?.cover?.alternativeText, article?.titolo, "Articolo Paneblog"),
+    imageAlt: pickFirst(article?.cover?.alternativeText, article?.titolo),
     summary: truncateText(article?.contenuto, 160),
-    title: pickFirst(article?.titolo, "Articolo Paneblog"),
+    title: pickFirst(article?.titolo),
   };
 }
 
@@ -112,12 +112,12 @@ function mapArticleDetail(article, lang) {
     documentId: pickFirst(article?.documentId),
     content: pickFirst(article?.contenuto),
     description: pickFirst(article?.seo?.metaDescription, truncateText(article?.contenuto, 180), mappedCard.summary),
-    heroAlt: pickFirst(article?.cover?.alternativeText, article?.titolo, "Copertina articolo Paneblog"),
+    heroAlt: pickFirst(article?.cover?.alternativeText, article?.titolo),
     heroImage: resolveMediaUrl(article?.cover, "large", ARTICLE_HERO_FALLBACK),
     publishedAt: pickFirst(article?.publishedAt, article?.updatedAt),
     seo: {
       description: pickFirst(article?.seo?.metaDescription, truncateText(article?.contenuto, 180), mappedCard.summary),
-      title: pickFirst(article?.seo?.metaTitle, article?.titolo, "Paneblog - Panebarco"),
+      title: pickFirst(article?.seo?.metaTitle, article?.titolo),
     },
     slug: pickFirst(article?.slug),
   };
@@ -168,7 +168,7 @@ export async function getFlashNewsContent({ lang = DEFAULT_LANG, limit = 3 } = {
       date: formatDateDDMMYYYY(rawDate),
       character: char.character,
       avatar: char.avatar,
-      title: pickFirst(item?.titolo, "Flash news"),
+      title: pickFirst(item?.titolo),
       text: truncateText(item?.contenuto, 120),
     };
   });
@@ -238,35 +238,35 @@ export async function getPaneblogPageContent({ lang = DEFAULT_LANG, fallback = {
   const introParagraphs = splitRichTextParagraphs(page?.intro?.contenuto);
   const mappedArticles = asArray(articlesResponse?.data).map((article) => mapArticle(article, lang));
   const articleFilters = ["Tutti", ...new Set(mappedArticles.map((article) => article.category).filter(Boolean))];
-  const ctaButton = mapButton(page?.cta?.pulsante, fallback.cta?.buttonLabel || "Contattaci", fallback.cta?.href || buildPath("contacts", lang));
+  const ctaButton = mapButton(page?.cta?.pulsante, fallback.cta?.buttonLabel, fallback.cta?.href || buildPath("contacts", lang));
 
   return {
     articleFilters: articleFilters.length ? articleFilters : ["Tutti"],
     articles: mappedArticles,
     cta: {
-      background: pickFirst(page?.cta?.bgColor, fallback.cta?.background, "#9f5ea3"),
+      background: pickFirst(page?.cta?.bgColor, fallback.cta?.background),
       buttonLabel: ctaButton.label,
-      figureAlt: pickFirst(page?.cta?.cover?.alternativeText, fallback.cta?.figureAlt, "Mascotte Panebarco"),
+      figureAlt: pickFirst(page?.cta?.cover?.alternativeText, fallback.cta?.figureAlt),
       figureSrc: resolveMediaUrl(page?.cta?.cover, "large", fallback.cta?.figureSrc || CTA_FIGURE_FALLBACK),
       href: ctaButton.href,
-      kicker: pickFirst(page?.cta?.sottotitolo, fallback.cta?.kicker, "Vuoi ricevere gli aggiornamenti?"),
-      title: pickFirst(page?.cta?.titolo, fallback.cta?.title, "ISCRIVITI ALLA NEWSLETTER."),
+      kicker: pickFirst(page?.cta?.sottotitolo, fallback.cta?.kicker),
+      title: pickFirst(page?.cta?.titolo, fallback.cta?.title),
     },
     header: mapHeader(page?.header, {
       backgroundVideoSrc: HERO_VIDEO_FALLBACK,
-      bgWord: pickFirst(fallback.header?.bgWord, "PRODUZIONI INDIPENDENTI"),
-      sideImageAlt: pickFirst(fallback.header?.sideImageAlt, "Team Panebarco"),
-      sideImageSrc: pickFirst(fallback.header?.sideImageSrc, "/images/lo-studio-panebarco-teams.png"),
-      subtitle: pickFirst(fallback.header?.subtitle, "Format originali sviluppati dentro la nostra casa creativa"),
-      title: pickFirst(fallback.header?.title, "PANEBLOG"),
+      bgWord: pickFirst(fallback.header?.bgWord),
+      sideImageAlt: pickFirst(fallback.header?.sideImageAlt),
+      sideImageSrc: pickFirst(fallback.header?.sideImageSrc),
+      subtitle: pickFirst(fallback.header?.subtitle),
+      title: pickFirst(fallback.header?.title),
     }),
     intro: {
-      title: pickFirst(page?.intro?.titolo, fallback.intro?.title, "Diario di viaggio"),
-      body: introParagraphs[0] || pickFirst(page?.intro?.contenuto, fallback.intro?.body, ""),
+      title: pickFirst(page?.intro?.titolo, fallback.intro?.title),
+      body: introParagraphs[0] || pickFirst(page?.intro?.contenuto, fallback.intro?.body),
     },
     seo: {
       description: pickFirst(page?.seo?.metaDescription),
-      title: pickFirst(page?.seo?.metaTitle, page?.header?.titolo, page?.nomePagina, "Paneblog - Panebarco"),
+      title: pickFirst(page?.seo?.metaTitle, page?.header?.titolo, page?.nomePagina),
     },
   };
 }

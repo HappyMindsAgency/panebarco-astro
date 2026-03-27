@@ -202,7 +202,6 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
 
       try {
         const payload = createPayload();
-        console.log(payload);
         await new Promise((resolve) => window.setTimeout(resolve, 900));
 
         form.reset();
@@ -220,8 +219,7 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
         });
 
         if (successMessage instanceof HTMLElement) successMessage.hidden = false;
-      } catch (error) {
-        console.error(error);
+      } catch {
         showError("Invio simulato non riuscito. Riprova.");
       } finally {
         setLoading(false);

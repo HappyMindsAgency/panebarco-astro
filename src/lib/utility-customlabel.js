@@ -211,13 +211,6 @@ export default function customLabel(label, locale = 'it') {
             'de': 'Bild von',
             'sp': 'Imagen de'
         },
-        'Si è verificato un errore, riprova tra qualche minuto.': {
-            'it': 'Si è verificato un errore, riprova tra qualche minuto.',
-            'en': 'An error occurred, please try again in a few minutes.',
-            'fr': 'Une erreur s\'est produite, veuillez réessayer dans quelques minutes.',
-            'de': 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es in ein paar Minuten erneut.',
-            'sp': 'Se ha producido un error, inténtalo de nuevo en unos minutos.'
-        },
         'Cerca': {
             'it': 'Cerca',
             'en': 'Search',
@@ -255,18 +248,8 @@ export default function customLabel(label, locale = 'it') {
         }
     };
 
-    // Controlla che l'etichetta esista nel dizionario
-    if (!data[label]) {
-        console.warn(`Etichetta non trovata: '${label}'`);
-        return label; // fallback: restituisci l'etichetta originale
-    }
+    if (!data[label]) return label;
+    if (!data[label][locale]) return data[label]['it'];
 
-    // Controlla che la lingua sia definita per quell'etichetta
-    if (!data[label][locale]) {
-        console.warn(`Traduzione non trovata per '${label}' in '${locale}'`);
-        return data[label]['it']; // fallback: italiano
-    }
-
-    // Ritorna la traduzione corretta
     return data[label][locale];
 }

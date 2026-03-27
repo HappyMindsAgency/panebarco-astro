@@ -872,7 +872,6 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
           if (apiErrorEl) apiErrorEl.hidden = true;
 
           var data = collectFormData(form);
-          console.log("[EnHomeBriefForm] Sending:", data);
           var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
 
           mockRequest.then(function () {
@@ -880,7 +879,6 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
             if (successEl) successEl.hidden = false;
             form.hidden = true;
           }).catch(function (error) {
-            console.error("[EnHomeBriefForm] Error:", error);
             if (apiErrorEl) apiErrorEl.hidden = false;
             setSubmitLoading(false);
           });
@@ -1042,7 +1040,6 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
           if (apiErrorEl) apiErrorEl.hidden = true;
 
           var data = collectFormData(form);
-          console.log("[EnHomeTalentForm] Sending:", data);
           var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
 
           mockRequest.then(function () {
@@ -1050,7 +1047,6 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
             if (successEl) successEl.hidden = false;
             form.hidden = true;
           }).catch(function (error) {
-            console.error("[EnHomeTalentForm] Error:", error);
             if (apiErrorEl) apiErrorEl.hidden = false;
             setSubmitLoading(false);
           });

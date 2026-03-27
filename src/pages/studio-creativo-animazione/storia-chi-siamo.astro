@@ -10,29 +10,29 @@ import type { ContactBannerContent, StoryMutantPageContent } from "../../lib/sit
 const lang = getLangFromPath(Astro.url.pathname);
 const storyFallback = {
   header: {
-    bgWord: "LA TANA",
-    title: "Lorem ipsum dolor sit amet",
-    subtitle: "Lorem ipsum dolor sit amet",
+    bgWord: "",
+    title: "",
+    subtitle: "",
     backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
     sideImageSrc: "/images/lo-studio-panebarco-teams.png",
-    sideImageAlt: "Lorem ipsum",
+    sideImageAlt: "",
   },
   intro: {
     mediaSrc: "/images/lo-studio-img-intro.png",
-    mediaAlt: "Lorem ipsum",
+    mediaAlt: "",
   },
   timeline: {
-    title: "Lorem ipsum dolor sit amet",
+    title: "",
     imageSrc: "/images/lo-studi-storia-panebarco.png",
-    imageAlt: "Lorem ipsum",
+    imageAlt: "",
   },
   cta: {
     imageSrc: "/images/cta-ci-vediamo-agli-oscar.png",
-    imageAlt: "Lorem ipsum",
+    imageAlt: "",
   },
   seo: {
-    title: "Lorem ipsum",
-    description: "Lorem ipsum dolor sit amet",
+    title: "",
+    description: "",
   },
 };
 function hasStoryCta(

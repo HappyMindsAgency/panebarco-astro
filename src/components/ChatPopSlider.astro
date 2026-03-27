@@ -17,29 +17,7 @@ interface Props {
   ariaLabel?: string;
 }
 
-const defaultMessages: readonly ChatMessage[] = [
-  {
-    date: "15/01/2026",
-    character: "Maya",
-    avatar: "/images/teams-avatar-che-fate-01.png",
-    title: "Titolo del messaggio",
-    text: "Aenean vel tortor aliquet, lobortis ligula a, tempus metus.",
-  },
-  {
-    date: "22/01/2026",
-    character: "Luca",
-    avatar: "/images/teams-avatar-che-fate-02.png",
-    title: "Secondo messaggio",
-    text: "Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-  },
-  {
-    date: "30/01/2026",
-    character: "Nora",
-    avatar: "/images/teams-avatar-che-fate-03.png",
-    title: "Terzo messaggio",
-    text: "Donec sed odio dui. Cras mattis consectetur purus sit amet fermentum.",
-  },
-];
+const defaultMessages: readonly ChatMessage[] = [];
 
 const {
   messages = defaultMessages,
@@ -47,12 +25,12 @@ const {
   className = "",
   fixedChipText = "che fate?",
   fixedAvatarSrc = "/images/avatar-che-fate-00.png",
-  fixedAvatarAlt = "Avatar fisso",
+  fixedAvatarAlt = "",
   ariaLabel = "Anteprima chat",
 } = Astro.props;
 
 const resolvedMessages = messages.length ? messages : defaultMessages;
-const initialMessage = resolvedMessages[0];
+const initialMessage = resolvedMessages[0] ?? { date: "", character: "", avatar: "", title: "", text: "" };
 const messagesJson = JSON.stringify(resolvedMessages);
 ---
 
@@ -69,14 +47,14 @@ const messagesJson = JSON.stringify(resolvedMessages);
     <div class="chat-slider-pop__fixed">
       <span class="chat-slider-pop__chip">{fixedChipText}</span>
       <span class="chat-slider-pop__avatar chat-slider-pop__avatar--fixed">
-        <img src={fixedAvatarSrc} alt={fixedAvatarAlt} />
+        <img src={fixedAvatarSrc} alt={fixedAvatarAlt} width="40" height="40" />
       </span>
     </div>
   </div>
 
   <div class="chat-slider-pop__message-row">
     <span class="chat-slider-pop__avatar chat-slider-pop__avatar--slider">
-      <img data-chat-slider-avatar src={initialMessage.avatar} alt={`Avatar di ${initialMessage.character}`} />
+      <img data-chat-slider-avatar src={initialMessage?.avatar} alt={initialMessage ? `Avatar di ${initialMessage.character}` : ""} width="40" height="40" />
     </span>
     <div class="chat-slider-pop__body">
       <strong data-chat-slider-title>{initialMessage.title}</strong>

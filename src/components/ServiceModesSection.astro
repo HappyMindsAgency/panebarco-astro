@@ -57,11 +57,11 @@ const { modes = [], defaultTag = "" } = Astro.props;
                 ]}
               >
                 {scene.href ? (
-                  <a class="commercials-media-card text-decoration-none d-block" href={scene.href} aria-label={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}>
+                  <a class="commercials-media-card text-decoration-none d-block" href={scene.href} aria-label={scene.imageAlt || ""}>
                     <img
                       class="img-fluid w-100"
                       src={scene.image}
-                      alt={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}
+                      alt={scene.imageAlt || ""}
                       style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
                     />
                     <div class="commercials-media-tags" aria-hidden="true">
@@ -70,16 +70,16 @@ const { modes = [], defaultTag = "" } = Astro.props;
                       ))}
                     </div>
                     <div class="commercials-media-overlay" aria-hidden="true">
-                      <h4>{scene.title || `${mode.title} ${String(sceneIndex + 1).padStart(2, "0")}`}</h4>
+                      <h4>{scene.title}</h4>
                       <p>{scene.summary}</p>
                     </div>
                   </a>
                 ) : (
-                  <article class="commercials-media-card" tabindex="0" aria-label={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}>
+                  <article class="commercials-media-card" tabindex="0" aria-label={scene.imageAlt || ""}>
                     <img
                       class="img-fluid w-100"
                       src={scene.image}
-                      alt={scene.imageAlt || `${mode.title} scena ${sceneIndex + 1}`}
+                      alt={scene.imageAlt || ""}
                       style="height: clamp(220px, 28vw, 300px); object-fit: cover;"
                     />
                     <div class="commercials-media-tags" aria-hidden="true">
@@ -88,7 +88,7 @@ const { modes = [], defaultTag = "" } = Astro.props;
                       ))}
                     </div>
                     <div class="commercials-media-overlay" aria-hidden="true">
-                      <h4>{scene.title || `${mode.title} ${String(sceneIndex + 1).padStart(2, "0")}`}</h4>
+                      <h4>{scene.title}</h4>
                       <p>{scene.summary}</p>
                     </div>
                   </article>

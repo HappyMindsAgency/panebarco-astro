@@ -12,21 +12,21 @@ const pageContent = await getPaneblogPageContent({
   fallback: {
     cta: {
       background: "#9f5ea3",
-      buttonLabel: "Lorem ipsum",
-      figureAlt: "Lorem ipsum",
+      buttonLabel: "",
+      figureAlt: "",
       figureSrc: "/images/lo-animiamo-noi.png",
       href: buildPath("contacts", lang),
-      kicker: "Lorem ipsum dolor sit amet",
-      title: "Lorem ipsum dolor sit amet",
+      kicker: "",
+      title: "",
     },
     header: {
-      bgWord: "PRODUZIONI INDIPENDENTI",
-      subtitle: "Lorem ipsum dolor sit amet",
-      title: "Lorem ipsum",
+      bgWord: "",
+      subtitle: "",
+      title: "",
     },
     intro: {
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      title: "Lorem ipsum",
+      body: "",
+      title: "",
     },
   },
 });
@@ -35,29 +35,7 @@ const flashNewsItems = await getFlashNewsContent({ lang, limit: 3 });
 
 const diaryChatMessages = flashNewsItems.length
   ? flashNewsItems
-  : [
-      {
-        date: "18/03/2026",
-        character: "Maya",
-        avatar: "/images/teams-avatar-che-fate-01.png",
-        title: "Lorem ipsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      },
-      {
-        date: "16/03/2026",
-        character: "Luca",
-        avatar: "/images/teams-avatar-che-fate-02.png",
-        title: "Lorem ipsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      },
-      {
-        date: "12/03/2026",
-        character: "Nora",
-        avatar: "/images/teams-avatar-che-fate-03.png",
-        title: "Lorem ipsum",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      },
-    ];
+  : [];
 ---
 
 <Layout

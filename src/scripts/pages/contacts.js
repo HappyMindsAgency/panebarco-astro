@@ -189,7 +189,6 @@
       if (apiErrorEl) apiErrorEl.hidden = true;
 
       var data = collectFormData(form);
-      console.log("[ContactBriefForm] Invio dati:", data);
       var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
 
       mockRequest.then(function () {
@@ -197,7 +196,6 @@
         if (successEl) successEl.hidden = false;
         form.hidden = true;
       }).catch(function (err) {
-        console.error("[ContactBriefForm] Errore invio:", err);
         if (apiErrorEl) apiErrorEl.hidden = false;
         setSubmitLoading(false);
       });
@@ -359,7 +357,6 @@
       if (apiErrorEl) apiErrorEl.hidden = true;
 
       var data = collectFormData(form);
-      console.log("[TalentForm] Invio dati:", data);
       var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
 
       mockRequest.then(function () {
@@ -367,7 +364,6 @@
         if (successEl) successEl.hidden = false;
         form.hidden = true;
       }).catch(function (err) {
-        console.error("[TalentForm] Errore invio:", err);
         if (apiErrorEl) apiErrorEl.hidden = false;
         setSubmitLoading(false);
       });

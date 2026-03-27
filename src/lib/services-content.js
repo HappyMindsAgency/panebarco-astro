@@ -196,11 +196,11 @@ function mapIntro(intro, fallback = {}) {
 
 function mapProjects(projects = [], lang, fallbackCategory) {
   const portfolioBase = buildPath("portfolio", lang || DEFAULT_LANG);
-  return projects.slice(0, 4).map((project, index) => ({
-    title: pickFirst(project?.titolo, `${fallbackCategory} ${String(index + 1).padStart(2, "0")}`),
-    summary: pickFirst(project?.intro, `Frame dal progetto ${fallbackCategory.toLowerCase()}.`),
+  return projects.slice(0, 4).map((project) => ({
+    title: pickFirst(project?.titolo),
+    summary: pickFirst(project?.intro),
     image: resolveMediaUrl(project?.cover, "large"),
-    imageAlt: pickFirst(project?.cover?.alternativeText, project?.titolo, `${fallbackCategory} scena ${index + 1}`),
+    imageAlt: pickFirst(project?.cover?.alternativeText, project?.titolo),
     tags: [
       fallbackCategory,
       ...(project?.tipologie_progetto || []).map((item) => item?.titolo).filter(Boolean),
@@ -366,8 +366,7 @@ export function getServiceRouteKey(slug) {
 export function getLabel(label, lang = DEFAULT_LANG, fallback = label) {
   try {
     return customLabel(label, lang) || fallback;
-  } catch (error) {
-    console.warn(`[labels] Failed to resolve label "${label}"`, error);
+  } catch {
     return fallback;
   }
 }

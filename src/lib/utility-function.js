@@ -1,54 +1,38 @@
-// Funzione per formattare le date nel formato 'gg MMM aaaa'
+const MESI = [
+    'GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU',
+    'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'
+];
+
 export function formatDate(dateString) {
     if (!dateString) return '';
 
-    const mesi = [
-        'GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU',
-        'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'
-    ];
-
     try {
         const date = new Date(dateString);
-
-        // Verifica che la data sia valida
-        if (isNaN(date.getTime())) {
-            return dateString; // Restituisce la stringa originale se non e una data valida
-        }
+        if (isNaN(date.getTime())) return dateString;
 
         const giorno = date.getDate().toString().padStart(2, '0');
-        const mese = mesi[date.getMonth()];
+        const mese = MESI[date.getMonth()];
         const anno = date.getFullYear();
 
         return `${giorno} ${mese} ${anno}`;
-    } catch (error) {
-        console.warn('Errore nella formattazione della data:', error);
-        return dateString; // Fallback alla stringa originale
+    } catch {
+        return dateString;
     }
 }
 
 export function formatDateBadge(dateString) {
     if (!dateString) return null;
 
-    const mesi = [
-        'GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU',
-        'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'
-    ];
-
     try {
         const date = new Date(dateString);
-
-        // Verifica che la data sia valida
-        if (isNaN(date.getTime())) {
-            return null;
-        }
+        if (isNaN(date.getTime())) return null;
 
         return {
             giorno: date.getDate().toString().padStart(2, '0'),
-            mese: mesi[date.getMonth()],
+            mese: MESI[date.getMonth()],
             anno: date.getFullYear()
         };
-    } catch (error) {
-        console.warn('Errore nella formattazione della data:', error);
+    } catch {
         return null;
     }
 }
