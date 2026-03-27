@@ -7,6 +7,10 @@ import { getOscarsPageContent } from "../../lib/site-content";
 import type { ContactBannerContent, OscarsPageContent } from "../../lib/site-content.types";
 
 const lang = getLangFromPath(Astro.url.pathname);
+const oscarsBeliefsImage = {
+  src: "/images/home-team-panebarco.png",
+  alt: "Team Panebarco",
+};
 const oscarsFallback = {
   header: {
     bgWord: "ROAD TO OSCAR",
@@ -18,8 +22,8 @@ const oscarsFallback = {
   },
   beliefs: {
     title: "In cosa crediamo",
-    imageSrc: "/images/lo-studio-panebarco-teams.png",
-    imageAlt: "Team Panebarco",
+    imageSrc: oscarsBeliefsImage.src,
+    imageAlt: oscarsBeliefsImage.alt,
     items: [
       { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "blue", bgColor: "#3394B2" },
       { title: "Lorem ipsum", subtitle: "Lorem ipsum", theme: "violet", bgColor: "#995791" },
@@ -88,8 +92,8 @@ const oscarsCta = hasOscarsCta(oscarsContent.cta) ? oscarsContent.cta : null;
           <div class="oscars-beliefs__art">
             <img
               class="img-fluid d-block mx-auto"
-              src={oscarsContent.beliefs.imageSrc}
-              alt={oscarsContent.beliefs.imageAlt}
+              src={oscarsBeliefsImage.src}
+              alt={oscarsBeliefsImage.alt}
               loading="lazy"
               decoding="async"
             />
