@@ -161,6 +161,8 @@ const [featured, sideOne, sideTwo] = originals;
 
         var activeIndex = 0;
         var autoplayId = null;
+        var swapTimeoutId = null;
+        var renderToken = 0;
 
         function mod(index, length) {
           return ((index % length) + length) % length;
@@ -173,6 +175,14 @@ const [featured, sideOne, sideTwo] = originals;
         }
 
         function renderOriginals() {
+          renderToken += 1;
+          var currentToken = renderToken;
+
+          if (swapTimeoutId !== null) {
+            window.clearTimeout(swapTimeoutId);
+            swapTimeoutId = null;
+          }
+
           [featuredCard, sideCard1, sideCard2].forEach(function (card) {
             card.classList.add("is-swapping");
           });
@@ -182,16 +192,18 @@ const [featured, sideOne, sideTwo] = originals;
           var sideOne = items[mod(activeIndex + 1, items.length)];
           var sideTwo = items[mod(activeIndex + 2, items.length)];
 
-          setCard(featuredCard, featuredTitle, featured);
-          setCard(sideCard1, sideTitle1, sideOne);
-          setCard(sideCard2, sideTitle2, sideTwo);
-          featuredBtn.setAttribute("href", featured.link || "#");
+          swapTimeoutId = window.setTimeout(function () {
+            if (currentToken !== renderToken) return;
 
-          window.requestAnimationFrame(function () {
+            setCard(featuredCard, featuredTitle, featured);
+            setCard(sideCard1, sideTitle1, sideOne);
+            setCard(sideCard2, sideTitle2, sideTwo);
+            featuredBtn.setAttribute("href", featured.link || "#");
+
             [featuredCard, sideCard1, sideCard2].forEach(function (card) {
               card.classList.remove("is-swapping");
             });
-          });
+          }, 170);
         }
 
         function stopAutoplay() {
@@ -236,6 +248,13 @@ const [featured, sideOne, sideTwo] = originals;
 
         renderOriginals();
         startAutoplay();
+
+        root.addEventListener("astro:unmount", function () {
+          if (swapTimeoutId !== null) {
+            window.clearTimeout(swapTimeoutId);
+          }
+          stopAutoplay();
+        }, { once: true });
       });
     }
 

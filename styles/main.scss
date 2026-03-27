@@ -1597,11 +1597,31 @@ h2 {
       will-change: opacity, transform, filter;
     }
 
+    .original-featured::before,
+    .original-side-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 6, 10, 0.18) 0%,
+        rgba(3, 6, 10, 0.4) 46%,
+        rgba(3, 6, 10, 0.76) 100%
+      );
+      transition: opacity 0.45s ease, background 0.45s ease;
+    }
+
     .original-featured.is-swapping,
     .original-side-card.is-swapping {
-      opacity: 0.72;
+      opacity: 0.78;
       transform: scale(0.985);
-      filter: saturate(0.88);
+      filter: saturate(0.84) brightness(0.92);
+    }
+
+    .original-featured.is-swapping::before,
+    .original-side-card.is-swapping::before {
+      opacity: 0.92;
     }
 
     .original-featured {
@@ -1610,11 +1630,6 @@ h2 {
 
     .original-side-card {
       aspect-ratio: 11 / 16;
-    }
-
-    .original-featured::after,
-    .original-side-card::after {
-      content: none;
     }
 
     .featured-content,
@@ -1637,6 +1652,7 @@ h2 {
       font-weight: 900;
       line-height: 0.95;
       text-wrap: balance;
+      text-shadow: 0 0.3rem 1.2rem rgba(0, 0, 0, 0.45);
     }
 
     .featured-content h4 {
@@ -1656,6 +1672,7 @@ h2 {
       text-transform: uppercase;
       opacity: 0.95;
       line-height: 1.2;
+      text-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.4);
     }
 
     .originals-logo-mark {
