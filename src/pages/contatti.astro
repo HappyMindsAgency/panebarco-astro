@@ -6,6 +6,7 @@ import { micromark } from "micromark";
 import contactsPageScriptUrl from "../scripts/pages/contacts.js?url";
 import { buildPath } from "../i18n/routing";
 import { getContactsPageContent } from "../lib/site-content";
+import { COUNTRIES_IT } from "../data/countries-it";
 
 const lang = "it" as const;
 const contactsFallback = {
@@ -164,44 +165,208 @@ function renderInlineRichText(value?: string) {
 
                   <div class="col-12 col-lg-8 col-xl-8">
                     <div class="contacts-form-shell">
-                      <form class="contacts-form" action="#" method="post" novalidate>
-                        <div class="row g-2 g-xl-3">
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="contactName">Nome</label>
-                            <input class="form-control" id="contactName" name="name" type="text" autocomplete="given-name" placeholder="Come ti chiami?" />
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="contactEmail">Email</label>
-                            <input class="form-control" id="contactEmail" name="email" type="email" autocomplete="email" placeholder="nome@azienda.it" />
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="contactCompany">Azienda</label>
-                            <input class="form-control" id="contactCompany" name="company" type="text" autocomplete="organization" placeholder="Studio, brand o realta da cui scrivi" />
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="contactPhone">Telefono</label>
-                            <input class="form-control" id="contactPhone" name="phone" type="tel" autocomplete="tel" placeholder="+39 000 0000000" />
-                          </div>
-                          <div class="col-12">
-                            <label class="form-label" for="contactMessage">Messaggio</label>
-                            <textarea class="form-control" id="contactMessage" name="message" rows="5" placeholder="Raccontaci il progetto, dove siete arrivati e come possiamo esservi utili."></textarea>
-                          </div>
-                          <div class="col-12">
-                            <div class="contacts-consent">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="accepted" id="contactConsent" name="consent" required />
-                                <label class="form-check-label" for="contactConsent">Ho letto e accetto l'<a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.</label>
+
+                      <div class="contacts-brief-success" id="briefFormSuccess" hidden role="alert">
+                        <span class="contacts-brief-success__icon" aria-hidden="true"><i class="bi bi-check-circle-fill"></i></span>
+                        <p class="contacts-brief-success__text">Grazie! Ti risponderemo al più presto.</p>
+                      </div>
+
+                      <form class="contacts-form contacts-form--brief" id="contactBriefForm" novalidate>
+
+                        <div class="contacts-brief-apierror" id="briefFormApiError" hidden role="alert">
+                          <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                          Si è verificato un errore. Riprova più tardi.
+                        </div>
+
+                        <!-- Sezione 1 — Dati anagrafici -->
+                        <fieldset class="contacts-brief-section">
+                          <legend class="contacts-brief-section__legend">Dati anagrafici</legend>
+                          <div class="row g-2 g-xl-3">
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefNome">Nome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefNome" name="nome" type="text" required aria-required="true" autocomplete="given-name" />
+                                <p class="contacts-field-error" id="briefNome-error" role="alert" hidden></p>
                               </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="newsletter" id="contactNewsletter" name="newsletter" />
-                                <label class="form-check-label" for="contactNewsletter">Voglio ricevere news, progetti e aggiornamenti di Pane Barco.</label>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefCognome">Cognome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefCognome" name="cognome" type="text" required aria-required="true" autocomplete="family-name" />
+                                <p class="contacts-field-error" id="briefCognome-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefEmail">Email <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefEmail" name="email" type="email" required aria-required="true" autocomplete="email" />
+                                <p class="contacts-field-error" id="briefEmail-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefTelefono">Telefono <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefTelefono" name="telefono" type="text" required aria-required="true" autocomplete="tel" />
+                                <p class="contacts-field-error" id="briefTelefono-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefAzienda">Azienda / Ente / Organizzazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefAzienda" name="azienda" type="text" required aria-required="true" autocomplete="organization" />
+                                <p class="contacts-field-error" id="briefAzienda-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefRuolo">Ruolo / Funzione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefRuolo" name="ruolo" type="text" required aria-required="true" autocomplete="organization-title" />
+                                <p class="contacts-field-error" id="briefRuolo-error" role="alert" hidden></p>
                               </div>
                             </div>
                           </div>
-                          <div class="col-12">
-                            <button class="btn btn-cta btn-cta--blue btn-pill" type="submit">Invia messaggio</button>
+                        </fieldset>
+
+                        <!-- Sezione 2 — Localizzazione -->
+                        <fieldset class="contacts-brief-section">
+                          <legend class="contacts-brief-section__legend">Localizzazione</legend>
+                          <div class="row g-2 g-xl-3">
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefPaese">Paese / Nazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <select class="form-select" id="briefPaese" name="paese" required aria-required="true">
+                                  <option value="">Seleziona...</option>
+                                  {COUNTRIES_IT.map((country) => (
+                                    <option value={country} selected={country === "Italia"}>{country}</option>
+                                  ))}
+                                </select>
+                                <p class="contacts-field-error" id="briefPaese-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefCitta">Città <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <input class="form-control" id="briefCitta" name="citta" type="text" required aria-required="true" autocomplete="address-level2" />
+                                <p class="contacts-field-error" id="briefCitta-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+
+                        <!-- Sezione 3 — Dettagli della richiesta -->
+                        <fieldset class="contacts-brief-section">
+                          <legend class="contacts-brief-section__legend">Dettagli della richiesta</legend>
+                          <div class="row g-2 g-xl-3">
+                            <div class="col-12">
+                              <div class="contacts-brief-field">
+                                <p class="form-label contacts-brief-group-label" id="briefMotivoLabel">Di cosa hai bisogno? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                                <div class="contacts-checkbox-group" role="group" aria-labelledby="briefMotivoLabel" aria-describedby="briefMotivo-error" id="briefMotivoGroup">
+                                  {[
+                                    "Spot pubblicitario / Video promozionale",
+                                    "Intervento Post produzione / VFX",
+                                    "Service / produzione esecutiva per prodotto cinematografico / audiovisivo",
+                                    "Co-Produzione",
+                                    "Campagna di Comunicazione",
+                                    "Consulenza creativa",
+                                    "Altro",
+                                  ].map((option, i) => (
+                                    <div class="form-check contacts-checkbox-item">
+                                      <input class="form-check-input" type="checkbox" name="motivo" value={option} id={`briefMotivo-${i}`} />
+                                      <label class="form-check-label" for={`briefMotivo-${i}`}>{option}</label>
+                                    </div>
+                                  ))}
+                                </div>
+                                <p class="contacts-field-error" id="briefMotivo-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefMessaggio">Raccontaci qualcosa di più <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                                <textarea class="form-control" id="briefMessaggio" name="messaggio" rows="5" required aria-required="true" placeholder="Raccontaci l'idea, il contesto, gli obiettivi, il pubblico, il tono… tutto ciò che può aiutarci a entrare nel tuo mondo."></textarea>
+                                <p class="contacts-field-error" id="briefMessaggio-error" role="alert" hidden></p>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+
+                        <!-- Sezione 4 — Dettagli aggiuntivi (facoltativi) -->
+                        <fieldset class="contacts-brief-section">
+                          <legend class="contacts-brief-section__legend">
+                            Dettagli aggiuntivi
+                            <span class="contacts-brief-section__optional">(facoltativi)</span>
+                          </legend>
+                          <div class="row g-2 g-xl-3">
+                            <div class="col-12">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefTempistiche">Tempistiche previste</label>
+                                <input class="form-control" id="briefTempistiche" name="tempistiche" type="text" />
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefMateriali">Allega eventuali materiali utili</label>
+                                <input class="form-control" id="briefMateriali" name="materiali_utili" type="text" placeholder="Brief, documenti, riferimenti visivi, linee guida, ecc. (inserisci i link)" />
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="contacts-brief-field">
+                                <label class="form-label" for="briefEsempi">Link a esempi o ispirazioni</label>
+                                <input class="form-control" id="briefEsempi" name="esempi_utili" type="text" />
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+
+                        <!-- Sezione 5 — Come ci hai trovato? (facoltativo) -->
+                        <fieldset class="contacts-brief-section">
+                          <legend class="contacts-brief-section__legend">
+                            Come ci hai trovato?
+                            <span class="contacts-brief-section__optional">(facoltativo)</span>
+                          </legend>
+                          <div class="contacts-checkbox-group" role="group" aria-label="Come ci hai trovato?">
+                            {[
+                              "Ricerca online",
+                              "Social",
+                              "Ho visto un vostro prodotto",
+                              "Passaparola",
+                              "Altro",
+                            ].map((option, i) => (
+                              <div class="form-check contacts-checkbox-item">
+                                <input class="form-check-input" type="checkbox" name="referral" value={option} id={`briefReferral-${i}`} />
+                                <label class="form-check-label" for={`briefReferral-${i}`}>{option}</label>
+                              </div>
+                            ))}
+                          </div>
+                        </fieldset>
+
+                        <!-- Sezione 6 — Consensi -->
+                        <div class="contacts-brief-section contacts-brief-section--consents">
+                          <div class="contacts-consent">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="briefNewsletter" name="newsletter" value="yes" />
+                              <label class="form-check-label" for="briefNewsletter">Vuoi ricevere aggiornamenti sui nostri progetti?</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="briefPrivacy" name="privacy" value="accepted" required aria-required="true" />
+                              <label class="form-check-label" for="briefPrivacy">
+                                Acconsento al trattamento dei dati personali e all'iscrizione alla newsletter così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                              </label>
+                            </div>
+                            <p class="contacts-field-error" id="briefPrivacy-error" role="alert" hidden></p>
                           </div>
                         </div>
+
+                        <!-- Submit -->
+                        <div class="contacts-brief-actions">
+                          <button class="btn btn-cta btn-cta--blue btn-pill contacts-brief-submit" type="submit" id="briefFormSubmit">
+                            <span class="contacts-brief-submit__text">Invia richiesta</span>
+                            <span class="contacts-brief-submit__loading" hidden aria-hidden="true">
+                              <span class="contacts-brief-spinner"></span>
+                              Invio in corso…
+                            </span>
+                          </button>
+                        </div>
+
                       </form>
                     </div>
                   </div>

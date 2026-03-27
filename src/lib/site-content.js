@@ -1007,6 +1007,8 @@ export async function getOriginalDetailContent({ lang = DEFAULT_LANG, slug }) {
       mainVideo: {
         populate: { anteprima: true },
       },
+      corpo: { populate: "*" },
+      rassegnaStampa: { populate: "*" },
     },
   });
 
@@ -1015,6 +1017,59 @@ export async function getOriginalDetailContent({ lang = DEFAULT_LANG, slug }) {
   if (!original) return null;
 
   const tipologie = asArray(original.tipologie_progetto).map((t) => t?.titolo).filter(Boolean);
+
+  const corpo = asArray(original.corpo).map((block) => {
+    if (!block?.__component) return null;
+    const t = block.__component;
+    if (t === "shared.titolo") {
+      return { type: "titolo", titolo: String(block.titolo || "") };
+    }
+    if (t === "shared.contenuto") {
+      return { type: "contenuto", contenuto: String(block.contenuto || "") };
+    }
+    if (t === "shared.media") {
+      const m = block.media;
+      if (!m) return null;
+      return { type: "media", url: resolveMediaUrl(m), mime: m.mime || "", alt: m.alternativeText || "" };
+    }
+    if (t === "shared.masonry") {
+      const items = asArray(block.masonry)
+        .map((m) => ({ url: resolveMediaUrl(m), mime: m?.mime || "", alt: m?.alternativeText || "" }))
+        .filter((i) => i.url);
+      return items.length ? { type: "masonry", items } : null;
+    }
+    if (t === "shared.slider") {
+      const items = asArray(block.slider)
+        .map((m) => ({ url: resolveMediaUrl(m), mime: m?.mime || "", alt: m?.alternativeText || "" }))
+        .filter((i) => i.url);
+      return items.length ? { type: "slider", items } : null;
+    }
+    if (t === "shared.embed") {
+      const src = extractEmbedSrc(block.embed);
+      return src ? { type: "embed", src } : null;
+    }
+    return null;
+  }).filter(Boolean);
+
+  const rassegnaStampa = asArray(original.rassegnaStampa).map((block) => {
+    if (!block?.__component) return null;
+    const t = block.__component;
+    if (t === "shared.link") {
+      return block.link ? { type: "link", url: String(block.link) } : null;
+    }
+    if (t === "shared.file") {
+      const f = block.file;
+      if (!f) return null;
+      return {
+        type: "file",
+        url: resolveMediaUrl(f),
+        name: f.name || "",
+        ext: (f.ext || "").replace(/^\./, "").toUpperCase(),
+        size: f.size || 0,
+      };
+    }
+    return null;
+  }).filter(Boolean);
 
   return {
     titolo: pickFirst(original.titolo),
@@ -1030,6 +1085,8 @@ export async function getOriginalDetailContent({ lang = DEFAULT_LANG, slug }) {
       description: pickFirst(original.seo?.metaDescription, original.titolo),
     },
     slug: pickFirst(original.slug),
+    corpo,
+    rassegnaStampa,
   };
 }
 

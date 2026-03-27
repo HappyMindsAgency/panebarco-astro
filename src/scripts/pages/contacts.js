@@ -77,11 +77,154 @@
     });
   }
 
+  function setupBriefContactForm(cleanups) {
+    var form = document.getElementById("contactBriefForm");
+    if (!form) return;
+
+    var controller = new AbortController();
+    var signal = controller.signal;
+
+    var REQUIRED_FIELD_IDS = [
+      "briefNome",
+      "briefCognome",
+      "briefEmail",
+      "briefTelefono",
+      "briefAzienda",
+      "briefRuolo",
+      "briefPaese",
+      "briefCitta",
+      "briefMessaggio",
+    ];
+
+    function getFieldError(field) {
+      var value = field.value.trim();
+      if (field.tagName === "SELECT") {
+        return value ? "" : "Seleziona un'opzione";
+      }
+      if (field.type === "email") {
+        if (!value) return "Campo obbligatorio";
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "" : "Inserisci un indirizzo email valido";
+      }
+      return value ? "" : "Campo obbligatorio";
+    }
+
+    function setFieldError(fieldId, message) {
+      var field = document.getElementById(fieldId);
+      var errorEl = document.getElementById(fieldId + "-error");
+      if (field) field.classList.toggle("is-brief-invalid", !!message);
+      if (errorEl) {
+        errorEl.hidden = !message;
+        errorEl.textContent = message || "";
+      }
+    }
+
+    function validateAll() {
+      var firstInvalidEl = null;
+
+      REQUIRED_FIELD_IDS.forEach(function (id) {
+        var field = document.getElementById(id);
+        if (!field) return;
+        var err = getFieldError(field);
+        setFieldError(id, err);
+        if (err && !firstInvalidEl) firstInvalidEl = field;
+      });
+
+      // motivo: almeno una checkbox selezionata
+      var motivoChecked = form.querySelectorAll('input[name="motivo"]:checked').length > 0;
+      var motivoErrorEl = document.getElementById("briefMotivo-error");
+      var motivoGroup = document.getElementById("briefMotivoGroup");
+      if (!motivoChecked) {
+        if (motivoErrorEl) { motivoErrorEl.hidden = false; motivoErrorEl.textContent = "Seleziona almeno un'opzione"; }
+        if (motivoGroup) motivoGroup.classList.add("is-brief-invalid");
+        if (!firstInvalidEl) firstInvalidEl = motivoGroup;
+      } else {
+        if (motivoErrorEl) { motivoErrorEl.hidden = true; motivoErrorEl.textContent = ""; }
+        if (motivoGroup) motivoGroup.classList.remove("is-brief-invalid");
+      }
+
+      // privacy: obbligatorio
+      var privacyField = document.getElementById("briefPrivacy");
+      if (privacyField && !privacyField.checked) {
+        setFieldError("briefPrivacy", "Devi accettare la Privacy Policy per procedere");
+        if (!firstInvalidEl) firstInvalidEl = privacyField;
+      } else {
+        setFieldError("briefPrivacy", "");
+      }
+
+      return firstInvalidEl;
+    }
+
+    function setSubmitLoading(loading) {
+      var btn = document.getElementById("briefFormSubmit");
+      if (!btn) return;
+      btn.disabled = loading;
+      var textEl = btn.querySelector(".contacts-brief-submit__text");
+      var loadingEl = btn.querySelector(".contacts-brief-submit__loading");
+      if (textEl) textEl.hidden = loading;
+      if (loadingEl) loadingEl.hidden = !loading;
+    }
+
+    function collectFormData() {
+      var data = {};
+      var fd = new FormData(form);
+      fd.forEach(function (value, key) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          if (!Array.isArray(data[key])) data[key] = [data[key]];
+          data[key].push(value);
+        } else {
+          data[key] = value;
+        }
+      });
+      return data;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var firstInvalidEl = validateAll();
+      if (firstInvalidEl) {
+        firstInvalidEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (typeof firstInvalidEl.focus === "function") {
+          setTimeout(function () { firstInvalidEl.focus(); }, 350);
+        }
+        return;
+      }
+
+      setSubmitLoading(true);
+
+      var apiErrorEl = document.getElementById("briefFormApiError");
+      if (apiErrorEl) apiErrorEl.hidden = true;
+
+      var data = collectFormData();
+
+      // TODO: sostituire con l'endpoint reale
+      console.log("[ContactBriefForm] Invio dati:", data);
+      var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
+
+      mockRequest
+        .then(function () {
+          var successEl = document.getElementById("briefFormSuccess");
+          if (successEl) successEl.hidden = false;
+          form.hidden = true;
+        })
+        .catch(function (err) {
+          console.error("[ContactBriefForm] Errore invio:", err);
+          if (apiErrorEl) apiErrorEl.hidden = false;
+          setSubmitLoading(false);
+        });
+    }, { signal: signal });
+
+    cleanups.push(function () {
+      controller.abort();
+    });
+  }
+
   function initContactsPage() {
     cleanupContactsPage();
 
     const cleanups = [];
     setupContactsTabs(cleanups);
+    setupBriefContactForm(cleanups);
 
     cleanupContactsPage = function () {
       cleanups.forEach(function (dispose) {

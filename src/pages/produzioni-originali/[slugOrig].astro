@@ -22,6 +22,8 @@ const introParagraphs = (original.intro || "")
 const creditsHtml = original.credits ? micromark(original.credits) : "";
 const hasHeaderMeta = Boolean(original.settoreTitolo || original.titolo || original.anno || original.tipologia);
 const hasIntro = introParagraphs.length > 0;
+const hasCorpo = original.corpo && original.corpo.length > 0;
+const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 0;
 ---
 
 <Layout
@@ -92,6 +94,159 @@ const hasIntro = introParagraphs.length > 0;
       </section>
     )}
 
+    {/* ── DynamicZone: corpo ───────────────────────────────────────────── */}
+    {hasCorpo && original.corpo.map((block: any) => (
+      <>
+        {block.type === "titolo" && block.titolo && (
+          <section class="section-space section-space--tight original-dz-section">
+            <div class="container">
+              <h2 class="original-dz-title">{block.titolo}</h2>
+            </div>
+          </section>
+        )}
+
+        {block.type === "contenuto" && block.contenuto && (
+          <section class="section-space section-space--tight original-dz-section">
+            <div class="container">
+              <div class="original-dz-contenuto" set:html={micromark(block.contenuto, { allowDangerousHtml: true })} />
+            </div>
+          </section>
+        )}
+
+        {block.type === "media" && block.url && (
+          <section class="section-space section-space--tight original-dz-section original-dz-media">
+            <div class="container">
+              {block.mime.startsWith("video/") ? (
+                <video
+                  class="original-dz-video"
+                  src={block.url}
+                  controls
+                  playsinline
+                />
+              ) : (
+                <img
+                  class="original-dz-img"
+                  src={block.url}
+                  alt={block.alt}
+                  loading="lazy"
+                />
+              )}
+            </div>
+          </section>
+        )}
+
+        {block.type === "masonry" && block.items.length > 0 && (
+          <section class="section-space section-space--tight original-dz-section">
+            <div class="container">
+              <div class="original-dz-masonry">
+                {block.items.map((item: any) => (
+                  item.mime.startsWith("video/") ? (
+                    <video
+                      class="original-dz-masonry-item"
+                      src={item.url}
+                      muted
+                      playsinline
+                      loop
+                      aria-label={item.alt || undefined}
+                    />
+                  ) : (
+                    <img
+                      class="original-dz-masonry-item"
+                      src={item.url}
+                      alt={item.alt}
+                      loading="lazy"
+                    />
+                  )
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {block.type === "slider" && block.items.length > 0 && (
+          <section class="section-space section-space--tight original-dz-section">
+            <div class="container">
+              <div
+                class="original-dz-slider-wrap"
+                data-dz-slider
+                role="region"
+                aria-roledescription="carosello"
+                aria-label="Galleria immagini"
+              >
+                <div class="original-dz-slider-viewport">
+                  <div class="original-dz-slider-track" data-dz-slider-track>
+                    {block.items.map((item: any, i: number) => (
+                      <div
+                        class="original-dz-slide"
+                        data-dz-slide
+                        role="group"
+                        aria-roledescription="diapositiva"
+                        aria-label={`${i + 1} di ${block.items.length}`}
+                        aria-hidden={i > 0 ? "true" : "false"}
+                      >
+                        {item.mime.startsWith("video/") ? (
+                          <video
+                            class="original-dz-slide-media"
+                            src={item.url}
+                            muted
+                            playsinline
+                            loop
+                            aria-label={item.alt || undefined}
+                          />
+                        ) : (
+                          <img
+                            class="original-dz-slide-media"
+                            src={item.url}
+                            alt={item.alt}
+                            loading={i === 0 ? "eager" : "lazy"}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  class="original-dz-slider-nav original-dz-slider-nav--prev"
+                  type="button"
+                  data-dz-slider-prev
+                  aria-label="Immagine precedente"
+                >
+                  <i class="bi bi-chevron-left" aria-hidden="true" />
+                </button>
+                <button
+                  class="original-dz-slider-nav original-dz-slider-nav--next"
+                  type="button"
+                  data-dz-slider-next
+                  aria-label="Immagine successiva"
+                >
+                  <i class="bi bi-chevron-right" aria-hidden="true" />
+                </button>
+
+                <div class="original-dz-slider-dots" data-dz-slider-dots aria-label="Navigazione diapositive" />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {block.type === "embed" && block.src && (
+          <section class="section-space section-space--tight original-dz-section">
+            <div class="container">
+              <div class="ratio ratio-16x9 shadow-lg overflow-hidden">
+                <iframe
+                  src={block.src}
+                  title={`Video — ${original.titolo}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </section>
+        )}
+      </>
+    ))}
+
     {original.credits && (
       <section class="section-space section-space--soft credits-section">
         <div class="container">
@@ -101,6 +256,60 @@ const hasIntro = introParagraphs.length > 0;
               <h2 class="page-title-uniform text-white text-uppercase mb-4">Credits</h2>
               <Fragment set:html={creditsHtml} />
             </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* ── DynamicZone: rassegnaStampa ──────────────────────────────────── */}
+    {hasRassegna && (
+      <section class="section-space section-space--soft original-rassegna">
+        <div class="container">
+          <hr class="credits-divider mt-0 mb-5" />
+          <h2 class="page-title-uniform text-white text-uppercase mb-4">Rassegna Stampa</h2>
+          <div class="original-rassegna-list">
+            {original.rassegnaStampa.map((item: any) => (
+              <>
+                {item.type === "link" && item.url && (
+                  <a
+                    class="original-rassegna-item original-rassegna-link"
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="original-rassegna-icon" aria-hidden="true">
+                      <i class="bi bi-link-45deg" />
+                    </span>
+                    <span class="original-rassegna-text">{item.url}</span>
+                    <span class="original-rassegna-arrow" aria-hidden="true">
+                      <i class="bi bi-arrow-up-right" />
+                    </span>
+                  </a>
+                )}
+                {item.type === "file" && item.url && (
+                  <a
+                    class="original-rassegna-item original-rassegna-file"
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                  >
+                    <span class="original-rassegna-icon" aria-hidden="true">
+                      <i class="bi bi-file-earmark-text" />
+                    </span>
+                    <span class="original-rassegna-text">{item.name}</span>
+                    {(item.ext || item.size > 0) && (
+                      <span class="original-rassegna-meta">
+                        {item.ext}{item.ext && item.size > 0 ? " · " : ""}{item.size > 0 ? `${Math.round((item.size / 1024) * 10) / 10} KB` : ""}
+                      </span>
+                    )}
+                    <span class="original-rassegna-arrow" aria-hidden="true">
+                      <i class="bi bi-download" />
+                    </span>
+                  </a>
+                )}
+              </>
+            ))}
           </div>
         </div>
       </section>
@@ -167,4 +376,356 @@ const hasIntro = introParagraphs.length > 0;
       border-radius: 0.5rem;
     }
   }
+
+  // ── DynamicZone: corpo ──────────────────────────────────────────────────
+
+  .original-dz-section {
+    &:first-of-type {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 3rem;
+    }
+  }
+
+  // shared.titolo
+  .original-dz-title {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+
+  // shared.contenuto
+  .original-dz-contenuto {
+    max-width: 72ch;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    line-height: 1.7;
+
+    :global(h1),
+    :global(h2),
+    :global(h3) {
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: 0.5em;
+    }
+
+    :global(p) {
+      margin-bottom: 1em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    :global(a) {
+      color: #009FE3;
+      text-underline-offset: 0.2em;
+    }
+
+    :global(strong),
+    :global(b) {
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  // shared.media — single image or video
+  .original-dz-img,
+  .original-dz-video {
+    display: block;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .original-dz-video {
+    aspect-ratio: 16 / 9;
+    background: #111;
+  }
+
+  // shared.masonry
+  .original-dz-masonry {
+    columns: 2;
+    column-gap: 0.5rem;
+
+    @media (min-width: 768px) {
+      columns: 3;
+      column-gap: 0.75rem;
+    }
+  }
+
+  .original-dz-masonry-item {
+    display: block;
+    width: 100%;
+    border-radius: 0.35rem;
+    margin-bottom: 0.5rem;
+    break-inside: avoid;
+    object-fit: cover;
+
+    @media (min-width: 768px) {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  // shared.slider
+  .original-dz-slider-wrap {
+    position: relative;
+    user-select: none;
+  }
+
+  .original-dz-slider-viewport {
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  .original-dz-slider-track {
+    display: flex;
+    transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .original-dz-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .original-dz-slide-media {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  // Nav buttons
+  .original-dz-slider-nav {
+    position: absolute;
+    top: calc(50% - 1.5rem); // compensate dots height
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(0, 159, 227, 0.88);
+      transform: translateY(-50%) scale(1.1);
+      outline: none;
+    }
+
+    &--prev { left: 0.75rem; }
+    &--next { right: 0.75rem; }
+
+    i {
+      display: block;
+      line-height: 1;
+      -webkit-text-stroke: 0.3px currentColor;
+    }
+  }
+
+  // Dots
+  .original-dz-slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+  }
+
+  :global(.original-dz-slider-dot) {
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.28);
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    &.is-active {
+      background: #009FE3;
+      transform: scale(1.35);
+    }
+
+    &:hover:not(.is-active) {
+      background: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  // ── DynamicZone: rassegnaStampa ─────────────────────────────────────────
+
+  .original-rassegna-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .original-rassegna-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.88);
+    transition: background 0.18s ease, border-color 0.18s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+  }
+
+  .original-rassegna-icon {
+    font-size: 1.25rem;
+    flex: 0 0 auto;
+    color: #009FE3;
+    line-height: 1;
+  }
+
+  .original-rassegna-text {
+    flex: 1 1 auto;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .original-rassegna-meta {
+    flex: 0 0 auto;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.45);
+    white-space: nowrap;
+  }
+
+  .original-rassegna-arrow {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.35);
+    line-height: 1;
+  }
 </style>
+
+<script is:inline>
+  (function () {
+    var cleanupDzSliders = function () {};
+
+    function setupDzSliders() {
+      cleanupDzSliders();
+      var cleanups = [];
+
+      document.querySelectorAll("[data-dz-slider]").forEach(function (root) {
+        var track = root.querySelector("[data-dz-slider-track]");
+        var slides = Array.from(root.querySelectorAll("[data-dz-slide]"));
+        var prevBtn = root.querySelector("[data-dz-slider-prev]");
+        var nextBtn = root.querySelector("[data-dz-slider-next]");
+        var dotsWrap = root.querySelector("[data-dz-slider-dots]");
+
+        if (!track || slides.length === 0) return;
+
+        // Slider da un solo elemento: nascondi i controlli
+        if (slides.length === 1) {
+          if (prevBtn) prevBtn.hidden = true;
+          if (nextBtn) nextBtn.hidden = true;
+          return;
+        }
+
+        var controller = new AbortController();
+        var signal = controller.signal;
+        var activeIndex = 0;
+
+        function mod(n, m) {
+          return ((n % m) + m) % m;
+        }
+
+        // Build dots
+        var dots = [];
+        if (dotsWrap) {
+          dotsWrap.innerHTML = "";
+          dots = slides.map(function (_, i) {
+            var dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "original-dz-slider-dot";
+            dot.setAttribute("aria-label", "Vai all'immagine " + (i + 1));
+            dot.addEventListener("click", function () { goTo(i); }, { signal: signal });
+            dotsWrap.appendChild(dot);
+            return dot;
+          });
+        }
+
+        function goTo(index) {
+          activeIndex = mod(index, slides.length);
+          track.style.transform = "translateX(" + (-activeIndex * 100) + "%)";
+
+          slides.forEach(function (slide, i) {
+            var isCurrent = i === activeIndex;
+            slide.setAttribute("aria-hidden", isCurrent ? "false" : "true");
+            slide.inert = !isCurrent;
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle("is-active", i === activeIndex);
+            dot.setAttribute("aria-current", i === activeIndex ? "true" : "false");
+          });
+        }
+
+        if (prevBtn) {
+          prevBtn.addEventListener("click", function () { goTo(activeIndex - 1); }, { signal: signal });
+        }
+        if (nextBtn) {
+          nextBtn.addEventListener("click", function () { goTo(activeIndex + 1); }, { signal: signal });
+        }
+
+        // Tastiera: frecce sinistra/destra
+        root.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowLeft") { e.preventDefault(); goTo(activeIndex - 1); }
+          if (e.key === "ArrowRight") { e.preventDefault(); goTo(activeIndex + 1); }
+        }, { signal: signal });
+
+        // Swipe touch/pointer
+        var pointerStartX = 0;
+        root.addEventListener("pointerdown", function (e) {
+          pointerStartX = e.clientX;
+        }, { signal: signal });
+        root.addEventListener("pointerup", function (e) {
+          var diff = e.clientX - pointerStartX;
+          if (Math.abs(diff) > 48) {
+            goTo(diff < 0 ? activeIndex + 1 : activeIndex - 1);
+          }
+        }, { signal: signal });
+
+        goTo(0);
+
+        cleanups.push(function () { controller.abort(); });
+      });
+
+      cleanupDzSliders = function () {
+        cleanups.forEach(function (fn) { fn(); });
+      };
+    }
+
+    if (!window.__dzSliderBound) {
+      document.addEventListener("astro:before-swap", function () { cleanupDzSliders(); });
+      document.addEventListener("astro:page-load", setupDzSliders);
+      window.__dzSliderBound = true;
+    }
+
+    setupDzSliders();
+  })();
+</script>
