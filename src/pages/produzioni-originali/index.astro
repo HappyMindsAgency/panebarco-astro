@@ -68,9 +68,9 @@ const finalCtas = originalsContent.ctas.map((cta) => ({
             </div>
           </div>
 
-          <div class="row g-4 originals-pillars-grid">
+          <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-xl-5 originals-pillars-grid">
             {originalsContent.explore.items.map((area, index) => (
-              <div class="col-12 col-md-6 col-xl-3">
+              <div class="col">
                 <article class:list={["originals-pillar-card", `originals-pillar-card--${area.theme}`]} tabindex="0">
                   <div class="originals-pillar-card__media" aria-hidden="true"></div>
                   <div class="originals-pillar-card__shade" aria-hidden="true"></div>

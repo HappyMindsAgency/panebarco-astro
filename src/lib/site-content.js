@@ -424,12 +424,18 @@ function mapPanebarcosSections(items = [], fallback = {}) {
 
 function mapPortfolioShowcaseItems(items = [], fallbackItems = []) {
   return fallbackItems.map((fallbackItem, index) => {
-    const item = items[index] || {};
+    const item = items[index];
+
+    if (!item) {
+      return { empty: true, slot: pickFirst(fallbackItem.slot) };
+    }
+
     const categories = asArray(item?.categorie_progetto).map((entry) => pickFirst(entry?.titolo)).filter(Boolean);
     const types = asArray(item?.tipologie_progetto).map((entry) => pickFirst(entry?.titolo)).filter(Boolean);
     const tags = [...categories, ...types].filter(Boolean);
 
     return {
+      empty: false,
       title: pickFirst(item?.titolo, fallbackItem.title),
       summary: pickFirst(stripRichTextSyntax(item?.intro), fallbackItem.summary),
       image: resolveMediaUrl(item?.cover, "large", fallbackItem.image),
@@ -737,7 +743,7 @@ export async function getPanebarcosPageContent({ lang = DEFAULT_LANG, fallback }
 }
 
 export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback }) {
-  const [pageResponse, originalsResponse, catalogueResponse] = await Promise.all([
+  const [pageResponse, catalogueResponse] = await Promise.all([
     getSingleDocument("pagina-portfolio", {
       locale: lang,
       status: "published",
@@ -748,16 +754,15 @@ export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback })
             imgTeam: true,
           },
         },
-        intro: {
+        originalsEvidenza: {
           populate: {
-            media: true,
-          },
-        },
-        progettiEvidenza: {
-          populate: {
-            cover: true,
-            categorie_progetto: true,
-            tipologie_progetto: true,
+            originals: {
+              populate: {
+                cover: true,
+                tipologie_progetto: true,
+              },
+            },
+            pulsante: true,
           },
         },
         cta: {
@@ -766,17 +771,6 @@ export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback })
             pulsante: true,
           },
         },
-      },
-    }),
-    getCollectionDocuments("originals", {
-      locale: lang,
-      status: "published",
-      sort: ["updatedAt:desc"],
-      pagination: { page: 1, pageSize: 3 },
-      fields: ["titolo", "slug"],
-      populate: {
-        cover: true,
-        tipologie_progetto: true,
       },
     }),
     getAllCollectionDocuments("progetti", {
@@ -793,10 +787,9 @@ export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback })
   ]);
 
   const page = pageResponse?.data || {};
-  const introParagraphs = splitRichTextParagraphs(page?.intro?.contenuto);
-  const highlightProjects = asArray(page?.progettiEvidenza).length
-    ? asArray(page?.progettiEvidenza).map((project, index) => mapPortfolioProject(project, fallback.highlightProjects[index]))
-    : fallback.highlightProjects;
+  const originalsEvidenza = page?.originalsEvidenza || {};
+  const introParagraphs = splitRichTextParagraphs(originalsEvidenza?.contenuto);
+  const originalsFromRelation = asArray(originalsEvidenza?.originals);
   const catalogueItems = asArray(catalogueResponse?.data);
   const catalogueProjects = catalogueItems.length
     ? catalogueItems.map((project) => mapPortfolioProject(project))
@@ -805,13 +798,13 @@ export async function getPortfolioPageContent({ lang = DEFAULT_LANG, fallback })
   return {
     header: mapHeader(page?.header, fallback.header),
     intro: {
-      title: pickFirst(page?.intro?.titolo, fallback.intro.title),
+      title: pickFirst(originalsEvidenza?.titolo, fallback.intro.title),
       paragraphs: introParagraphs.length ? introParagraphs : fallback.intro.paragraphs,
     },
-    highlightProjects,
+    catalogueTitle: pickFirst(stripRichTextSyntax(page?.tuttiProgetti), fallback.catalogueTitle),
     catalogueProjects,
-    originalsSlides: asArray(originalsResponse?.data).length
-      ? asArray(originalsResponse?.data).map((item, index) => mapOriginalSlide(item, fallback.originalsSlides[index]))
+    originalsSlides: originalsFromRelation.length
+      ? originalsFromRelation.map((item, index) => mapOriginalSlide(item, fallback.originalsSlides[index]))
       : fallback.originalsSlides,
     cta: {
       kicker: pickFirst(page?.cta?.sottotitolo, fallback.cta.kicker),

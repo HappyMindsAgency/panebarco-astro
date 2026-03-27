@@ -202,6 +202,13 @@ body.inner-page {
     white-space: nowrap;
   }
 
+  .portfolio-page .page-hero--studio .page-hero-bgword,
+  .portfolio-page .page-hero--studio .page-hero-title,
+  .portfolio-page .page-hero--studio .page-hero-subtitle {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
   .studio-page .page-hero--studio .page-hero-media {
     position: absolute;
     right: clamp(#{$spacer * 0.6}, 3.6vw, #{$spacer * 2.8});
@@ -2430,7 +2437,6 @@ body.inner-page {
   }
 
   @media (min-width: 992px) {
-    .portfolio-page .portfolio-section-heading .page-title-uniform,
     .originals-page .portfolio-section-heading .page-title-uniform {
       white-space: nowrap;
     }

@@ -14,86 +14,82 @@ const discussLabel = customLabel("Parliamone", lang);
 
 const fallbackSpecialProjects = [
   {
-    title: "Curiosita e formati laterali",
+    title: "Lorem ipsum",
     href: buildPath("paneblog", lang),
     image: "/images/portfolio-cover-01-695x391.jpg",
-    alt: "Storyboard e contenuti laterali Panebarco",
-    summary: "Contenuti nati per sperimentare formati ibridi, linguaggi piu leggeri e materiali che possono vivere anche oltre il progetto principale.",
+    alt: "Lorem ipsum",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     slot: "top-left" as const,
     tags: ["Editoriale", "Format"] as const,
   },
   {
-    title: "Progetti editoriali e racconto",
+    title: "Lorem ipsum",
     href: buildPath("paneblogTravelDiary", lang),
     image: "/images/portfolio-cover-02-695x391.jpg",
-    alt: "Personaggio in una scena editoriale Panebarco",
-    summary: "Appunti visivi, backstage e narrazioni corte pensate per dare continuita al tono dei progetti anche fuori dal set.",
+    alt: "Lorem ipsum",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     slot: "top-right" as const,
     tags: ["Storytelling", "Backstage"] as const,
   },
   {
-    title: "Esperimenti visivi",
+    title: "Lorem ipsum",
     href: buildPath("portfolio", lang),
     image: "/images/portfolio-cover-03-695x391.jpg",
-    alt: "Personaggio illustrato colorato Panebarco",
-    summary: "Piccoli test, variazioni di stile e prove di immaginario che ci aiutano a far evolvere il linguaggio del laboratorio.",
+    alt: "Lorem ipsum",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     slot: "bottom-left" as const,
     tags: ["Visual", "R&D"] as const,
   },
   {
-    title: "Contenuti da archivio vivo",
+    title: "Lorem ipsum",
     href: buildPath("portfolio", lang),
     image: "/images/portfolio-cover-04-695x391.jpg",
-    alt: "Ritratto character-driven Panebarco",
-    summary: "Materiali modulari che restano utili nel tempo, si riattivano facilmente e alimentano una libreria di contenuti sempre pronta a muoversi.",
+    alt: "Lorem ipsum",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     slot: "bottom-right" as const,
     tags: ["Library", "Content"] as const,
   },
-] as const;
+];
 
 const fallbackThoughtCards = [
   {
-    label: "Paneblog",
+    label: "Lorem ipsum",
     href: buildPath("paneblog", lang),
-    summary:
-      "Note veloci da set, studio e lavorazioni: cose raccolte al volo, ma spesso decisive per capire come evolve un progetto.",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     cta: customLabel("Scopri di piu", lang),
     stickerClass: "extras-figma-thought-card__sticker--red",
   },
   {
-    label: "Diario di viaggio",
+    label: "Lorem ipsum dolor",
     href: buildPath("paneblogTravelDiary", lang),
-    summary:
-      "Note veloci da set, studio e lavorazioni: cose raccolte al volo, ma spesso decisive per capire come evolve un progetto.",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     cta: customLabel("Accedi ora", lang),
     stickerClass: "extras-figma-thought-card__sticker--blue",
   },
   {
-    label: "Newsletter",
+    label: "Lorem ipsum sit",
     href: buildPath("contacts", lang),
-    summary:
-      "Aggiornamenti essenziali su nuove uscite, materiali utili e direzioni che vale la pena seguire senza troppo rumore intorno.",
+    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     cta: customLabel("Accedi ora", lang),
     stickerClass: "extras-figma-thought-card__sticker--violet",
   },
 ] as const;
 
-const fallbackSocialLibrary = {
-  eyebrow: "PSL",
-  title: "Panebarco Social Library",
-  body:
-    "Una raccolta in movimento di contenuti, frammenti e materiali da riattivare nel tempo: una libreria viva per raccontare meglio il lavoro, costruire continuita e far circolare ogni progetto oltre il set.",
+/* const fallbackSocialLibrary = {
+  eyebrow: "Lorem",
+  title: "Lorem ipsum",
+  body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   ctaLabel: customLabel("Scopri di piu", lang),
   ctaHref: buildPath("contacts", lang),
   background: "/images/panebarco-social-library.jpg",
-};
+}; */
 
 const fallbackNewsletter = {
-  kicker: "Vuoi ricevere gli aggiornamenti?",
-  title: "ISCRIVITI ALLA NEWSLETTER.",
-  buttonLabel: "Contattaci",
+  kicker: "",
+  title: "LOREM IPSUM.",
+  buttonLabel: "Lorem ipsum",
   figureSrc: "/images/lo-animiamo-noi.png",
-  figureAlt: "Mascotte Panebarco",
+  figureAlt: "Lorem ipsum",
   background: "#30997b",
 };
 
@@ -149,7 +145,7 @@ function stripHtml(value) {
     .trim();
 }
 
-function richTextParagraphs(value) {
+/* function richTextParagraphs(value) {
   const html = String(value || "");
   const paragraphs = Array.from(html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi), (match) => stripHtml(match[1])).filter(Boolean);
 
@@ -159,7 +155,7 @@ function richTextParagraphs(value) {
   if (!plainText) return [];
 
   return plainText.split(/\n+/).map((item) => item.trim()).filter(Boolean);
-}
+} */
 
 function getMediaSrc(media, fallback = "") {
   if (!media) return fallback;
@@ -199,11 +195,11 @@ const page = pageResponse?.data || {};
 
 const header = {
   backgroundVideoSrc: getMediaSrc(page.header?.mediaBackground, "/images/panebarco-commercial-video.mp4"),
-  bgWord: stripHtml(page.header?.titoloTana || "SERVIZI"),
-  title: stripHtml(page.header?.titolo || "E TANTO ALTRO"),
-  subtitle: stripHtml(page.header?.sottotitolo || "Idee al confine tra cartoon e realta"),
+  bgWord: stripHtml(page.header?.titoloTana || "LOREM"),
+  title: stripHtml(page.header?.titolo || "LOREM IPSUM"),
+  subtitle: stripHtml(page.header?.sottotitolo || "Lorem ipsum dolor sit amet"),
   sideImageSrc: getMediaSrc(page.header?.imgTeam, "/images/hero-commercials.png"),
-  sideImageAlt: getMediaAlt(page.header?.imgTeam, "Hero e tanto altro"),
+  sideImageAlt: getMediaAlt(page.header?.imgTeam, "Lorem ipsum"),
 };
 
 const intro = {

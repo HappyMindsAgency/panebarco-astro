@@ -11,28 +11,28 @@ const lang = getLangFromPath(Astro.url.pathname);
 const storyFallback = {
   header: {
     bgWord: "LA TANA",
-    title: "STORIA DI UN'AZIENDA MUTANTE",
-    subtitle: "Supporto creativo, produttivo e operativo lungo tutto il processo",
+    title: "Lorem ipsum dolor sit amet",
+    subtitle: "Lorem ipsum dolor sit amet",
     backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
     sideImageSrc: "/images/lo-studio-panebarco-teams.png",
-    sideImageAlt: "Team Panebarco",
+    sideImageAlt: "Lorem ipsum",
   },
   intro: {
     mediaSrc: "/images/lo-studio-img-intro.png",
-    mediaAlt: "Illustrazione intro lo studio",
+    mediaAlt: "Lorem ipsum",
   },
   timeline: {
-    title: "Questa e la storia di un'azienda mutante",
+    title: "Lorem ipsum dolor sit amet",
     imageSrc: "/images/lo-studi-storia-panebarco.png",
-    imageAlt: "Illustrazione storia Panebarco",
+    imageAlt: "Lorem ipsum",
   },
   cta: {
     imageSrc: "/images/cta-ci-vediamo-agli-oscar.png",
-    imageAlt: "Mascotte Panebarco",
+    imageAlt: "Lorem ipsum",
   },
   seo: {
-    title: "Storia di un'azienda mutante - Panebarco",
-    description: "Storia di un'azienda mutante - Panebarco",
+    title: "Lorem ipsum",
+    description: "Lorem ipsum dolor sit amet",
   },
 };
 function hasStoryCta(
@@ -104,14 +104,14 @@ const storyCta = hasStoryCta(storyContent.cta) ? storyContent.cta : null;
     {hasTimeline && (
       <section class="studio-timeline section-space">
         <div class="container">
-          {storyContent.timeline.title && (
+          {/*storyContent.timeline.title && (
             <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">{storyContent.timeline.title}</h2>
           )}
           {storyContent.timeline.content && (
             <div class="studio-timeline-intro">
               <RitchText block={storyContent.timeline.content} className="story-mutant-timeline-richtext" />
             </div>
-          )}
+          )*/}
 
           {storyContent.timeline.cards.length > 0 && (
             <>

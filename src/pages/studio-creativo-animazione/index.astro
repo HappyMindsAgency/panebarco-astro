@@ -11,52 +11,52 @@ const lang = getLangFromPath(Astro.url.pathname);
 const studioFallback = {
   header: {
     bgWord: "LA TANA",
-    title: "LO STUDIO",
-    subtitle: "Idee al confine tra cartoon e realtà",
+    title: "Lorem ipsum",
+    subtitle: "Lorem ipsum dolor sit amet",
     backgroundVideoSrc: "/images/panebarco-studio-video.mp4",
     sideImageSrc: "/images/lo-studio-panebarco-teams.png",
-    sideImageAlt: "Team Panebarco",
+    sideImageAlt: "Lorem ipsum",
   },
   intro: {
-    title: "Storia di un'azienda mutante",
+    title: "Lorem ipsum dolor sit amet",
     paragraphs: [
-      "Duis in nibh egestas, facilisis magna ac, sagittis felis. Curabitur sagittis nisi non porttitor ullamcorper. Proin mattis, lacus eu condimentum dapibus, turpis lectus pellentesque mauris, vitae ornare nunc leo et justo.",
-      "Pellentesque tempus elementum aliquet. Etiam commodo elit ut mi tristique laoreet. Donec ac enim vestibulum, sagittis urna sit amet, posuere ex.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     ],
     mediaSrc: "/images/lo-studio-img-intro.png",
-    mediaAlt: "Illustrazione intro lo studio",
+    mediaAlt: "Lorem ipsum",
     button: {
-      label: "Leggi la storia",
+      label: "Lorem ipsum",
       href: buildPath("studioStory", lang),
     },
   },
   protagonists: {
-    title: "I protagonisti siamo tutti noi... i Panebarcos",
+    title: "Lorem ipsum dolor sit amet",
     paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     ],
-    imageAlt: "Il team Panebarcos in studio",
+    imageAlt: "Lorem ipsum",
     images: [
-      { src: "/images/lo-studio-panebarcos-01.jpg", alt: "Il team Panebarcos in studio" },
-      { src: "/images/lo-studio-panebarcos-02.jpg", alt: "Il team Panebarcos in studio" },
-      { src: "/images/lo-studio-panebarcos-03.jpg", alt: "Il team Panebarcos in studio" },
-      { src: "/images/lo-studio-panebarcos-04.jpg", alt: "Il team Panebarcos in studio" },
+      { src: "/images/lo-studio-panebarcos-01.jpg", alt: "Lorem ipsum" },
+      { src: "/images/lo-studio-panebarcos-02.jpg", alt: "Lorem ipsum" },
+      { src: "/images/lo-studio-panebarcos-03.jpg", alt: "Lorem ipsum" },
+      { src: "/images/lo-studio-panebarcos-04.jpg", alt: "Lorem ipsum" },
     ],
   },
   cta: {
-    kicker: "Spoiler sul finale?",
-    title: "CI VEDIAMO AGLI OSCAR",
-    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim",
+    kicker: "Lorem ipsum",
+    title: "Lorem ipsum dolor sit amet",
+    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     imageSrc: "/images/lo-studio-oscar.png",
-    imageAlt: "Personaggi con Oscar",
+    imageAlt: "Lorem ipsum",
     button: {
-      label: "Conosci i Panebarcos",
+      label: "Lorem ipsum",
       href: buildPath("studioOscars", lang),
     },
   },
   seo: {
-    title: "Studio - Panebarco",
-    description: "Studio Panebarco",
+    title: "Lorem ipsum",
+    description: "Lorem ipsum dolor sit amet",
   },
 };
 const studioContent = await getStudioPageContent({ lang, fallback: studioFallback });
@@ -219,7 +219,7 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12 col-xl-10 studio-panebarcos-intro-inner text-start text-md-center">
-              <h2 class="page-title-uniform">{studioContent.protagonists.title}</h2>
+              <h2 class="page-title-uniform" hidden>{studioContent.protagonists.title}</h2>
               <RitchText block={studioContent.protagonists.content} className="studio-panebarcos-richtext" />
             </div>
           </div>

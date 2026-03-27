@@ -1,5 +1,6 @@
 ---
 interface PortfolioShowcaseItem {
+  empty?: boolean;
   title: string;
   summary: string;
   image: string;
@@ -46,7 +47,7 @@ const hasCta = Boolean(ctaHref && ctaLabel);
 
     <div class="portfolio-grid">
       {items.map((item) => (
-        item.href ? (
+        item.empty ? null : item.href ? (
           <a
             class:list={["portfolio-item", item.slot, "text-decoration-none"]}
             href={item.href}
