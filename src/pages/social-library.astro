@@ -1,0 +1,151 @@
+---
+import CmsContentRenderer from "../components/cms/CmsContentRenderer.astro";
+import HeroStyStudio from "../components/HeroStyStudio.astro";
+import SocialLibraryForm from "../components/SocialLibraryForm.astro";
+import { getLangFromPath } from "../i18n/routing";
+import { getSocialLibraryPageContent } from "../lib/site-content";
+import Layout from "../layouts/Layout.astro";
+
+const lang = getLangFromPath(Astro.url.pathname);
+
+const socialLibraryFallback = {
+  name: "",
+  header: {
+    bgWord: "",
+    title: "",
+    subtitle: "",
+    backgroundVideoSrc: "",
+    sideImageSrc: "",
+    sideImageAlt: "",
+    showSideImage: false,
+  },
+  content: "",
+  seo: {
+    title: "Social Library | Panebarco",
+    description: "Esplora la Social Library di Panebarco e invia una richiesta di prenotazione.",
+  },
+};
+
+const pageContent = await getSocialLibraryPageContent({
+  lang,
+  fallback: socialLibraryFallback,
+});
+
+const heroTitle = pageContent.header.title || pageContent.name;
+const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
+---
+
+<Layout
+  title={pageContent.seo.title}
+  description={pageContent.seo.description}
+  useInnerStyles={true}
+  lang={lang}
+  headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}
+>
+  <main class="social-library-page studio-page">
+    <HeroStyStudio
+      backgroundVideoSrc={pageContent.header.backgroundVideoSrc}
+      bgWord={pageContent.header.bgWord}
+      title={heroTitle}
+      subtitle={pageContent.header.subtitle}
+      sideImageSrc={pageContent.header.sideImageSrc}
+      sideImageAlt={pageContent.header.sideImageAlt}
+      showSideImage={pageContent.header.showSideImage}
+      className="hero-sty-studio page-hero page-hero--studio"
+    />
+
+    <section class="social-library-main">
+      <div class="container">
+        <div class="row g-4 g-xl-5 align-items-start">
+          <div class="col-12 col-xl-6">
+            {hasEditorialContent && (
+              <section class="social-library-editorial" aria-labelledby="socialLibraryEditorialTitle">
+                <p class="social-library-section-kicker">Contenuto editoriale</p>
+                {pageContent.name && (
+                  <h2 id="socialLibraryEditorialTitle" class="page-title-uniform">
+                    {pageContent.name}
+                  </h2>
+                )}
+                {pageContent.content && (
+                  <CmsContentRenderer
+                    kind="richText"
+                    markdown={pageContent.content}
+                    className="social-library-editorial__content"
+                  />
+                )}
+              </section>
+            )}
+          </div>
+
+          <div class="col-12 col-xl-6">
+            <SocialLibraryForm lang={lang} />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .social-library-page {
+    background:
+      radial-gradient(circle at top left, rgba(0, 159, 227, 0.1), transparent 32%),
+      linear-gradient(180deg, #f7fbff 0%, #ffffff 32%, #f5f7fb 100%);
+  }
+
+  .social-library-main {
+    padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(4rem, 7vw, 6.5rem);
+  }
+
+  .social-library-editorial,
+  .social-library-form-section {
+    height: 100%;
+  }
+
+  .social-library-editorial {
+    padding: clamp(1.5rem, 2vw, 2rem) 0;
+  }
+
+  .social-library-section-kicker {
+    margin-bottom: 0.85rem;
+    color: var(--bs-primary);
+    font-size: 0.84rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .social-library-editorial__content {
+    margin-top: 1.4rem;
+    color: rgba(33, 38, 46, 0.88);
+  }
+
+  .social-library-editorial__content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .social-library-editorial__content :global(img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+    border-radius: 1.5rem;
+  }
+
+  .social-library-editorial__content :global(a) {
+    color: inherit;
+    text-decoration-thickness: 0.08em;
+  }
+
+  .social-library-editorial__content :global(h2),
+  .social-library-editorial__content :global(h3),
+  .social-library-editorial__content :global(h4) {
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 1199.98px) {
+    .social-library-editorial {
+      padding-bottom: 0;
+    }
+  }
+</style>

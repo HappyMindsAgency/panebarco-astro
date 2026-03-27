@@ -1,0 +1,287 @@
+---
+import { buildPath } from "../i18n/routing";
+
+interface Props {
+  lang?: "it" | "en";
+}
+
+const { lang = "it" } = Astro.props;
+const privacyHref = buildPath("privacyPolicyPsl", lang);
+---
+
+<section class="social-library-form-section" aria-labelledby="socialLibraryFormTitle">
+  <div class="social-library-form-card">
+    <div class="social-library-form-intro">
+      <p class="social-library-form-kicker">Prenotazione</p>
+      <h2 id="socialLibraryFormTitle" class="social-library-form-title">Richiedi un titolo dalla Social Library</h2>
+      <p class="social-library-form-lead mb-0">
+        Compila il modulo con i dati essenziali. Il payload viene preparato lato client per una futura integrazione API.
+      </p>
+    </div>
+
+    <div class="social-library-form-alert alert alert-success" data-form-success hidden role="alert">
+      Richiesta simulata correttamente. Controlla la console per il payload JSON.
+    </div>
+
+    <div class="social-library-form-alert alert alert-danger" data-form-error hidden role="alert"></div>
+
+    <form class="row g-3 needs-validation" data-social-library-form novalidate>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryNome">Nome</label>
+        <input class="form-control" id="socialLibraryNome" name="nome" type="text" autocomplete="given-name" required />
+        <div class="invalid-feedback">Inserisci il nome.</div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryCognome">Cognome</label>
+        <input class="form-control" id="socialLibraryCognome" name="cognome" type="text" autocomplete="family-name" required />
+        <div class="invalid-feedback">Inserisci il cognome.</div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryEmail">Email</label>
+        <input class="form-control" id="socialLibraryEmail" name="email" type="email" autocomplete="email" inputmode="email" required />
+        <div class="invalid-feedback">Inserisci un indirizzo email valido.</div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryTelefono">Telefono</label>
+        <input class="form-control" id="socialLibraryTelefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
+        <div class="invalid-feedback">Inserisci il numero di telefono.</div>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label" for="socialLibraryLinkCatalogo">Link catalogo</label>
+        <input class="form-control" id="socialLibraryLinkCatalogo" name="linkCatalogo" type="url" inputmode="url" placeholder="https://" required />
+        <div class="invalid-feedback">Inserisci un URL valido del catalogo o del riferimento.</div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryDataRitiro">Data ritiro</label>
+        <input class="form-control" id="socialLibraryDataRitiro" name="dataRitiro" type="date" required />
+        <div class="invalid-feedback">Seleziona la data di ritiro.</div>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label" for="socialLibraryMessaggio">Messaggio</label>
+        <textarea class="form-control" id="socialLibraryMessaggio" name="messaggio" rows="5" required></textarea>
+        <div class="invalid-feedback">Inserisci un messaggio.</div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-check">
+          <input class="form-check-input" id="socialLibraryNewsletter" name="newsletter" type="checkbox" />
+          <label class="form-check-label" for="socialLibraryNewsletter">
+            Voglio ricevere aggiornamenti sulla Social Library.
+          </label>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-check">
+          <input class="form-check-input" id="socialLibraryPrivacy" name="privacy" type="checkbox" required />
+          <label class="form-check-label" for="socialLibraryPrivacy">
+            Ho letto e accetto l'<a href={privacyHref}>informativa privacy</a>.
+          </label>
+          <div class="invalid-feedback">Devi accettare l'informativa privacy.</div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-cta btn-cta--blue btn-pill social-library-submit" type="submit" data-submit-button>
+          <span data-submit-label>Invia richiesta</span>
+          <span data-submit-loading hidden>
+            <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+            Invio in corso...
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector("[data-social-library-form]");
+
+  if (form instanceof HTMLFormElement) {
+    const submitButton = form.querySelector("[data-submit-button]");
+    const submitLabel = form.querySelector("[data-submit-label]");
+    const submitLoading = form.querySelector("[data-submit-loading]");
+    const successMessage = document.querySelector("[data-form-success]");
+    const errorMessage = document.querySelector("[data-form-error]");
+
+    const state = {
+      nome: "",
+      cognome: "",
+      email: "",
+      telefono: "",
+      messaggio: "",
+      linkCatalogo: "",
+      dataRitiro: "",
+      newsletter: false,
+      privacy: false,
+    };
+
+    const urlPattern = /^https?:\/\/.+/i;
+
+    const setLoading = (isLoading) => {
+      if (!(submitButton instanceof HTMLButtonElement)) return;
+
+      submitButton.disabled = isLoading;
+      if (submitLabel instanceof HTMLElement) submitLabel.hidden = isLoading;
+      if (submitLoading instanceof HTMLElement) submitLoading.hidden = !isLoading;
+    };
+
+    const showError = (message) => {
+      if (!(errorMessage instanceof HTMLElement)) return;
+      errorMessage.textContent = message;
+      errorMessage.hidden = false;
+    };
+
+    const clearMessages = () => {
+      if (successMessage instanceof HTMLElement) successMessage.hidden = true;
+      if (errorMessage instanceof HTMLElement) {
+        errorMessage.hidden = true;
+        errorMessage.textContent = "";
+      }
+    };
+
+    const syncState = () => {
+      const formData = new FormData(form);
+
+      state.nome = String(formData.get("nome") || "").trim();
+      state.cognome = String(formData.get("cognome") || "").trim();
+      state.email = String(formData.get("email") || "").trim();
+      state.telefono = String(formData.get("telefono") || "").trim();
+      state.messaggio = String(formData.get("messaggio") || "").trim();
+      state.linkCatalogo = String(formData.get("linkCatalogo") || "").trim();
+      state.dataRitiro = String(formData.get("dataRitiro") || "").trim();
+      state.newsletter = formData.get("newsletter") !== null;
+      state.privacy = formData.get("privacy") !== null;
+    };
+
+    const validateForm = () => {
+      syncState();
+
+      const hasValidCatalogLink = urlPattern.test(state.linkCatalogo);
+
+      const linkField = form.elements.namedItem("linkCatalogo");
+      if (linkField instanceof HTMLInputElement) {
+        linkField.setCustomValidity(hasValidCatalogLink ? "" : "Inserisci un URL valido.");
+      }
+
+      const isNativeValid = form.checkValidity();
+      form.classList.add("was-validated");
+      return isNativeValid && hasValidCatalogLink;
+    };
+
+    const createPayload = () => ({
+      nome: state.nome,
+      cognome: state.cognome,
+      email: state.email,
+      telefono: state.telefono,
+      messaggio: state.messaggio,
+      linkCatalogo: state.linkCatalogo,
+      dataRitiro: new Date(state.dataRitiro).toISOString(),
+      newsletter: state.newsletter,
+      privacy: state.privacy,
+      source: "social-library",
+      createdAt: new Date().toISOString(),
+    });
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      clearMessages();
+
+      if (!validateForm()) {
+        showError("Controlla i campi obbligatori evidenziati prima di inviare.");
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const payload = createPayload();
+        console.log(payload);
+        await new Promise((resolve) => window.setTimeout(resolve, 900));
+
+        form.reset();
+        form.classList.remove("was-validated");
+        Object.assign(state, {
+          nome: "",
+          cognome: "",
+          email: "",
+          telefono: "",
+          messaggio: "",
+          linkCatalogo: "",
+          dataRitiro: "",
+          newsletter: false,
+          privacy: false,
+        });
+
+        if (successMessage instanceof HTMLElement) successMessage.hidden = false;
+      } catch (error) {
+        console.error(error);
+        showError("Invio simulato non riuscito. Riprova.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    form.addEventListener("input", () => {
+      syncState();
+      clearMessages();
+    });
+
+    form.addEventListener("submit", handleSubmit);
+  }
+</script>
+
+<style>
+  .social-library-form-card {
+    padding: clamp(1.5rem, 3vw, 3rem);
+    border-radius: 2rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(246, 250, 255, 0.98)),
+      #fff;
+    box-shadow:
+      0 1.25rem 3rem rgba(15, 23, 42, 0.08),
+      inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+  }
+
+  .social-library-form-intro {
+    margin-bottom: 1.75rem;
+  }
+
+  .social-library-form-kicker {
+    margin-bottom: 0.75rem;
+    color: var(--bs-primary);
+    font-size: 0.84rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .social-library-form-title {
+    margin-bottom: 0.9rem;
+    font-size: clamp(1.7rem, 1.3rem + 1vw, 2.35rem);
+    line-height: 1.08;
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
+  .social-library-form-lead {
+    max-width: 60ch;
+    color: rgba(33, 38, 46, 0.8);
+  }
+
+  .social-library-form-alert {
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+  }
+
+  .social-library-submit[disabled] {
+    opacity: 0.8;
+    cursor: progress;
+  }
+</style>

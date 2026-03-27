@@ -1188,3 +1188,34 @@ export async function getContactsPageContent({ lang = DEFAULT_LANG, fallback }) 
     },
   };
 }
+
+export async function getSocialLibraryPageContent({ lang = DEFAULT_LANG, fallback }) {
+  const response = await getSingleDocument("pagina-panebarco-social-library", {
+    locale: lang,
+    status: "published",
+    fields: ["documentId", "nomePagina", "contenuto"],
+    populate: {
+      header: {
+        populate: {
+          mediaBackground: true,
+          imgTeam: true,
+        },
+      },
+      seo: {
+        fields: ["metaTitle", "metaDescription"],
+      },
+    },
+  });
+
+  const page = response?.data || {};
+
+  return {
+    name: pickFirst(page?.nomePagina, fallback.name),
+    header: mapHeader(page?.header, fallback.header),
+    content: pickFirst(page?.contenuto, fallback.content),
+    seo: {
+      title: pickFirst(page?.seo?.metaTitle, page?.nomePagina, fallback.seo?.title),
+      description: pickFirst(page?.seo?.metaDescription, fallback.seo?.description),
+    },
+  };
+}
