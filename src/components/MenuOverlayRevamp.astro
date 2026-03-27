@@ -125,12 +125,12 @@ const defaultPanel = menuItems.find((item) => item.children.length > 0) ?? menuI
       </ul>
 
       <div class="menu-overlay-v2-lang" aria-label={customLabel("a11y.languageSwitch", lang)}>
-        <button class="menu-overlay-v2-lang-btn" type="button" aria-label={customLabel("a11y.switchToEnglish", lang)}>
+        <a class="menu-overlay-v2-lang-btn" href={buildPath("home", "en")} aria-label={customLabel("a11y.switchToEnglish", lang)}>
           <img src="/images/inglese.png" alt="English" />
-        </button>
-        <button class="menu-overlay-v2-lang-btn" type="button" aria-label={customLabel("a11y.switchToItalian", lang)}>
+        </a>
+        <a class="menu-overlay-v2-lang-btn" href={buildPath("home", "it")} aria-label={customLabel("a11y.switchToItalian", lang)}>
           <img src="/images/italiano.png" alt="Italiano" />
-        </button>
+        </a>
       </div>
     </div>
 

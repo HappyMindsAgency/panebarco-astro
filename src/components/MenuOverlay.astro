@@ -82,12 +82,12 @@ const {
     <a class="menu-overlay-link" href={buildPath("contacts", lang)} data-bubble="/images/contatti-raccontaci.png">{customLabel("menu.contacts", lang)}</a>
 
     <div class="menu-lang" aria-label={customLabel("a11y.languageSwitch", lang)}>
-      <button class="menu-lang-btn" type="button" aria-label={customLabel("a11y.switchToEnglish", lang)}>
+      <a class="menu-lang-btn" href={buildPath("home", "en")} aria-label={customLabel("a11y.switchToEnglish", lang)}>
         <img src="/images/inglese.png" alt="English" />
-      </button>
-      <button class="menu-lang-btn" type="button" aria-label={customLabel("a11y.switchToItalian", lang)}>
+      </a>
+      <a class="menu-lang-btn" href={buildPath("home", "it")} aria-label={customLabel("a11y.switchToItalian", lang)}>
         <img src="/images/italiano.png" alt="Italiano" />
-      </button>
+      </a>
     </div>
   </nav>
 

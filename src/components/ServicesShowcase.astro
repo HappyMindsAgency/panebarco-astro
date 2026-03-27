@@ -10,7 +10,7 @@ interface Props {
   title?: string;
   stickerSrc?: string;
   stickerAlt?: string;
-  items?: Array<{
+  items?: ReadonlyArray<{
     title: string;
     href: string;
     image: string;
@@ -70,25 +70,25 @@ const content = {
         title: "Commercials",
         href: buildPath("servicesCommercials", lang),
         image: "/images/servizi-cover-01-340x487.png",
-        summary: "Spots, branded content and videos built to explain, promote and engage with a clear visual identity.",
+        summary: "We create animated videos for brands, companies, and institutions. From script to final rendering, we work together to define style, technique, and tone.",
       },
       {
         title: "Post-production",
         href: buildPath("servicesPost", lang),
         image: "/images/servizi-cover-02-340x487.jpg",
-        summary: "Color, compositing, VFX and finishing to give images rhythm, atmosphere and precision.",
+        summary: "We step in during the final stage of film and audiovisual projects, including live action. Editing, 3D, VFX, compositing, and color grading refine every frame.",
       },
       {
         title: "Service",
         href: buildPath("servicesService", lang),
         image: "/images/servizi-cover-03-340x487.jpg",
-        summary: "Production support and operations across every phase, from kickoff to delivery.",
+        summary: "If you’re looking for a partner for an animation project, we can work as a service provider or executive producer across the full workflow or selected stages.",
       },
       {
         title: "...and more",
         href: buildPath("servicesMore", lang),
         image: "/images/servizi-cover-01-340x487.png",
-        summary: "Special projects, experiments and side ideas that widen the way we work.",
+        summary: "We create special projects, experiments, and initiatives that tell our work from different perspectives, blending research, cross-pollination, and new ideas.",
       },
     ],
   },
@@ -99,13 +99,14 @@ const showcaseTitle = title ?? showcase.title;
 const showcaseStickerSrc = stickerSrc ?? showcase.stickerSrc;
 const showcaseStickerAlt = stickerAlt ?? showcase.stickerAlt;
 const showcaseItems = items?.length ? items : showcase.items;
+const hasSticker = Boolean(showcaseStickerSrc);
 ---
 
 <section id={sectionId} class={sectionClass}>
   <div class={containerClass}>
     <h2 class="section-title section-title-reveal" data-services-showcase-title data-reveal-managed="self">
       <span class="section-title-text">{showcaseTitle}</span>
-      <img class="section-title-sticker" src={showcaseStickerSrc} alt={showcaseStickerAlt} aria-hidden="true" />
+      {hasSticker && <img class="section-title-sticker" src={showcaseStickerSrc} alt={showcaseStickerAlt} aria-hidden="true" />}
     </h2>
     <div class="row g-4 services-box-grid">
       {showcaseItems.map((service) => (

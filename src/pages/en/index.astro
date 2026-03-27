@@ -1,0 +1,1316 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import HeroStyHome from "../../components/HeroStyHome.astro";
+import OriginalsShowcase from "../../components/OriginalsShowcase.astro";
+import PortfolioShowcase from "../../components/PortfolioShowcase.astro";
+import ServicesShowcase from "../../components/ServicesShowcase.astro";
+import mainScriptUrl from "../../scripts/main.js?url";
+import { customLabel } from "../../i18n/labels";
+import { buildPath } from "../../i18n/routing";
+import { getHomeOriginalsShowcaseContent, getPortfolioShowcaseContent } from "../../lib/site-content";
+
+const lang = "en" as const;
+
+const heroContent = {
+  title: customLabel("home.heroTitle", lang),
+  subtitle: customLabel("home.heroSubtitle", lang),
+  videoSrc: "/images/panebarco-commercial-video.mp4",
+  ctaLabel: customLabel("home.heroCta", lang),
+  ctaHref: "#contactsFormTitle",
+};
+
+const introContent = {
+  staticTitle: customLabel("home.introTitleStatic", lang),
+  typingWords: customLabel("home.introTypingWords", lang).split("|"),
+  paragraphs: [
+    customLabel("home.introParagraph1", lang),
+    customLabel("home.introParagraph2", lang),
+  ],
+  imageSrc: "/images/siamo-teams.png",
+  imageAlt: customLabel("home.introImageAlt", lang),
+};
+
+const contactIntro = {
+  title: customLabel("home.contactTitle", lang),
+  lead: customLabel("home.contactLead", lang),
+  formTitle: customLabel("home.contactFormTitle", lang),
+  formLead: customLabel("home.contactFormLead", lang),
+};
+
+const originalsIntro = customLabel("home.originalsIntro", lang);
+const panebarcosTeamHref = `${buildPath("studioTeam", "it")}#team`;
+const briefNeedOptions = [
+  "Commercial / Promotional video",
+  "Post-production / VFX support",
+  "Service / executive production for film or audiovisual projects",
+  "Co-production",
+  "Communication campaign",
+  "Creative consulting",
+  "Other",
+] as const;
+const talentRoleOptions = [
+  "Animation",
+  "Direction",
+  "Compositing",
+  "Production",
+  "Writing",
+  "3D",
+  "Other",
+] as const;
+const talentApplicationOptions = ["Collaboration", "Internship"] as const;
+const servicesItems = [
+  {
+    title: "Commercials",
+    href: buildPath("servicesCommercials", "it"),
+    image: "/images/servizi-commercials-panebarco.jpg",
+    summary: "We create animated videos for brands, companies, and institutions. From script to final rendering, we work together to define style, technique, and tone.",
+  },
+  {
+    title: "Post-production",
+    href: buildPath("servicesPost", "it"),
+    image: "/images/servizi-post-produzione-panebarco.jpg",
+    summary: "We step in during the final stage of film and audiovisual projects, including live action. Editing, 3D, VFX, compositing, and color grading refine every frame.",
+  },
+  {
+    title: "Service",
+    href: buildPath("servicesService", "it"),
+    image: "/images/servizi-service-panebarco.jpg",
+    summary: "If you’re looking for a partner for an animation project, we can work as a service provider or executive producer across the full workflow or selected stages.",
+  },
+  {
+    title: "...and more",
+    href: buildPath("servicesMore", "it"),
+    image: "/images/servizi-tanto-altro-panebarco.jpg",
+    summary: "We create special projects, experiments, and initiatives that tell our work from different perspectives, blending research, cross-pollination, and new ideas.",
+  },
+] as const;
+
+interface ContactCard {
+  icon: string;
+  title: string;
+  text: string;
+  lines: string[];
+  hrefs: string[];
+}
+
+const contactCards: ContactCard[] = [
+  {
+    icon: "bi-envelope-paper-heart",
+    title: customLabel("home.contactEmailTitle", lang),
+    text: customLabel("home.contactEmailText", lang),
+    lines: ["info@panebarco.it"],
+    hrefs: ["mailto:info@panebarco.it"],
+  },
+  {
+    icon: "bi-telephone-forward",
+    title: customLabel("home.contactPhoneTitle", lang),
+    text: customLabel("home.contactPhoneText", lang),
+    lines: ["+39 0544 35012", "+39 338 3693558"],
+    hrefs: ["tel:+39054435012", "tel:+393383693558"],
+  },
+  {
+    icon: "bi-geo-alt",
+    title: customLabel("home.contactAddressTitle", lang),
+    text: customLabel("home.contactAddressText", lang),
+    lines: ["Via Molino, 9", "48121 Ravenna, Italy"],
+    hrefs: ["https://maps.google.com/?q=Via+Molino+9,+48121+Ravenna,+Italy"],
+  },
+] as const;
+
+const originalsShowcase = await getHomeOriginalsShowcaseContent({
+  lang,
+  fallback: {
+    baseHref: buildPath("originals", lang),
+    items: [
+      {
+        title: "The Forest Five - I Cinque Amici del Bosco Magico",
+        image: "/images/i-cinque-amici-del-bosco-magico-(the forest five)-produzione-originale-panebarco-cover.jpg",
+        imageAlt: "Frame from The Forest Five",
+        slug: "the-forest-five",
+        link: buildPath("originals", lang),
+      },
+      {
+        title: "#NonstoppingNora - L'inarrestabile Nora",
+        image: "/images/originals-cover-03-270x395.jpg",
+        imageAlt: "Frame from Nora project",
+        slug: "nora",
+        link: buildPath("originals", lang),
+      },
+      {
+        title: "Caramelle - Sweets",
+        image: "/images/caramelle.jpg",
+        imageAlt: "Frame from Caramelle - Sweets",
+        slug: "caramelle-sweets",
+        link: buildPath("originals", lang),
+      },
+    ],
+  },
+});
+
+const portfolioShowcase = await getPortfolioShowcaseContent({
+  lang,
+  fallback: {
+    title: "Cool things we’ve made",
+    stickerSrc: "",
+    stickerAlt: "",
+    ctaLabel: "",
+    ctaHref: undefined,
+    baseHref: buildPath("portfolio", lang),
+    items: [
+      {
+        title: "A Hard Life for the Marsican Bears",
+        summary:
+          "The misadventures of the Marsican Bear from the well-known Golia Activ Plus commercial return — and this time, he’s not alone. Agency: Selection for Perfetti Van Melle – VFX powered by Panebarco for Spook.",
+        image: "/images/portfolio-cover-03-695x391.jpg",
+        imageAlt: "Frame from Marsican Brown Bears project",
+        slot: "top-left",
+        tags: ["Direction", "2D"],
+        href: undefined,
+      },
+      {
+        title: "Bacio nel Taschino",
+        summary: "A song competing in the 76th edition of the Zecchino d’Oro, transformed into an animated short full of rhythm and detail. Produced by Antoniano in collaboration with RAI – coordination by Federico Fiecconi – directed and artistically led by Matteo.",
+        image: "/images/large_Il_Bacio_Nel_Taschino_V01.jpg",
+        imageAlt: "Frame from a Panebarco commercial project",
+        slot: "top-right",
+        tags: ["Animation", "Production"],
+        href: undefined,
+      },
+      {
+        title: "Chupa Chups – Melody Pops",
+        summary: "The commercial was created together with Spook Effects for Perfetti Van Melle. By Panebarco: animation, backgrounds and tracking.",
+        image: "/images/portfolio-cover-02-695x391.jpg",
+        imageAlt: "Frame from a Panebarco special project",
+        slot: "bottom-left",
+        tags: ["Service", "VFX"],
+        href: undefined,
+      },
+      {
+        title: "ARF",
+        summary: "Dedicated to children who are victims of all wars, this 2D animated film delicately explores themes such as dictatorship, racism and imprisonment, encouraging acceptance and kindness. Produced by Genoma in collaboration with Panebarco.",
+        image: "/images/portfolio-cover-04-695x391.jpg",
+        imageAlt: "Frame from Panebarco film work",
+        slot: "bottom-right",
+        tags: ["Post", "Compositing"],
+        href: undefined,
+      },
+      {
+        title: "Gilielmo The inventor",
+        summary: "Guglielmo the Inventor is an animated series for children aged 6 to 9, inspired by Marconi’s story and the origins of wireless communication. By Panebarco: animation for the teaser and the pilot episode.",
+        image: "/images/large_guglielmocartolina1_.jpg",
+        imageAlt: "Wide frame from Panebarco integrated production project",
+        slot: "wide",
+        tags: ["Creative", "Production"],
+        href: undefined,
+      },
+    ],
+  },
+});
+---
+
+<Layout
+  title={customLabel("home.seoTitle", lang)}
+  description={customLabel("home.seoDescription", lang)}
+  lang={lang}
+  useInnerStyles={true}
+  headerProps={{ darkmode: false, logoSrc: "/images/panebarco-logo-dark.png", lang: "it", logoHref: buildPath("home", "it") }}
+>
+  <main class="en-home-page contacts-page">
+    <HeroStyHome
+      id="top"
+      className="hero-wrap en-home-hero"
+      showSlider={false}
+      title={heroContent.title}
+      subtitle={heroContent.subtitle}
+      videoSrc={heroContent.videoSrc}
+      ctaLabel={heroContent.ctaLabel}
+      ctaHref={heroContent.ctaHref}
+    />
+
+    <section class="section-space en-home-intro" id="about">
+      <div class="container">
+        <h2 class="section-title en-home-intro__heading">
+          {introContent.staticTitle} <br>
+          <span
+            id="typing-text"
+            class="accent typing-text"
+            data-words={introContent.typingWords.join("|")}
+            aria-live="polite"
+          ></span>
+        </h2>
+        <div class="row g-4 g-xl-5 align-items-center">
+          <div class="col-12 col-lg-5">
+            {introContent.paragraphs.map((paragraph, index) => (
+              <p class:list={["en-home-intro__text", index === 0 && "about-text"]}>{paragraph}</p>
+            ))}
+          </div>
+          <div class="col-12 col-lg-7">
+            <div class="en-home-intro__media">
+              <img src={introContent.imageSrc} alt={introContent.imageAlt} loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ServicesShowcase lang={lang} title="Services - Things we do" stickerSrc="" stickerAlt="" items={servicesItems} />
+
+    <OriginalsShowcase
+      sectionId="originals"
+      introText={originalsIntro}
+      items={originalsShowcase.items}
+      showFeaturedCta={false}
+    />
+
+    <PortfolioShowcase
+      sectionId="portfolio"
+      sectionClass="section-space"
+      containerClass="container originals-stage portfolio-container"
+      title={portfolioShowcase.title}
+      stickerSrc={portfolioShowcase.stickerSrc}
+      stickerAlt={portfolioShowcase.stickerAlt}
+      items={portfolioShowcase.items}
+      ctaHref={portfolioShowcase.ctaHref}
+      ctaLabel={portfolioShowcase.ctaLabel}
+    />
+
+    <section class="section-space en-home-spotlight" aria-labelledby="enHomeSpotlightTitle">
+      <div class="container">
+        <div class="row align-items-center g-4 g-lg-5">
+          <div class="col-12 col-lg-7">
+            <div class="en-home-spotlight__media">
+              <img src="/images/home-eng-team-panebarco-1.png" alt={customLabel("home.spotlightImageAlt", lang)} loading="lazy" />
+            </div>
+          </div>
+          <div class="col-12 col-lg-5">
+            <h2 id="enHomeSpotlightTitle" class="page-title-uniform en-home-spotlight__title">
+              <span class="en-home-spotlight__title-top">Teams</span>
+              <span class="en-home-spotlight__title-bottom">I PANEBARCOS</span>
+            </h2>
+            <p class="en-home-spotlight__text">{customLabel("home.spotlightText", lang)}</p>
+            <a href={panebarcosTeamHref} class="btn btn-cta btn-cta--blue btn-pill">
+              {customLabel("home.introCta", lang)}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contacts-content section-space section-space--tight" id="contact">
+      <div class="container">
+        <section class="contacts-intro contacts-block text-center" aria-labelledby="contactsIntroTitle">
+          <h2 id="contactsIntroTitle" class="page-title-uniform">{contactIntro.title}</h2>
+          <p class="contacts-intro__lead mx-auto mb-0">{contactIntro.lead}</p>
+        </section>
+
+        <section class="contact-section contacts-block" aria-labelledby="contactsCardsTitle">
+          <h2 id="contactsCardsTitle" class="visually-hidden">{customLabel("home.contactInfoLabel", lang)}</h2>
+          <div class="contact-info-grid">
+            {contactCards.map((item) => (
+              <article class="contact-info-card contacts-info-card">
+                <div class="contact-info-head">
+                  <span class="contact-info-icon contacts-info-card__icon" aria-hidden="true">
+                    <i class={`bi ${item.icon}`}></i>
+                  </span>
+                  <h3>{item.title}</h3>
+                </div>
+                <div class="contacts-info-card__body">
+                  <p>{item.text}</p>
+                  <div class="contacts-info-card__links">
+                    {item.lines.map((line, index) => (
+                      item.hrefs[index] ? (
+                        <a
+                          href={item.hrefs[index]}
+                          target={item.hrefs[index].startsWith("http") ? "_blank" : undefined}
+                          rel={item.hrefs[index].startsWith("http") ? "noopener noreferrer" : undefined}
+                        >
+                          {line}
+                        </a>
+                      ) : (
+                        <span>{line}</span>
+                      )
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="contacts-form-section contacts-block" aria-labelledby="contactsFormTitle">
+          <div class="contacts-section-head contacts-section-head--center text-start">
+            <h2 id="contactsFormTitle" class="page-title-uniform">{contactIntro.formTitle}</h2>
+            <p class="mb-0">{contactIntro.formLead}</p>
+          </div>
+
+          <div class="contacts-tabs-shell" data-contacts-tabs>
+            <div class="contacts-tabs-nav" role="tablist" aria-label="Choose the request type">
+              <button class="contacts-tab-button is-active" type="button" id="contacts-tab-contact-en" role="tab" aria-selected="true" aria-controls="contacts-panel-contact-en" data-contacts-tab="contact">
+                <i class="bi bi-send" aria-hidden="true"></i>
+                <span>Tell us your idea</span>
+              </button>
+              <button class="contacts-tab-button" type="button" id="contacts-tab-talent-en" role="tab" aria-selected="false" aria-controls="contacts-panel-talent-en" data-contacts-tab="talent" tabindex="-1">
+                <i class="bi bi-stars" aria-hidden="true"></i>
+                <span>Submit your application</span>
+              </button>
+            </div>
+
+            <section class="contacts-tab-panel is-active" id="contacts-panel-contact-en" role="tabpanel" aria-labelledby="contacts-tab-contact-en" data-contacts-panel="contact">
+              <div class="contacts-tab-card contacts-tab-card--full">
+                <div class="contacts-form-shell contacts-form-shell--wide">
+                  <div class="contacts-brief-success" id="briefFormSuccess" hidden role="alert">
+                    <span class="contacts-brief-success__icon" aria-hidden="true"><i class="bi bi-check-circle-fill"></i></span>
+                    <p class="contacts-brief-success__text">Thank you! We will get back to you soon.</p>
+                  </div>
+
+                  <form class="contacts-form contacts-form--brief" id="contactBriefForm" novalidate>
+                    <div class="contacts-brief-apierror" id="briefFormApiError" hidden role="alert">
+                      <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                      Something went wrong. Please try again later.
+                    </div>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Essential contacts</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefNome">First name <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefNome" name="nome" type="text" required aria-required="true" autocomplete="given-name" />
+                            <p class="contacts-field-error" id="briefNome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefCognome">Last name <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefCognome" name="cognome" type="text" required aria-required="true" autocomplete="family-name" />
+                            <p class="contacts-field-error" id="briefCognome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefEmail">Email <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefEmail" name="email" type="email" required aria-required="true" autocomplete="email" />
+                            <p class="contacts-field-error" id="briefEmail-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefTelefono">Phone <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefTelefono" name="telefono" type="text" required aria-required="true" autocomplete="tel" />
+                            <p class="contacts-field-error" id="briefTelefono-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefAzienda">Company / Institution / Organization <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefAzienda" name="azienda" type="text" required aria-required="true" autocomplete="organization" />
+                            <p class="contacts-field-error" id="briefAzienda-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefRuolo">Role / Function <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefRuolo" name="ruolo" type="text" required aria-required="true" autocomplete="organization-title" />
+                            <p class="contacts-field-error" id="briefRuolo-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Project context</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefPaese">Country <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefPaese" name="paese" type="text" required aria-required="true" autocomplete="country-name" placeholder="Country" />
+                            <p class="contacts-field-error" id="briefPaese-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefCitta">City <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefCitta" name="citta" type="text" required aria-required="true" autocomplete="address-level2" placeholder="City" />
+                            <p class="contacts-field-error" id="briefCitta-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <p class="form-label contacts-brief-group-label" id="briefMotivoLabel">What do you need? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                            <div class="contacts-checkbox-group contacts-checkbox-group--compact" role="group" aria-labelledby="briefMotivoLabel" aria-describedby="briefMotivo-error" id="briefMotivoGroup">
+                              {briefNeedOptions.map((option, index) => (
+                                <div class="form-check contacts-checkbox-item">
+                                  <input class="form-check-input" type="checkbox" name="motivo" value={option} id={`briefMotivo-${index}`} />
+                                  <label class="form-check-label" for={`briefMotivo-${index}`}>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <p class="contacts-field-error" id="briefMotivo-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefTempistiche">Expected timeline</label>
+                            <input class="form-control" id="briefTempistiche" name="tempistiche" type="text" placeholder="When would you like to start or deliver?" />
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefEsempi">Links to examples or references</label>
+                            <input class="form-control" id="briefEsempi" name="esempi_utili" type="text" placeholder="https:// or useful references" />
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefMateriali">Useful materials</label>
+                            <input class="form-control" id="briefMateriali" name="materiali_utili" type="text" placeholder="Brief, documents, guidelines or shared folders" />
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefMessaggio">Tell us a bit more <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <textarea class="form-control" id="briefMessaggio" name="messaggio" rows="4" required aria-required="true" placeholder="Idea, context, goals, audience and tone: a few well-chosen details are enough to help us understand the request."></textarea>
+                            <p class="contacts-field-error" id="briefMessaggio-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <div class="contacts-brief-section contacts-brief-section--consents">
+                      <div class="contacts-consent">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="briefNewsletter" name="newsletter" value="yes" />
+                          <label class="form-check-label" for="briefNewsletter">Would you like to receive updates about our projects?</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="briefPrivacy" name="privacy" value="accepted" required aria-required="true" />
+                          <label class="form-check-label" for="briefPrivacy">
+                            I consent to the processing of personal data and newsletter subscription as defined in the <a href={buildPath("privacyPolicy", lang)}>{customLabel("footer.privacy", lang)}</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                          </label>
+                        </div>
+                        <p class="contacts-field-error" id="briefPrivacy-error" role="alert" hidden></p>
+                      </div>
+                    </div>
+
+                    <div class="contacts-brief-actions">
+                      <button class="btn btn-cta btn-cta--blue btn-pill contacts-brief-submit" type="submit" id="briefFormSubmit">
+                        <span class="contacts-brief-submit__text">Send request</span>
+                        <span class="contacts-brief-submit__loading" hidden aria-hidden="true">
+                          <span class="contacts-brief-spinner"></span>
+                          Sending...
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </section>
+
+            <section class="contacts-tab-panel" id="contacts-panel-talent-en" role="tabpanel" aria-labelledby="contacts-tab-talent-en" data-contacts-panel="talent" hidden>
+              <div class="contacts-tab-card contacts-tab-card--full">
+                <div class="contacts-form-shell contacts-form-shell--wide">
+                  <div class="contacts-brief-success" id="talentFormSuccess" hidden role="alert">
+                    <span class="contacts-brief-success__icon" aria-hidden="true"><i class="bi bi-check-circle-fill"></i></span>
+                    <p class="contacts-brief-success__text">Thank you! We have received your application.</p>
+                  </div>
+
+                  <form class="contacts-form contacts-form--brief" id="talentForm" novalidate>
+                    <div class="contacts-brief-apierror" id="talentFormApiError" hidden role="alert">
+                      <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                      Something went wrong. Please try again later.
+                    </div>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Your details</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentNome">First name <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentNome" name="nome" type="text" required aria-required="true" autocomplete="given-name" />
+                            <p class="contacts-field-error" id="talentNome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentCognome">Last name <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentCognome" name="cognome" type="text" required aria-required="true" autocomplete="family-name" />
+                            <p class="contacts-field-error" id="talentCognome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentEmail">Email <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentEmail" name="email" type="email" required aria-required="true" autocomplete="email" />
+                            <p class="contacts-field-error" id="talentEmail-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentTelefono">Phone <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentTelefono" name="telefono" type="text" required aria-required="true" autocomplete="tel" />
+                            <p class="contacts-field-error" id="talentTelefono-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentPaese">Country <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentPaese" name="paese" type="text" required aria-required="true" autocomplete="country-name" />
+                            <p class="contacts-field-error" id="talentPaese-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentCitta">City <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentCitta" name="citta" type="text" required aria-required="true" autocomplete="address-level2" />
+                            <p class="contacts-field-error" id="talentCitta-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Application</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <p class="form-label contacts-brief-group-label" id="talentRuoloLabel">Which role interests you? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                            <div class="contacts-checkbox-group contacts-checkbox-group--compact" role="radiogroup" aria-labelledby="talentRuoloLabel" aria-describedby="talentRuolo-error" id="talentRuoloGroup">
+                              {talentRoleOptions.map((option, index) => (
+                                <div class="form-check contacts-checkbox-item">
+                                  <input class="form-check-input" type="radio" name="ruolo" value={option} id={`talentRuolo-${index}`} />
+                                  <label class="form-check-label" for={`talentRuolo-${index}`}>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <p class="contacts-field-error" id="talentRuolo-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <p class="form-label contacts-brief-group-label" id="talentCosaLabel">What are you applying for? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                            <div class="contacts-checkbox-group contacts-checkbox-group--compact" role="radiogroup" aria-labelledby="talentCosaLabel" aria-describedby="talentCosa-error" id="talentCosaGroup">
+                              {talentApplicationOptions.map((option, index) => (
+                                <div class="form-check contacts-checkbox-item">
+                                  <input class="form-check-input" type="radio" name="cosa" value={option} id={`talentCosa-${index}`} />
+                                  <label class="form-check-label" for={`talentCosa-${index}`}>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <p class="contacts-field-error" id="talentCosa-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12" id="talentStageSection" hidden>
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentStage">If you are applying for an internship: for how long, in which period, with which training institution, which course did you attend, and what is your background? <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <textarea class="form-control" id="talentStage" name="stage" rows="5" placeholder="Duration, period, training institution, attended course and educational background."></textarea>
+                            <p class="contacts-field-error" id="talentStage-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12" id="talentMessageSection" hidden>
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentMessaggio">Tell us something about yourself</label>
+                            <textarea class="form-control" id="talentMessaggio" name="messaggio" rows="5" placeholder="Skills, experience, tools and the kind of projects you would like to work on."></textarea>
+                            <p class="contacts-field-error" id="talentMessaggio-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentLinkCv">Upload your CV <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentLinkCv" name="linkCv" type="text" required aria-required="true" placeholder="Paste a shareable link" />
+                            <p class="contacts-field-error" id="talentLinkCv-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentLinkPortfolio">Upload portfolio / showreel (link) <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentLinkPortfolio" name="linkPortfolio" type="text" required aria-required="true" placeholder="https:// or link to a shared folder" />
+                            <p class="contacts-field-error" id="talentLinkPortfolio-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <div class="contacts-brief-section contacts-brief-section--consents">
+                      <div class="contacts-consent">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="talentNewsletter" name="newsletter" value="yes" />
+                          <label class="form-check-label" for="talentNewsletter">Would you like to stay updated on our projects?</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="talentPrivacy" name="privacy" value="accepted" required aria-required="true" />
+                          <label class="form-check-label" for="talentPrivacy">
+                            I consent to the processing of personal data and newsletter subscription as defined in the <a href={buildPath("privacyPolicy", lang)}>{customLabel("footer.privacy", lang)}</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                          </label>
+                        </div>
+                        <p class="contacts-field-error" id="talentPrivacy-error" role="alert" hidden></p>
+                      </div>
+                    </div>
+
+                    <div class="contacts-brief-actions">
+                      <button class="btn btn-cta btn-cta--blue btn-pill contacts-brief-submit" type="submit" id="talentFormSubmit">
+                        <span class="contacts-brief-submit__text">Send your application</span>
+                        <span class="contacts-brief-submit__loading" hidden aria-hidden="true">
+                          <span class="contacts-brief-spinner"></span>
+                          Sending...
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src={mainScriptUrl}></script>
+  <script is:inline>
+    (function () {
+      var cleanupHomeContact = window.__cleanupHomeContact || function () {};
+
+      function collectFormData(form) {
+        var data = {};
+        var fd = new FormData(form);
+
+        fd.forEach(function (value, key) {
+          if (Object.prototype.hasOwnProperty.call(data, key)) {
+            if (!Array.isArray(data[key])) data[key] = [data[key]];
+            data[key].push(value);
+          } else {
+            data[key] = value;
+          }
+        });
+
+        return data;
+      }
+
+      function setupContactsTabs(cleanups) {
+        var roots = Array.from(document.querySelectorAll("[data-contacts-tabs]"));
+        if (roots.length === 0) return;
+
+        roots.forEach(function (root) {
+          var buttons = Array.from(root.querySelectorAll("[data-contacts-tab]"));
+          var panels = Array.from(root.querySelectorAll("[data-contacts-panel]"));
+          if (buttons.length === 0 || panels.length === 0) return;
+
+          var controller = new AbortController();
+          var signal = controller.signal;
+
+          function activateTab(targetKey) {
+            buttons.forEach(function (button) {
+              var isActive = button.getAttribute("data-contacts-tab") === targetKey;
+              button.classList.toggle("is-active", isActive);
+              button.setAttribute("aria-selected", String(isActive));
+              button.tabIndex = isActive ? 0 : -1;
+            });
+
+            panels.forEach(function (panel) {
+              var isActive = panel.getAttribute("data-contacts-panel") === targetKey;
+              panel.classList.toggle("is-active", isActive);
+              panel.hidden = !isActive;
+            });
+          }
+
+          buttons.forEach(function (button, index) {
+            button.addEventListener("click", function () {
+              activateTab(button.getAttribute("data-contacts-tab"));
+            }, { signal: signal });
+
+            button.addEventListener("keydown", function (event) {
+              if (event.key !== "ArrowRight" && event.key !== "ArrowLeft" && event.key !== "Home" && event.key !== "End") {
+                return;
+              }
+
+              event.preventDefault();
+
+              var nextIndex = index;
+              if (event.key === "ArrowRight") nextIndex = (index + 1) % buttons.length;
+              if (event.key === "ArrowLeft") nextIndex = (index - 1 + buttons.length) % buttons.length;
+              if (event.key === "Home") nextIndex = 0;
+              if (event.key === "End") nextIndex = buttons.length - 1;
+
+              var nextButton = buttons[nextIndex];
+              if (!nextButton) return;
+              activateTab(nextButton.getAttribute("data-contacts-tab"));
+              nextButton.focus();
+            }, { signal: signal });
+          });
+
+          var activeButton = buttons.find(function (button) {
+            return button.classList.contains("is-active");
+          }) || buttons[0];
+
+          if (activeButton) {
+            activateTab(activeButton.getAttribute("data-contacts-tab"));
+          }
+
+          cleanups.push(function () {
+            controller.abort();
+          });
+        });
+      }
+
+      function setupBriefContactForm(cleanups) {
+        var form = document.getElementById("contactBriefForm");
+        if (!form) return;
+
+        var controller = new AbortController();
+        var signal = controller.signal;
+        var requiredFieldIds = [
+          "briefNome",
+          "briefCognome",
+          "briefEmail",
+          "briefTelefono",
+          "briefAzienda",
+          "briefRuolo",
+          "briefPaese",
+          "briefCitta",
+          "briefMessaggio",
+        ];
+
+        function getFieldError(field) {
+          var value = field.value.trim();
+          if (field.tagName === "SELECT") {
+            return value ? "" : "Select an option";
+          }
+          if (field.type === "email") {
+            if (!value) return "This field is required";
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "" : "Enter a valid email address";
+          }
+          return value ? "" : "This field is required";
+        }
+
+        function setFieldError(fieldId, message) {
+          var field = document.getElementById(fieldId);
+          var errorEl = document.getElementById(fieldId + "-error");
+          if (field) field.classList.toggle("is-brief-invalid", !!message);
+          if (errorEl) {
+            errorEl.hidden = !message;
+            errorEl.textContent = message || "";
+          }
+        }
+
+        function validateAll() {
+          var firstInvalidEl = null;
+
+          requiredFieldIds.forEach(function (id) {
+            var field = document.getElementById(id);
+            if (!field) return;
+            var err = getFieldError(field);
+            setFieldError(id, err);
+            if (err && !firstInvalidEl) firstInvalidEl = field;
+          });
+
+          var needsChecked = form.querySelectorAll('input[name="motivo"]:checked').length > 0;
+          var needsErrorEl = document.getElementById("briefMotivo-error");
+          var needsGroup = document.getElementById("briefMotivoGroup");
+          if (!needsChecked) {
+            if (needsErrorEl) {
+              needsErrorEl.hidden = false;
+              needsErrorEl.textContent = "Select at least one option";
+            }
+            if (needsGroup) needsGroup.classList.add("is-brief-invalid");
+            if (!firstInvalidEl) firstInvalidEl = needsGroup;
+          } else {
+            if (needsErrorEl) {
+              needsErrorEl.hidden = true;
+              needsErrorEl.textContent = "";
+            }
+            if (needsGroup) needsGroup.classList.remove("is-brief-invalid");
+          }
+
+          var privacyField = document.getElementById("briefPrivacy");
+          if (privacyField && !privacyField.checked) {
+            setFieldError("briefPrivacy", "You need to accept the Privacy Policy to continue");
+            if (!firstInvalidEl) firstInvalidEl = privacyField;
+          } else {
+            setFieldError("briefPrivacy", "");
+          }
+
+          return firstInvalidEl;
+        }
+
+        function setSubmitLoading(loading) {
+          var btn = document.getElementById("briefFormSubmit");
+          if (!btn) return;
+          btn.disabled = loading;
+          var textEl = btn.querySelector(".contacts-brief-submit__text");
+          var loadingEl = btn.querySelector(".contacts-brief-submit__loading");
+          if (textEl) textEl.hidden = loading;
+          if (loadingEl) loadingEl.hidden = !loading;
+        }
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var firstInvalidEl = validateAll();
+          if (firstInvalidEl) {
+            firstInvalidEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            if (typeof firstInvalidEl.focus === "function") {
+              setTimeout(function () { firstInvalidEl.focus(); }, 350);
+            }
+            return;
+          }
+
+          setSubmitLoading(true);
+
+          var apiErrorEl = document.getElementById("briefFormApiError");
+          if (apiErrorEl) apiErrorEl.hidden = true;
+
+          var data = collectFormData(form);
+          console.log("[EnHomeBriefForm] Sending:", data);
+          var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
+
+          mockRequest.then(function () {
+            var successEl = document.getElementById("briefFormSuccess");
+            if (successEl) successEl.hidden = false;
+            form.hidden = true;
+          }).catch(function (error) {
+            console.error("[EnHomeBriefForm] Error:", error);
+            if (apiErrorEl) apiErrorEl.hidden = false;
+            setSubmitLoading(false);
+          });
+        }, { signal: signal });
+
+        cleanups.push(function () {
+          controller.abort();
+        });
+      }
+
+      function setupTalentForm(cleanups) {
+        var form = document.getElementById("talentForm");
+        if (!form) return;
+
+        var controller = new AbortController();
+        var signal = controller.signal;
+        var requiredFieldIds = [
+          "talentNome",
+          "talentCognome",
+          "talentEmail",
+          "talentTelefono",
+          "talentPaese",
+          "talentCitta",
+          "talentLinkCv",
+          "talentLinkPortfolio",
+        ];
+
+        function getFieldError(field) {
+          var value = field.value.trim();
+          if (field.tagName === "SELECT") {
+            return value ? "" : "Select an option";
+          }
+          if (field.type === "email") {
+            if (!value) return "This field is required";
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "" : "Enter a valid email address";
+          }
+          return value ? "" : "This field is required";
+        }
+
+        function setFieldError(fieldId, message) {
+          var field = document.getElementById(fieldId);
+          var errorEl = document.getElementById(fieldId + "-error");
+          if (field) field.classList.toggle("is-brief-invalid", !!message);
+          if (errorEl) {
+            errorEl.hidden = !message;
+            errorEl.textContent = message || "";
+          }
+        }
+
+        function setGroupError(errorId, groupId, message) {
+          var errorEl = document.getElementById(errorId);
+          var groupEl = document.getElementById(groupId);
+          if (errorEl) {
+            errorEl.hidden = !message;
+            errorEl.textContent = message || "";
+          }
+          if (groupEl) {
+            groupEl.classList.toggle("is-brief-invalid", !!message);
+          }
+        }
+
+        function getSelectedRadioValue(name) {
+          var checked = form.querySelector('input[name="' + name + '"]:checked');
+          return checked ? checked.value : "";
+        }
+
+        function syncConditionalFields() {
+          var applicationType = getSelectedRadioValue("cosa");
+          var stageSection = document.getElementById("talentStageSection");
+          var messageSection = document.getElementById("talentMessageSection");
+          var stageVisible = applicationType === "Internship";
+          var messageVisible = applicationType === "Collaboration";
+
+          if (stageSection) stageSection.hidden = !stageVisible;
+          if (messageSection) messageSection.hidden = !messageVisible;
+
+          if (!stageVisible) setFieldError("talentStage", "");
+          if (!messageVisible) setFieldError("talentMessaggio", "");
+        }
+
+        function validateAll() {
+          var firstInvalidEl = null;
+
+          requiredFieldIds.forEach(function (id) {
+            var field = document.getElementById(id);
+            if (!field) return;
+            var err = getFieldError(field);
+            setFieldError(id, err);
+            if (err && !firstInvalidEl) firstInvalidEl = field;
+          });
+
+          var roleValue = getSelectedRadioValue("ruolo");
+          if (!roleValue) {
+            setGroupError("talentRuolo-error", "talentRuoloGroup", "Select a role");
+            if (!firstInvalidEl) firstInvalidEl = document.getElementById("talentRuoloGroup");
+          } else {
+            setGroupError("talentRuolo-error", "talentRuoloGroup", "");
+          }
+
+          var applicationType = getSelectedRadioValue("cosa");
+          if (!applicationType) {
+            setGroupError("talentCosa-error", "talentCosaGroup", "Select an option");
+            if (!firstInvalidEl) firstInvalidEl = document.getElementById("talentCosaGroup");
+          } else {
+            setGroupError("talentCosa-error", "talentCosaGroup", "");
+          }
+
+          if (applicationType === "Internship") {
+            var stageField = document.getElementById("talentStage");
+            var stageError = stageField ? getFieldError(stageField) : "";
+            setFieldError("talentStage", stageError);
+            if (stageError && !firstInvalidEl) firstInvalidEl = stageField;
+          } else {
+            setFieldError("talentStage", "");
+          }
+
+          var privacyField = document.getElementById("talentPrivacy");
+          if (privacyField && !privacyField.checked) {
+            setFieldError("talentPrivacy", "You need to accept the Privacy Policy to continue");
+            if (!firstInvalidEl) firstInvalidEl = privacyField;
+          } else {
+            setFieldError("talentPrivacy", "");
+          }
+
+          return firstInvalidEl;
+        }
+
+        function setSubmitLoading(loading) {
+          var btn = document.getElementById("talentFormSubmit");
+          if (!btn) return;
+          btn.disabled = loading;
+          var textEl = btn.querySelector(".contacts-brief-submit__text");
+          var loadingEl = btn.querySelector(".contacts-brief-submit__loading");
+          if (textEl) textEl.hidden = loading;
+          if (loadingEl) loadingEl.hidden = !loading;
+        }
+
+        form.querySelectorAll('input[name="cosa"]').forEach(function (input) {
+          input.addEventListener("change", syncConditionalFields, { signal: signal });
+        });
+
+        syncConditionalFields();
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var firstInvalidEl = validateAll();
+          if (firstInvalidEl) {
+            firstInvalidEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            if (typeof firstInvalidEl.focus === "function") {
+              setTimeout(function () { firstInvalidEl.focus(); }, 350);
+            }
+            return;
+          }
+
+          setSubmitLoading(true);
+
+          var apiErrorEl = document.getElementById("talentFormApiError");
+          if (apiErrorEl) apiErrorEl.hidden = true;
+
+          var data = collectFormData(form);
+          console.log("[EnHomeTalentForm] Sending:", data);
+          var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
+
+          mockRequest.then(function () {
+            var successEl = document.getElementById("talentFormSuccess");
+            if (successEl) successEl.hidden = false;
+            form.hidden = true;
+          }).catch(function (error) {
+            console.error("[EnHomeTalentForm] Error:", error);
+            if (apiErrorEl) apiErrorEl.hidden = false;
+            setSubmitLoading(false);
+          });
+        }, { signal: signal });
+
+        cleanups.push(function () {
+          controller.abort();
+        });
+      }
+
+      function initHomeContactForm() {
+        cleanupHomeContact();
+
+        var cleanups = [];
+        setupContactsTabs(cleanups);
+        setupBriefContactForm(cleanups);
+        setupTalentForm(cleanups);
+
+        cleanupHomeContact = function () {
+          cleanups.forEach(function (dispose) {
+            dispose();
+          });
+        };
+
+        window.__cleanupHomeContact = cleanupHomeContact;
+      }
+
+      if (!window.__panebarcoEnHomeContactBound) {
+        document.addEventListener("astro:before-swap", function () {
+          cleanupHomeContact();
+        });
+
+        document.addEventListener("astro:page-load", initHomeContactForm);
+        window.__panebarcoEnHomeContactBound = true;
+      }
+
+      initHomeContactForm();
+    })();
+  </script>
+
+  <style>
+    :global(body.inner-page:has(.en-home-page)) {
+      background: #f9fafb;
+    }
+
+    :global(body.inner-page:has(.en-home-page) .top-header:not(.is-scrolled)) {
+      background: #f9fafb;
+      box-shadow: none;
+    }
+
+    :global(body.inner-page:has(.en-home-page) .top-header.is-scrolled) {
+      background: #ffffff;
+    }
+
+    :global(body.inner-page:has(.en-home-page) .top-header .hero-nav) {
+      min-height: 2.75rem;
+    }
+
+    .en-home-page {
+      background: #f9fafb;
+    }
+
+    .en-home-hero {
+      margin-top: clamp(3.9rem, 7vw, 5rem);
+      padding-bottom: clamp(1.8rem, 4vw, 3rem);
+    }
+
+    .en-home-hero :global(.hero-card) {
+      border-radius: 0 0 2rem 2rem;
+      overflow: hidden;
+    }
+
+    .en-home-hero :global(.hero-sty-home__body) {
+      max-width: min(44rem, 86vw);
+      padding: clamp(8.5rem, 19vw, 12.5rem) clamp(1.5rem, 4vw, 3rem) clamp(4rem, 8vw, 5.5rem);
+    }
+
+    .en-home-hero :global(h1) {
+      max-width: 12ch;
+      text-transform: none;
+    }
+
+    .en-home-hero :global(.hero-sty-home__body p) {
+      max-width: 34rem;
+      margin-top: 1rem;
+      font-size: clamp(1.05rem, 1rem + 0.45vw, 1.35rem);
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.94);
+    }
+
+    .en-home-spotlight__eyebrow {
+      margin: 0 0 0.85rem;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #009fe3;
+    }
+
+    .en-home-intro__heading,
+    .en-home-spotlight__title {
+      margin-bottom: 1.35rem;
+    }
+
+    .en-home-spotlight__title span {
+      display: block;
+      line-height: 0.95;
+    }
+
+    .en-home-spotlight__title-top {
+      color: #1f2937;
+    }
+
+    .en-home-spotlight__title-bottom {
+      color: #009fe3;
+    }
+
+    .en-home-intro__text,
+    .en-home-spotlight__text {
+      max-width: 34rem;
+      color: #111827;
+    }
+
+    .en-home-intro__media,
+    .en-home-spotlight__media {
+      position: relative;
+      overflow: visible;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .en-home-intro__media {
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .en-home-intro__media img,
+    .en-home-spotlight__media img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    .en-home-spotlight__media {
+      overflow: visible;
+      display: flex;
+      justify-content: center;
+    }
+
+    .en-home-intro__media img {
+      width: min(100%, 32rem);
+    }
+
+    .en-home-spotlight__media img {
+      width: min(100%, 43rem);
+    }
+
+    .en-home-spotlight {
+      position: relative;
+    }
+
+    .en-home-page .contacts-content {
+      padding-top: clamp(1rem, 2vw, 1.6rem);
+      padding-bottom: clamp(3rem, 5vw, 4.5rem);
+    }
+
+    .en-home-page .contacts-section-head {
+      max-width: 52rem;
+      margin: 0 0 1.4rem;
+    }
+
+    .en-home-page .contacts-section-head p {
+      color: #111827;
+    }
+
+    .en-home-page .contacts-info-card__links {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .en-home-page .contacts-form textarea.form-control {
+      min-height: 11rem;
+      resize: vertical;
+    }
+
+    .en-home-page :global(#originals .original-featured),
+    .en-home-page :global(#originals .original-side-card) {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .en-home-page :global(#originals .original-featured::after),
+    .en-home-page :global(#originals .original-side-card::after) {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.2) 34%, rgba(0, 0, 0, 0.82) 100%);
+      pointer-events: none;
+    }
+
+    .en-home-page :global(#originals .featured-content),
+    .en-home-page :global(#originals .side-content) {
+      justify-content: flex-end;
+      padding: 1.35rem 1.1rem 1.2rem;
+      text-shadow: 0 0.12rem 0.5rem rgba(0, 0, 0, 0.78);
+    }
+
+    .en-home-page :global(#originals .featured-content h4),
+    .en-home-page :global(#originals .side-content h4),
+    .en-home-page :global(#originals .originals-logo-mark) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .en-home-page :global(#originals .featured-content h4),
+    .en-home-page :global(#originals .side-content h4) {
+      display: inline-block;
+      padding: 0.18rem 0.45rem;
+      border-radius: 0.55rem;
+      background: rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+
+    @media (max-width: 991.98px) {
+      .en-home-hero {
+        margin-top: 4rem;
+      }
+
+      .en-home-hero :global(.hero-sty-home__body) {
+        padding-top: clamp(7rem, 18vw, 9rem);
+      }
+
+      .en-home-intro__heading,
+      .en-home-spotlight__title {
+        max-width: none;
+      }
+
+    }
+
+    @media (max-width: 767.98px) {
+      :global(body.inner-page:has(.en-home-page) .top-header) {
+        padding: 0.75rem 0;
+      }
+
+      :global(body.inner-page:has(.en-home-page) .top-header .hero-logo img) {
+        width: clamp(8.2rem, 33vw, 9.5rem);
+      }
+
+      .en-home-hero {
+        margin-top: 3.5rem;
+      }
+
+      .en-home-hero :global(.hero-card) {
+        border-radius: 0 0 1.25rem 1.25rem;
+      }
+
+      .en-home-intro__media,
+      .en-home-spotlight__media {
+        border-radius: 0;
+      }
+
+      .en-home-intro__media img,
+      .en-home-spotlight__media img {
+        border-radius: 0;
+      }
+    }
+  </style>
+</Layout>

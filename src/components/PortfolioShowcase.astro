@@ -12,7 +12,7 @@ interface PortfolioShowcaseItem {
 
 interface Props {
   title: string;
-  stickerSrc: string;
+  stickerSrc?: string;
   stickerAlt?: string;
   items: readonly PortfolioShowcaseItem[];
   sectionId?: string;
@@ -41,7 +41,9 @@ const hasCta = Boolean(ctaHref && ctaLabel);
   <div class={containerClass}>
     <h2 class="section-title section-title-reveal" data-reveal-managed="self" data-portfolio-showcase-title>
       <span class="section-title-text">{title}</span>
-      <img class="section-title-sticker" src={stickerSrc} alt={stickerAlt} aria-hidden={stickerAlt ? undefined : "true"} />
+      {stickerSrc && (
+        <img class="section-title-sticker" src={stickerSrc} alt={stickerAlt} aria-hidden={stickerAlt ? undefined : "true"} />
+      )}
     </h2>
 
     <div class="portfolio-grid">

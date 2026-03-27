@@ -13,6 +13,7 @@ interface Props {
   containerClass?: string;
   introText?: string;
   items?: OriginalItem[];
+  showFeaturedCta?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   sectionClass = "dark-band originals-parallax",
   containerClass = "container originals-stage",
   introText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  showFeaturedCta = true,
   items = [
     {
       title: "Marta e la morte",
@@ -69,13 +71,15 @@ const [featured, sideOne, sideTwo] = originals;
             <div class="featured-content">
               <h4 data-originals-featured-title>{featured.title}</h4>
               <img class="originals-logo-mark" src="/images/panebarco originals logo.png" alt="" />
-              <a
-                data-originals-featured-link
-                href={featured.link}
-                class="btn btn-cta btn-cta--blue original-more-btn"
-              >
-                Scopri di pi&ugrave;
-              </a>
+              {showFeaturedCta && (
+                <a
+                  data-originals-featured-link
+                  href={featured.link}
+                  class="btn btn-cta btn-cta--blue original-more-btn"
+                >
+                  Scopri di pi&ugrave;
+                </a>
+              )}
             </div>
           </article>
 
@@ -148,7 +152,6 @@ const [featured, sideOne, sideTwo] = originals;
           !featuredTitle ||
           !sideTitle1 ||
           !sideTitle2 ||
-          !featuredBtn ||
           !prevBtn ||
           !nextBtn ||
           !Array.isArray(items) ||
@@ -198,7 +201,9 @@ const [featured, sideOne, sideTwo] = originals;
             setCard(featuredCard, featuredTitle, featured);
             setCard(sideCard1, sideTitle1, sideOne);
             setCard(sideCard2, sideTitle2, sideTwo);
-            featuredBtn.setAttribute("href", featured.link || "#");
+            if (featuredBtn) {
+              featuredBtn.setAttribute("href", featured.link || "#");
+            }
 
             [featuredCard, sideCard1, sideCard2].forEach(function (card) {
               card.classList.remove("is-swapping");
