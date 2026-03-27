@@ -1,0 +1,150 @@
+---
+import { getLangFromPath } from "../i18n/routing";
+import { getLegalPageContent } from "../lib/legal-content";
+import Layout from "../layouts/Layout.astro";
+
+const lang = getLangFromPath(Astro.url.pathname);
+
+
+---
+
+<Layout
+  title="Trasparenza"
+  description=""
+  useInnerStyles={true}
+  lang={lang}
+  headerProps={{ darkmode: false }}
+>
+  
+    <main class="py-5 mt-4 mt-md-5">
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-9 col-xl-8">
+            <h1 class="legal-page-title mb-4">Trasparenza</h1>
+            <p>In ottemperanza a quanto previsto dall’art. 1, commi da 125 a 129 della Legge n. 124 del 4 agosto 2017 e ss.mm.ii., in merito all'obbligo di dare evidenza delle somme di denaro eventualmente ricevute nell'esercizio a titolo di sovvenzioni, sussidi, vantaggi, contributi o aiuti, in denaro o in natura, ricevuti dalle Pubbliche Amministrazioni, la Società PANEBARCO S.R.L. Partita iva 01315670396 ha ricevuto benefici rientranti nel regime degli aiuti di Stato e nel regime de minimis per i quali sussiste l’obbligo di pubblicazione nel Registro Nazionale degli aiuti di Stato di cui all’art. 52 della L. 234/2012 sul seguente sito:</p>
+            <p><a rel="noreferrer noopener" href="http://www.rna.gov.it/RegistroNazionaleTrasparenza/faces/pages/TrasparenzaAiuto.jspx" target="_blank">www.rna.gov.it/RegistroNazionaleTrasparenza/faces/pages/TrasparenzaAiuto.jspx</a></p>
+
+            
+          </div>
+        </div>
+      </section>
+      <section class="container-fluid px-4">
+        <div class="pt-4 table-responsive-wrap">
+          <figure class="trasparenza-table-wrap">
+            <table class="trasparenza-table"><thead><tr><th>Codice CAR</th><th>Codice CE</th><th>Titolo<br>misura</th><th>Tipo Misura</th><th>COR</th><th>Titolo Progetto</th><th>Data concessione</th><th>Elemento Aiuto</th></tr></thead><tbody><tr><td>16615</td><td>SA.57625</td><td>COVID-19: Fondo di garanzia PMI Aiuto di stato SA.59655 - Proroga SA.56966</td><td>Regime di aiuti</td><td>5721651</td><td>COVID-19: Fondo di garanzia PMI Aiuto di stato SA. 56966 (2020/N)</td><td>10/07/2021</td><td>€ 101.788,28</td></tr><tr><td>16522</td><td>C.F.: 02490441207</td><td>RER DGR 1870/2020 - Modalità applicazione Reg. UE n. 1407/2013 del 18/12/2013 sugli aiuti de minimis alle imprese operanti nel territorio della regione Emilia-Romagna e destinatarie di contributi pubblici nell'ambito delle politiche attive del lavoro</td><td>Regime di aiuti</td><td>6461910</td><td>INNOVAZIONE SOCIALE E PARTECIPATA PER LE IMPRESE ARTIGIANE</td><td>15/11/2021</td><td>€ 563,50</td></tr><tr><td>19754</td><td>SA.58159</td><td>esenzioni fiscali e crediti d'imposta adottati a seguito della crisi economica causata dall'epidemia di COVID-19 [con modifiche derivanti dalla decisione SA. 62668 e dalla decisione C(2022) 171 final su SA 101076)</td><td>Regime di aiuti</td><td>6953411</td><td>Disposizioni in materia di versamento dell'IRAP</td><td>27/11/2021</td><td>€ 1.417,00</td></tr><tr><td>21799</td><td>SA.62007</td><td>Tax credit per la produzione di opere cinematografiche</td><td>Regime di aiuti</td><td>8700862</td><td>Caramelle</td><td>11/04/2022</td><td>€ 56.677,12</td></tr><tr><td>21822</td><td>SA.50421</td><td>Contributo selettivo allo sviluppo e pre-produzione di opere cinematografiche e audiovisive</td><td>Regime di aiuti</td><td>8751657</td><td>Le incredibili avventure di una famiglia creativa</td><td>20/04/2022</td><td>€ 49.000,00</td></tr><tr><td>21812</td><td>SA.50457</td><td>Contributo selettivo alla produzione di opere cinematografiche e audiovisive</td><td>Regime di aiuti</td><td>10567346</td><td>Caramelle</td><td>06/03/2023</td><td>€ 70.000,00</td></tr><tr><td>19754</td><td>SA.58159</td><td>esenzioni fiscali e crediti d'imposta adottati a seguito della crisi economica causata dall'epidemia di COVID-19 [con modifiche derivanti dalla decisione SA. 62668 e dalla decisione C(2022) 171 final su SA 101076)</td><td>Regime di aiuti</td><td>11224865</td><td>Disposizioni in materia di versamento dell'IRAP</td><td>03/04/2023</td><td>€ 1.098,00</td></tr><tr><td>15959</td><td>SA.57752(2020/N)</td><td>Contributo a fondo perduto [e modifiche ai sensi della decisione SA. 62668 e decisione C(2022) 171 final) SA 101076)</td><td>Regime di aiuti</td><td>14911302</td><td>Contributo a fondo perduto [e modifiche ai sensi della decisione SA. 62668 e decisione C(2022) 171 final) SA 101076)</td><td>26/05/2023</td><td>€ 2.000,00</td></tr><tr><td>884</td><td>SA 100284</td><td>Regolamento per i fondi interprofessionali per la formazione continua per la concessioni di aiuti di stato esentati ai sensi del regolamento CE n.651/2014 e in regime de minimis ai sensi del regolamento CE n.1407/2013</td><td>Regime di aiuti</td><td>156866572</td><td>CNA Form. ER/RA 12 - Strumenti per la gestione finanziaria e controllo di gestione per PANEBARCO SRL</td><td>07/06/2023</td><td>€ 5.760,00</td></tr><tr><td>25293</td><td>C.F.: 02490441207</td><td>RER - DGR 302/2023 - PR FESR 2021-2027 - AZIONE 1.3.2 - APPROVAZIONE DEL BANDO PER IL SOSTEGNO A PROGETTI DI PROMOZIONE DELL'EXPORT E PARTECIPAZIONE A EVENTI FIERISTICI NEL 2023</td><td>Regime di aiuti</td><td>16642382</td><td>PANEBARCO S.R.L.</td><td>29/12/2023</td><td>€ 0,00</td></tr><tr><td>20177</td><td>SA.62668</td><td>Misure fiscali automatiche e sovvenzioni a fondo perduto a sostegno alle imprese e all'economia (come modificato da C(2022) 171 final su SA 101076)</td><td>Regime di aiuti</td><td>18673295</td><td>Misure fiscali automatiche e sovvenzioni a fondo perduto a sostegno alle imprese e all'economia (come modificato da C(2022) 171 final su SA 101076)</td><td>21/02/2024</td><td>€ 3.374,00</td></tr><tr><td>20177</td><td>SA.62668</td><td>Misure fiscali automatiche e sovvenzioni a fondo perduto a sostegno alle imprese e all'economia (come modificato da C(2022) 171 final su SA 101076)</td><td>Regime di aiuti</td><td>20437908</td><td>Misure fiscali automatiche e sovvenzioni a fondo perduto a sostegno alle imprese e all'economia (come modificato da C(2022) 171 final su SA 101076)</td><td>01/03/2024</td><td>€ 3.374,00</td></tr><tr><td>20177</td><td>SA.62668</td><td>Misure fiscali automatiche e sovvenzioni a fondo perduto a sostegno alle imprese e all'economia (come modificato da C(2022) 171 final su SA 101076)</td><td>Regime di aiuti</td><td>21560342</td><td>Misure fiscali automatiche e sovvenzioni a fondo perduto a sostegno alle imprese e all'economia (come modificato da C(2022) 171 final su SA 101076)</td><td>08/03/2024</td><td>€ 198,00</td></tr><tr><td>20624</td><td>SA.100155</td><td>Contributo a fondo perduto "perequativo" [decisione su SA.100155 e modifiche (estensione temporale al 30.6.22) ai sensi della decisione C(2022) 171 final dell 11.1.2022 su SA.101076].</td><td>Regime di aiuti</td><td>21836586</td><td>"Contributo a fondo perduto perequativo per i soggetti maggiormente colpiti dall emergenza epidemiologica ""Covid-19 . Art. 1, commi da 16 a 27, D.L. n. 73/2021"</td><td>11/03/2024</td><td>€ 7.316,00</td></tr><tr><td>28694</td><td>C.F.: 02490441207</td><td>RER DGR 1077/2023 BANDO AZIONE 1.3.4. DEL PR FSER 2021-2027 PER IL SETTORE DELLE IMPRESE CULTURALI E CREATIVE (ICC)</td><td>Regime di aiuti</td><td>19463218</td><td>PANE-RELOAD - Progetto di innovazione della Panebarco.</td><td>11/03/2024</td><td>€ 122.199,00</td></tr><tr><td>23267</td><td>C.F.: 02490441207</td><td>RER - DGR 1030/2022 - ISTITUZIONE DEL REGIME DI AIUTI DI IMPORTANZA MINORE () RIVOLTI ALLE IMPRESE OPERANTI NEL TERRITORIO DELLA REGIONE EMILIA-ROMAGNA AI SENSI DEL REGOLAMENTO (UE) N. 1407/2013 E APPROVAZIONE DELLE DISPOSIZIONI APPLICATIVE</td><td>Regime di aiuti</td><td>22236723</td><td>DIGI-GREEN: guidare la doppia transizione con le imprese dei servizi avanzati</td><td>21/03/2024</td><td>€ 461,40</td></tr><tr><td>29189</td><td>C.F.: 02490441207</td><td>RER - DGR 1030/2022 - ISTITUZIONE DEL REGIME DI AIUTI DI IMPORTANZA MINORE () RIVOLTI ALLE IMPRESE OPERANTI NEL TERRITORIO DELLA REGIONE EMILIA-ROMAGNA AI SENSI DEL REGOLAMENTO (UE) N. 1407/2013 E APPROVAZIONE DELLE DISPOSIZIONI APPLICATIVE</td><td>Regime di aiuti</td><td>22390888</td><td>DIGI-GREEN: guidare la doppia transizione con le imprese dei servizi avanzati</td><td>13/05/2024</td><td>€ 990,00</td></tr><tr><td>30072</td><td>C.F.: 02490441207</td><td>RER - DGR 763/2024 L.R. N. 20/2014, ART. 10 - APPROVAZIONE BANDO PER IL SOSTEGNO ALLO SVILUPPO DI OPERE CINEMATOGRAFICHE E AUDIOVISIVE DESTINATO AD IMPRESE CON SEDE IN EMILIA-ROMAGNA - ANNO 2024</td><td>Regime di aiuti</td><td>22759031</td><td>Realizzazione opera televisiva "Keepers"</td><td>30/09/2024</td><td>€ 12.000,00</td></tr><tr><td>28941</td><td>SA.113157</td><td>RER - DGR 144/2024 - L.R. N. 20/2014 - ART. 10 - APPROVAZIONE BANDO PER IL SOSTEGNO ALLA PRODUZIONE DI OPERE CINEMATOGRAFICHE E AUDIOVISIVE REALIZZATE DA IMPRESE NAZIONALI, EUROPEE ED EXTRAEUROPEE - ANNO 2024</td><td>Regime di aiuti</td><td>23052003</td><td>realizzazione documentario "E' la vita che sogna"</td><td>19/11/2024</td><td>€ 23.160,00</td></tr><tr><td>21799</td><td>SA.62007</td><td>Tax credit per la produzione di opere cinematografiche</td><td>Regime di aiuti</td><td>23143736</td><td>TI RESPIRO</td><td>29/11/2024</td><td>€ 5.610,92</td></tr><tr><td>21778</td><td>SA.62008</td><td>Tax credit per la produzione di opere audiovisive</td><td>Regime di aiuti</td><td>24219970</td><td>#NostoppingNora - #InarrestabileNora (provvisorio)<br>(precedente titolo provvisorio "Le incredibili avventure di una famiglia creativa")</td><td>31/03/2025</td><td>€38.796,68</td></tr><tr><td>27647</td><td>SA.106009</td><td>Esonero dal versamento dei contributi previdenziali per l'assunzione di giovani lavoratori ( art. 1 comma 10-15 L. 178/2020 - art. 1 comma 297 L. 197/2022)</td><td>Regime di aiuti</td><td>23548200</td><td>Esonero contributivo per le assunzioni di giovani lavoratori effettuate dal 1 luglio 2022 al 31 dicembre 2023 (art. 1, comma 297, L. 197/2022)</td><td>31/01/2025</td><td>€1.324,64</td></tr></tbody></table></figure>
+          </figure>
+        </div>
+      </section>
+    </main>
+  
+</Layout>
+
+<style>
+  .legal-page-title {
+    margin-top: 0;
+    color: #21262e;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: clamp(3.4rem, 8vw, 6.2rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+
+  @media (max-width: 767.98px) {
+    .legal-page-title {
+      font-size: clamp(2.8rem, 12vw, 4.2rem);
+    }
+  }
+
+  .legal-page-content :global(h2) {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.08;
+    margin: 2rem 0 1rem;
+  }
+
+  .legal-page-content :global(h3) {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.15;
+    margin: 1.6rem 0 0.85rem;
+  }
+
+  /* Table */
+  .table-responsive-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trasparenza-table-wrap {
+    margin: 0;
+    padding: 0;
+  }
+
+  .trasparenza-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: #21262e;
+    background: #fff;
+  }
+
+  .trasparenza-table thead tr {
+    background: #21262e;
+    color: #fff;
+  }
+
+  .trasparenza-table thead th {
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    border: none;
+  }
+
+  .trasparenza-table tbody tr:nth-child(odd) {
+    background: #f6f7f8;
+  }
+
+  .trasparenza-table tbody tr:nth-child(even) {
+    background: #fff;
+  }
+
+  .trasparenza-table tbody tr:hover {
+    background: #eaf0f8;
+  }
+
+  .trasparenza-table tbody td {
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid #e2e6ea;
+    vertical-align: top;
+    min-width: 90px;
+  }
+
+  .trasparenza-table tbody td:last-child {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .trasparenza-table tbody td:first-child {
+    white-space: nowrap;
+    font-weight: 600;
+    color: #555;
+  }
+
+  /* Last column (Elemento Aiuto) align right */
+  .trasparenza-table thead th:last-child,
+  .trasparenza-table tbody td:last-child {
+    text-align: right;
+  }
+
+  .legal-page-content :global(h4),
+  .legal-page-content :global(h5),
+  .legal-page-content :global(h6) {
+    font-size: 1.05rem;
+    line-height: 1.2;
+    margin: 1.35rem 0 0.75rem;
+  }
+</style>
