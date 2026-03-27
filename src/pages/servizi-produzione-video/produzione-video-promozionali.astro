@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import ServiceModesSection from "../../components/ServiceModesSection.astro";
+import RitchText from "../../components/RitchText.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
 import { buildPath } from "../../i18n/routing";
 import { getServiceDetailContent } from "../../lib/services-content";
@@ -20,10 +21,7 @@ const fallback = {
   },
   intro: {
     title: "Lorem ipsum dolor sit amet",
-    paragraphs: [
-      "Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    ],
+    content: "Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nQuis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   modes: [
     {
@@ -198,9 +196,6 @@ const commercialContent = await getServiceDetailContent({
   fallback,
 });
 
-const introParagraphs = commercialContent.intro.paragraphs.length
-  ? commercialContent.intro.paragraphs
-  : fallback.intro.paragraphs;
 ---
 
 <Layout
@@ -227,8 +222,7 @@ const introParagraphs = commercialContent.intro.paragraphs.length
           <div class="row">
             <div class="col-12 text-lg-center text-start">
               <h2 class="page-title-uniform mb-4 text-body">{commercialContent.intro.title}</h2>
-              <p class="mb-4">{introParagraphs[0] ?? fallback.intro.paragraphs[0]}</p>
-              <p class="mb-0">{introParagraphs[1] ?? introParagraphs[0] ?? fallback.intro.paragraphs[1]}</p>
+              <RitchText block={commercialContent.intro.content} />
             </div>
           </div>
         </div>

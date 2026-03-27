@@ -138,10 +138,12 @@ function stripHtml(value) {
 }
 
 function splitRichTextParagraphs(value) {
-  return String(value || "")
-    .split(/\n{2,}/)
-    .map((item) => stripHtml(item))
-    .filter(Boolean);
+  const clean = String(value || "");
+  const fromParagraphs = Array.from(clean.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi), (match) => stripHtml(match[1])).filter(Boolean);
+  if (fromParagraphs.length) {
+    return fromParagraphs;
+  }
+  return clean.split(/\n{2,}/).map((item) => stripHtml(item)).filter(Boolean);
 }
 
 function splitTags(value) {

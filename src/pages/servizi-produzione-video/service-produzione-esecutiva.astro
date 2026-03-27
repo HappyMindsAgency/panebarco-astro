@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import ServiceModesSection from "../../components/ServiceModesSection.astro";
+import RitchText from "../../components/RitchText.astro";
 import { getServiceDetailContent } from "../../lib/services-content";
 import { buildPath } from "../../i18n/routing";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
@@ -20,10 +21,7 @@ const serviceFallback = {
   },
   intro: {
     title: "",
-    paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ],
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   modes: [
     {
@@ -224,8 +222,7 @@ const serviceContent = await getServiceDetailContent({
           <div class="row">
             <div class="col-12 text-lg-center text-start">
               <h2 class="page-title-uniform mb-4 text-body">{serviceContent.intro.title}</h2>
-              <p class="mb-4">{serviceContent.intro.paragraphs?.[0] ?? serviceFallback.intro.paragraphs[0]}</p>
-              <p class="mb-0">{serviceContent.intro.paragraphs?.[1] ?? serviceFallback.intro.paragraphs[1]}</p>
+              <RitchText block={serviceContent.intro.content} />
             </div>
           </div>
         </div>

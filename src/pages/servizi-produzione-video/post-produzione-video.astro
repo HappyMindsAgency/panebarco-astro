@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import ContactCtaBanner from "../../components/ContactCtaBanner.astro";
 import ServiceModesSection from "../../components/ServiceModesSection.astro";
+import RitchText from "../../components/RitchText.astro";
 import commercialsPageScriptUrl from "../../scripts/pages/commercials.js?url";
 import { buildPath } from "../../i18n/routing";
 import { getServiceDetailContent } from "../../lib/services-content";
@@ -22,11 +23,7 @@ const fallbackContent = {
   },
   intro: {
     title: "Lorem ipsum dolor sit amet",
-    paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ],
-    content: "",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   modes: [
     {
@@ -205,7 +202,6 @@ const textlessFallback = {
   intro: {
     ...fallbackContent.intro,
     title: "",
-    paragraphs: [],
     content: "",
   },
   modes: fallbackContent.modes.map((mode) => ({
@@ -235,8 +231,7 @@ const pageContent = await getServiceDetailContent({
   lang: locale,
   fallback: textlessFallback,
 });
-const introParagraphs = pageContent.intro.paragraphs;
-const hasIntro = Boolean(pageContent.intro.title || introParagraphs.length);
+const hasIntro = Boolean(pageContent.intro.title || pageContent.intro.content);
 const hasCta = Boolean(
   pageContent.cta.kicker ||
   pageContent.cta.title ||
@@ -269,9 +264,7 @@ const hasCta = Boolean(
             <div class="row">
               <div class="col-12 text-lg-center text-start">
                 {pageContent.intro.title && <h2 class="page-title-uniform mb-4 text-body">{pageContent.intro.title}</h2>}
-                {introParagraphs.map((paragraph, index) => (
-                  <p class:list={[index === introParagraphs.length - 1 ? "mb-0" : "mb-4"]}>{paragraph}</p>
-                ))}
+                <RitchText block={pageContent.intro.content} />
               </div>
             </div>
           </div>

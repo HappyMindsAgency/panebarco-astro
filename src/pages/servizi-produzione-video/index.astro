@@ -1,13 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
+import RitchText from "../../components/RitchText.astro";
 import mainScriptUrl from "../../scripts/main.js?url";
 import { buildPath, joinLocalizedPath } from "../../i18n/routing";
 import { getLabel, getServicesOriginalSlides, getServicesPageContent } from "../../lib/services-content";
 
 const lang = "it" as const;
 const clientsLabel = getLabel("I nostri clienti", lang);
-const originalsCtaLabel = getLabel("Scopri gli originals", lang);
+const originalsCtaLabel = getLabel("Guarda tutti gli originals", lang);
 const servicesFallback = {
   header: {
     bgWord: "COSE",
@@ -19,11 +20,7 @@ const servicesFallback = {
   },
   intro: {
     title: "Lorem ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ],
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     mediaSrc: "/images/lo-studio-panebarco-teams.png",
     mediaAlt: "Lorem ipsum",
     hasMedia: false,
@@ -193,7 +190,7 @@ const portfolioOriginalSlides = originalSlidesFallback.map((fallbackSlide, index
           <div class="container">
             <div class="row">
               <div class="col-12 text-lg-center text-start services-intro-copy">
-                <p class="mb-0">{servicesPage.intro.paragraphs?.[0] || servicesPage.intro.content}</p>
+                <RitchText block={servicesPage.intro.content} />
               </div>
             </div>
           </div>
