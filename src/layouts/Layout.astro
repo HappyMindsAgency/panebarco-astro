@@ -14,6 +14,9 @@ import menuScriptUrl from "../scripts/menu-revamp.js?url";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import type { Lang } from "../i18n/config";
+import { SEO } from "astro-seo";
+import { getCollectionDocuments, getSingleDocument } from "../lib/strapi-client";
+import { getStrapiMediaUrl } from "../lib/utility-function";
 
 interface Props {
   title?: string;
@@ -24,6 +27,8 @@ interface Props {
   lang?: Lang;
   headerProps?: Record<string, any>;
   footerProps?: Record<string, any>;
+  entita?: string;
+  documentId?: string;
 }
 
 const {
@@ -35,7 +40,204 @@ const {
   lang = "it",
   headerProps = {},
   footerProps = {},
+  entita = "pagina-home-page",
+  documentId = "",
 } = Astro.props;
+
+interface openGraph {
+  basic: {
+    title: string;
+    type: string;
+    image: string;
+    url: string;
+  },
+  optional?: {
+    audio?: string;
+    description?: string;
+    determiner?: string;
+    locale?: string;
+    localeAlternate?: Array<string>;
+    siteName?: string;
+    video?: string;
+  }
+};
+
+interface Seo {
+/*     titolo: string,
+    headerHero: {
+        titolo: string,
+    }, */
+    seo: {
+        id: number,
+        metaTitle: string,
+        metaDescription: string,
+        keywords: string,
+        metaRobots: string,
+        metaImage: {
+            id: number,
+            documentId: string,
+            name: string,
+            alternativeText: string,
+            caption: string,
+            width: number,
+            height: number,
+            formats: {
+                thumbnail: {
+                    name: string,
+                    hash: string,
+                    ext: string,
+                    mime: string,
+                    width: number,
+                    height: number,
+                    size: number,
+                }
+                small: {
+                    name: string,
+                    hash: string,
+                    ext: string,
+                    mime: string,
+                    width: number,
+                    height: number,
+                    size: number,
+                }
+            },
+            hash: string,
+            ext: string,
+            mime: string,
+            size: number,
+            url: string,
+            previewUrl: string,
+            provider: string,
+            provider_metadata: string,
+            created_at: string,
+            updated_at: string,
+            publishedAt: string,
+            revisedAt: string,
+        },
+        metaSocial: Array<{
+            id: number,
+            socialNetwork: string,
+            title: string,
+            description: string,
+            image: any[],
+        }>,
+    }
+};
+
+let endpoint = '';
+let populate: object | string[] = {};
+let filters = {};
+
+if (documentId && entita) {
+    endpoint = entita
+    filters = { documentId: documentId }
+} else if (!documentId && entita) {
+    endpoint = entita;
+} else if (!entita) {
+    endpoint = 'pagina-home-page';
+}
+
+if (entita === 'pagina-privacy-policy' || 
+    entita === 'pagina-privacy-policy-newsletter' ||
+    entita === 'pagina-privacy-policy-psl' || 
+    entita === 'pagina-cookie-policy') {
+    populate = [
+        'seo'
+    ];
+} else {
+
+    if (documentId) {
+        populate = [
+            'seo',
+            'seo.metaSocial',
+            'seo.metaSocial.image',
+        ];
+    } else {
+        populate = [            
+            'seo',
+            'seo.metaSocial',
+            'seo.metaSocial.image',
+        ];
+    } 
+}
+
+
+let getSEORawData : any;
+let seo : any;
+
+
+if (documentId) {
+    getSEORawData = await getCollectionDocuments(endpoint, {
+        populate: populate,
+        locale: lang,
+        filters: filters
+    });
+
+    seo = Array.isArray(getSEORawData?.data) && getSEORawData.data[0]
+        ? getSEORawData.data[0].seo
+        : null;
+} else {
+    getSEORawData = await getSingleDocument(endpoint, {
+        populate: populate,
+        locale: lang,
+    });
+
+    seo = getSEORawData?.data?.seo ?? null;
+}
+
+const defaultSEORawData = await getSingleDocument('pagina-home-page', {
+    populate: [
+            'seo',
+            'seo.metaSocial',
+            'seo.metaSocial.image',
+        ],
+    locale: 'it'
+});
+
+const defaultSEO = defaultSEORawData?.data?.seo ?? {};
+
+const customTitle = "Panebarco | Studio di Animazione e Produzione Video";
+
+
+const titleDefault = 
+    seo 
+        ? (seo.metaTitle 
+            ? seo.metaTitle 
+            : (documentId 
+                ? (seo && seo.titolo 
+                    ? seo.titolo 
+                    : customTitle
+                ) 
+                : (seo && seo.headerHero && seo.headerHero.titolo 
+                    ? seo.headerHero.titolo 
+                    : customTitle
+                )
+            )
+        ) 
+        : (documentId 
+            ? (seo && seo.titolo 
+                ? seo.titolo 
+                : customTitle
+            ) 
+            : (seo && seo.headerHero && seo.headerHero.titolo 
+                ? seo.headerHero.titolo 
+                : customTitle
+            )
+        );
+
+let metaSocialGeneric = (seo?.metaSocial && seo.metaSocial[0]) ? seo.metaSocial[0] : defaultSEO?.metaSocial?.[0];
+let metaSocialTwitter = (seo?.metaSocial && seo.metaSocial[1]) ? seo.metaSocial[1] : defaultSEO?.metaSocial?.[1];
+
+if (typeof metaSocialGeneric !== "object" || metaSocialGeneric === null) metaSocialGeneric = {};
+if (typeof metaSocialTwitter !== "object" || metaSocialTwitter === null) metaSocialTwitter = {};
+
+metaSocialGeneric.title = metaSocialGeneric.title || titleDefault;
+metaSocialGeneric.description = metaSocialGeneric.description || '';
+metaSocialTwitter.title = metaSocialTwitter.title || titleDefault;
+metaSocialTwitter.description = metaSocialTwitter.description || '';
+
+
+
 ---
 
 <!doctype html>
@@ -43,8 +245,42 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    
+    <SEO 
+        title={titleDefault}
+        titleDefault={titleDefault}
+        description={seo ? seo.metaDescription : ''}
+        noindex={ seo ? (seo && seo.metaRobots && seo.metaRobots.includes('noindex') ? true : false) : true }
+        nofollow={ seo ? (seo && seo.metaRobots && seo.metaRobots.includes('nofollow') ? true : false) : true }
+        openGraph={{
+            basic: {
+                title: metaSocialGeneric ? metaSocialGeneric.title : '',
+                type: "website",
+                image: metaSocialGeneric && metaSocialGeneric.image ? getStrapiMediaUrl(metaSocialGeneric.image?.url) : '',
+                url: Astro.url.href,
+            },
+            optional: {
+                description: metaSocialGeneric ? metaSocialGeneric.description : '',
+                locale: 'it',
+            }
+        }}
+        extend={{
+            // extending the default link tags
+            link: [{ rel: "image/x-icon", href: "/favicon.ico" }],
+            // extending the default meta tags
+            meta: [
+                {
+                name: "twitter:image",
+                content: metaSocialTwitter && metaSocialTwitter.image ? getStrapiMediaUrl(metaSocialTwitter.image?.url) : '',
+                },
+                { name: "twitter:title", content: metaSocialTwitter ? metaSocialTwitter.title : '' },
+                { name: "twitter:description", content: metaSocialTwitter ? metaSocialTwitter.description : '' },
+            ],
+        }}
+    />
+
+
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href={Favicon.src} sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href={FaviconSvg} />

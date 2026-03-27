@@ -1072,6 +1072,7 @@ export async function getOriginalDetailContent({ lang = DEFAULT_LANG, slug }) {
   }).filter(Boolean);
 
   return {
+    documentId: pickFirst(original.documentId),
     titolo: pickFirst(original.titolo),
     anno: pickFirst(original.anno),
     cover: resolveMediaUrl(original.cover, "large"),
@@ -1124,6 +1125,7 @@ export async function getPortfolioDetailContent({ lang = DEFAULT_LANG, slug }) {
   });
 
   return {
+    documentId: pickFirst(project.documentId),
     titolo: pickFirst(project.titolo),
     anno: pickFirst(project.anno),
     cover: resolveMediaUrl(project.cover, "large"),

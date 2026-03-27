@@ -51,7 +51,7 @@ const serviceFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => p
 const typeFilters = ["Tutti", ...new Set(portfolioProjects.map((project) => project.videoType).filter(Boolean))];
 ---
 
-<Layout title="Portfolio - Panebarco" useInnerStyles={true} lang={lang} headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}>
+<Layout title="Portfolio - Panebarco" useInnerStyles={true} lang={lang} entita="pagina-portfolio" headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}>
   <main class="studio-page portfolio-page">
     <HeroStyStudio backgroundVideoSrc={portfolioContent.header.backgroundVideoSrc} bgWord={portfolioContent.header.bgWord} title={portfolioContent.header.title} subtitle={portfolioContent.header.subtitle} sideImageSrc={portfolioContent.header.sideImageSrc} sideImageAlt={portfolioContent.header.sideImageAlt} showSideImage={false} />
 

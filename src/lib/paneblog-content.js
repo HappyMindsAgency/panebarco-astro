@@ -109,6 +109,7 @@ function mapArticleDetail(article, lang) {
 
   return {
     ...mappedCard,
+    documentId: pickFirst(article?.documentId),
     content: pickFirst(article?.contenuto),
     description: pickFirst(article?.seo?.metaDescription, truncateText(article?.contenuto, 180), mappedCard.summary),
     heroAlt: pickFirst(article?.cover?.alternativeText, article?.titolo, "Copertina articolo Paneblog"),
