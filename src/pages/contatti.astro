@@ -34,13 +34,15 @@ const contactsFallback = {
   },
   formSection: {
     title: "Scegli il modo in cui vuoi contattarci",
-    lead: "Usa il form giusto per mandarci un brief, raccontarci un'esigenza produttiva oppure presentarti per una collaborazione futura.",
+    lead: "Usa il form giusto per mandarci un brief oppure per proporti come talento o tirocinante.",
   },
 };
 
 const contactsContent = await getContactsPageContent({ lang, fallback: contactsFallback });
 const contactDetails = contactsFallback.contactDetails;
 const contactCards = contactsContent.contactSection.cards;
+const talentRoleOptions = ["animazione 2D", "animazione 3D", "compositing", "produzione", "illustrazione", "VFX", "montaggio"];
+const talentApplicationOptions = ["Collaborazione", "Stage", "Tirocinio"];
 
 function isExternalHref(href?: string) {
   return typeof href === "string" && href.startsWith("https");
@@ -66,10 +68,19 @@ function renderInlineRichText(value?: string) {
 
     <section class="page-main page-main--studio contacts-content">
       <div class="container">
-        <section class="contacts-intro contacts-block text-center" aria-labelledby="contactsIntroTitle">
-          <h2 id="contactsIntroTitle" class="page-title-uniform">{contactsContent.contactSection.title}</h2>
-          <p class="contacts-intro__lead mx-auto mb-0">{contactsContent.contactSection.lead}</p>
-        </section>
+        {(contactsContent.contactSection.title || contactsContent.contactSection.lead || contactsContent.contactSection.content) && (
+          <section class="contacts-intro contacts-block text-center" aria-labelledby="contactsIntroTitle">
+            {contactsContent.contactSection.title && (
+              <h2 id="contactsIntroTitle" class="page-title-uniform">{contactsContent.contactSection.title}</h2>
+            )}
+            {contactsContent.contactSection.lead && (
+              <p class="contacts-intro__lead mx-auto mb-0">{contactsContent.contactSection.lead}</p>
+            )}
+            {contactsContent.contactSection.content && (
+              <RitchText block={contactsContent.contactSection.content} className="contacts-intro__content mx-auto" />
+            )}
+          </section>
+        )}
 
         <section class="contact-section contacts-block" aria-labelledby="contactsCardsTitle">
           <h2 id="contactsCardsTitle" class="visually-hidden">Informazioni di contatto</h2>
@@ -136,308 +147,326 @@ function renderInlineRichText(value?: string) {
                 <i class="bi bi-send" aria-hidden="true"></i>
                 <span>Contattaci</span>
               </button>
-              <button class="contacts-tab-button" type="button" id="contacts-tab-collab" role="tab" aria-selected="false" aria-controls="contacts-panel-collab" data-contacts-tab="collab" tabindex="-1">
-                <i class="bi bi-people" aria-hidden="true"></i>
-                <span>Collabora</span>
+              <button class="contacts-tab-button" type="button" id="contacts-tab-talent" role="tab" aria-selected="false" aria-controls="contacts-panel-talent" data-contacts-tab="talent" tabindex="-1">
+                <i class="bi bi-stars" aria-hidden="true"></i>
+                <span>Talents</span>
               </button>
             </div>
 
             <section class="contacts-tab-panel is-active" id="contacts-panel-contact" role="tabpanel" aria-labelledby="contacts-tab-contact" data-contacts-panel="contact">
-              <div class="contacts-tab-card">
-                <div class="row g-3 g-xl-4 align-items-start align-items-lg-stretch">
-                  <div class="col-12 col-lg-4 col-xl-4">
-                    <aside class="contacts-tab-visual contacts-tab-visual--contact h-100">
-                      <div class="contacts-tab-visual__head">
-                        <img class="contacts-tab-balloon" src="/images/contatti-raccontaci.png" alt="Raccontaci il tuo progetto" />
-                      </div>
-                      <div class="contacts-tab-visual__bottom">
-                        <div class="contacts-tab-visual__stage">
-                          <div class="contacts-tab-visual__portrait" aria-hidden="true">
-                            <img src="/images/teams-avatar-che-fate-01.png" alt="" />
-                          </div>
-                        </div>
-                        <div class="contacts-visual-note">
-                          <p>Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.</p>
-                        </div>
-                      </div>
-                    </aside>
+              <div class="contacts-tab-card contacts-tab-card--full">
+                <div class="contacts-form-shell contacts-form-shell--wide">
+                  <div class="contacts-brief-success" id="briefFormSuccess" hidden role="alert">
+                    <span class="contacts-brief-success__icon" aria-hidden="true"><i class="bi bi-check-circle-fill"></i></span>
+                    <p class="contacts-brief-success__text">Grazie! Ti risponderemo al più presto.</p>
                   </div>
 
-                  <div class="col-12 col-lg-8 col-xl-8">
-                    <div class="contacts-form-shell">
-
-                      <div class="contacts-brief-success" id="briefFormSuccess" hidden role="alert">
-                        <span class="contacts-brief-success__icon" aria-hidden="true"><i class="bi bi-check-circle-fill"></i></span>
-                        <p class="contacts-brief-success__text">Grazie! Ti risponderemo al più presto.</p>
-                      </div>
-
-                      <form class="contacts-form contacts-form--brief" id="contactBriefForm" novalidate>
-
-                        <div class="contacts-brief-apierror" id="briefFormApiError" hidden role="alert">
-                          <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
-                          Si è verificato un errore. Riprova più tardi.
-                        </div>
-
-                        <!-- Sezione 1 — Dati anagrafici -->
-                        <fieldset class="contacts-brief-section">
-                          <legend class="contacts-brief-section__legend">Dati anagrafici</legend>
-                          <div class="row g-2 g-xl-3">
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefNome">Nome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefNome" name="nome" type="text" required aria-required="true" autocomplete="given-name" />
-                                <p class="contacts-field-error" id="briefNome-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefCognome">Cognome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefCognome" name="cognome" type="text" required aria-required="true" autocomplete="family-name" />
-                                <p class="contacts-field-error" id="briefCognome-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefEmail">Email <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefEmail" name="email" type="email" required aria-required="true" autocomplete="email" />
-                                <p class="contacts-field-error" id="briefEmail-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefTelefono">Telefono <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefTelefono" name="telefono" type="text" required aria-required="true" autocomplete="tel" />
-                                <p class="contacts-field-error" id="briefTelefono-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefAzienda">Azienda / Ente / Organizzazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefAzienda" name="azienda" type="text" required aria-required="true" autocomplete="organization" />
-                                <p class="contacts-field-error" id="briefAzienda-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefRuolo">Ruolo / Funzione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefRuolo" name="ruolo" type="text" required aria-required="true" autocomplete="organization-title" />
-                                <p class="contacts-field-error" id="briefRuolo-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-
-                        <!-- Sezione 2 — Localizzazione -->
-                        <fieldset class="contacts-brief-section">
-                          <legend class="contacts-brief-section__legend">Localizzazione</legend>
-                          <div class="row g-2 g-xl-3">
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefPaese">Paese / Nazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <select class="form-select" id="briefPaese" name="paese" required aria-required="true">
-                                  <option value="">Seleziona...</option>
-                                  {COUNTRIES_IT.map((country) => (
-                                    <option value={country} selected={country === "Italia"}>{country}</option>
-                                  ))}
-                                </select>
-                                <p class="contacts-field-error" id="briefPaese-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefCitta">Città <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <input class="form-control" id="briefCitta" name="citta" type="text" required aria-required="true" autocomplete="address-level2" />
-                                <p class="contacts-field-error" id="briefCitta-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-
-                        <!-- Sezione 3 — Dettagli della richiesta -->
-                        <fieldset class="contacts-brief-section">
-                          <legend class="contacts-brief-section__legend">Dettagli della richiesta</legend>
-                          <div class="row g-2 g-xl-3">
-                            <div class="col-12">
-                              <div class="contacts-brief-field">
-                                <p class="form-label contacts-brief-group-label" id="briefMotivoLabel">Di cosa hai bisogno? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
-                                <div class="contacts-checkbox-group" role="group" aria-labelledby="briefMotivoLabel" aria-describedby="briefMotivo-error" id="briefMotivoGroup">
-                                  {[
-                                    "Spot pubblicitario / Video promozionale",
-                                    "Intervento Post produzione / VFX",
-                                    "Service / produzione esecutiva per prodotto cinematografico / audiovisivo",
-                                    "Co-Produzione",
-                                    "Campagna di Comunicazione",
-                                    "Consulenza creativa",
-                                    "Altro",
-                                  ].map((option, i) => (
-                                    <div class="form-check contacts-checkbox-item">
-                                      <input class="form-check-input" type="checkbox" name="motivo" value={option} id={`briefMotivo-${i}`} />
-                                      <label class="form-check-label" for={`briefMotivo-${i}`}>{option}</label>
-                                    </div>
-                                  ))}
-                                </div>
-                                <p class="contacts-field-error" id="briefMotivo-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefMessaggio">Raccontaci qualcosa di più <span class="contacts-required-mark" aria-hidden="true">*</span></label>
-                                <textarea class="form-control" id="briefMessaggio" name="messaggio" rows="5" required aria-required="true" placeholder="Raccontaci l'idea, il contesto, gli obiettivi, il pubblico, il tono… tutto ciò che può aiutarci a entrare nel tuo mondo."></textarea>
-                                <p class="contacts-field-error" id="briefMessaggio-error" role="alert" hidden></p>
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-
-                        <!-- Sezione 4 — Dettagli aggiuntivi (facoltativi) -->
-                        <fieldset class="contacts-brief-section">
-                          <legend class="contacts-brief-section__legend">
-                            Dettagli aggiuntivi
-                            <span class="contacts-brief-section__optional">(facoltativi)</span>
-                          </legend>
-                          <div class="row g-2 g-xl-3">
-                            <div class="col-12">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefTempistiche">Tempistiche previste</label>
-                                <input class="form-control" id="briefTempistiche" name="tempistiche" type="text" />
-                              </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefMateriali">Allega eventuali materiali utili</label>
-                                <input class="form-control" id="briefMateriali" name="materiali_utili" type="text" placeholder="Brief, documenti, riferimenti visivi, linee guida, ecc. (inserisci i link)" />
-                              </div>
-                            </div>
-                            <div class="col-12">
-                              <div class="contacts-brief-field">
-                                <label class="form-label" for="briefEsempi">Link a esempi o ispirazioni</label>
-                                <input class="form-control" id="briefEsempi" name="esempi_utili" type="text" />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-
-                        <!-- Sezione 5 — Come ci hai trovato? (facoltativo) -->
-                        <fieldset class="contacts-brief-section">
-                          <legend class="contacts-brief-section__legend">
-                            Come ci hai trovato?
-                            <span class="contacts-brief-section__optional">(facoltativo)</span>
-                          </legend>
-                          <div class="contacts-checkbox-group" role="group" aria-label="Come ci hai trovato?">
-                            {[
-                              "Ricerca online",
-                              "Social",
-                              "Ho visto un vostro prodotto",
-                              "Passaparola",
-                              "Altro",
-                            ].map((option, i) => (
-                              <div class="form-check contacts-checkbox-item">
-                                <input class="form-check-input" type="checkbox" name="referral" value={option} id={`briefReferral-${i}`} />
-                                <label class="form-check-label" for={`briefReferral-${i}`}>{option}</label>
-                              </div>
-                            ))}
-                          </div>
-                        </fieldset>
-
-                        <!-- Sezione 6 — Consensi -->
-                        <div class="contacts-brief-section contacts-brief-section--consents">
-                          <div class="contacts-consent">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="briefNewsletter" name="newsletter" value="yes" />
-                              <label class="form-check-label" for="briefNewsletter">Vuoi ricevere aggiornamenti sui nostri progetti?</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="briefPrivacy" name="privacy" value="accepted" required aria-required="true" />
-                              <label class="form-check-label" for="briefPrivacy">
-                                Acconsento al trattamento dei dati personali e all'iscrizione alla newsletter così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
-                              </label>
-                            </div>
-                            <p class="contacts-field-error" id="briefPrivacy-error" role="alert" hidden></p>
-                          </div>
-                        </div>
-
-                        <!-- Submit -->
-                        <div class="contacts-brief-actions">
-                          <button class="btn btn-cta btn-cta--blue btn-pill contacts-brief-submit" type="submit" id="briefFormSubmit">
-                            <span class="contacts-brief-submit__text">Invia richiesta</span>
-                            <span class="contacts-brief-submit__loading" hidden aria-hidden="true">
-                              <span class="contacts-brief-spinner"></span>
-                              Invio in corso…
-                            </span>
-                          </button>
-                        </div>
-
-                      </form>
+                  <form class="contacts-form contacts-form--brief" id="contactBriefForm" novalidate>
+                    <div class="contacts-brief-apierror" id="briefFormApiError" hidden role="alert">
+                      <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                      Si è verificato un errore. Riprova più tardi.
                     </div>
-                  </div>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Contatti essenziali</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefNome">Nome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefNome" name="nome" type="text" required aria-required="true" autocomplete="given-name" />
+                            <p class="contacts-field-error" id="briefNome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefCognome">Cognome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefCognome" name="cognome" type="text" required aria-required="true" autocomplete="family-name" />
+                            <p class="contacts-field-error" id="briefCognome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefEmail">Email <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefEmail" name="email" type="email" required aria-required="true" autocomplete="email" />
+                            <p class="contacts-field-error" id="briefEmail-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefTelefono">Telefono <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefTelefono" name="telefono" type="text" required aria-required="true" autocomplete="tel" />
+                            <p class="contacts-field-error" id="briefTelefono-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefAzienda">Azienda / Ente / Organizzazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefAzienda" name="azienda" type="text" required aria-required="true" autocomplete="organization" />
+                            <p class="contacts-field-error" id="briefAzienda-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefRuolo">Ruolo / Funzione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefRuolo" name="ruolo" type="text" required aria-required="true" autocomplete="organization-title" />
+                            <p class="contacts-field-error" id="briefRuolo-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Contesto del progetto</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefPaese">Paese / Nazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <select class="form-select" id="briefPaese" name="paese" required aria-required="true">
+                              <option value="">Seleziona...</option>
+                              {COUNTRIES_IT.map((country) => (
+                                <option value={country} selected={country === "Italia"}>{country}</option>
+                              ))}
+                            </select>
+                            <p class="contacts-field-error" id="briefPaese-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefCitta">Città <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="briefCitta" name="citta" type="text" required aria-required="true" autocomplete="address-level2" />
+                            <p class="contacts-field-error" id="briefCitta-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <p class="form-label contacts-brief-group-label" id="briefMotivoLabel">Di cosa hai bisogno? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                            <div class="contacts-checkbox-group contacts-checkbox-group--compact" role="group" aria-labelledby="briefMotivoLabel" aria-describedby="briefMotivo-error" id="briefMotivoGroup">
+                              {[
+                                "Spot pubblicitario / Video promozionale",
+                                "Intervento post produzione / VFX",
+                                "Service / produzione esecutiva per prodotto cinematografico / audiovisivo",
+                                "Co-produzione",
+                                "Campagna di comunicazione",
+                                "Consulenza creativa",
+                                "Altro",
+                              ].map((option, i) => (
+                                <div class="form-check contacts-checkbox-item">
+                                  <input class="form-check-input" type="checkbox" name="motivo" value={option} id={`briefMotivo-${i}`} />
+                                  <label class="form-check-label" for={`briefMotivo-${i}`}>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <p class="contacts-field-error" id="briefMotivo-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefTempistiche">Tempistiche previste</label>
+                            <input class="form-control" id="briefTempistiche" name="tempistiche" type="text" placeholder="Quando vorresti partire o consegnare?" />
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefEsempi">Link a esempi o ispirazioni</label>
+                            <input class="form-control" id="briefEsempi" name="esempi_utili" type="text" placeholder="https:// oppure riferimenti utili" />
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefMateriali">Materiali utili</label>
+                            <input class="form-control" id="briefMateriali" name="materiali_utili" type="text" placeholder="Brief, documenti, linee guida o cartelle condivise" />
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="briefMessaggio">Raccontaci qualcosa di più <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <textarea class="form-control" id="briefMessaggio" name="messaggio" rows="4" required aria-required="true" placeholder="Idea, contesto, obiettivi, pubblico e tono: bastano poche informazioni ben scelte per aiutarci a capire la richiesta."></textarea>
+                            <p class="contacts-field-error" id="briefMessaggio-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <div class="contacts-brief-section contacts-brief-section--consents">
+                      <div class="contacts-consent">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="briefNewsletter" name="newsletter" value="yes" />
+                          <label class="form-check-label" for="briefNewsletter">Vuoi ricevere aggiornamenti sui nostri progetti?</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="briefPrivacy" name="privacy" value="accepted" required aria-required="true" />
+                          <label class="form-check-label" for="briefPrivacy">
+                            Acconsento al trattamento dei dati personali e all'iscrizione alla newsletter così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                          </label>
+                        </div>
+                        <p class="contacts-field-error" id="briefPrivacy-error" role="alert" hidden></p>
+                      </div>
+                    </div>
+
+                    <div class="contacts-brief-actions">
+                      <button class="btn btn-cta btn-cta--blue btn-pill contacts-brief-submit" type="submit" id="briefFormSubmit">
+                        <span class="contacts-brief-submit__text">Invia richiesta</span>
+                        <span class="contacts-brief-submit__loading" hidden aria-hidden="true">
+                          <span class="contacts-brief-spinner"></span>
+                          Invio in corso...
+                        </span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </section>
 
-            <section class="contacts-tab-panel" id="contacts-panel-collab" role="tabpanel" aria-labelledby="contacts-tab-collab" data-contacts-panel="collab" hidden>
-              <div class="contacts-tab-card">
-                <div class="row g-3 g-xl-4 align-items-start align-items-lg-stretch">
-                  <div class="col-12 col-lg-4 col-xl-4">
-                    <aside class="contacts-tab-visual contacts-tab-visual--contact collabora h-100">
-                      <div class="contacts-tab-visual__head">
-                        <img class="contacts-tab-balloon" src="/images/contatti-raccontaci.png" alt="Raccontaci il tuo progetto" />
-                      </div>
-                      <div class="contacts-tab-visual__bottom">
-                        <div class="contacts-tab-visual__stage">
-                          <div class="contacts-tab-visual__portrait" aria-hidden="true">
-                            <img src="/images/teams-avatar-camilla-04.png" alt="" />
-                          </div>
-                        </div>
-                        <div class="contacts-visual-note">
-                          <p>Raccontaci obiettivi, tempi e formato: ti rispondiamo con un confronto concreto.</p>
-                        </div>
-                      </div>
-                    </aside>
+            <section class="contacts-tab-panel" id="contacts-panel-talent" role="tabpanel" aria-labelledby="contacts-tab-talent" data-contacts-panel="talent" hidden>
+              <div class="contacts-tab-card contacts-tab-card--full">
+                <div class="contacts-form-shell contacts-form-shell--wide">
+                  <div class="contacts-brief-success" id="talentFormSuccess" hidden role="alert">
+                    <span class="contacts-brief-success__icon" aria-hidden="true"><i class="bi bi-check-circle-fill"></i></span>
+                    <p class="contacts-brief-success__text">Grazie! Abbiamo ricevuto la tua candidatura.</p>
                   </div>
 
-                  <div class="col-12 col-lg-8 col-xl-8">
-                    <div class="contacts-form-shell">
-                      <form class="contacts-form" action="#" method="post" novalidate>
-                        <div class="row g-2 g-xl-3">
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="collabName">Nome e cognome</label>
-                            <input class="form-control" id="collabName" name="full_name" type="text" autocomplete="name" placeholder="Nome Cognome" />
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="collabEmail">Email</label>
-                            <input class="form-control" id="collabEmail" name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" />
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="collabRole">Ruolo</label>
-                            <input class="form-control" id="collabRole" name="role" type="text" autocomplete="organization-title" placeholder="Animazione, regia, compositing, produzione..." />
-                          </div>
-                          <div class="col-12 col-md-6">
-                            <label class="form-label" for="collabPortfolio">Portfolio / link</label>
-                            <input class="form-control" id="collabPortfolio" name="portfolio" type="url" inputmode="url" placeholder="https://" />
-                          </div>
-                          <div class="col-12">
-                            <label class="form-label" for="collabPresentation">Presentazione</label>
-                            <textarea class="form-control" id="collabPresentation" name="presentation" rows="5" placeholder="Dicci chi sei, come lavori e su quali progetti ti piacerebbe collaborare."></textarea>
-                          </div>
-                          <div class="col-12">
-                            <div class="contacts-consent">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="accepted" id="collabConsent" name="consent" required />
-                                <label class="form-check-label" for="collabConsent">Ho letto e accetto l'<a href={buildPath("privacyPolicy", lang)}>Informativa sulla privacy</a>.</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="newsletter" id="collabNewsletter" name="newsletter" />
-                                <label class="form-check-label" for="collabNewsletter">Voglio ricevere aggiornamenti e novita dal mondo Pane Barco.</label>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-12">
-                            <button class="btn btn-cta btn-cta--blue btn-pill" type="submit">Invia candidatura</button>
+                  <form class="contacts-form contacts-form--brief" id="talentForm" novalidate>
+                    <div class="contacts-brief-apierror" id="talentFormApiError" hidden role="alert">
+                      <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                      Si è verificato un errore. Riprova più tardi.
+                    </div>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">I tuoi riferimenti</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentNome">Nome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentNome" name="nome" type="text" required aria-required="true" autocomplete="given-name" />
+                            <p class="contacts-field-error" id="talentNome-error" role="alert" hidden></p>
                           </div>
                         </div>
-                      </form>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentCognome">Cognome <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentCognome" name="cognome" type="text" required aria-required="true" autocomplete="family-name" />
+                            <p class="contacts-field-error" id="talentCognome-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentEmail">Email <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentEmail" name="email" type="email" required aria-required="true" autocomplete="email" />
+                            <p class="contacts-field-error" id="talentEmail-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentTelefono">Telefono <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentTelefono" name="telefono" type="text" required aria-required="true" autocomplete="tel" />
+                            <p class="contacts-field-error" id="talentTelefono-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentPaese">Paese / Nazione <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentPaese" name="paese" type="text" required aria-required="true" autocomplete="country-name" />
+                            <p class="contacts-field-error" id="talentPaese-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentCitta">Città <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentCitta" name="citta" type="text" required aria-required="true" autocomplete="address-level2" />
+                            <p class="contacts-field-error" id="talentCitta-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="contacts-brief-section">
+                      <legend class="contacts-brief-section__legend">Candidatura</legend>
+                      <div class="row g-2 g-xl-3">
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <p class="form-label contacts-brief-group-label" id="talentRuoloLabel">Quale ruolo ti interessa? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                            <div class="contacts-checkbox-group contacts-checkbox-group--compact" role="radiogroup" aria-labelledby="talentRuoloLabel" aria-describedby="talentRuolo-error" id="talentRuoloGroup">
+                              {talentRoleOptions.map((option, index) => (
+                                <div class="form-check contacts-checkbox-item">
+                                  <input class="form-check-input" type="radio" name="ruolo" value={option} id={`talentRuolo-${index}`} />
+                                  <label class="form-check-label" for={`talentRuolo-${index}`}>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <p class="contacts-field-error" id="talentRuolo-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="contacts-brief-field">
+                            <p class="form-label contacts-brief-group-label" id="talentCosaLabel">Per cosa ti candidi? <span class="contacts-required-mark" aria-hidden="true">*</span></p>
+                            <div class="contacts-checkbox-group contacts-checkbox-group--compact" role="radiogroup" aria-labelledby="talentCosaLabel" aria-describedby="talentCosa-error" id="talentCosaGroup">
+                              {talentApplicationOptions.map((option, index) => (
+                                <div class="form-check contacts-checkbox-item">
+                                  <input class="form-check-input" type="radio" name="cosa" value={option} id={`talentCosa-${index}`} />
+                                  <label class="form-check-label" for={`talentCosa-${index}`}>{option}</label>
+                                </div>
+                              ))}
+                            </div>
+                            <p class="contacts-field-error" id="talentCosa-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12" id="talentStageSection" hidden>
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentStage">Se ti candidi per uno stage: per quanto tempo, in quale periodo, con quale ente di formazione, quale corso hai frequentato e qual è il tuo percorso? <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <textarea class="form-control" id="talentStage" name="stage" rows="5" placeholder="Durata, periodo, ente di formazione, corso frequentato e percorso di studi/formazione."></textarea>
+                            <p class="contacts-field-error" id="talentStage-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12" id="talentMessageSection" hidden>
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentMessaggio">Raccontaci qualcosa di te</label>
+                            <textarea class="form-control" id="talentMessaggio" name="messaggio" rows="5" placeholder="Competenze, esperienze, strumenti e il tipo di progetti su cui vorresti lavorare."></textarea>
+                            <p class="contacts-field-error" id="talentMessaggio-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentLinkCv">Carica il tuo CV <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentLinkCv" name="linkCv" type="text" required aria-required="true" placeholder="Inserisci un link condivisibile" />
+                            <p class="contacts-field-error" id="talentLinkCv-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                          <div class="contacts-brief-field">
+                            <label class="form-label" for="talentLinkPortfolio">Carica portfolio / showreel (link) <span class="contacts-required-mark" aria-hidden="true">*</span></label>
+                            <input class="form-control" id="talentLinkPortfolio" name="linkPortfolio" type="text" required aria-required="true" placeholder="https:// oppure link a cartella condivisa" />
+                            <p class="contacts-field-error" id="talentLinkPortfolio-error" role="alert" hidden></p>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <div class="contacts-brief-section contacts-brief-section--consents">
+                      <div class="contacts-consent">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="talentNewsletter" name="newsletter" value="yes" />
+                          <label class="form-check-label" for="talentNewsletter">Vuoi rimanere aggiornato sui nostri progetti?</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="talentPrivacy" name="privacy" value="accepted" required aria-required="true" />
+                          <label class="form-check-label" for="talentPrivacy">
+                            Acconsento al trattamento dei dati personali e all'iscrizione alla newsletter così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                          </label>
+                        </div>
+                        <p class="contacts-field-error" id="talentPrivacy-error" role="alert" hidden></p>
+                      </div>
                     </div>
-                  </div>
+
+                    <div class="contacts-brief-actions">
+                      <button class="btn btn-cta btn-cta--blue btn-pill contacts-brief-submit" type="submit" id="talentFormSubmit">
+                        <span class="contacts-brief-submit__text">Invia la tua candidatura</span>
+                        <span class="contacts-brief-submit__loading" hidden aria-hidden="true">
+                          <span class="contacts-brief-spinner"></span>
+                          Invio in corso...
+                        </span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </section>

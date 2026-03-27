@@ -31,6 +31,20 @@ function asArray(value) {
   return Array.isArray(value) ? value : value ? [value] : [];
 }
 
+function unwrapEntry(value) {
+  if (!value || typeof value !== "object") return value;
+
+  if (value.attributes && typeof value.attributes === "object") {
+    return {
+      ...value.attributes,
+      id: value.id ?? value.attributes.id,
+      documentId: value.documentId ?? value.attributes.documentId,
+    };
+  }
+
+  return value;
+}
+
 function pickFirst(...values) {
   for (const value of values) {
     if (typeof value === "string" && value.trim()) {
@@ -1169,16 +1183,17 @@ export async function getContactsPageContent({ lang = DEFAULT_LANG, fallback }) 
     },
   });
 
-  const page = pageResponse?.data || {};
-  const contacts = page?.contatti || {};
+  const page = unwrapEntry(pageResponse?.data) || {};
+  const contacts = unwrapEntry(page?.contatti) || {};
   const formContent = pickFirst(page?.contattaci);
   const formParagraphs = splitRichTextParagraphs(formContent);
 
   return {
     header: mapHeader(page?.header, fallback.header),
     contactSection: {
-      title: pickFirst(contacts?.titolo, fallback.contactSection.title),
-      lead: pickFirst(contacts?.sottotitolo, fallback.contactSection.lead),
+      title: pickFirst(contacts?.titolo),
+      lead: pickFirst(contacts?.sottotitolo),
+      content: pickFirst(contacts?.contenuto),
       cards: asArray(contacts?.item).length
         ? mapContactCards(asArray(contacts?.item), fallback.contactSection.cards, fallback.contactDetails)
         : mapContactCards([], fallback.contactSection.cards, fallback.contactDetails),
