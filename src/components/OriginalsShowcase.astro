@@ -16,6 +16,8 @@ interface Props {
   showFeaturedCta?: boolean;
 }
 
+//console.log("item", Astro.props.items);
+
 const {
   sectionId = "originals",
   sectionClass = "dark-band originals-parallax",
@@ -25,6 +27,7 @@ const {
   items = [],
 } = Astro.props;
 const originals: OriginalItem[] = items;
+
 
 const hasEnoughItems = originals.length >= 3;
 const [featured, sideOne, sideTwo] = hasEnoughItems ? originals : [null, null, null];

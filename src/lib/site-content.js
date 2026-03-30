@@ -434,8 +434,8 @@ function mapPortfolioShowcaseItems(items = [], fallbackItems = []) {
 }
 
 function mapHomeOriginalsShowcaseItems(items = [], fallbackItems = []) {
-  return fallbackItems.map((fallbackItem, index) => {
-    const item = items[index] || {};
+  return items.map((item, index) => {
+    const fallbackItem = fallbackItems[index] || {};
 
     return {
       title: pickFirst(item?.titolo, fallbackItem.title),
@@ -855,10 +855,16 @@ export async function getHomeOriginalsShowcaseContent({ lang = DEFAULT_LANG, fal
   const response = await getCollectionDocuments("originals", {
     locale: lang,
     status: "published",
+    filters: {
+      inEvidenza: {
+        $eq: true,
+      },
+    },
     sort: ["updatedAt:desc"],
     pagination: {
       page: 1,
-      pageSize: asArray(fallback.items).length || 3,
+      //pageSize: asArray(fallback.items).length || 3,
+      pageSize: 10,
     },
     fields: ["documentId", "titolo", "slug"],
     populate: {
