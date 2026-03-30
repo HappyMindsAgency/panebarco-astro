@@ -16,25 +16,28 @@ const specialProjectSlots = ["top-left", "top-right", "bottom-left", "bottom-rig
 
 const fallbackThoughtCards = [
   {
-    label: "",
+    label: "PANEBLOG",
     href: buildPath("paneblog", lang),
     summary: "",
     cta: customLabel("Scopri di piu", lang),
-    stickerClass: "extras-figma-thought-card__sticker--red",
+    balloonSrc: "/images/e-tanto-altro-baneblog-balloon.svg",
+    balloonClass: "",
   },
   {
-    label: "",
+    label: "DIARIO DI VIAGGIO",
     href: buildPath("paneblogTravelDiary", lang),
     summary: "",
     cta: customLabel("Accedi ora", lang),
-    stickerClass: "extras-figma-thought-card__sticker--blue",
+    balloonSrc: "/images/e-tanto-altro-diario-di-viaggio-balloon.svg",
+    balloonClass: "extras-figma-thought-card__sticker--diary",
   },
   {
-    label: "",
+    label: "NEWSLETTER",
     href: buildPath("contacts", lang),
     summary: "",
     cta: customLabel("Accedi ora", lang),
-    stickerClass: "extras-figma-thought-card__sticker--violet",
+    balloonSrc: "/images/e-tanto-altro-newsletter-balloon.svg",
+    balloonClass: "",
   },
 ] as const;
 
@@ -176,7 +179,8 @@ const thoughts = fallbackThoughtCards.map((fallbackCard, index) => {
     href,
     summary,
     cta,
-    stickerClass: fallbackCard.stickerClass,
+    balloonSrc: fallbackCard.balloonSrc,
+    balloonClass: fallbackCard.balloonClass,
   };
 });
 
@@ -271,13 +275,13 @@ const newsletterData = {
 
     <section class="extras-figma-thoughts" aria-labelledby="extrasThoughtsTitle">
       <div class="container">
-        <h2 id="extrasThoughtsTitle" class="extras-figma-thoughts__title">{thoughtsLabel}</h2>
+        <h2 id="extrasThoughtsTitle" class="extras-figma-thoughts__title pb-4">{thoughtsLabel}</h2>
 
         <div class="extras-figma-thoughts__grid">
           {thoughts.map((item) => (
             <article class="extras-figma-thought-card">
-              <a class:list={["extras-figma-thought-card__sticker", item.stickerClass]} href={item.href}>
-                {item.label}
+              <a class:list={["extras-figma-thought-card__sticker", item.balloonClass]} href={item.href} aria-label={item.label}>
+                <img class="extras-figma-thought-card__sticker-image" src={item.balloonSrc} alt="" aria-hidden="true" loading="lazy" decoding="async" />
               </a>
               <p class="extras-figma-thought-card__summary">{item.summary}</p>
               <a class="btn btn-cta btn-cta--orange btn-pill extras-figma-thought-card__cta" href={item.href}>

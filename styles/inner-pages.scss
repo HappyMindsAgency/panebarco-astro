@@ -2975,7 +2975,7 @@ body.inner-page {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    padding: clamp(2.4rem, 4vw, 3rem) clamp(1rem, 2.4vw, 1.5rem) clamp(1.15rem, 2vw, 1.5rem);
+    padding: clamp(4.2rem, 5.8vw, 5.1rem) clamp(1rem, 2.4vw, 1.5rem) clamp(1.15rem, 2vw, 1.5rem);
     border-radius: 1.25rem;
     background: #ffffff;
     box-shadow:
@@ -2986,62 +2986,23 @@ body.inner-page {
 
   .extras-page .extras-figma-thought-card__sticker {
     position: absolute;
-    top: -0.7rem;
+    top: -1.2rem;
     left: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.35rem;
-    padding: 0.45rem 0.9rem 0.38rem;
-    border-radius: 0.8rem;
-    font-family: "Margarine", cursive;
-    font-size: clamp(0.88rem, 0.76rem + 0.35vw, 1.1rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    color: #ffffff;
+    display: block;
+    width: clamp(11.8rem, 18vw, 14.2rem);
     text-decoration: none;
-    box-shadow: 0 0.6rem 1.1rem rgba(15, 23, 42, 0.15);
-    transform-origin: center;
+    transform: translateX(-50%);
   }
 
-  .extras-page .extras-figma-thought-card__sticker::after {
-    content: "";
-    position: absolute;
-    left: 0.8rem;
-    bottom: -0.42rem;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0.48rem 0.42rem 0 0;
-    border-color: transparent transparent transparent transparent;
+  .extras-page .extras-figma-thought-card__sticker-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0.7rem 1.2rem rgba(15, 23, 42, 0.18));
   }
 
-  .extras-page .extras-figma-thought-card__sticker--red {
-    background: #b03d4f;
-    transform: translateX(-50%) rotate(-4deg);
-  }
-
-  .extras-page .extras-figma-thought-card__sticker--red::after {
-    border-top-color: #b03d4f;
-  }
-
-  .extras-page .extras-figma-thought-card__sticker--blue {
-    background: #009fe3;
-    transform: translateX(-50%) rotate(-5deg);
-  }
-
-  .extras-page .extras-figma-thought-card__sticker--blue::after {
-    border-top-color: #009fe3;
-  }
-
-  .extras-page .extras-figma-thought-card__sticker--violet {
-    background: #995791;
-    transform: translateX(-50%) rotate(-4deg);
-  }
-
-  .extras-page .extras-figma-thought-card__sticker--violet::after {
-    border-top-color: #995791;
+  .extras-page .extras-figma-thought-card__sticker--diary {
+    width: clamp(14.2rem, 21vw, 17rem);
   }
 
   .extras-page .extras-figma-thought-card__summary {
@@ -3200,6 +3161,19 @@ body.inner-page {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .extras-page .extras-figma-thought-card {
+      padding-top: 3.9rem;
+    }
+
+    .extras-page .extras-figma-thought-card__sticker {
+      top: -1.05rem;
+      width: clamp(10.8rem, 24vw, 13rem);
+    }
+
+    .extras-page .extras-figma-thought-card__sticker--diary {
+      width: clamp(12.8rem, 29vw, 15.2rem);
+    }
+
     .extras-page .extras-figma-library {
       padding-block: 3.5rem;
     }
@@ -3258,20 +3232,16 @@ body.inner-page {
     }
 
     .extras-page .extras-figma-thought-card {
-      padding-top: 2.8rem;
+      padding-top: 4.6rem;
     }
 
     .extras-page .extras-figma-thought-card__sticker {
-      min-height: 2.85rem;
-      padding: 0.56rem 1.12rem 0.46rem;
-      border-radius: 0.92rem;
-      font-size: clamp(1rem, 0.88rem + 0.52vw, 1.22rem);
+      top: -1.2rem;
+      width: min(78vw, 16rem);
     }
 
-    .extras-page .extras-figma-thought-card__sticker::after {
-      left: 0.96rem;
-      bottom: -0.5rem;
-      border-width: 0.56rem 0.5rem 0 0;
+    .extras-page .extras-figma-thought-card__sticker--diary {
+      width: min(88vw, 18.4rem);
     }
 
     .extras-page .extras-figma-library {
