@@ -124,6 +124,13 @@ if (!project) {
 </Layout>
 
 <style>
+  @media (max-width: 991.98px) {
+    :global(.hero-wrap .hero-card) {
+      min-height: unset !important;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
   .portfolio-detail-page p {
     max-width: 100%;
   }
@@ -147,5 +154,14 @@ if (!project) {
     font-weight: 400;
     color: var(--ink);
     margin-bottom: 1.5rem;
+  }
+
+  .portfolio-detail-page .portfolio-detail-imported-content :global(iframe) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: none;
   }
 </style>
