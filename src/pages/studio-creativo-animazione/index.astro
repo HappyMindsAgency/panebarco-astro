@@ -178,12 +178,15 @@ const protagonistFirstImage = protagonistImages[0] || studioFallback.protagonist
         </div>
       </section>
 
-      <section class="studio-panebarcos-intro section-space section-space--soft">
+      <section class="studio-panebarcos-intro section-space section-space--soft pb-0">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12 col-xl-10 studio-panebarcos-intro-inner text-start text-md-center">
               <h2 class="page-title-uniform" hidden>{studioContent.protagonists.title}</h2>
               <RitchText block={studioContent.protagonists.content} className="studio-panebarcos-richtext" />
+              <a class="btn btn-cta btn-cta--blue btn-pill mt-4" href={buildPath("studioTeam", lang)}>
+                {lang === "en" ? "Meet the Panebarcos" : "Conosci i Panebarcos"}
+              </a>
             </div>
           </div>
         </div>
