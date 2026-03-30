@@ -31,7 +31,7 @@ const pageContent = await getPaneblogPageContent({
   },
 });
 
-const flashNewsItems = await getFlashNewsContent({ lang, limit: 3 });
+const flashNewsItems = await getFlashNewsContent({ lang, limit: 4 });
 
 const diaryChatMessages = flashNewsItems.length
   ? flashNewsItems
@@ -61,7 +61,7 @@ const diaryChatMessages = flashNewsItems.length
 
    
 
-    <section class="section-space paneblog-articles p-0" data-paneblog-root>
+    <section class="section-space paneblog-articles pb-0" data-paneblog-root>
       <div class="container">
         <div class="row justify-content-center text-center mb-4 mb-lg-5" hidden>
           <div class="col-12">

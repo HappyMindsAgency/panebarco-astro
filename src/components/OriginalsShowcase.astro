@@ -51,16 +51,16 @@ const [featured, sideOne, sideTwo] = hasEnoughItems ? originals : [null, null, n
           <article
             class="original-featured"
             data-originals-featured
-            aria-label={featured.ariaLabel || featured.title}
-            style={`background-image:url('${featured.image}');`}
+            aria-label={featured?.ariaLabel || featured?.title}
+            style={`background-image:url('${featured?.image}');`}
           >
             <div class="featured-content">
-              <h4 data-originals-featured-title>{featured.title}</h4>
+              <h4 data-originals-featured-title>{featured?.title}</h4>
               <img class="originals-logo-mark" src="/images/panebarco originals logo.png" alt="" />
               {showFeaturedCta && (
                 <a
                   data-originals-featured-link
-                  href={featured.link}
+                  href={featured?.link}
                   class="btn btn-cta btn-cta--blue original-more-btn"
                 >
                   Scopri di pi&ugrave;
@@ -72,11 +72,11 @@ const [featured, sideOne, sideTwo] = hasEnoughItems ? originals : [null, null, n
           <article
             class="original-side-card"
             data-originals-side-one
-            aria-label={sideOne.ariaLabel || sideOne.title}
-            style={`background-image:url('${sideOne.image}');`}
+            aria-label={sideOne?.ariaLabel || sideOne?.title}
+            style={`background-image:url('${sideOne?.image}');`}
           >
             <div class="side-content">
-              <h4 data-originals-side-one-title>{sideOne.title}</h4>
+              <h4 data-originals-side-one-title>{sideOne?.title}</h4>
               <img class="originals-logo-mark" src="/images/panebarco originals logo.png" alt="" />
             </div>
           </article>
@@ -84,11 +84,11 @@ const [featured, sideOne, sideTwo] = hasEnoughItems ? originals : [null, null, n
           <article
             class="original-side-card"
             data-originals-side-two
-            aria-label={sideTwo.ariaLabel || sideTwo.title}
-            style={`background-image:url('${sideTwo.image}');`}
+            aria-label={sideTwo?.ariaLabel || sideTwo?.title}
+            style={`background-image:url('${sideTwo?.image}');`}
           >
             <div class="side-content">
-              <h4 data-originals-side-two-title>{sideTwo.title}</h4>
+              <h4 data-originals-side-two-title>{sideTwo?.title}</h4>
               <img class="originals-logo-mark" src="/images/panebarco originals logo.png" alt="" />
             </div>
           </article>

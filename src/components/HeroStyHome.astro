@@ -1,8 +1,17 @@
 ---
 import ChatPopSlider from "./ChatPopSlider.astro";
 
+interface ChatMessage {
+  date: string;
+  character: string;
+  avatar: string;
+  title: string;
+  text: string;
+}
+
 interface Props {
   showSlider?: boolean;
+  sliderMessages?: readonly ChatMessage[];
   className?: string;
   containerClass?: string;
   heroClass?: string;
@@ -22,6 +31,7 @@ interface Props {
 const {
   show = true,
   showSlider = true,
+  sliderMessages = [],
   className = "hero-sty-home",
   containerClass = "container-fluid hero-fluid px-3 px-md-4 px-lg-5",
   heroClass = "hero-card",
@@ -100,7 +110,7 @@ const hasCta = normalizeBool(showCta, true);
             )}
           </div>
           {hasSlider && (
-            <ChatPopSlider variant="hero" />
+            <ChatPopSlider variant="hero" messages={sliderMessages} />
           )}
         </div>
       </div>

@@ -7,7 +7,7 @@ import ServicesShowcase from "../components/ServicesShowcase.astro";
 import mainScriptUrl from "../scripts/main.js?url";
 import { buildPath, getLangFromPath } from "../i18n/routing";
 import { getHomeOriginalsShowcaseContent, getHomePageContent, getPortfolioShowcaseContent } from "../lib/site-content";
-import { getPaneblogPreviewArticles } from "../lib/paneblog-content";
+import { getFlashNewsContent, getPaneblogPreviewArticles } from "../lib/paneblog-content";
 
 const lang = getLangFromPath(Astro.url.pathname);
 const homeFallback = {
@@ -84,6 +84,7 @@ const homePaneblogArticles = await getPaneblogPreviewArticles({
   lang,
   limit: 3,
 });
+const heroFlashMessages = await getFlashNewsContent({ lang, limit: 4 });
 ---
 
 <Layout
@@ -98,6 +99,7 @@ const homePaneblogArticles = await getPaneblogPreviewArticles({
         id="studio"
         className="hero-wrap"
         showSlider={true}
+        sliderMessages={heroFlashMessages}
         title={homeContent.header.title}
         subtitle={homeContent.header.subtitle}
         videoSrc={homeContent.header.videoSrc}
