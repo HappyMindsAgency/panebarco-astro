@@ -15,6 +15,11 @@ const originalsFallback = {
     sideImageSrc: "/images/lo-studio-panebarco-teams.png",
     sideImageAlt: "Team Panebarco",
   },
+  showcase: {
+    title: "",
+    subtitle: "",
+    intro: "Lo spazio in cui coltiviamo storie originali, personaggi e mondi narrativi che possono crescere tra sviluppo, scrittura e produzione.",
+  },
   explore: {
     title: "Esplora i progetti",
     summary: "Filtra il portfolio per area di servizio o per tipologia di video e scorri una griglia piu ampia di lavori, frame e casi correlati.",
@@ -88,7 +93,13 @@ const finalCtas = originalsContent.ctas.map((cta) => ({
         </div>
       </section>
 
-      <OriginalsPortfolioSlider lang={lang} slides={originalsContent.highlightedOriginals} />
+      <OriginalsPortfolioSlider
+        lang={lang}
+        title={originalsContent.showcase.title}
+        subtitle={originalsContent.showcase.subtitle}
+        intro={originalsContent.showcase.intro}
+        slides={originalsContent.highlightedOriginals}
+      />
 
       <section class="section-space section-space--tight originals-dual-cta" aria-labelledby="originalsFinalCtaTitle">
         <div class="container">

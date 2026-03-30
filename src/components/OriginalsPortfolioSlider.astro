@@ -13,6 +13,8 @@ interface Props {
   sectionClass?: string;
   containerClass?: string;
   lang?: "it" | "en";
+  title?: string;
+  subtitle?: string;
   intro?: string;
   slides?: Slide[];
 }
@@ -22,6 +24,8 @@ const {
   sectionClass = "section-space section-space--soft portfolio-originals-slider originals-showcase-slider",
   containerClass = "container",
   lang = "it",
+  title = "",
+  subtitle = "",
   intro = "Lo spazio in cui coltiviamo storie originali, personaggi e mondi narrativi che possono crescere tra sviluppo, scrittura e produzione.",
   slides = [
     { title: "Caramelle", subtitle: "Serie animate", image: "/images/originals-cover-01-700x395.jpg", slug: "caramelle" },
@@ -39,7 +43,9 @@ const resolvedSlides = slides.map((slide) => ({
 <section id={sectionId} class={sectionClass}>
   <div class={containerClass}>
     <div class="originals-showcase-brand">
+      {subtitle && <p class="originals-showcase-brand__subtitle">{subtitle}</p>}
       <img class="originals-title-logo" src="/images/panebarco originals logo.png" alt="Panebarco Originals" />
+      {title && <h2 class="originals-showcase-brand__title">{title}</h2>}
       <p class="originals-showcase-brand__intro">{intro}</p>
     </div>
 
@@ -212,7 +218,9 @@ const resolvedSlides = slides.map((slide) => ({
 
 <style>
   .originals-showcase-brand { display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:clamp(1.2rem, 2vw, 2rem); }
+  .originals-showcase-brand__subtitle { margin:0 0 0.55rem; color:rgba(255, 255, 255, 0.8); font-size:0.95rem; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; text-align:center; }
   .originals-showcase-brand .originals-title-logo { width:min(21rem, 58vw); margin-bottom:0; }
+  .originals-showcase-brand__title { margin:0.85rem 0 0; color:#fff; font-family:"Sofia Sans Semi Condensed", "Sofia Sans", sans-serif; font-size:clamp(1.8rem, 3.6vw, 3.15rem); line-height:0.98; font-weight:900; letter-spacing:-0.03em; text-align:center; }
   .originals-showcase-brand__intro { margin:0.95rem 0 0; color:rgba(255, 255, 255, 0.92); font-weight:700; line-height:1.55; text-align:center; }
   .portfolio-originals-slider { --portfolio-slider-slide-width:min(74vw, 54rem); --portfolio-slider-side-width:min(22vw, 16rem); }
   .portfolio-originals-slider__shell { position:relative; isolation:isolate; padding-inline:clamp(2rem, 5vw, 4rem); min-height:clamp(22rem, 48vw, 40rem); outline:none; }

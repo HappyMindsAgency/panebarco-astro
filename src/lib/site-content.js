@@ -946,10 +946,11 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
 
   const page = pageResponse?.data || {};
   const explore = page?.esploraProgetti || {};
+  const originalsEvidenza = page?.originalsEvidenza || {};
   const ctas = asArray(page?.cta);
   const fallbackCtas = [fallback.ctaOscar, fallback.ctaContact];
-  const highlightedOriginalsSource = asArray(page?.originalsEvidenza?.originals).length
-    ? asArray(page?.originalsEvidenza?.originals)
+  const highlightedOriginalsSource = asArray(originalsEvidenza?.originals).length
+    ? asArray(originalsEvidenza?.originals)
     : asArray(catalogueOriginalsResponse?.data);
   const highlightedOriginals = highlightedOriginalsSource.length
     ? highlightedOriginalsSource.map((item, index) => mapOriginalSlide(item, fallback.highlightedOriginals[index]))
@@ -957,6 +958,11 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
 
   return {
     header: mapHeader(page?.header, fallback.header),
+    showcase: {
+      title: pickFirst(originalsEvidenza?.titolo, fallback.showcase?.title),
+      subtitle: pickFirst(originalsEvidenza?.sottotitolo, fallback.showcase?.subtitle),
+      intro: pickFirst(stripRichTextSyntax(originalsEvidenza?.contenuto), fallback.showcase?.intro),
+    },
     explore: {
       title: pickFirst(explore?.titolo, fallback.explore.title),
       summary: pickFirst(explore?.contenuto, fallback.explore.summary),
