@@ -187,7 +187,7 @@ body.inner-page {
   .studio-page .page-hero--studio .page-hero-title {
     font-family: "Margarine", "Sofia Sans", sans-serif;
     text-transform: uppercase;
-    font-size: clamp(#{$h1-font-size}, 5.55vw, #{$h1-font-size * 2.2});
+    font-size: clamp(#{$h1-font-size * 1.44}, 5.55vw, #{$h1-font-size * 2.2});
     line-height: 0.92;
     letter-spacing: 0.01em;
     white-space: nowrap;
