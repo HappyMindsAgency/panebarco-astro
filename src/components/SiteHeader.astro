@@ -1,7 +1,5 @@
 ---
 import MenuOverlayRevamp from "./MenuOverlayRevamp.astro";
-import logoDark from "../../public/images/panebarco-logo-dark.png";
-import logoLight from "../../public/images/panebarco-logo-light.png";
 import menuWhite from "../../public/images/hamburger-menu-bianco.png";
 import menuBlack from "../../public/images/hamburger-menu-nero.png";
 import type { Lang } from "../i18n/config";
@@ -32,9 +30,11 @@ const {
 
 // darkmode=true  -> logo chiaro + hamburger bianco (per sfondi scuri) [default]
 // darkmode=false -> logo scuro  + hamburger nero  (per sfondi chiari)
-const imgLogo = logoSrc ?? (darkmode ? logoLight.src : logoDark.src);
+const logoDark = "/images/logo-dark-panebarco.svg";
+const logoLight = "/images/logo-light-panebarco.svg";
+const imgLogo = logoSrc ?? (darkmode ? logoLight : logoDark);
 const menuIcon = menuIconSrc ?? (darkmode ? menuWhite.src : menuBlack.src);
-const stickyLogo = logoDark.src;
+const stickyLogo = logoDark;
 const stickyMenuIcon = menuBlack.src;
 
 ---
