@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import HeroStyStudio from "../../components/HeroStyStudio.astro";
 import RitchText from "../../components/RitchText.astro";
 import { buildPath, joinLocalizedPath } from "../../i18n/routing";
-import { getCollectionDocuments, getSingleDocument } from "../../lib/strapi-client";
+import { getSingleDocument } from "../../lib/strapi-client";
 import { getImageFormat, getStrapiMediaUrl } from "../../lib/utility-function";
 import customLabel from "../../lib/utility-customlabel";
 
@@ -12,44 +12,7 @@ const specialProjectsLabel = customLabel("Progetti speciali", lang);
 const thoughtsLabel = customLabel("Pensieri che ci frullano in testa", lang);
 const discussLabel = customLabel("Parliamone", lang);
 
-const fallbackSpecialProjects = [
-  {
-    title: "",
-    href: buildPath("paneblog", lang),
-    image: "/images/portfolio-cover-01-695x391.jpg",
-    alt: "",
-    summary: "",
-    slot: "top-left" as const,
-    tags: [] as const,
-  },
-  {
-    title: "",
-    href: buildPath("paneblogTravelDiary", lang),
-    image: "/images/portfolio-cover-02-695x391.jpg",
-    alt: "",
-    summary: "",
-    slot: "top-right" as const,
-    tags: [] as const,
-  },
-  {
-    title: "",
-    href: buildPath("portfolio", lang),
-    image: "/images/portfolio-cover-03-695x391.jpg",
-    alt: "",
-    summary: "",
-    slot: "bottom-left" as const,
-    tags: [] as const,
-  },
-  {
-    title: "",
-    href: buildPath("portfolio", lang),
-    image: "/images/portfolio-cover-04-695x391.jpg",
-    alt: "",
-    summary: "",
-    slot: "bottom-right" as const,
-    tags: [] as const,
-  },
-];
+const specialProjectSlots = ["top-left", "top-right", "bottom-left", "bottom-right"] as const;
 
 const fallbackThoughtCards = [
   {
@@ -101,6 +64,15 @@ const servicePageQuery = {
     },
     progettiSpeciali: {
       populate: {
+        progetti: {
+          fields: ["titolo", "slug", "intro"],
+          populate: {
+            cover: true,
+            tipologie_progetto: {
+              fields: ["titolo"],
+            },
+          },
+        },
         pulsante: true,
       },
     },
@@ -153,22 +125,7 @@ function getButtonHref(button, fallback = "") {
   return stripHtml(button?.url || fallback) || fallback;
 }
 
-const [pageResponse, specialProjectsResponse] = await Promise.all([
-  getSingleDocument("pagina-tanto-altro", servicePageQuery),
-  getCollectionDocuments("progetti", {
-    locale: lang,
-    status: "published",
-    sort: ["inEvidenza:desc", "updatedAt:desc"],
-    pagination: { page: 1, pageSize: 4 },
-    fields: ["titolo", "slug", "intro"],
-    populate: {
-      cover: true,
-      tipologie_progetto: {
-        fields: ["titolo"],
-      },
-    },
-  }),
-]);
+const pageResponse = await getSingleDocument("pagina-tanto-altro", servicePageQuery);
 
 const page = pageResponse?.data || {};
 
@@ -186,25 +143,23 @@ const intro = {
   content: String(page.intro?.contenuto || ""),
 };
 
-const specialProjectsCollection = asArray(specialProjectsResponse?.data);
-const specialProjects = fallbackSpecialProjects.map((fallbackProject, index) => {
-  const project = specialProjectsCollection[index] || {};
+const specialProjectsCollection = asArray(page.progettiSpeciali?.progetti).slice(0, 4);
+const specialProjects = specialProjectsCollection.map((project, index) => {
   const slug = stripHtml(project.slug || "");
-  const href = slug ? joinLocalizedPath(buildPath("portfolio", lang), slug) : fallbackProject.href;
+  const href = slug ? joinLocalizedPath(buildPath("portfolio", lang), slug) : buildPath("portfolio", lang);
   const introSummary = stripHtml(project.intro || "");
   const projectTags = asArray(project.tipologie_progetto)
     .map((item) => stripHtml(item?.titolo || ""))
     .filter(Boolean);
-  const tags = projectTags.length ? projectTags.slice(0, 2) : fallbackProject.tags;
 
   return {
-    title: stripHtml(project.titolo || fallbackProject.title),
+    title: stripHtml(project.titolo || ""),
     href,
-    image: getMediaSrc(project.cover, fallbackProject.image),
-    alt: getMediaAlt(project.cover, fallbackProject.alt || fallbackProject.title),
-    summary: introSummary || fallbackProject.summary,
-    slot: fallbackProject.slot,
-    tags,
+    image: getMediaSrc(project.cover, "/images/placeholder pg.png"),
+    alt: getMediaAlt(project.cover, stripHtml(project.titolo || "")),
+    summary: introSummary,
+    slot: specialProjectSlots[index],
+    tags: projectTags.slice(0, 2),
   };
 });
 

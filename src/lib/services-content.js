@@ -212,6 +212,25 @@ function mapProjects(projects = [], lang, fallbackCategory) {
 function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
   const compositItems = asArray(container?.composit);
   const itemsToMap = compositItems.length ? compositItems : fallbackModes;
+  const bubbleByTitle = {
+    "rendere visibile": "/images/commercials-balloon-rendere-visibile-panebarco.svg",
+    integrare:
+      "/images/post-produzione-balloon-integrare-3D-e-VFX integrati-con-riprese-live-action-panebarco.svg",
+    trasformare:
+      "/images/post-produzione-balloon-trasformare-compositing-effetti-visivi-e-particellari-panebarco.svg",
+    rifinire:
+      "/images/post-produzione-balloon-rifinire-color-grading-finishing-look-e-feel-panebarco.svg",
+    potenziare:
+      "/images/post-produzione-balloon-potenziare-interventi-invisibili-a-supporto-della-narrazione panebarco.svg",
+    sviluppare:
+      "/images/service-balloon-sviluppare-supporto-creativo-e-progettuale-panebarco.svg",
+    produrre:
+      "/images/service-balloon-produrre-animazione-2D-3D-e-contenuti-audiovisivi-panebarco.svg",
+    coordinare:
+      "/images/service-balloon-coordinare-gestione-del-lavoro-con-team-e partner panebarco.svg",
+    gestire:
+      "/images/service-balloon-gestire-produzione-esecutiva-in-emilia-romagna-panebarco.svg",
+  };
 
   return itemsToMap.map((item, index) => {
     const itemTitle = pickFirst(item?.titolo);
@@ -219,6 +238,7 @@ function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
       fallbackModes.find((mode) => pickFirst(mode?.title).toLowerCase() === itemTitle.toLowerCase()) ||
       fallbackModes[index] ||
       {};
+    const resolvedTitle = pickFirst(item?.titolo, fallbackMode.title);
     const projects = mapProjects(
       asArray(item?.progetti),
       pickFirst(container?.locale, DEFAULT_LANG),
@@ -227,7 +247,7 @@ function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
     const useSceneFallbacks = !compositItems.length;
 
     return {
-      title: pickFirst(item?.titolo, fallbackMode.title),
+      title: resolvedTitle,
       description: pickFirst(item?.contenuto, fallbackMode.description),
       scenes: Array.from(
         { length: projects.length > 0 ? projects.length : (useSceneFallbacks ? (fallbackMode.scenes?.length || 0) : 0) },
@@ -240,7 +260,7 @@ function mapCompositItems(container, fallbackModes = [], fallbackTag = "") {
           href: projects[sceneIndex]?.href,
         })
       ),
-      bubble: pickFirst(fallbackMode.bubble),
+      bubble: pickFirst(bubbleByTitle[resolvedTitle.toLowerCase()], fallbackMode.bubble),
       topLayout: fallbackMode.topLayout,
       bottomLayout: fallbackMode.bottomLayout,
     };

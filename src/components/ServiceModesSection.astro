@@ -23,6 +23,15 @@ interface Props {
 }
 
 const { modes = [], defaultTag = "" } = Astro.props;
+
+function toModeSlug(value = "") {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 ---
 
 <div class="container">
@@ -34,7 +43,10 @@ const { modes = [], defaultTag = "" } = Astro.props;
             <h3 class="fw-bold text-body display-5 display-lg-4">{mode.title}</h3>
             {mode.bubble && (
               <img
-                class="commercial-mode-bubble"
+                class:list={[
+                  "commercial-mode-bubble",
+                  toModeSlug(mode.title) && `commercial-mode-bubble--${toModeSlug(mode.title)}`,
+                ]}
                 src={mode.bubble}
                 alt=""
                 aria-hidden="true"

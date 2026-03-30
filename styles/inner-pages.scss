@@ -2110,6 +2110,16 @@ body.inner-page {
     filter: drop-shadow(0 0.42rem 0.68rem rgba(0, 0, 0, 0.22));
   }
 
+  .commercials-page--post .commercial-mode-bubble {
+    width: auto;
+    height: clamp(2.9rem, 5vw, 4rem);
+    max-width: none;
+  }
+
+  .commercials-page--post .commercial-mode-bubble--potenziare {
+    height: clamp(3.2rem, 5.5vw, 4.45rem);
+  }
+
   .commercials-page
     .commercial-mode-heading.is-in-view
     .commercial-mode-bubble {
@@ -5533,6 +5543,15 @@ body.inner-page {
       width: clamp(9.2rem, 28vw, 12.6rem);
     }
 
+    .commercials-page--post .commercial-mode-bubble {
+      width: auto;
+      height: clamp(2.7rem, 7vw, 3.5rem);
+    }
+
+    .commercials-page--post .commercial-mode-bubble--potenziare {
+      height: clamp(3rem, 7.6vw, 3.9rem);
+    }
+
     .extras-page .extras-social-library__stack {
       min-height: 15rem;
       margin-inline: auto;
@@ -6138,6 +6157,15 @@ body.inner-page {
     .commercials-page--service .commercial-mode-bubble {
       width: clamp(8.4rem, 40vw, 11.2rem);
       transform: translateY(0.28rem) rotate(-7deg) scale(0.92);
+    }
+
+    .commercials-page--post .commercial-mode-bubble {
+      width: auto;
+      height: clamp(2.35rem, 10vw, 3rem);
+    }
+
+    .commercials-page--post .commercial-mode-bubble--potenziare {
+      height: clamp(2.65rem, 11vw, 3.35rem);
     }
 
     .commercials-page

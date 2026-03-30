@@ -48,8 +48,8 @@ const showcaseCopy = {
     en: "",
   },
   ctaLabel: {
-    it: "SCOPRI DI PIÙ",
-    en: "DISCOVER MORE",
+    it: "Guarda tutti i progetti",
+    en: "View all projects",
   },
 } as const;
 

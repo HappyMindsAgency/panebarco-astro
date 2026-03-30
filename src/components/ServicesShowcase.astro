@@ -95,9 +95,9 @@ const content = {
 } as const;
 
 const showcase = content[lang];
-const showcaseTitle = title ?? showcase.title;
-const showcaseStickerSrc = stickerSrc ?? showcase.stickerSrc;
-const showcaseStickerAlt = stickerAlt ?? showcase.stickerAlt;
+const showcaseTitle = typeof title === "string" && title.trim() ? title.trim() : showcase.title;
+const showcaseStickerSrc = typeof stickerSrc === "string" && stickerSrc.trim() ? stickerSrc.trim() : showcase.stickerSrc;
+const showcaseStickerAlt = typeof stickerAlt === "string" && stickerAlt.trim() ? stickerAlt.trim() : showcase.stickerAlt;
 const showcaseItems = items?.length ? items : showcase.items;
 const hasSticker = Boolean(showcaseStickerSrc);
 ---
