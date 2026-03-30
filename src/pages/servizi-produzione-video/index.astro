@@ -83,30 +83,6 @@ const servicesPage = await getServicesPageContent({
   fallback: servicesFallback,
 });
 
-const servicesOriginalSlides = await getServicesOriginalSlides({
-  lang,
-  fallback: [
-    {
-      title: "",
-      subtitle: "",
-      image: "/images/originals-cover-01-700x395.jpg",
-      slug: "caramelle",
-    },
-    {
-      title: "",
-      subtitle: "",
-      image: "/images/originals-cover-02-270x395.jpg",
-      slug: "marta-e-la-morte",
-    },
-    {
-      title: "",
-      subtitle: "",
-      image: "/images/originals-cover-03-270x395.jpg",
-      slug: "nostoppingnora",
-    },
-  ],
-});
-
 const originalSlidesFallback = [
   {
     title: "",
@@ -127,6 +103,11 @@ const originalSlidesFallback = [
     slug: "nostoppingnora",
   },
 ];
+
+const servicesOriginalSlides = await getServicesOriginalSlides({
+  lang,
+  fallback: originalSlidesFallback,
+});
 
 const repeatedClientNames = Array.from({ length: 3 }, (_, groupIndex) =>
   servicesPage.clientNames.map((name) => ({
