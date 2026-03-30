@@ -104,14 +104,9 @@ const storyCta = hasStoryCta(storyContent.cta) ? storyContent.cta : null;
     {hasTimeline && (
       <section class="studio-timeline section-space">
         <div class="container">
-          {/*storyContent.timeline.title && (
-            <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">{storyContent.timeline.title}</h2>
-          )}
-          {storyContent.timeline.content && (
-            <div class="studio-timeline-intro">
-              <RitchText block={storyContent.timeline.content} className="story-mutant-timeline-richtext" />
-            </div>
-          )*/}
+          <h2 class="studio-timeline-title page-title-uniform" id="studioTimelineTitle">
+            Scorri la nostra timeline in VI Atti
+          </h2>
 
           {storyContent.timeline.cards.length > 0 && (
             <>
