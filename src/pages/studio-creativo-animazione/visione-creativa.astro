@@ -60,6 +60,22 @@ const oscarsContent: OscarsPageContent = await getOscarsPageContent({ lang, fall
 const hasDreamContent = Boolean(oscarsContent.dream.title || oscarsContent.dream.content);
 const hasWorkflow = Array.isArray(oscarsContent.workflow.items) && oscarsContent.workflow.items.length > 0;
 const oscarsCta = hasOscarsCta(oscarsContent.cta) ? oscarsContent.cta : null;
+const normalizeOscarsStickerText = (value = "") =>
+  String(value)
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+const oscarsBeliefItems = oscarsContent.beliefs.items.map((item) => {
+  const isBeautyResponsibilitySticker =
+    normalizeOscarsStickerText(item.title) === "bellezza" &&
+    normalizeOscarsStickerText(item.subtitle) === "come responsabilita";
+
+  return {
+    ...item,
+    bgColor: isBeautyResponsibilitySticker ? "#009fe3" : item.bgColor,
+  };
+});
 ---
 
 <Layout
@@ -100,7 +116,7 @@ const oscarsCta = hasOscarsCta(oscarsContent.cta) ? oscarsContent.cta : null;
           </div>
 
           <div class="oscars-beliefs__stickers" aria-label={oscarsContent.beliefs.title}>
-            {oscarsContent.beliefs.items.map((item) => (
+            {oscarsBeliefItems.map((item) => (
               <div class:list={["oscars-belief-sticker", `oscars-belief-sticker--${item.theme}`]} style={item.bgColor ? `background:${item.bgColor};` : undefined}>
                 <span class="oscars-belief-sticker__title">{item.title}</span>
                 <span class="oscars-belief-sticker__subtitle">{item.subtitle}</span>
