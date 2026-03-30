@@ -4175,7 +4175,7 @@ body.inner-page {
     min-height: var(--originals-pillar-card-height);
     flex-direction: column;
     justify-content: flex-end;
-    padding: clamp(1.15rem, 1.8vw, 1.55rem);
+    padding: clamp(0.85rem, 1.35vw, 1.15rem);
     color: #fff;
   }
 
@@ -4185,9 +4185,9 @@ body.inner-page {
 
   .originals-page .originals-pillar-card h3 {
     margin: 0;
-    max-width: 10ch;
-    font-size: clamp(2rem, 2.2vw, 3rem);
-    line-height: 0.92;
+    max-width: 11ch;
+    font-size: clamp(1.55rem, 1.7vw, 2.35rem);
+    line-height: 0.96;
     letter-spacing: -0.03em;
     font-weight: 900;
     color: #fff;
@@ -4208,7 +4208,7 @@ body.inner-page {
     margin: 0.7rem 0 0;
     max-width: 30ch;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     line-height: 1.35;
   }
 
@@ -4234,7 +4234,7 @@ body.inner-page {
 
   .originals-page .originals-pillar-card:hover .originals-pillar-card__description,
   .originals-page .originals-pillar-card:focus-visible .originals-pillar-card__description {
-    max-height: 7rem;
+    max-height: 12rem;
     opacity: 1;
     transform: translateY(0);
   }
@@ -5757,7 +5757,7 @@ body.inner-page {
 
     .originals-page .originals-pillar-card__content,
     .originals-page .originals-cta-card__body {
-      padding-inline: $spacer;
+      padding-inline: $spacer * 0.75;
     }
 
     .paneblog-page .paneblog-intro-art img {
@@ -5799,6 +5799,11 @@ body.inner-page {
     .paneblog-page .paneblog-newsletter-stack {
       width: min(100%, 18rem);
       min-height: 15rem;
+    }
+
+    .originals-page .originals-pillar-card h3,
+    .originals-page .originals-pillar-card__description p {
+      max-width: none;
     }
 
     .paneblog-page .paneblog-newsletter-figure {
