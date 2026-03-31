@@ -2254,7 +2254,8 @@ body.inner-page {
     box-shadow: 0 1rem 2.4rem rgba(15, 23, 42, 0.12);
   }
 
-  .services-page .services-figma-row__media img {
+  .services-page .services-figma-row__media img,
+  .services-page .services-figma-row__media video {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;

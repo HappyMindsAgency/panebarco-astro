@@ -271,11 +271,15 @@ function mapServiceCards(items = [], fallbackCards = []) {
   return fallbackCards.map((fallbackCard, index) => {
     const item = items[index] || {};
     const button = mapButton(item?.pulsante, fallbackCard.buttonLabel, fallbackCard.href);
+    const isVideo = Boolean(item?.cover?.mime?.startsWith("video/"));
+    const mediaSrc = isVideo
+      ? getStrapiMediaUrl(item.cover.url) || fallbackCard.image
+      : resolveMediaUrl(item?.cover, "large", fallbackCard.image);
 
     return {
       title: pickFirst(item?.titolo, fallbackCard.title),
       href: button.href,
-      image: resolveMediaUrl(item?.cover, "large", fallbackCard.image),
+      image: mediaSrc,
       imageAlt: pickFirst(item?.cover?.alternativeText, fallbackCard.imageAlt),
       summary: pickFirst(item?.contenuto, fallbackCard.summary),
       bullets: splitRichTextParagraphs(item?.sottotitolo).length
@@ -284,6 +288,7 @@ function mapServiceCards(items = [], fallbackCards = []) {
           ? splitTags(item?.sottotitolo)
           : fallbackCard.bullets,
       buttonLabel: button.label,
+      isVideo,
     };
   });
 }

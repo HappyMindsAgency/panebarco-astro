@@ -165,7 +165,11 @@ const portfolioOriginalSlides = originalSlidesFallback.map((fallbackSlide, index
             {servicesPage.serviceCards.map((service, index) => (
               <article class="services-figma-row">
                 <div class:list={["services-figma-row__media", index % 2 === 1 && "order-lg-2"]}>
-                  <img src={service.image} alt={service.imageAlt} loading="lazy" decoding="async" />
+                  {service.isVideo ? (
+                    <video src={service.image} autoplay muted loop playsinline></video>
+                  ) : (
+                    <img src={service.image} alt={service.imageAlt} loading="lazy" decoding="async" />
+                  )}
                 </div>
 
                 <div class:list={["services-figma-row__copy", index % 2 === 1 && "order-lg-1"]}>
