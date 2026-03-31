@@ -187,7 +187,7 @@ body.inner-page {
   .studio-page .page-hero--studio .page-hero-title {
     font-family: "Margarine", "Sofia Sans", sans-serif;
     text-transform: uppercase;
-    font-size: clamp(#{$h1-font-size}, 5.55vw, #{$h1-font-size * 2.2});
+    font-size: clamp(#{$h1-font-size * 1.44}, 5.55vw, #{$h1-font-size * 2.2});
     line-height: 0.92;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -3575,6 +3575,7 @@ body.inner-page {
     .services-page .portfolio-originals-slider__shell {
       min-height: 17.75rem;
       padding-inline: 1.6rem;
+      padding-bottom: 4rem;
     }
 
     .portfolio-page .portfolio-originals-slider__slide,
@@ -3612,20 +3613,20 @@ body.inner-page {
     .services-page .portfolio-originals-slider__arrow {
       width: 3rem;
       height: 3rem;
-      top: 50%;
-      bottom: auto;
-      transform: translateY(-50%);
+      top: auto;
+      bottom: 0.75rem;
+      transform: none;
       box-shadow: 0 0.65rem 1.6rem rgba(0, 0, 0, 0.16);
     }
 
     .portfolio-page .portfolio-originals-slider__arrow--prev,
     .services-page .portfolio-originals-slider__arrow--prev {
-      left: calc(50% - (var(--portfolio-slider-slide-width) / 2) + var(--portfolio-slider-mobile-arrow-inset));
+      left: calc(50% - 3.25rem);
     }
 
     .portfolio-page .portfolio-originals-slider__arrow--next,
     .services-page .portfolio-originals-slider__arrow--next {
-      right: calc(50% - (var(--portfolio-slider-slide-width) / 2) + var(--portfolio-slider-mobile-arrow-inset));
+      right: calc(50% - 3.25rem);
     }
   }
 
@@ -3648,6 +3649,11 @@ body.inner-page {
 
     .portfolio-page .portfolio-originals-slider__shell {
       min-height: 16.5rem;
+      padding-bottom: 3.75rem;
+    }
+
+    .services-page .portfolio-originals-slider__shell {
+      padding-bottom: 3.75rem;
     }
 
     .portfolio-page .portfolio-originals-slider__slide,
@@ -3677,14 +3683,24 @@ body.inner-page {
     .services-page .portfolio-originals-slider__arrow {
       width: 2.7rem;
       height: 2.7rem;
-      top: 50%;
-      bottom: auto;
-      transform: translateY(-50%);
+      top: auto;
+      bottom: 0.75rem;
+      transform: none;
     }
 
     .portfolio-page .portfolio-originals-slider__arrow i,
     .services-page .portfolio-originals-slider__arrow i {
       font-size: 1.1rem;
+    }
+
+    .portfolio-page .portfolio-originals-slider__arrow--prev,
+    .services-page .portfolio-originals-slider__arrow--prev {
+      left: calc(50% - 2.95rem);
+    }
+
+    .portfolio-page .portfolio-originals-slider__arrow--next,
+    .services-page .portfolio-originals-slider__arrow--next {
+      right: calc(50% - 2.95rem);
     }
   }
 
