@@ -271,12 +271,16 @@ function mapServiceCards(items = [], fallbackCards = []) {
   return fallbackCards.map((fallbackCard, index) => {
     const item = items[index] || {};
     const button = mapButton(item?.pulsante, fallbackCard.buttonLabel, fallbackCard.href);
+    const coverMime = pickFirst(item?.cover?.mime);
+    const isVideoCover = typeof coverMime === "string" && coverMime.startsWith("video/");
 
     return {
       title: pickFirst(item?.titolo, fallbackCard.title),
       href: button.href,
       image: resolveMediaUrl(item?.cover, "large", fallbackCard.image),
       imageAlt: pickFirst(item?.cover?.alternativeText, fallbackCard.imageAlt),
+      mediaKind: isVideoCover ? "video" : "image",
+      mediaMime: isVideoCover ? coverMime : "",
       summary: pickFirst(item?.contenuto, fallbackCard.summary),
       bullets: splitRichTextParagraphs(item?.sottotitolo).length
         ? splitRichTextParagraphs(item?.sottotitolo)
