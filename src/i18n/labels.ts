@@ -408,6 +408,14 @@ export const localizedLabels = {
       it: "Prodotto originale frutto delle menti felici e creative di",
       en: "An original product created by the happy and creative minds of",
     },
+    projectFondiEu: {
+      it: "Il progetto è realizzato grazie ai Fondi europei della Regione Emilia-Romagna",
+      en: "The project is made possible thanks to the European Funds of the Emilia-Romagna Region",
+    },
+    trasparenza: {
+      it: "Trasparenza",
+      en: "Transparency",
+    }
   },
   a11y: {
     openMenu: {

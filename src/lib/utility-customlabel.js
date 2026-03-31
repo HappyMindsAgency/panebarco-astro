@@ -245,6 +245,13 @@ export default function customLabel(label, locale = 'it') {
             'fr': 'Voir tous les originals',
             'de': 'Alle Originals ansehen',
             'sp': 'Ver todos los originals'
+        },
+        'footer.projectFondiEu': {
+            'it': 'Il progetto è realizzato grazie ai Fondi europei della Regione Emilia-Romagna',
+            'en': 'The project is made possible thanks to the European Funds of the Emilia-Romagna Region', 
+            'fr': 'Le projet est rendu possible grâce aux Fonds européens de la Région Émilie-Romagne',
+            'de': 'Das Projekt wird dank der Europäischen Fonds der Region Emilia-Romagna ermöglicht',
+            'sp': 'El proyecto es posible gracias a los Fondos Europeos de la Región Emilia-Romagna'
         }
     };
 

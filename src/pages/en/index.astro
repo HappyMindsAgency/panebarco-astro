@@ -8,6 +8,10 @@ import mainScriptUrl from "../../scripts/main.js?url";
 import { customLabel } from "../../i18n/labels";
 import { buildPath } from "../../i18n/routing";
 import { getHomeOriginalsShowcaseContent, getPortfolioShowcaseContent } from "../../lib/site-content";
+import imgFaccePanebarco from "../../assets/images/home-eng-team-panebarco.png";
+import baloonService from "../../assets/images/landing-inglese-service.png";
+import baloonPortfolio from "../../assets/images/landing-inglese-portfolio.png";
+
 
 const lang = "en" as const;
 
@@ -151,7 +155,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
   lang,
   fallback: {
     title: "Cool things we’ve made",
-    stickerSrc: "",
+    stickerSrc: {baloonPortfolio},
     stickerAlt: "",
     ctaLabel: "",
     ctaHref: undefined,
@@ -265,7 +269,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
       </div>
     </section>
 
-    <ServicesShowcase lang={lang} title="Services - Things we do" stickerSrc="" stickerAlt="" items={servicesItems} />
+    <ServicesShowcase lang={lang} title="Services - Things we do" stickerSrc={baloonService.src} stickerAlt="" items={servicesItems} />
 
     <OriginalsShowcase
       sectionId="originals"
@@ -279,7 +283,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
       sectionClass="section-space"
       containerClass="container originals-stage portfolio-container"
       title={portfolioShowcase.title}
-      stickerSrc={portfolioShowcase.stickerSrc}
+      stickerSrc={baloonPortfolio.src}
       stickerAlt={portfolioShowcase.stickerAlt}
       items={portfolioShowcase.items}
       ctaHref={portfolioShowcase.ctaHref}
@@ -291,7 +295,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
         <div class="row align-items-center g-4 g-lg-5">
           <div class="col-12 col-lg-7">
             <div class="en-home-spotlight__media">
-              <img src="/images/home-eng-team-panebarco-1.png" alt={customLabel("home.spotlightImageAlt", lang)} loading="lazy" />
+              <img src={imgFaccePanebarco.src} alt={customLabel("home.spotlightImageAlt", lang)} loading="lazy" />
             </div>
           </div>
           <div class="col-12 col-lg-5">

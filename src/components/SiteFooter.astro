@@ -2,6 +2,7 @@
 import type { Lang } from "../i18n/config";
 import { customLabel } from "../i18n/labels";
 import { buildPath } from "../i18n/routing";
+import imgLoghiBando from "../assets/images/loghi-er-bando.jpeg";
 
 interface Props {
   lang?: Lang;
@@ -27,8 +28,7 @@ const footerHeadingPrefix = footerHeadingHighlight
       <div class="col-lg-4">
         <img class="footer-logo" src="/images/logo-light-panebarco.svg" alt="Panebarco">
         <p class="contact-line mb-0">
-          Panebarco &amp; C. S.r.l. - Via Molino, 9<br>
-          48121 Ravenna, Italia<br>
+          Panebarco &amp; C. S.r.l.<br>Via Molino, 9, 48121 Ravenna, Italia<br>
           <a href="tel:+39054435012">+39 0544 35012</a> |
           <a href="tel:+393383693558">+39 338 3693558</a><br>
           <a href="mailto:info@panebarco.it">info@panebarco.it</a>
@@ -64,10 +64,24 @@ const footerHeadingPrefix = footerHeadingHighlight
         <a href={buildPath("contacts", lang)} class="btn btn-cta btn-cta--orange btn-pill">{customLabel("footer.contactCta", lang)}</a>
       </div>
     </div>
+  </div>
 
+  <div class="container-fluid bg-white">
+    <div class="bg-white row">
+      <div class="lg-col-8 col-12 mx-auto">
+        <div class="text-container text-center py-4">
+          <p class="mb-0 fs-6 text-black">{customLabel("footer.projectFondiEu", lang)}</p>
+          <img src={imgLoghiBando.src} alt="Loghi Bando Fondi Europei" class="img-fluid mt-3" style="max-height: 80px;">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container bg-primary">
     <div class="footer-meta">
       <p class="small-muted mb-0">
-        Copyright &copy; Panebarco &amp; C. 2025 | <a href={buildPath("privacyPolicy", lang)}>{customLabel("footer.privacy", lang)}</a> - <a href={buildPath("cookiePolicy", lang)}>{customLabel("footer.cookies", lang)}</a>
+        Copyright &copy; Panebarco &amp; C. 2025 <span class="d-none d-lg-inline">|</span> <br class="d-lg-none"> <a href={buildPath("privacyPolicy", lang)}>{customLabel("footer.privacy", lang)}</a> - <a href={buildPath("cookiePolicy", lang)}>{customLabel("footer.cookies", lang)}</a> - <a href={buildPath("trasparenza", lang)}>{customLabel("footer.trasparenza", lang)}</a>
       </p>
     </div>
   </div>

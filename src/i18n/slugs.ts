@@ -77,6 +77,10 @@ export const localizedSlugs = {
     it: "cookie-policy",
     en: "cookie-policy",
   },
+  trasparenza: {
+    it: "trasparenza",
+    en: "transparency",
+  },
   socialLibrary: {
     it: "social-library",
     en: "social-library",
