@@ -104,7 +104,17 @@ const hasSticker = Boolean(showcaseStickerSrc);
 
 <section id={sectionId} class={sectionClass}>
   <div class={containerClass}>
-    <h2 class="section-title section-title-reveal" data-services-showcase-title data-reveal-managed="self">
+    <h2
+      class:list={[
+        "section-title",
+        "section-title-reveal",
+        "services-home-cards__title",
+        lang === "en" && "services-home-cards__title--en",
+      ]}
+      data-services-showcase-title
+      data-services-showcase-lang={lang}
+      data-reveal-managed="self"
+    >
       <span class="section-title-text">{showcaseTitle}</span>
       {hasSticker && <img class="section-title-sticker" src={showcaseStickerSrc} alt={showcaseStickerAlt} aria-hidden="true" />}
     </h2>

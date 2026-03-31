@@ -1425,6 +1425,52 @@ h2 {
       margin-bottom: clamp(2rem, 4vw, 2.8rem);
     }
 
+    .services-home-cards__title {
+      position: relative;
+      padding-top: clamp(1.4rem, 2.6vw, 2rem);
+    }
+
+    .services-home-cards__title--en {
+      padding-top: clamp(2.7rem, 4vw, 3.3rem);
+    }
+
+    .services-home-cards__title--en .section-title-text {
+      line-height: 0.94;
+    }
+
+    .services-home-cards__title--en .section-title-sticker {
+      top: 0;
+      left: 40%;
+      width: clamp(10.8rem, 20vw, 14rem);
+      transform: translate(-50%, 38%) rotate(-6deg) scale(0.86);
+    }
+
+    .services-home-cards__title--en.is-in-view .section-title-sticker {
+      transform: translate(-50%, 20%) rotate(-6deg) scale(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .services-home-cards__title--en .section-title-sticker {
+        transform: translate(-50%, 20%) rotate(-6deg) scale(1);
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .services-home-cards__title--en {
+        padding-top: clamp(3.4rem, 13vw, 4.4rem);
+      }
+
+      .services-home-cards__title--en .section-title-sticker {
+        left: 42%;
+        width: clamp(9.4rem, 42vw, 12rem);
+        transform: translate(-50%, 36%) rotate(-6deg) scale(0.86);
+      }
+
+      .services-home-cards__title--en.is-in-view .section-title-sticker {
+        transform: translate(-50%, 18%) rotate(-6deg) scale(1);
+      }
+    }
+
     .services-box-grid {
       justify-content: center;
     }
@@ -1841,6 +1887,52 @@ h2 {
 
     .portfolio-container .section-title {
       margin-bottom: clamp(2rem, 4.2vw, 3rem);
+    }
+
+    .portfolio-container__title {
+      position: relative;
+      padding-top: clamp(1.4rem, 2.6vw, 2rem);
+    }
+
+    .portfolio-container__title--en {
+      padding-top: clamp(2.9rem, 4.2vw, 3.5rem);
+    }
+
+    .portfolio-container__title--en .section-title-text {
+      line-height: 0.94;
+    }
+
+    .portfolio-container__title--en .section-title-sticker {
+      top: 0;
+      left: 34%;
+      width: clamp(12rem, 21vw, 15.4rem);
+      transform: translate(-50%, 28%) rotate(-6deg) scale(0.86);
+    }
+
+    .portfolio-container__title--en.is-in-view .section-title-sticker {
+      transform: translate(-50%, 10%) rotate(-6deg) scale(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .portfolio-container__title--en .section-title-sticker {
+        transform: translate(-50%, 10%) rotate(-6deg) scale(1);
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .portfolio-container__title--en {
+        padding-top: clamp(3.6rem, 13vw, 4.5rem);
+      }
+
+      .portfolio-container__title--en .section-title-sticker {
+        left: 38%;
+        width: clamp(10.4rem, 44vw, 13rem);
+        transform: translate(-50%, 28%) rotate(-6deg) scale(0.86);
+      }
+
+      .portfolio-container__title--en.is-in-view .section-title-sticker {
+        transform: translate(-50%, 10%) rotate(-6deg) scale(1);
+      }
     }
 
     .portfolio-grid {

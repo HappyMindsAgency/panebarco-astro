@@ -154,7 +154,7 @@ const originalsShowcase = await getHomeOriginalsShowcaseContent({
 const portfolioShowcase = await getPortfolioShowcaseContent({
   lang,
   fallback: {
-    title: "Cool things we’ve made",
+    title: "PORTFOLIO",
     stickerSrc: {baloonPortfolio},
     stickerAlt: "",
     ctaLabel: "",
@@ -269,7 +269,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
       </div>
     </section>
 
-    <ServicesShowcase lang={lang} title="Services - Things we do" stickerSrc={baloonService.src} stickerAlt="" items={servicesItems} />
+    <ServicesShowcase lang={lang} stickerSrc={baloonService.src} stickerAlt="" items={servicesItems} />
 
     <OriginalsShowcase
       sectionId="originals"
@@ -283,6 +283,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
       sectionClass="section-space"
       containerClass="container originals-stage portfolio-container"
       title={portfolioShowcase.title}
+      titleClass="portfolio-container__title portfolio-container__title--en"
       stickerSrc={baloonPortfolio.src}
       stickerAlt={portfolioShowcase.stickerAlt}
       items={portfolioShowcase.items}

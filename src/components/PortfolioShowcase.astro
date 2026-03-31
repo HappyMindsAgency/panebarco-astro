@@ -15,6 +15,7 @@ interface Props {
   title: string;
   stickerSrc?: string;
   stickerAlt?: string;
+  titleClass?: string;
   items: readonly PortfolioShowcaseItem[];
   sectionId?: string;
   sectionClass?: string;
@@ -27,6 +28,7 @@ const {
   title,
   stickerSrc,
   stickerAlt = "",
+  titleClass,
   items,
   sectionId,
   sectionClass = "section-space",
@@ -40,7 +42,11 @@ const hasCta = Boolean(ctaHref && ctaLabel);
 
 <section id={sectionId} class={sectionClass} data-portfolio-showcase>
   <div class={containerClass}>
-    <h2 class="section-title section-title-reveal" data-reveal-managed="self" data-portfolio-showcase-title>
+    <h2
+      class:list={["section-title", "section-title-reveal", titleClass]}
+      data-reveal-managed="self"
+      data-portfolio-showcase-title
+    >
       <span class="section-title-text">{title}</span>
       {stickerSrc && (
         <img class="section-title-sticker" src={stickerSrc} alt={stickerAlt} aria-hidden={stickerAlt ? undefined : "true"} />
