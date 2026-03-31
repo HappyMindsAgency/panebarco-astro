@@ -1,0 +1,2924 @@
+{
+  "redirects": [
+    {
+      "source": "/contatti/lasciaci-un-messaggio/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/le-origini/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/tenacia-e-passione/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/dalla-carta-al-digitale/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/lera-multimediale/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/lera-del-3d-in-tempo-reale/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/lera-dei-video/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/chi-siamo/8461-2/",
+      "destination": "/studio-creativo-animazione/storia-chi-siamo/",
+      "permanent": true
+    },
+    {
+      "source": "/social-library/alcuni-dati-della-biblioteca/",
+      "destination": "/social-library/",
+      "permanent": true
+    },
+    {
+      "source": "/social-library/informazioni-utili/",
+      "destination": "/social-library/",
+      "permanent": true
+    },
+    {
+      "source": "/social-library/curiosita/",
+      "destination": "/social-library/",
+      "permanent": true
+    },
+    {
+      "source": "/social-library/prenota/",
+      "destination": "/social-library/",
+      "permanent": true
+    },
+    {
+      "source": "/spiega-la-tua-startup-innovativa/",
+      "destination": "/servizi-produzione-video/produzione-video-promozionali",
+      "permanent": true
+    },
+    {
+      "source": "/spiega-la-tua-startup-innovativa/a-cosa-potrebbe-servirti-un-video-animato/",
+      "destination": "/servizi-produzione-video/produzione-video-promozionali",
+      "permanent": true
+    },
+    {
+      "source": "/spiega-la-tua-startup-innovativa/ecco-qualche-esempio-di-startup-che-si-e-affidata-a-noi/",
+      "destination": "/servizi-produzione-video/produzione-video-promozionali",
+      "permanent": true
+    },
+    {
+      "source": "/spiega-la-tua-startup-innovativa/richiedi-una-consulenza-gratuita/",
+      "destination": "/servizi-produzione-video/produzione-video-promozionali",
+      "permanent": true
+    },
+    {
+      "source": "/page-404/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/cookie-policy/",
+      "destination": "/cookie-policy/",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter-panebarcos/",
+      "destination": "/newsletter/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/newsletter-privacy-policy/",
+      "destination": "/privacy-policy-newsletter/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/social-library-privacy-policy/",
+      "destination": "/privacy-policy-social-library/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/contatti-privacy-policy/",
+      "destination": "/privacy-policy/",
+      "permanent": true
+    },
+    {
+      "source": "/accesso-vietato/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/cartoni-animati-post-produzione/spot-video-promozionali/",
+      "destination": "/servizi-produzione-video/produzione-video-promozionali/",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/cartoni-animati-post-produzione/produzioni-indipendenti/",
+      "destination": "/produzioni-originali/",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/cartoni-animati-post-produzione/",
+      "destination": "/servizi-produzione-video/post-produzione-video",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/cosaltro-facciamo-copy/",
+      "destination": "/servizi-produzione-video/altri-progetti",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/lasciaci-un-messaggio-home-copy/",
+      "destination": "/contatti/",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/cartoni-animati-post-produzione/3d-vfx-e-post-produzione/",
+      "destination": "/servizi-produzione-video/post-produzione-video",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos/cartoni-animati-post-produzione/service/",
+      "destination": "/servizi-produzione-video/service-produzione-esecutiva/",
+      "permanent": true
+    },
+    {
+      "source": "/noi-siamo-i-panebarcos-copy/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/valenti-video-natale/",
+      "destination": "/portfolio/valenti-video-natale/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/lighthistory/",
+      "destination": "/portfolio/lighthistory/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/golia-active-plus-spot-tv-orsi-che-parlano/",
+      "destination": "/portfolio/golia-active-plus-spot-tv-orsi-che-parlano/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/keepers-i-custodi-del-mare/",
+      "destination": "/produzioni-originali/keepers-i-custodi-del-mare/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/arf-2/",
+      "destination": "/portfolio/arf-2/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/rwt/",
+      "destination": "/portfolio/rwt/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/guglielmo-the-inventor/",
+      "destination": "/portfolio/guglielmo-the-inventor/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/traghettilines2025/",
+      "destination": "/portfolio/traghettilines2025/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/natale2024/",
+      "destination": "/portfolio/natale2024/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/sunny-per-autostradale/",
+      "destination": "/portfolio/sunny-per-autostradale/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/big-babol-the-real-game/",
+      "destination": "/portfolio/big-babol-the-real-game/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/chupa-chups-melody-pops/",
+      "destination": "/portfolio/chupa-chups-melody-pops/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/i-figli-dei-giganti-verdi-in-un-vasetto-di-terra-la-storia-di-ravenna/",
+      "destination": "/portfolio/i-figli-dei-giganti-verdi-in-un-vasetto-di-terra-la-storia-di-ravenna/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/video-in-grafica-animata-per-progetti-eu-qualche-info-aggiuntiva/",
+      "destination": "/portfolio/video-in-grafica-animata-per-progetti-eu-qualche-info-aggiuntiva/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/warrant-hub/",
+      "destination": "/portfolio/warrant-hub/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/olga-superpotere/",
+      "destination": "/portfolio/olga-superpotere/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/arandora-star/",
+      "destination": "/portfolio/arandora-star/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/arf/",
+      "destination": "/portfolio/arf/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/panebarco-demo-reel-2023/",
+      "destination": "/portfolio/panebarco-demo-reel-2023/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/san-valentino/",
+      "destination": "/portfolio/san-valentino/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/hello-acmilan/",
+      "destination": "/portfolio/hello-acmilan/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/kazuma/",
+      "destination": "/portfolio/kazuma/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/figli-giganti/",
+      "destination": "/portfolio/figli-giganti/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/ravennantica/",
+      "destination": "/portfolio/ravennantica/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/milla-camomilla/",
+      "destination": "/portfolio/milla-camomilla/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/marta-e-la-morte/",
+      "destination": "/portfolio/marta-e-la-morte/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/casa-delle-marionette/",
+      "destination": "/portfolio/casa-delle-marionette/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/golia-herbs-tv/",
+      "destination": "/portfolio/golia-herbs-tv/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/hm-poste-plurale-universale/",
+      "destination": "/portfolio/hm-poste-plurale-universale/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dadegu-lk-2022/",
+      "destination": "/portfolio/dadegu-lk-2022/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/iggy-vidas/",
+      "destination": "/portfolio/iggy-vidas/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/cocchi-abs/",
+      "destination": "/portfolio/cocchi-abs/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/il-giardino-delle-luppole/",
+      "destination": "/portfolio/il-giardino-delle-luppole/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/elenos/",
+      "destination": "/portfolio/elenos/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/oltrefrontiera-porta-nuova-milano/",
+      "destination": "/portfolio/oltrefrontiera-porta-nuova-milano/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/hyperspace/",
+      "destination": "/portfolio/hyperspace/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/videointerviste-grafica/",
+      "destination": "/portfolio/videointerviste-grafica/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/la-vera-storia-di-ravenna/",
+      "destination": "/portfolio/la-vera-storia-di-ravenna/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/marta-muore-con-gli-occhi-aperti/",
+      "destination": "/portfolio/marta-muore-con-gli-occhi-aperti/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/kea-ilucidare/",
+      "destination": "/portfolio/kea-ilucidare/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/danukk/",
+      "destination": "/portfolio/danukk/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/netafim/",
+      "destination": "/portfolio/netafim/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/corelli/",
+      "destination": "/portfolio/corelli/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/innova-finance-2022/",
+      "destination": "/portfolio/innova-finance-2022/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/cocchi-packaging-proposte-grafiche/",
+      "destination": "/portfolio/cocchi-packaging-proposte-grafiche/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/caramelle/",
+      "destination": "/produzioni-originali/caramelle/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/no-stopping-nora/",
+      "destination": "/produzioni-originali/no-stopping-nora/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dare-darsena-ravenna-scopri/",
+      "destination": "/portfolio/dare-darsena-ravenna-scopri/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/jova-beach-party-2022-belle-storie/",
+      "destination": "/portfolio/jova-beach-party-2022-belle-storie/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/golia-active-plus-spot-tv/",
+      "destination": "/portfolio/golia-active-plus-spot-tv/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dare-darsena-ravenna-approdo-comune/",
+      "destination": "/portfolio/dare-darsena-ravenna-approdo-comune/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/playcopy-2021/",
+      "destination": "/portfolio/playcopy-2021/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dental-trey-patient-digital-experience/",
+      "destination": "/portfolio/dental-trey-patient-digital-experience/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dental-trey-wacom-uno-firma-digitale/",
+      "destination": "/portfolio/dental-trey-wacom-uno-firma-digitale/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/ego-flying-behind-the-status-quo/",
+      "destination": "/portfolio/ego-flying-behind-the-status-quo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/smartchain/",
+      "destination": "/portfolio/smartchain/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/wormapp/",
+      "destination": "/portfolio/wormapp/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/figure-per-gianni-rodari-eccellenze-italiane/",
+      "destination": "/portfolio/figure-per-gianni-rodari-eccellenze-italiane/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dental-trey-uno-my-business-cloud/",
+      "destination": "/portfolio/dental-trey-uno-my-business-cloud/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/quam-able-label/",
+      "destination": "/portfolio/quam-able-label/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/kea-turns-20/",
+      "destination": "/portfolio/kea-turns-20/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/maikid-jova-non-voglio-cambiare-pianeta/",
+      "destination": "/portfolio/maikid-jova-non-voglio-cambiare-pianeta/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/jumpcutmedia-nickelodeon-cabin-12006/",
+      "destination": "/portfolio/jumpcutmedia-nickelodeon-cabin-12006/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/eufic-protein2food/",
+      "destination": "/portfolio/eufic-protein2food/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/iggi-post-gatto-topo/",
+      "destination": "/portfolio/iggi-post-gatto-topo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dental-trey-uno-software/",
+      "destination": "/portfolio/dental-trey-uno-software/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/eufic-oleum/",
+      "destination": "/portfolio/eufic-oleum/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/merry-christmas-sparkling-new-year-2020/",
+      "destination": "/portfolio/merry-christmas-sparkling-new-year-2020/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/merry-christmas-sparkling-new-year/",
+      "destination": "/portfolio/merry-christmas-sparkling-new-year/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/eufic-games-of-food/",
+      "destination": "/portfolio/eufic-games-of-food/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/eufic-ypack-sustainable-food-packaging/",
+      "destination": "/portfolio/eufic-ypack-sustainable-food-packaging/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/cocchi-e-cocchi-maestri-di-branding/",
+      "destination": "/portfolio/cocchi-e-cocchi-maestri-di-branding/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/playcopy-opener-2019/",
+      "destination": "/portfolio/playcopy-opener-2019/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/tozzi-green-energy-nature-children/",
+      "destination": "/portfolio/tozzi-green-energy-nature-children/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/roboqbo-un-potenziale-esplosivo/",
+      "destination": "/portfolio/roboqbo-un-potenziale-esplosivo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/gastronomia-muderi-food-truck/",
+      "destination": "/portfolio/gastronomia-muderi-food-truck/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/jova-beach-wedding/",
+      "destination": "/portfolio/jova-beach-wedding/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/innova-finance-1/",
+      "destination": "/portfolio/innova-finance-1/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/nickelodeon-xmas-tunes/",
+      "destination": "/portfolio/nickelodeon-xmas-tunes/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/casa-sicura/",
+      "destination": "/portfolio/casa-sicura/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/nuovoarredo/",
+      "destination": "/portfolio/nuovoarredo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/diaro-di-un-wedding-planner/",
+      "destination": "/portfolio/diaro-di-un-wedding-planner/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/il-punto-gordon/",
+      "destination": "/portfolio/il-punto-gordon/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/lofter/",
+      "destination": "/portfolio/lofter/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/chupa-chups/",
+      "destination": "/portfolio/chupa-chups/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/alpenliebe/",
+      "destination": "/portfolio/alpenliebe/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/playlink/",
+      "destination": "/portfolio/playlink/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/crema-e-cioccolato/",
+      "destination": "/portfolio/crema-e-cioccolato/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/gabs-presentazione-shooting/",
+      "destination": "/portfolio/gabs-presentazione-shooting/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/dental-trey/",
+      "destination": "/portfolio/dental-trey/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/vocal-it/",
+      "destination": "/portfolio/vocal-it/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/panebarcos-super-idee-cartoon-realta/",
+      "destination": "/portfolio/panebarcos-super-idee-cartoon-realta/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/play-copy-2018/",
+      "destination": "/portfolio/play-copy-2018/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/gosanital/",
+      "destination": "/portfolio/gosanital/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/panebarcos-super-christmas/",
+      "destination": "/portfolio/panebarcos-super-christmas/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/un-gemello-sotto-l-albero/",
+      "destination": "/portfolio/un-gemello-sotto-l-albero/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/farmacie-gluten-free/",
+      "destination": "/portfolio/farmacie-gluten-free/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/yes-energy/",
+      "destination": "/portfolio/yes-energy/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/marianna-in-stop-motion/",
+      "destination": "/portfolio/marianna-in-stop-motion/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/panebarco-social-library/",
+      "destination": "/portfolio/panebarco-social-library/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/cultural-creative-cities-monitor/",
+      "destination": "/portfolio/cultural-creative-cities-monitor/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/creattivazione-cna-marianna-panebarco/",
+      "destination": "/portfolio/creattivazione-cna-marianna-panebarco/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/kis-keter-presentazione/",
+      "destination": "/portfolio/kis-keter-presentazione/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/vado-a-farmi-un-giro-jova-tv/",
+      "destination": "/portfolio/vado-a-farmi-un-giro-jova-tv/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/kea-rise-shine-2017/",
+      "destination": "/portfolio/kea-rise-shine-2017/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/481-le-ricette-di-antonino-cannavacciuolo/",
+      "destination": "/portfolio/481-le-ricette-di-antonino-cannavacciuolo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/electric-christmas-happy-frank-year/",
+      "destination": "/portfolio/electric-christmas-happy-frank-year/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/483-cultura-moderna-logo-animation/",
+      "destination": "/portfolio/483-cultura-moderna-logo-animation/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/479-revoluce/",
+      "destination": "/portfolio/479-revoluce/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/474-improovo/",
+      "destination": "/portfolio/474-improovo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/477-my-good-client/",
+      "destination": "/portfolio/477-my-good-client/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/484-drive-break-opener/",
+      "destination": "/portfolio/484-drive-break-opener/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/480-tecnoacademy/",
+      "destination": "/portfolio/480-tecnoacademy/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/475-kiaracloud/",
+      "destination": "/portfolio/475-kiaracloud/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/473-golee/",
+      "destination": "/portfolio/473-golee/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/423-rier-impianti/",
+      "destination": "/portfolio/423-rier-impianti/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/471-biobang/",
+      "destination": "/portfolio/471-biobang/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/485-festival-show-logo-animation/",
+      "destination": "/portfolio/485-festival-show-logo-animation/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/478-qirate/",
+      "destination": "/portfolio/478-qirate/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/amphenol-defense/",
+      "destination": "/portfolio/amphenol-defense/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/486-rockin1000/",
+      "destination": "/portfolio/486-rockin1000/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/476-meis-museo-dell-ebraismo-italiano-e-della-shoah/",
+      "destination": "/portfolio/476-meis-museo-dell-ebraismo-italiano-e-della-shoah/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/422-ossigenatevi-show/",
+      "destination": "/portfolio/422-ossigenatevi-show/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/424-gabs-franco-gabbrielli/",
+      "destination": "/portfolio/424-gabs-franco-gabbrielli/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/472-dotmobile/",
+      "destination": "/portfolio/472-dotmobile/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/425-kea/",
+      "destination": "/portfolio/425-kea/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/427-paperissima-sprint/",
+      "destination": "/portfolio/427-paperissima-sprint/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/426-sparks/",
+      "destination": "/portfolio/426-sparks/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/428-spot-smeraldina/",
+      "destination": "/portfolio/428-spot-smeraldina/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/408-io-cna/",
+      "destination": "/portfolio/408-io-cna/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/404-girl-geek-dinner-ravenna/",
+      "destination": "/portfolio/404-girl-geek-dinner-ravenna/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/402-la-tua-spesa-in-bottega/",
+      "destination": "/portfolio/402-la-tua-spesa-in-bottega/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/435-ti-presento-i-nostri/",
+      "destination": "/portfolio/435-ti-presento-i-nostri/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/434-invitato-speciale-opener/",
+      "destination": "/portfolio/434-invitato-speciale-opener/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/433-hotel-cercasi/",
+      "destination": "/portfolio/433-hotel-cercasi/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/400-konvergence/",
+      "destination": "/portfolio/400-konvergence/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/399-konvergence/",
+      "destination": "/portfolio/399-konvergence/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/432-pokeman-day-opener/",
+      "destination": "/portfolio/432-pokeman-day-opener/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/431-diario-di-un-wedding-planner/",
+      "destination": "/portfolio/431-diario-di-un-wedding-planner/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/430-shiseido/",
+      "destination": "/portfolio/430-shiseido/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/420-spiaggeventi/",
+      "destination": "/portfolio/420-spiaggeventi/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/421-hotel-cercasi/",
+      "destination": "/portfolio/421-hotel-cercasi/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/398-newtom-vgi-evo/",
+      "destination": "/portfolio/398-newtom-vgi-evo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/397-myray-hyperion-x5-promo/",
+      "destination": "/portfolio/397-myray-hyperion-x5-promo/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/396-konvergence/",
+      "destination": "/portfolio/396-konvergence/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/438-shiseido-opener/",
+      "destination": "/portfolio/438-shiseido-opener/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/437-un-giorno-da/",
+      "destination": "/portfolio/437-un-giorno-da/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/amphenol-aeronautique/",
+      "destination": "/portfolio/amphenol-aeronautique/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/371-scary-xmas-and-a-creepy-new-year/",
+      "destination": "/portfolio/371-scary-xmas-and-a-creepy-new-year/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/370-konvergence/",
+      "destination": "/portfolio/370-konvergence/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/366-st-art-app/",
+      "destination": "/portfolio/366-st-art-app/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/352-opuscolo-olio-e-aceto/",
+      "destination": "/portfolio/352-opuscolo-olio-e-aceto/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/panebarco-reel-2/",
+      "destination": "/portfolio/panebarco-reel-2/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/351-wineowners/",
+      "destination": "/portfolio/351-wineowners/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/350-e-se-l-api-fussi-lavativa/",
+      "destination": "/portfolio/350-e-se-l-api-fussi-lavativa/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/418-ovo-selfie/",
+      "destination": "/portfolio/418-ovo-selfie/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/348-dall-orto-in-barattolo-all-orto-energetico/",
+      "destination": "/portfolio/348-dall-orto-in-barattolo-all-orto-energetico/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/344-prendi-un-bambino-per-mano/",
+      "destination": "/portfolio/344-prendi-un-bambino-per-mano/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/343-livia-meldolesi-collection/",
+      "destination": "/portfolio/343-livia-meldolesi-collection/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/domus-dei-triclini/",
+      "destination": "/portfolio/domus-dei-triclini/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/417-eroi-di-impresa/",
+      "destination": "/portfolio/417-eroi-di-impresa/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/333-k-pay/",
+      "destination": "/portfolio/333-k-pay/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/416-post-produzione/",
+      "destination": "/portfolio/416-post-produzione/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/296-konvergence/",
+      "destination": "/portfolio/296-konvergence/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/387-auguri-di-natale-2013/",
+      "destination": "/portfolio/387-auguri-di-natale-2013/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/207-konvergence/",
+      "destination": "/portfolio/207-konvergence/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/168-kea/",
+      "destination": "/portfolio/168-kea/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/166-tra-un-arancia-e-l-altra/",
+      "destination": "/portfolio/166-tra-un-arancia-e-l-altra/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/167-k-wallet/",
+      "destination": "/portfolio/167-k-wallet/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/307-centenario-aldo-borgonzoni/",
+      "destination": "/portfolio/307-centenario-aldo-borgonzoni/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/169-archivio-digitale-varestate/",
+      "destination": "/portfolio/169-archivio-digitale-varestate/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/170-kalarav-design-studio/",
+      "destination": "/portfolio/170-kalarav-design-studio/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/114-ravenna2019/",
+      "destination": "/portfolio/114-ravenna2019/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/175-cartagine-roma-siracusa-archimede-e-la-seconda-guerra-punica/",
+      "destination": "/portfolio/175-cartagine-roma-siracusa-archimede-e-la-seconda-guerra-punica/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/55-donareit/",
+      "destination": "/portfolio/55-donareit/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/415-panebarco-reel-2014/",
+      "destination": "/portfolio/415-panebarco-reel-2014/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/289-chiss-cosa-direbbe-carla/",
+      "destination": "/portfolio/289-chiss-cosa-direbbe-carla/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/294-parmigiano-reggiano/",
+      "destination": "/portfolio/294-parmigiano-reggiano/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/304-vigorsol-fruit-3d/",
+      "destination": "/portfolio/304-vigorsol-fruit-3d/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/56-serenitas/",
+      "destination": "/portfolio/56-serenitas/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/115-vi-auguriamo-un-natale-da-paura/",
+      "destination": "/portfolio/115-vi-auguriamo-un-natale-da-paura/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/60-river-monsters/",
+      "destination": "/portfolio/60-river-monsters/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/61-velux/",
+      "destination": "/portfolio/61-velux/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/62-nivea/",
+      "destination": "/portfolio/62-nivea/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/63-lancia-y/",
+      "destination": "/portfolio/63-lancia-y/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/205-gelish-hard-gel/",
+      "destination": "/portfolio/205-gelish-hard-gel/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/sangue/",
+      "destination": "/portfolio/sangue/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/66-risintonizzazione-dmax/",
+      "destination": "/portfolio/66-risintonizzazione-dmax/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/67-la-canzone-del-co/",
+      "destination": "/portfolio/67-la-canzone-del-co/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/292-carla-gozzi/",
+      "destination": "/portfolio/292-carla-gozzi/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/327-a-pictures/",
+      "destination": "/portfolio/327-a-pictures/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/295-real-break/",
+      "destination": "/portfolio/295-real-break/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/291-xpossible/",
+      "destination": "/portfolio/291-xpossible/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/116-cervellina-e-cuoricino/",
+      "destination": "/portfolio/116-cervellina-e-cuoricino/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/69-dante-a-ravenna/",
+      "destination": "/portfolio/69-dante-a-ravenna/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/103-percorsi-danteschi/",
+      "destination": "/portfolio/103-percorsi-danteschi/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/199-la-battaglia-di-canne/",
+      "destination": "/portfolio/199-la-battaglia-di-canne/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/70-cerdomus/",
+      "destination": "/portfolio/70-cerdomus/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/72-barcamp-cna-ravenna/",
+      "destination": "/portfolio/72-barcamp-cna-ravenna/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/174-la-grande-avventura-dell-artigianato/",
+      "destination": "/portfolio/174-la-grande-avventura-dell-artigianato/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/104-videogiochi-per-bambini/",
+      "destination": "/portfolio/104-videogiochi-per-bambini/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/top-gear-su-dmax/",
+      "destination": "/portfolio/top-gear-su-dmax/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/298-land-rover/",
+      "destination": "/portfolio/298-land-rover/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/299-samsung-galaxy-s-ii/",
+      "destination": "/portfolio/299-samsung-galaxy-s-ii/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/74-6-clip-di-storia/",
+      "destination": "/portfolio/74-6-clip-di-storia/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/75-ford-democratizing-technology/",
+      "destination": "/portfolio/75-ford-democratizing-technology/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/76-domus-nova/",
+      "destination": "/portfolio/76-domus-nova/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/105-shirerace/",
+      "destination": "/portfolio/105-shirerace/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/77-sistemifotovoltaicicom/",
+      "destination": "/portfolio/77-sistemifotovoltaicicom/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/78-150-clip-di-cultura-generale/",
+      "destination": "/portfolio/78-150-clip-di-cultura-generale/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/80-vogue-eyewear/",
+      "destination": "/portfolio/80-vogue-eyewear/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/82-as-se-hace/",
+      "destination": "/portfolio/82-as-se-hace/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/83-gino-e-nonna-rosa/",
+      "destination": "/portfolio/83-gino-e-nonna-rosa/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/84-into-the-pattern/",
+      "destination": "/portfolio/84-into-the-pattern/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/85-dalla-domus-al-palatium/",
+      "destination": "/portfolio/85-dalla-domus-al-palatium/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/106-le-botteghe-del-mosaico/",
+      "destination": "/portfolio/106-le-botteghe-del-mosaico/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/107-ravenna2019-e-ravenna-mosaico/",
+      "destination": "/portfolio/107-ravenna2019-e-ravenna-mosaico/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/108-ortofabbrica/",
+      "destination": "/portfolio/108-ortofabbrica/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/173-la-crisi-del-cinema/",
+      "destination": "/portfolio/173-la-crisi-del-cinema/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/305-il-sacco-dell-energia/",
+      "destination": "/produzioni-originali/305-il-sacco-dell-energia/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/111-burattini-combinatori/",
+      "destination": "/portfolio/111-burattini-combinatori/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/196-exhibits3d/",
+      "destination": "/portfolio/196-exhibits3d/",
+      "permanent": true
+    },
+    {
+      "source": "/lavori/109-enciclopedie-e-avventure-interattive/",
+      "destination": "/portfolio/109-enciclopedie-e-avventure-interattive/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/news/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/pane-quotidiano/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/video-dintorni/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/pensieri/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/panebarcos/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/90-animali/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/testimonial-category/startup/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/category/retrobottega/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/big-sleeping/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/biblioteca/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/design/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/instagram/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/colori/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/brand/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animali/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/advertising/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animazioni/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animation/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/banca-intesa/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/azienda-famiglia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/bellezza/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/alice/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/2018/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animazione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/amore/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/academy-awards/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/travestimenti/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cartoni-animati/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/awards/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cibo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/bottega/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/2020/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sacrificiofanfilm/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/paralimpiadi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/avvento/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/betlemme/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/capodanno/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/chroma-key/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animazione-3d-scienza-scientifica-naimation-corono-virus-virus/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/doodle/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/fumetti-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animazione-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/jovanotti/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/coronavirus-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/afroamericani/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cognome/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/bagno/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/diario/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/25x25-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/3d/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/2022/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/comunediravenna/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/biblioteca-privata/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/formazione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/marketing/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/corso/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/commercial/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/creative-industries/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/bambini/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/effetti-sonori/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/banca-intesa-san-paolo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/creativita/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/animazione-3d/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cartoon/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/barbie/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/copy/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/europa/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/colloqui/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/frankenstein/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/unione-europea/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sacrificiofanfilm-starwarsfanfilm-starwars-empira-sound-design/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/roger-rabbit/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/calendario/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/natale/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/disney/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/denti/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/virus-coronavirus/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/antifragile/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/google/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/panebarco-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/daniele-panebarco/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/giornatamondialedellibro/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/logo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/lockdown/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/david-di-donatello/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/fumetto/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/water/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/promossi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/404/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/americani/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/2021/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/anno-nuovo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/bartali/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/happyminds/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cortometraggio/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cataloghi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/panebarco-social-library/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/spot/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/corporate-video/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sound-design/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/campagna-elettorale/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/banca-san-paolo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/coppia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/oscar/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/fumetti/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/copywriter/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/food/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/lavoro/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/grafica-animata/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/video/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/tecnica-mista/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/il-mago/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sfighe/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/duchessa-di-sussex/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/dentisti/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/antifragilita/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/semmelweis/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/pasqua/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/letteratura/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/logo-animation/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/quarantena-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/effetti-speciali/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/blm/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/illustrazione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/rimborsati/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/errori/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/buoni-propositi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/bologna/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/paneblog/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/trend/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/spot-pubblicitari/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/hamburger/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/flat-design/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/disegni/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/ciclo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sound-effects/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/comunicazione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/la-stampa/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/dietro-le-quinte/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/persone-speciali/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sanvalentino/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sonno/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/costumi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/libri/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/femminile/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/paolo-iabichino/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/realtime/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/topten/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/meghan-markle/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/green-screen/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/coronavirus/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/fumettista/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/lettura-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/lorenzo-cherubini/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/video-animati/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/effetti-visivi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cani/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/mago/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sottobanco/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/illustrazioni/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/festival/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/anno/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cimitero/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cattive-abitudini/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/busan/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/ravennawelcomestalents/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/strategie/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/panino/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/graphics/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/grafica/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/suono/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/clip/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/motion-graphics/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/forme/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/dietrolequinte/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/team/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/short-movie/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sveglia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/storie/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/gender/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/pennamontata/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/vestiario/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/videobiglietto-di-auguri/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/principesse/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/modellazione-3d/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/covid19/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cartonianimati/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/libro/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/msc/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/fumetto-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/discriminazione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/medaglia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/seo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/aspro/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/cinema/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/regioneemiliaromagna/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/ilbacioneltaschino/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/tendenze/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sandwich/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/inspiration/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/epicfail/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/puffi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/packging/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/racconto/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/identita/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/playcopy/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/yeti/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/reali-inglesi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/smartworking/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/quarantena/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/raiplay-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/lockdown-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/disney-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/naming/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/web/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/lenin/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/corto/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/ravenna/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/musica/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/tv/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/panebarco/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/my-period/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/dem/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/stop-motion/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/errore/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/maschile/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/regina-elisabetta/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/telelavoro/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/worldbookday/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sigle-animate/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/pinocchio/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/donne/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/nome/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/muro-di-berlino/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/limonata/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/darsena/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/corea/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/piccolocorodellantoniano/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/social-library/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/matitegiovanotte-ravenna/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/riqualificazione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/direct-email-marketing/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/tour-operator/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/passi-falsi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/videoproiezioni/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/modelli-di-genere/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/premi/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/razzismo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/paese-sera/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/produzione/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/limone/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/video-marketing/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/video-aziendali/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/matitemporary-school/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/streetart/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/video-ricerche/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/elezioni/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/travel-cartoon/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/ricrescita/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/sessismo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/pandemia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/zecchinodoro/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/youtube/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/facebook/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/turismo/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/video-virale/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/videosigle/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/wia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/premi-2/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/stili-di-vita/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/viral/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/gif/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/hillary/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/immagini/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/obama/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/politica/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/real-time-marketing/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/slogan/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/social/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/trump/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/voto/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/forum/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/keepers/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/mia/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/pitch/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/roma/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/seul/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/tag/tolosa/",
+      "destination": "/paneblog/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/lavori-archivio/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/lavori-portfolio/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/distribuzione/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/divulgare/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/cinema-tv-eventi/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/descrivere/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/funzione-del-video/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/lavori-cartoon/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/fan-follower-appassionati/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/destinatari-del-messaggio/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/lavori-favourite/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/proposte-clienti/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/produzioni-indipendenti/",
+      "destination": "/produzioni-originali/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/fiere-congressi/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/pubblico-generico/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/pubblico-specialistico/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/lavori-motion-graphics/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/raccontare/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/web-social/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-category/startup/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/2d/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/3d/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/concept/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/live-action/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/design/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/footage/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/post-produzione/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/logo-animation/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/storyboard/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/cut-out/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/grafica/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/animazione/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/personaggi/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/illustrazioni/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/fotografie/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/arf/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/script/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/frame-by-frame/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/vfx/",
+      "destination": "/portfolio/",
+      "permanent": true
+    },
+    {
+      "source": "/paneblog/portfolio-tag/giornatadellamemoria/",
+      "destination": "/portfolio/",
+      "permanent": true
+    }
+  ]
+}
