@@ -906,7 +906,11 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
         },
         esploraProgetti: {
           populate: {
-            item: true,
+            item: {
+              populate: {
+                cover: true,
+              },
+            },
             pulsante: true,
           },
         },
@@ -973,8 +977,8 @@ export async function getOriginalsPageContent({ lang = DEFAULT_LANG, fallback })
           return {
             title: pickFirst(item?.titolo, fallbackItem.title),
             summary: pickFirst(stripRichTextSyntax(item?.contenuto), fallbackItem.summary),
-            image: pickFirst(fallbackItem.image),
-            imageAlt: pickFirst(fallbackItem.imageAlt, fallbackItem.title),
+            image: resolveMediaUrl(item?.cover, "large", fallbackItem.image),
+            imageAlt: pickFirst(item?.cover?.alternativeText, fallbackItem.imageAlt, fallbackItem.title),
             theme: pickFirst(fallbackItem.theme),
           };
         })

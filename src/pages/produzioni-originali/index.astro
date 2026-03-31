@@ -24,10 +24,10 @@ const originalsFallback = {
     title: "Esplora i progetti",
     summary: "Filtra il portfolio per area di servizio o per tipologia di video e scorri una griglia piu ampia di lavori, frame e casi correlati.",
     items: [
-      { theme: "shorts", title: "Cortometraggi", summary: "Formati compatti e autoriali pensati per festival, ricerca visiva e nascita di nuove IP.", image: "", imageAlt: "Cortometraggi" },
-      { theme: "series", title: "Serie animate", summary: "Progetti seriali con personaggi forti, architetture narrative elastiche e mondi pronti a espandersi.", image: "", imageAlt: "Serie animate" },
-      { theme: "features", title: "Lungometraggi", summary: "Sviluppi lunghi dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.", image: "", imageAlt: "Lungometraggi" },
-      { theme: "crossmedia", title: "Progetti crossmediali", summary: "Idee che possono vivere su piu piattaforme tra audiovisivo, editoria, educational e licensing.", image: "", imageAlt: "Progetti crossmediali" },
+      { theme: "shorts", title: "Cortometraggi", summary: "Formati compatti e autoriali pensati per festival, ricerca visiva e nascita di nuove IP.", image: "/images/nostoppingnora.jpg", imageAlt: "Cortometraggi" },
+      { theme: "series", title: "Serie animate", summary: "Progetti seriali con personaggi forti, architetture narrative elastiche e mondi pronti a espandersi.", image: "/images/caramelle-intro.jpg", imageAlt: "Serie animate" },
+      { theme: "features", title: "Lungometraggi", summary: "Sviluppi lunghi dove scrittura, visual design e tenuta narrativa devono crescere insieme fin dall'inizio.", image: "/images/marta-e-la-morte.jpg", imageAlt: "Lungometraggi" },
+      { theme: "crossmedia", title: "Progetti crossmediali", summary: "Idee che possono vivere su piu piattaforme tra audiovisivo, editoria, educational e licensing.", image: "/images/panebarco-originals-bg.jpg", imageAlt: "Progetti crossmediali" },
     ],
   },
   highlightedOriginals: [
@@ -56,7 +56,7 @@ const finalCtas = originalsContent.ctas.map((cta) => ({
   ...cta,
   href: cta.button.href,
   buttonLabel: cta.button.label,
-})) as const;
+}));
 ---
 
 <Layout title="Originals - Panebarco" useInnerStyles={true} lang={lang} entita="pagina-originals" headerProps={{ containerClass: "container-fluid hero-fluid px-3 px-md-4 px-lg-5" }}>
@@ -77,7 +77,11 @@ const finalCtas = originalsContent.ctas.map((cta) => ({
             {originalsContent.explore.items.map((area, index) => (
               <div class="col">
                 <article class:list={["originals-pillar-card", `originals-pillar-card--${area.theme}`]} tabindex="0">
-                  <div class="originals-pillar-card__media" aria-hidden="true"></div>
+                  <div
+                    class="originals-pillar-card__media"
+                    aria-hidden="true"
+                    style={area.image ? `background-image:url('${area.image}');` : undefined}
+                  ></div>
                   <div class="originals-pillar-card__shade" aria-hidden="true"></div>
                   <div class="originals-pillar-card__content">
                     <p class="originals-pillar-card__index">0{index + 1}</p>

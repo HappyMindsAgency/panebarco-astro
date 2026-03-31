@@ -1,7 +1,7 @@
 import type { MiddlewareHandler } from "astro";
 import { redirects } from "./lib/redirects.js";
 
-const MAINTENANCE_MODE_ENABLED = true;
+const MAINTENANCE_MODE_ENABLED = false;
 const MAINTENANCE_BYPASS_QUERY_PARAM = "bypass";
 const MAINTENANCE_BYPASS_VALUE = "panebarco";
 const MAINTENANCE_BYPASS_COOKIE = "maintenance_bypass";
