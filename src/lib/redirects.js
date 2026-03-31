@@ -8,7 +8,6 @@ export const redirects = {
   "/contatti/lasciaci-un-messaggio/": "/contatti/",
   "/lavori/": "/portfolio/",
   "/chi-siamo/": "/studio-creativo-animazione/storia-chi-siamo/",
-  "/social-library/": "/social-library/",
   "/chi-siamo/le-origini/": "/studio-creativo-animazione/storia-chi-siamo/",
   "/chi-siamo/tenacia-e-passione/": "/studio-creativo-animazione/storia-chi-siamo/",
   "/chi-siamo/dalla-carta-al-digitale/": "/studio-creativo-animazione/storia-chi-siamo/",
