@@ -95,7 +95,7 @@ function mapArticle(article, lang) {
 
   return {
     category: pickFirst(categories[0]),
-    date: formatDate(pickFirst(article?.publishedAt, article?.updatedAt)),
+    date: formatDate(pickFirst(article?.dataPubblicazione, article?.dataPubblicazione)),
     href: slug ? joinLocalizedPath(buildPath("paneblog", lang), slug) : buildPath("paneblog", lang),
     image: resolveMediaUrl(article?.cover, "large", "/images/paneblog-cover-01-356x217.png"),
     imageAlt: pickFirst(article?.cover?.alternativeText, article?.titolo),
@@ -223,8 +223,8 @@ export async function getPaneblogPageContent({ lang = DEFAULT_LANG, fallback = {
     getCollectionDocuments("articoli", {
       locale: lang,
       status: "published",
-      sort: ["publishedAt:desc", "updatedAt:desc"],
-      fields: ["documentId", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
+      sort: ["publishedAt:asc", "updatedAt:asc"],
+      fields: ["documentId", "dataPubblicazione", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
       populate: {
         cover: true,
         categorie_articolo: {
@@ -290,7 +290,7 @@ export async function getPaneblogArticlePageContent({ lang = DEFAULT_LANG, slug 
         page: 1,
         pageSize: 1,
       },
-      fields: ["documentId", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
+      fields: ["documentId","dataPubblicazione","titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
       populate: {
         cover: true,
         categorie_articolo: {
