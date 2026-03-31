@@ -169,7 +169,7 @@ export async function getFlashNewsContent({ lang = DEFAULT_LANG, limit = 3 } = {
       character: char.character,
       avatar: char.avatar,
       title: pickFirst(item?.titolo),
-      text: truncateText(item?.contenuto, 120),
+      text: stripHtml(item?.contenuto),
     };
   });
 }

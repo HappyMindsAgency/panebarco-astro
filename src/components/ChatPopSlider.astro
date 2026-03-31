@@ -475,11 +475,6 @@ const messagesJson = JSON.stringify(resolvedMessages);
     line-height: 1.28;
     font-weight: 600;
     text-align: left;
-    display: -webkit-box;
-    -webkit-line-clamp: var(--chat-copy-lines);
-    line-clamp: var(--chat-copy-lines);
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   .chat-slider-pop__controls {
@@ -626,6 +621,9 @@ const messagesJson = JSON.stringify(resolvedMessages);
       --chat-slider-avatar-size: 2.8rem;
       --chat-title-size: 0.86rem;
       --chat-copy-size: 0.72rem;
+      --chat-left: clamp(0.4rem, 2vw, 0.85rem);
+      --chat-right: auto;
+      --chat-bottom: -3.1rem;
     }
   }
 </style>
