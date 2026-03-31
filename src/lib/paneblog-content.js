@@ -231,6 +231,11 @@ export async function getPaneblogPageContent({ lang = DEFAULT_LANG, fallback = {
           fields: ["titolo", "slug"],
         },
       },
+      pagination: {
+        page: 1,
+        /* ******** Modifica il valore di pageSize se vuoi aumentare gli articoli presi dalla fetch ******** */
+        pageSize: 999,
+      }
     }),
   ]);
 
