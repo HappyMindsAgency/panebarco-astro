@@ -20,7 +20,7 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
     </div>
 
     <div class="social-library-form-alert alert alert-success" data-form-success hidden role="alert">
-      Richiesta simulata correttamente. Controlla la console per il payload JSON.
+      Richiesta inviata con successo! Ti contatteremo a breve.
     </div>
 
     <div class="social-library-form-alert alert alert-danger" data-form-error hidden role="alert"></div>
@@ -202,25 +202,22 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
 
       try {
         const payload = createPayload();
-        await new Promise((resolve) => window.setTimeout(resolve, 900));
+
+        const res = await fetch("/api/contacts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ formType: "socialLibrary", data: payload }),
+        });
+
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(json?.error ?? "Errore");
 
         form.reset();
         form.classList.remove("was-validated");
-        Object.assign(state, {
-          nome: "",
-          cognome: "",
-          email: "",
-          telefono: "",
-          messaggio: "",
-          linkCatalogo: "",
-          dataRitiro: "",
-          newsletter: false,
-          privacy: false,
-        });
 
         if (successMessage instanceof HTMLElement) successMessage.hidden = false;
       } catch {
-        showError("Invio simulato non riuscito. Riprova.");
+        showError("Invio non riuscito. Riprova o contattaci direttamente a info@panebarco.it.");
       } finally {
         setLoading(false);
       }
