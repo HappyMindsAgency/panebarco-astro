@@ -189,13 +189,19 @@
       if (apiErrorEl) apiErrorEl.hidden = true;
 
       var data = collectFormData(form);
-      var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
 
-      mockRequest.then(function () {
+      fetch("/api/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formType: "brief", data: data }),
+      }).then(function (res) {
+        return res.json().then(function (json) { return { ok: res.ok, json: json }; });
+      }).then(function (result) {
+        if (!result.ok) throw new Error(result.json?.error ?? "Errore");
         var successEl = document.getElementById("briefFormSuccess");
         if (successEl) successEl.hidden = false;
         form.hidden = true;
-      }).catch(function (err) {
+      }).catch(function () {
         if (apiErrorEl) apiErrorEl.hidden = false;
         setSubmitLoading(false);
       });
@@ -357,13 +363,19 @@
       if (apiErrorEl) apiErrorEl.hidden = true;
 
       var data = collectFormData(form);
-      var mockRequest = new Promise(function (resolve) { setTimeout(resolve, 1200); });
 
-      mockRequest.then(function () {
+      fetch("/api/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formType: "talent", data: data }),
+      }).then(function (res) {
+        return res.json().then(function (json) { return { ok: res.ok, json: json }; });
+      }).then(function (result) {
+        if (!result.ok) throw new Error(result.json?.error ?? "Errore");
         var successEl = document.getElementById("talentFormSuccess");
         if (successEl) successEl.hidden = false;
         form.hidden = true;
-      }).catch(function (err) {
+      }).catch(function () {
         if (apiErrorEl) apiErrorEl.hidden = false;
         setSubmitLoading(false);
       });
