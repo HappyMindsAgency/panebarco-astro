@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import HeroStyDettaglio from "../../components/HeroStyDettaglio.astro";
+import RitchText from "../../components/RitchText.astro";
 import { buildPath } from "../../i18n/routing";
 import { getOriginalDetailContent } from "../../lib/site-content";
 import { micromark } from "micromark";
@@ -19,7 +20,6 @@ const introParagraphs = (original.intro || "")
   .map((p: string) => p.replace(/^#+\s+/, "").replace(/[*_]/g, "").trim())
   .filter(Boolean);
 
-const creditsHtml = original.credits ? micromark(original.credits) : "";
 const hasHeaderMeta = Boolean(original.settoreTitolo || original.titolo || original.anno || original.tipologia);
 const hasIntro = introParagraphs.length > 0;
 const hasCorpo = original.corpo && original.corpo.length > 0;
@@ -49,7 +49,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
     <section class="section-space section-space--soft intro-header">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-lg-8 col-xl-7">
+          <div class="col-12">
             {original.settoreTitolo && <p class="hero-eyebrow mb-1">{original.settoreTitolo.toUpperCase()}</p>}
             {original.titolo && <h1 class="heading-detail mb-1">{original.titolo}</h1>}
             {original.anno && <p class="hero-meta mb-3">INIZIO PRODUZIONE {original.anno}</p>}
@@ -67,12 +67,12 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
 
   <main class="original-detail-page pb-5">
     {hasIntro && (
-      <section class="section-space section-space--soft">
+      <section class="section-space section-space--soft original-intro">
         <div class="container">
           <div class="row">
-            <div class="col-12 col-xl-12">
+            <div class="col-12">
               {introParagraphs.map((paragraph, index) => (
-                <p class:list={[index === 0 ? "lead" : null, "text-white", index === introParagraphs.length - 1 ? "mb-0" : "mb-3", "fw-bold"]}>
+                <p class:list={["original-intro__paragraph", index === 0 ? "lead" : null, "text-white", index === introParagraphs.length - 1 ? "mb-0" : "mb-3"]}>
                   {paragraph}
                 </p>
               ))}
@@ -100,7 +100,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
     {hasCorpo && original.corpo.map((block: any) => (
       <>
         {block.type === "titolo" && block.titolo && (
-          <section class="section-space section-space--tight original-dz-section">
+          <section class="section-space section-space--tight original-dz-section original-dz-section--title">
             <div class="container">
               <h2 class="original-dz-title">{block.titolo}</h2>
             </div>
@@ -108,7 +108,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
         )}
 
         {block.type === "contenuto" && block.contenuto && (
-          <section class="section-space section-space--tight original-dz-section">
+          <section class="section-space section-space--tight original-dz-section original-dz-section--content">
             <div class="container">
               <div class="original-dz-contenuto" set:html={micromark(block.contenuto, { allowDangerousHtml: true })} />
             </div>
@@ -256,7 +256,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
           <div class="row">
             <div class="col-12 col-xl-11 credits-copy">
               <h2 class="page-title-uniform text-white text-uppercase mb-4">Credits</h2>
-              <Fragment set:html={creditsHtml} />
+              <RitchText block={original.credits} className="credits-richtext" />
             </div>
           </div>
         </div>
@@ -329,6 +329,15 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
     background: transparent;
   }
 
+  .original-intro__paragraph {
+    max-width: none;
+    font-weight: 400;
+  }
+
+  .original-intro__paragraph.lead {
+    font-weight: 400;
+  }
+
   .hero-eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.18em;
@@ -373,12 +382,6 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
     border-radius: 0;
   }
 
-  @media (min-width: 768px) {
-    .originals-hero__media {
-      border-radius: 0.5rem;
-    }
-  }
-
   // ── DynamicZone: corpo ──────────────────────────────────────────────────
 
   .original-dz-section {
@@ -386,6 +389,14 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding-top: 3rem;
     }
+  }
+
+  .original-dz-section--title {
+    --section-space-bottom: clamp(0.6rem, 1vw, 0.95rem);
+  }
+
+  .original-dz-section--title + .original-dz-section--content {
+    --section-space-top: 0;
   }
 
   // shared.titolo
@@ -400,7 +411,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
 
   // shared.contenuto
   .original-dz-contenuto {
-    max-width: 72ch;
+    max-width: none;
     color: rgba(255, 255, 255, 0.85);
     font-size: clamp(1rem, 1.5vw, 1.125rem);
     line-height: 1.7;
@@ -415,6 +426,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
 
     :global(p) {
       margin-bottom: 1em;
+      font-weight: 400;
 
       &:last-child {
         margin-bottom: 0;
@@ -438,7 +450,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
   .original-dz-video {
     display: block;
     width: 100%;
-    border-radius: 0.5rem;
+    border-radius: 0;
     overflow: hidden;
   }
 
@@ -461,7 +473,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
   .original-dz-masonry-item {
     display: block;
     width: 100%;
-    border-radius: 0.35rem;
+    border-radius: 0;
     margin-bottom: 0.5rem;
     break-inside: avoid;
     object-fit: cover;
@@ -479,7 +491,7 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
 
   .original-dz-slider-viewport {
     overflow: hidden;
-    border-radius: 0.5rem;
+    border-radius: 0;
   }
 
   .original-dz-slider-track {
@@ -621,6 +633,22 @@ const hasRassegna = original.rassegnaStampa && original.rassegnaStampa.length > 
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.35);
     line-height: 1;
+  }
+
+  :global(.credits-richtext p) {
+    max-width: none;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  :global(.credits-richtext p + p) {
+    margin-top: 1em;
+  }
+
+  :global(.credits-richtext strong),
+  :global(.credits-richtext b) {
+    color: #fff;
+    font-weight: 700;
   }
 </style>
 
