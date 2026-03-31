@@ -281,6 +281,8 @@ function mapServiceCards(items = [], fallbackCards = []) {
       href: button.href,
       image: mediaSrc,
       imageAlt: pickFirst(item?.cover?.alternativeText, fallbackCard.imageAlt),
+      mediaKind: isVideoCover ? "video" : "image",
+      mediaMime: isVideoCover ? coverMime : "",
       summary: pickFirst(item?.contenuto, fallbackCard.summary),
       bullets: splitRichTextParagraphs(item?.sottotitolo).length
         ? splitRichTextParagraphs(item?.sottotitolo)
