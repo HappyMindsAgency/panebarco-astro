@@ -309,12 +309,12 @@ export async function getPaneblogArticlePageContent({ lang = DEFAULT_LANG, slug 
           $ne: slug,
         },
       },
-      sort: ["publishedAt:desc", "updatedAt:desc"],
+      sort: ["publishedAt:asc", "updatedAt:asc"],
       pagination: {
         page: 1,
         pageSize: 3,
       },
-      fields: ["documentId", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
+      fields: ["documentId","dataPubblicazione", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
       populate: {
         cover: true,
         categorie_articolo: {
