@@ -10,13 +10,8 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
 const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 ---
 
-<section class="social-library-form-section" aria-labelledby="socialLibraryFormTitle">
+<section class="social-library-form-section" aria-label="Modulo richiesta Social Library">
   <div class="social-library-form-card">
-    <div class="social-library-form-intro">
-      <p class="social-library-form-kicker">Prenotazione</p>
-      <h2 id="socialLibraryFormTitle" class="social-library-form-title">Richiedi un titolo dalla Social Library</h2>
-    </div>
-
     <div class="social-library-form-alert alert alert-success" data-form-success hidden role="alert">
       Richiesta inviata con successo! Ti contatteremo a breve.
     </div>
@@ -25,37 +20,37 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 
     <form class="row g-3 needs-validation" data-social-library-form novalidate>
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryNome">Nome *</label>
+        <label class="form-label" for="socialLibraryNome">Nome*</label>
         <input class="form-control" id="socialLibraryNome" name="nome" type="text" autocomplete="given-name" required />
         <div class="invalid-feedback">Inserisci il nome.</div>
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryCognome">Cognome *</label>
+        <label class="form-label" for="socialLibraryCognome">Cognome*</label>
         <input class="form-control" id="socialLibraryCognome" name="cognome" type="text" autocomplete="family-name" required />
         <div class="invalid-feedback">Inserisci il cognome.</div>
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryEmail">Email *</label>
+        <label class="form-label" for="socialLibraryEmail">Email*</label>
         <input class="form-control" id="socialLibraryEmail" name="email" type="email" autocomplete="email" inputmode="email" required />
         <div class="invalid-feedback">Inserisci un indirizzo email valido.</div>
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryTelefono">Telefono *</label>
+        <label class="form-label" for="socialLibraryTelefono">Telefono*</label>
         <input class="form-control" id="socialLibraryTelefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
         <div class="invalid-feedback">Inserisci il numero di telefono.</div>
       </div>
 
-      <div class="col-12">
-        <label class="form-label" for="socialLibraryLinkCatalogo">Vuoi ricevere il link con il catalogo? *</label>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryLinkCatalogo">Vuoi ricevere il link con il catalogo?*</label>
         <input class="form-control" id="socialLibraryLinkCatalogo" name="linkCatalogo" type="url" inputmode="url" placeholder="https://" required />
         <div class="invalid-feedback">Inserisci un URL valido del catalogo o del riferimento.</div>
       </div>
 
-      <div class="col-12">
-        <label class="form-label" for="socialLibraryDataRitiro">Scrivici il giorno in cui preferiresti ritirare i libri *</label>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="socialLibraryDataRitiro">Scrivici il giorno in cui preferiresti ritirare i libri*</label>
         <input
           class="form-control"
           id="socialLibraryDataRitiro"
@@ -68,7 +63,7 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
       </div>
 
       <div class="col-12">
-        <label class="form-label" for="socialLibraryMessaggio">Messaggio *</label>
+        <label class="form-label" for="socialLibraryMessaggio">Messaggio*</label>
         <textarea class="form-control" id="socialLibraryMessaggio" name="messaggio" rows="5" required></textarea>
         <div class="invalid-feedback">Inserisci un messaggio.</div>
       </div>
@@ -241,43 +236,73 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 
 <style>
   .social-library-form-card {
-    padding: clamp(1.5rem, 3vw, 3rem);
-    border-radius: 2rem;
+    padding: clamp(1.25rem, 2.4vw, 2rem);
+    border-radius: 1.5rem;
     background: #fff;
     box-shadow:
-      0 1.25rem 3rem rgba(15, 23, 42, 0.08),
+      0 1rem 2.5rem rgba(15, 23, 42, 0.08),
       inset 0 0 0 1px rgba(15, 23, 42, 0.06);
-  }
-
-  .social-library-form-intro {
-    margin-bottom: 1.75rem;
-  }
-
-  .social-library-form-kicker {
-    margin-bottom: 0.75rem;
-    color: var(--bs-primary);
-    font-size: 0.84rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .social-library-form-title {
-    margin-bottom: 0.9rem;
-    font-size: clamp(1.7rem, 1.3rem + 1vw, 2.35rem);
-    line-height: 1.08;
-    text-transform: none;
-    letter-spacing: -0.02em;
-  }
-
-  .social-library-form-lead {
-    max-width: 60ch;
-    color: rgba(33, 38, 46, 0.8);
   }
 
   .social-library-form-alert {
     margin-bottom: 1rem;
     border-radius: 1rem;
+  }
+
+  [data-social-library-form] {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 0.9rem;
+  }
+
+  [data-social-library-form] .form-label,
+  [data-social-library-form] .form-check-label {
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+
+  [data-social-library-form] .form-label {
+    margin-bottom: 0.35rem;
+    font-weight: 700;
+  }
+
+  [data-social-library-form] .form-control {
+    min-height: 3rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+  }
+
+  [data-social-library-form] textarea.form-control {
+    min-height: 8rem;
+  }
+
+  [data-social-library-form] .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0;
+    padding: 0.2rem 0;
+    padding-left: 0;
+  }
+
+  [data-social-library-form] .form-check-input {
+    float: none;
+    margin-top: 0.22rem;
+    margin-left: 0;
+    flex: 0 0 auto;
+  }
+
+  [data-social-library-form] .form-check-label {
+    margin-bottom: 0;
+  }
+
+  [data-social-library-form] .invalid-feedback {
+    margin-top: 0.25rem;
+    font-size: 0.86rem;
+  }
+
+  .social-library-submit {
+    min-width: 14rem;
   }
 
   .social-library-submit[disabled] {
@@ -287,76 +312,64 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 
   @media (min-width: 1200px) {
     .social-library-form-card {
-      padding: 1.1rem 1.2rem 1.2rem;
-    }
-
-    .social-library-form-intro {
-      margin-bottom: 0.8rem;
-    }
-
-    .social-library-form-kicker {
-      margin-bottom: 0.3rem;
-      font-size: 0.82rem;
-    }
-
-    .social-library-form-title {
-      margin-bottom: 0.4rem;
-      font-size: 2.07rem;
-      line-height: 0.96;
-    }
-
-    .social-library-form-lead {
-      font-size: 1.03rem;
-      line-height: 1.3;
+      padding: 1.35rem 1.45rem 1.45rem;
     }
 
     [data-social-library-form] {
-      --bs-gutter-x: 0.7rem;
-      --bs-gutter-y: 0.55rem;
+      --bs-gutter-x: 0.85rem;
+      --bs-gutter-y: 0.75rem;
     }
 
     [data-social-library-form] .form-label,
     [data-social-library-form] .form-check-label {
-      font-size: 1rem;
-      line-height: 1.26;
+      font-size: 0.95rem;
+      line-height: 1.35;
     }
 
     [data-social-library-form] .form-label {
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.3rem;
     }
 
     [data-social-library-form] .form-control {
-      min-height: 2.2rem;
-      padding: 0.38rem 0.65rem;
-      font-size: 1.04rem;
-      line-height: 1.24;
+      min-height: 2.9rem;
+      padding: 0.62rem 0.8rem;
+      font-size: 0.98rem;
+      line-height: 1.3;
     }
 
     [data-social-library-form] textarea.form-control {
-      min-height: 4.8rem;
+      min-height: 7rem;
     }
 
     [data-social-library-form] .form-check {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.42rem;
-      margin-bottom: 0;
+      gap: 0.55rem;
+      padding: 0.2rem 0;
     }
 
     [data-social-library-form] .form-check-input {
-      margin-top: 0.12rem;
-      flex: 0 0 auto;
+      margin-top: 0.14rem;
     }
 
     [data-social-library-form] .invalid-feedback {
       font-size: 0.86rem;
-      margin-top: 0.15rem;
+      margin-top: 0.2rem;
     }
 
     .social-library-submit {
-      font-size: 1.04rem;
-      padding-top: 0.58rem;
-      padding-bottom: 0.58rem;
+      font-size: 1rem;
+      padding-top: 0.62rem;
+      padding-bottom: 0.62rem;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .social-library-form-card {
+      padding: 1rem;
+      border-radius: 1.25rem;
+    }
+
+    .social-library-submit {
+      width: 100%;
     }
   }
 </style>

@@ -57,8 +57,8 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
 
     <section class="social-library-main">
       <div class="container">
-        <div class="row g-4 g-xl-5 social-library-layout">
-          <div class="col-12 col-xl-6">
+        <div class="row justify-content-center">
+          <div class="col-12 col-xl-10">
             {hasEditorialContent && (
               <section class="social-library-editorial" aria-labelledby="socialLibraryEditorialTitle">
                 <p class="social-library-section-kicker">Contenuto editoriale</p>
@@ -77,9 +77,11 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
               </section>
             )}
           </div>
+        </div>
 
-          <div class="col-12 col-xl-6 social-library-form-column">
-            <div class="social-library-form-sticky sticky-xl-top">
+        <div class="row justify-content-center social-library-form-row">
+          <div class="col-12 col-xl-10">
+            <div class="social-library-form-wrap">
               <SocialLibraryForm lang={lang} />
             </div>
           </div>
@@ -88,26 +90,6 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
     </section>
   </main>
 </Layout>
-
-<script>
-  /**
-   * Calcola l'offset top per il form sticky in base all'altezza dell'header.
-   * Usa una CSS custom property così il valore si aggiorna al resize
-   * e position: sticky (via Bootstrap sticky-xl-top) fa tutto il resto.
-   */
-  const STICKY_GAP = 16;
-
-  function updateStickyOffset() {
-    const header = document.querySelector(".top-header");
-    if (!(header instanceof HTMLElement)) return;
-    const offset = header.getBoundingClientRect().height + STICKY_GAP;
-    document.documentElement.style.setProperty("--sl-sticky-top", `${offset}px`);
-  }
-
-  updateStickyOffset();
-  window.addEventListener("resize", updateStickyOffset);
-  window.addEventListener("load", updateStickyOffset);
-</script>
 
 <style>
   .social-library-main {
@@ -160,8 +142,8 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
     margin-top: 1.5rem;
   }
 
-  .social-library-form-sticky.sticky-xl-top {
-    top: var(--sl-sticky-top, 5rem);
+  .social-library-form-row {
+    margin-top: clamp(2.25rem, 5vw, 3.5rem);
   }
 
   @media (max-width: 1199.98px) {
