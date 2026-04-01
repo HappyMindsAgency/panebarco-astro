@@ -57,7 +57,7 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
 
     <section class="social-library-main">
       <div class="container">
-        <div class="row g-4 g-xl-5 align-items-start">
+        <div class="row g-4 g-xl-5 align-items-start social-library-layout" data-social-library-layout>
           <div class="col-12 col-xl-6">
             {hasEditorialContent && (
               <section class="social-library-editorial" aria-labelledby="socialLibraryEditorialTitle">
@@ -78,8 +78,10 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
             )}
           </div>
 
-          <div class="col-12 col-xl-6">
-            <SocialLibraryForm lang={lang} />
+          <div class="col-12 col-xl-6 social-library-form-column" data-social-library-form-column>
+            <div class="social-library-form-sticky" data-social-library-form-sticky>
+              <SocialLibraryForm lang={lang} />
+            </div>
           </div>
         </div>
       </div>
@@ -87,13 +89,87 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
   </main>
 </Layout>
 
-<style>
-  .social-library-page {
-    background:
-      radial-gradient(circle at top left, rgba(0, 159, 227, 0.1), transparent 32%),
-      linear-gradient(180deg, #f7fbff 0%, #ffffff 32%, #f5f7fb 100%);
-  }
+<script>
+  const desktopMq = window.matchMedia("(min-width: 1200px)");
+  const stickyGap = 16;
+  const header = document.querySelector(".top-header");
+  const layout = document.querySelector("[data-social-library-layout]");
+  const formColumn = document.querySelector("[data-social-library-form-column]");
+  const formSticky = document.querySelector("[data-social-library-form-sticky]");
 
+  if (
+    header instanceof HTMLElement &&
+    layout instanceof HTMLElement &&
+    formColumn instanceof HTMLElement &&
+    formSticky instanceof HTMLElement
+  ) {
+    let ticking = false;
+
+    const clearStickyState = () => {
+      layout.style.position = "";
+      formColumn.style.minHeight = "";
+      formSticky.style.position = "";
+      formSticky.style.top = "";
+      formSticky.style.left = "";
+      formSticky.style.width = "";
+    };
+
+    const syncStickyState = () => {
+      ticking = false;
+
+      if (!desktopMq.matches) {
+        clearStickyState();
+        return;
+      }
+
+      const headerHeight = header.getBoundingClientRect().height;
+      const topOffset = headerHeight + stickyGap;
+      const stickyHeight = formSticky.offsetHeight;
+      const layoutRect = layout.getBoundingClientRect();
+      const columnRect = formColumn.getBoundingClientRect();
+      const layoutTop = layoutRect.top + window.scrollY;
+      const layoutBottom = layoutTop + layout.offsetHeight;
+      const startSticky = layoutTop - topOffset;
+      const stopSticky = layoutBottom - topOffset - stickyHeight;
+
+      layout.style.position = "relative";
+
+      if (window.scrollY <= startSticky) {
+        clearStickyState();
+        return;
+      }
+
+      formColumn.style.minHeight = `${stickyHeight}px`;
+
+      if (window.scrollY >= stopSticky) {
+        formSticky.style.position = "absolute";
+        formSticky.style.top = `${Math.max(layout.offsetHeight - stickyHeight, 0)}px`;
+        formSticky.style.left = `${formColumn.offsetLeft}px`;
+        formSticky.style.width = `${formColumn.offsetWidth}px`;
+        return;
+      }
+
+      formSticky.style.position = "fixed";
+      formSticky.style.top = `${topOffset}px`;
+      formSticky.style.left = `${columnRect.left}px`;
+      formSticky.style.width = `${columnRect.width}px`;
+    };
+
+    const requestStickySync = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(syncStickyState);
+    };
+
+    window.addEventListener("scroll", requestStickySync, { passive: true });
+    window.addEventListener("resize", requestStickySync);
+    desktopMq.addEventListener("change", requestStickySync);
+    window.addEventListener("load", requestStickySync);
+    requestStickySync();
+  }
+</script>
+
+<style>
   .social-library-main {
     padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(4rem, 7vw, 6.5rem);
   }
@@ -142,6 +218,10 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
   .social-library-editorial__content :global(h3),
   .social-library-editorial__content :global(h4) {
     margin-top: 1.5rem;
+  }
+
+  .social-library-form-column {
+    align-self: flex-start;
   }
 
   @media (max-width: 1199.98px) {

@@ -28,43 +28,50 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 
     <form class="row g-3 needs-validation" data-social-library-form novalidate>
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryNome">Nome</label>
+        <label class="form-label" for="socialLibraryNome">Nome *</label>
         <input class="form-control" id="socialLibraryNome" name="nome" type="text" autocomplete="given-name" required />
         <div class="invalid-feedback">Inserisci il nome.</div>
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryCognome">Cognome</label>
+        <label class="form-label" for="socialLibraryCognome">Cognome *</label>
         <input class="form-control" id="socialLibraryCognome" name="cognome" type="text" autocomplete="family-name" required />
         <div class="invalid-feedback">Inserisci il cognome.</div>
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryEmail">Email</label>
+        <label class="form-label" for="socialLibraryEmail">Email *</label>
         <input class="form-control" id="socialLibraryEmail" name="email" type="email" autocomplete="email" inputmode="email" required />
         <div class="invalid-feedback">Inserisci un indirizzo email valido.</div>
       </div>
 
       <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryTelefono">Telefono</label>
+        <label class="form-label" for="socialLibraryTelefono">Telefono *</label>
         <input class="form-control" id="socialLibraryTelefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
         <div class="invalid-feedback">Inserisci il numero di telefono.</div>
       </div>
 
       <div class="col-12">
-        <label class="form-label" for="socialLibraryLinkCatalogo">Vuoi ricevere il link con il catalogo?</label>
+        <label class="form-label" for="socialLibraryLinkCatalogo">Vuoi ricevere il link con il catalogo? *</label>
         <input class="form-control" id="socialLibraryLinkCatalogo" name="linkCatalogo" type="url" inputmode="url" placeholder="https://" required />
         <div class="invalid-feedback">Inserisci un URL valido del catalogo o del riferimento.</div>
       </div>
 
-      <div class="col-12 col-md-6">
-        <label class="form-label" for="socialLibraryDataRitiro">Data ritiro</label>
-        <input class="form-control" id="socialLibraryDataRitiro" name="dataRitiro" type="date" required />
-        <div class="invalid-feedback">Seleziona la data di ritiro.</div>
+      <div class="col-12">
+        <label class="form-label" for="socialLibraryDataRitiro">Scrivici il giorno in cui preferiresti ritirare i libri *</label>
+        <input
+          class="form-control"
+          id="socialLibraryDataRitiro"
+          name="dataRitiro"
+          type="text"
+          autocomplete="off"
+          required
+        />
+        <div class="invalid-feedback">Inserisci il giorno preferito per il ritiro.</div>
       </div>
 
       <div class="col-12">
-        <label class="form-label" for="socialLibraryMessaggio">Messaggio</label>
+        <label class="form-label" for="socialLibraryMessaggio">Messaggio *</label>
         <textarea class="form-control" id="socialLibraryMessaggio" name="messaggio" rows="5" required></textarea>
         <div class="invalid-feedback">Inserisci un messaggio.</div>
       </div>
@@ -74,7 +81,7 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
           <input class="form-check-input" id="socialLibraryNewsletter" name="newsletter" type="checkbox" />
           <label class="form-check-label" for="socialLibraryNewsletter">
             Si, voglio iscrivermi alla newsletter e rimanere aggiornato sui progetti di Panebarco -
-            <a href={newsletterPrivacyHref}>Informativa*</a>
+            <a href={newsletterPrivacyHref}>Informativa</a>
           </label>
         </div>
       </div>
@@ -83,8 +90,8 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
         <div class="form-check">
           <input class="form-check-input" id="socialLibraryPrivacy" name="privacy" type="checkbox" required />
           <label class="form-check-label" for="socialLibraryPrivacy">
-            Acconsento al trattamento dei dati personali cosi come definito all'interno delle Privacy Policy -
-            <a href={privacyHref}>Link all'informativa*</a>
+            Acconsento al trattamento dei dati personali cosi come definito all'interno delle
+            <a href={privacyHref}>Privacy Policy*</a>
           </label>
           <div class="invalid-feedback">Devi accettare l'informativa privacy.</div>
         </div>
@@ -185,7 +192,7 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
       telefono: state.telefono,
       messaggio: state.messaggio,
       linkCatalogo: state.linkCatalogo,
-      dataRitiro: new Date(state.dataRitiro).toISOString(),
+      dataRitiro: state.dataRitiro,
       newsletter: state.newsletter,
       privacy: state.privacy,
       source: "social-library",
@@ -239,9 +246,7 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
   .social-library-form-card {
     padding: clamp(1.5rem, 3vw, 3rem);
     border-radius: 2rem;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(246, 250, 255, 0.98)),
-      #fff;
+    background: #fff;
     box-shadow:
       0 1.25rem 3rem rgba(15, 23, 42, 0.08),
       inset 0 0 0 1px rgba(15, 23, 42, 0.06);
