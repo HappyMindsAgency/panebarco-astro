@@ -61,7 +61,6 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
           <div class="col-12 col-xl-10">
             {hasEditorialContent && (
               <section class="social-library-editorial" aria-labelledby="socialLibraryEditorialTitle">
-                <p class="social-library-section-kicker">Contenuto editoriale</p>
                 {pageContent.name && (
                   <h2 id="socialLibraryEditorialTitle" class="page-title-uniform">
                     {pageContent.name}
@@ -103,15 +102,6 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
 
   .social-library-editorial {
     padding: clamp(1.5rem, 2vw, 2rem) 0;
-  }
-
-  .social-library-section-kicker {
-    margin-bottom: 0.85rem;
-    color: var(--bs-primary);
-    font-size: 0.84rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
   }
 
   .social-library-editorial__content {

@@ -12,6 +12,8 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 
 <section class="social-library-form-section" aria-label="Modulo richiesta Social Library">
   <div class="social-library-form-card">
+    <h2 class="social-library-form-title">Chiedici un libro dalla Social Library</h2>
+
     <div class="social-library-form-alert alert alert-success" data-form-success hidden role="alert">
       Richiesta inviata con successo! Ti contatteremo a breve.
     </div>
@@ -249,6 +251,16 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
     border-radius: 1rem;
   }
 
+  .social-library-form-title {
+    margin-bottom: 1.1rem;
+    font-size: clamp(1.85rem, 1.45rem + 1.1vw, 2.75rem);
+    line-height: 0.96;
+    font-weight: 900;
+    color: #21262e;
+    text-transform: none;
+    letter-spacing: -0.035em;
+  }
+
   [data-social-library-form] {
     --bs-gutter-x: 1rem;
     --bs-gutter-y: 0.9rem;
@@ -315,6 +327,11 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
       padding: 1.35rem 1.45rem 1.45rem;
     }
 
+    .social-library-form-title {
+      margin-bottom: 0.95rem;
+      font-size: 2.25rem;
+    }
+
     [data-social-library-form] {
       --bs-gutter-x: 0.85rem;
       --bs-gutter-y: 0.75rem;
@@ -366,6 +383,11 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
     .social-library-form-card {
       padding: 1rem;
       border-radius: 1.25rem;
+    }
+
+    .social-library-form-title {
+      margin-bottom: 0.9rem;
+      font-size: 1.7rem;
     }
 
     .social-library-submit {
