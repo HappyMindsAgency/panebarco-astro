@@ -57,7 +57,7 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
 
     <section class="social-library-main">
       <div class="container">
-        <div class="row g-4 g-xl-5 align-items-start social-library-layout" data-social-library-layout>
+        <div class="row g-4 g-xl-5 social-library-layout">
           <div class="col-12 col-xl-6">
             {hasEditorialContent && (
               <section class="social-library-editorial" aria-labelledby="socialLibraryEditorialTitle">
@@ -78,8 +78,8 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
             )}
           </div>
 
-          <div class="col-12 col-xl-6 social-library-form-column" data-social-library-form-column>
-            <div class="social-library-form-sticky" data-social-library-form-sticky>
+          <div class="col-12 col-xl-6 social-library-form-column">
+            <div class="social-library-form-sticky sticky-xl-top">
               <SocialLibraryForm lang={lang} />
             </div>
           </div>
@@ -90,83 +90,23 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
 </Layout>
 
 <script>
-  const desktopMq = window.matchMedia("(min-width: 1200px)");
-  const stickyGap = 16;
-  const header = document.querySelector(".top-header");
-  const layout = document.querySelector("[data-social-library-layout]");
-  const formColumn = document.querySelector("[data-social-library-form-column]");
-  const formSticky = document.querySelector("[data-social-library-form-sticky]");
+  /**
+   * Calcola l'offset top per il form sticky in base all'altezza dell'header.
+   * Usa una CSS custom property così il valore si aggiorna al resize
+   * e position: sticky (via Bootstrap sticky-xl-top) fa tutto il resto.
+   */
+  const STICKY_GAP = 16;
 
-  if (
-    header instanceof HTMLElement &&
-    layout instanceof HTMLElement &&
-    formColumn instanceof HTMLElement &&
-    formSticky instanceof HTMLElement
-  ) {
-    let ticking = false;
-
-    const clearStickyState = () => {
-      layout.style.position = "";
-      formColumn.style.minHeight = "";
-      formSticky.style.position = "";
-      formSticky.style.top = "";
-      formSticky.style.left = "";
-      formSticky.style.width = "";
-    };
-
-    const syncStickyState = () => {
-      ticking = false;
-
-      if (!desktopMq.matches) {
-        clearStickyState();
-        return;
-      }
-
-      const headerHeight = header.getBoundingClientRect().height;
-      const topOffset = headerHeight + stickyGap;
-      const stickyHeight = formSticky.offsetHeight;
-      const layoutRect = layout.getBoundingClientRect();
-      const columnRect = formColumn.getBoundingClientRect();
-      const layoutTop = layoutRect.top + window.scrollY;
-      const layoutBottom = layoutTop + layout.offsetHeight;
-      const startSticky = layoutTop - topOffset;
-      const stopSticky = layoutBottom - topOffset - stickyHeight;
-
-      layout.style.position = "relative";
-
-      if (window.scrollY <= startSticky) {
-        clearStickyState();
-        return;
-      }
-
-      formColumn.style.minHeight = `${stickyHeight}px`;
-
-      if (window.scrollY >= stopSticky) {
-        formSticky.style.position = "absolute";
-        formSticky.style.top = `${Math.max(layout.offsetHeight - stickyHeight, 0)}px`;
-        formSticky.style.left = `${formColumn.offsetLeft}px`;
-        formSticky.style.width = `${formColumn.offsetWidth}px`;
-        return;
-      }
-
-      formSticky.style.position = "fixed";
-      formSticky.style.top = `${topOffset}px`;
-      formSticky.style.left = `${columnRect.left}px`;
-      formSticky.style.width = `${columnRect.width}px`;
-    };
-
-    const requestStickySync = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(syncStickyState);
-    };
-
-    window.addEventListener("scroll", requestStickySync, { passive: true });
-    window.addEventListener("resize", requestStickySync);
-    desktopMq.addEventListener("change", requestStickySync);
-    window.addEventListener("load", requestStickySync);
-    requestStickySync();
+  function updateStickyOffset() {
+    const header = document.querySelector(".top-header");
+    if (!(header instanceof HTMLElement)) return;
+    const offset = header.getBoundingClientRect().height + STICKY_GAP;
+    document.documentElement.style.setProperty("--sl-sticky-top", `${offset}px`);
   }
+
+  updateStickyOffset();
+  window.addEventListener("resize", updateStickyOffset);
+  window.addEventListener("load", updateStickyOffset);
 </script>
 
 <style>
@@ -220,8 +160,8 @@ const hasEditorialContent = Boolean(pageContent.name || pageContent.content);
     margin-top: 1.5rem;
   }
 
-  .social-library-form-column {
-    align-self: flex-start;
+  .social-library-form-sticky.sticky-xl-top {
+    top: var(--sl-sticky-top, 5rem);
   }
 
   @media (max-width: 1199.98px) {
