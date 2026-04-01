@@ -192,6 +192,15 @@ const commercialContent = await getServiceDetailContent({
   fallback,
 });
 
+const commercialModes = commercialContent.modes.map((mode) =>
+  mode.title?.toLowerCase() === "promuovere"
+    ? {
+        ...mode,
+        bubble: "/images/commercials-balloon-promuovere-pubblicità-per-televisione-e-cinema-panebarco.svg",
+      }
+    : mode
+);
+
 ---
 
 <Layout
@@ -225,7 +234,7 @@ const commercialContent = await getServiceDetailContent({
       </div>
     </section>
 
-    <ServiceModesSection modes={commercialContent.modes} defaultTag="Commercial" />
+    <ServiceModesSection modes={commercialModes} defaultTag="Commercial" />
 
     <section class="section-space section-space--tight mt-4 mt-md-5 mt-lg-5 pt-2 pt-md-3 pt-lg-4">
       <div class="container">
