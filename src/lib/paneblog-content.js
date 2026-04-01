@@ -82,7 +82,7 @@ function mapHeader(header, fallback = {}) {
     bgWord: pickFirst(header?.titoloTana, fallback.bgWord),
     title: pickFirst(header?.titolo, fallback.title),
     subtitle: pickFirst(header?.sottotitolo, fallback.subtitle),
-    backgroundVideoSrc: resolveMediaUrl(header?.mediaBackground, "large", fallback.backgroundVideoSrc),
+    backgroundVideoSrc: getStrapiMediaUrl(header?.mediaBackground?.url) || fallback.backgroundVideoSrc,
     sideImageSrc: resolveMediaUrl(header?.imgTeam, "large", fallback.sideImageSrc),
     sideImageAlt: pickFirst(header?.imgTeam?.alternativeText, fallback.sideImageAlt),
     showSideImage: Boolean(header?.imgTeamBool && resolveMediaUrl(header?.imgTeam)),

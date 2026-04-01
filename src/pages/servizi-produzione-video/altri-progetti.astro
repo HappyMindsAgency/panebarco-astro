@@ -133,7 +133,7 @@ const pageResponse = await getSingleDocument("pagina-tanto-altro", servicePageQu
 const page = pageResponse?.data || {};
 
 const header = {
-  backgroundVideoSrc: getMediaSrc(page.header?.mediaBackground, "/images/panebarco-commercial-video.mp4"),
+  backgroundVideoSrc: getStrapiMediaUrl(page.header?.mediaBackground?.url) || "/images/panebarco-commercial-video.mp4",
   bgWord: stripHtml(page.header?.titoloTana || ""),
   title: stripHtml(page.header?.titolo || ""),
   subtitle: stripHtml(page.header?.sottotitolo || ""),
