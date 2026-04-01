@@ -1,5 +1,6 @@
 ---
 import HeroStyStudio from "../components/HeroStyStudio.astro";
+import { buildPath } from "../i18n/routing";
 import Layout from "../layouts/Layout.astro";
 
 const lang = "it" as const;
@@ -10,12 +11,12 @@ const lang = "it" as const;
   description="Conferma di iscrizione alla newsletter di Panebarco."
   lang={lang}
   useInnerStyles={true}
-  headerProps={{ darkmode: false, containerClass: "hero-fluid" }}
+  headerProps={{ darkmode: true, containerClass: "hero-fluid" }}
 >
   <main class="studio-page services-page newsletter-page">
     <HeroStyStudio
-      backgroundVideoSrc="/images/testata-newsletter-panebarco.jpg"
-      bgWord="ISCRIVITI"
+      backgroundVideoSrc="/images/testata-newsletter-panebarco-versione-scura.jpg"
+      bgWord="ISCRIVITI ALLA"
       title="NEWSLETTER"
       subtitle="Resta aggiornato su progetti, novita e cose che ci frullano in testa."
       sideImageSrc=""
@@ -26,6 +27,14 @@ const lang = "it" as const;
 
     <section class="page-main page-main--studio newsletter-main">
       <div class="container">
+        <div class="newsletter-intro text-center">
+          <p class="newsletter-intro-text">
+            Per raccontare cosa stiamo facendo, cosa abbiamo scoperto e cosa ci passa per la testa tra un progetto e l'altro, ti raggiungiamo direttamente nella tua inbox.
+          </p>
+          <p class="newsletter-intro-text newsletter-intro-text--lead">
+            Vuoi entrare nel mondo Panebarco? Iscriviti alla nostra Newsletter.
+          </p>
+        </div>
 
         <div id="mc_embed_shell" class="newsletter-mailchimp">
           <div id="mc_embed_signup" class="newsletter-mailchimp-card">
@@ -68,7 +77,7 @@ const lang = "it" as const;
                         value="Acconsento al trattamento dei dati personali così come definito all'interno delle Privacy Policy"
                       />
                       <label for="mce-MMERGE100">
-                        Acconsento al trattamento dei dati personali così come definito all'interno delle Privacy Policy
+                        Acconsento al trattamento dei dati personali così come definito all'interno delle <a href={buildPath("privacyPolicyNewsletter", lang)}>Privacy Policy</a>
                       </label>
                     </li>
                   </ul>
@@ -153,13 +162,23 @@ const lang = "it" as const;
     padding-top: clamp(5.8rem, 10vw, 8rem);
   }
 
+  .newsletter-page .newsletter-intro {
+    max-width: 60rem;
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+  }
+
   .newsletter-page .newsletter-intro-text {
-    max-width: none;
-    width: 100%;
-    margin: 0 0 clamp(1.2rem, 2vw, 1.6rem);
+    margin: 0 0 clamp(1rem, 1.8vw, 1.4rem);
     font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem);
     line-height: 1.6;
-    color: rgba(15, 23, 42, 0.78);
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  .newsletter-page .newsletter-intro-text--lead {
+    margin-bottom: 0;
+    font-weight: 800;
+    color: var(--ink);
   }
 
   .newsletter-page .newsletter-mailchimp-card {
