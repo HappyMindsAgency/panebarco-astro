@@ -291,12 +291,14 @@ function renderInlineRichText(value?: string) {
                       <div class="contacts-consent">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="briefNewsletter" name="newsletter" value="yes" />
-                          <label class="form-check-label" for="briefNewsletter">Vuoi ricevere aggiornamenti sui nostri progetti?</label>
+                          <label class="form-check-label" for="briefNewsletter">
+                            Si, voglio iscrivermi alla newsletter e rimanere aggiornato sui progetti di Panebarco - <a href={buildPath("privacyPolicyNewsletter", lang)}> Informativa*</a>
+                          </label>
                         </div>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="briefPrivacy" name="privacy" value="accepted" required aria-required="true" />
                           <label class="form-check-label" for="briefPrivacy">
-                            Acconsento al trattamento dei dati personali e all'iscrizione alla newsletter così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                            Acconsento al trattamento dei dati personali così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a> <span class="contacts-required-mark" aria-hidden="true">*</span>
                           </label>
                         </div>
                         <p class="contacts-field-error" id="briefPrivacy-error" role="alert" hidden></p>
@@ -445,12 +447,14 @@ function renderInlineRichText(value?: string) {
                       <div class="contacts-consent">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="talentNewsletter" name="newsletter" value="yes" />
-                          <label class="form-check-label" for="talentNewsletter">Vuoi rimanere aggiornato sui nostri progetti?</label>
+                          <label class="form-check-label" for="talentNewsletter">
+                            Si, voglio iscrivermi alla newsletter e rimanere aggiornato sui progetti di Panebarco - <a href={buildPath("privacyPolicyNewsletter", lang)}>Informativa</a>
+                          </label>
                         </div>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="talentPrivacy" name="privacy" value="accepted" required aria-required="true" />
                           <label class="form-check-label" for="talentPrivacy">
-                            Acconsento al trattamento dei dati personali e all'iscrizione alla newsletter così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a>. <span class="contacts-required-mark" aria-hidden="true">*</span>
+                            Acconsento al trattamento dei dati personali così come definito all'interno delle <a href={buildPath("privacyPolicy", lang)}>Privacy Policy</a> <span class="contacts-required-mark" aria-hidden="true">*</span>
                           </label>
                         </div>
                         <p class="contacts-field-error" id="talentPrivacy-error" role="alert" hidden></p>

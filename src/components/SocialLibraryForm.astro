@@ -7,6 +7,7 @@ interface Props {
 
 const { lang = "it" } = Astro.props;
 const privacyHref = buildPath("privacyPolicyPsl", lang);
+const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
 ---
 
 <section class="social-library-form-section" aria-labelledby="socialLibraryFormTitle">
@@ -51,7 +52,7 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
       </div>
 
       <div class="col-12">
-        <label class="form-label" for="socialLibraryLinkCatalogo">Link catalogo</label>
+        <label class="form-label" for="socialLibraryLinkCatalogo">Vuoi ricevere il link con il catalogo?</label>
         <input class="form-control" id="socialLibraryLinkCatalogo" name="linkCatalogo" type="url" inputmode="url" placeholder="https://" required />
         <div class="invalid-feedback">Inserisci un URL valido del catalogo o del riferimento.</div>
       </div>
@@ -72,7 +73,8 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
         <div class="form-check">
           <input class="form-check-input" id="socialLibraryNewsletter" name="newsletter" type="checkbox" />
           <label class="form-check-label" for="socialLibraryNewsletter">
-            Voglio ricevere aggiornamenti sulla Social Library.
+            Si, voglio iscrivermi alla newsletter e rimanere aggiornato sui progetti di Panebarco -
+            <a href={newsletterPrivacyHref}>Informativa*</a>
           </label>
         </div>
       </div>
@@ -81,7 +83,8 @@ const privacyHref = buildPath("privacyPolicyPsl", lang);
         <div class="form-check">
           <input class="form-check-input" id="socialLibraryPrivacy" name="privacy" type="checkbox" required />
           <label class="form-check-label" for="socialLibraryPrivacy">
-            Ho letto e accetto l'<a href={privacyHref}>informativa privacy</a>.
+            Acconsento al trattamento dei dati personali cosi come definito all'interno delle Privacy Policy -
+            <a href={privacyHref}>Link all'informativa*</a>
           </label>
           <div class="invalid-feedback">Devi accettare l'informativa privacy.</div>
         </div>
