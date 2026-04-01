@@ -287,4 +287,79 @@ const newsletterPrivacyHref = buildPath("privacyPolicyNewsletter", lang);
     opacity: 0.8;
     cursor: progress;
   }
+
+  @media (min-width: 1200px) {
+    .social-library-form-card {
+      padding: 1.1rem 1.2rem 1.2rem;
+    }
+
+    .social-library-form-intro {
+      margin-bottom: 0.8rem;
+    }
+
+    .social-library-form-kicker {
+      margin-bottom: 0.3rem;
+      font-size: 0.82rem;
+    }
+
+    .social-library-form-title {
+      margin-bottom: 0.4rem;
+      font-size: 2.07rem;
+      line-height: 0.96;
+    }
+
+    .social-library-form-lead {
+      font-size: 1.03rem;
+      line-height: 1.3;
+    }
+
+    [data-social-library-form] {
+      --bs-gutter-x: 0.7rem;
+      --bs-gutter-y: 0.55rem;
+    }
+
+    [data-social-library-form] .form-label,
+    [data-social-library-form] .form-check-label {
+      font-size: 1rem;
+      line-height: 1.26;
+    }
+
+    [data-social-library-form] .form-label {
+      margin-bottom: 0.2rem;
+    }
+
+    [data-social-library-form] .form-control {
+      min-height: 2.2rem;
+      padding: 0.38rem 0.65rem;
+      font-size: 1.04rem;
+      line-height: 1.24;
+    }
+
+    [data-social-library-form] textarea.form-control {
+      min-height: 4.8rem;
+    }
+
+    [data-social-library-form] .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.42rem;
+      margin-bottom: 0;
+    }
+
+    [data-social-library-form] .form-check-input {
+      margin-top: 0.12rem;
+      flex: 0 0 auto;
+    }
+
+    [data-social-library-form] .invalid-feedback {
+      font-size: 0.86rem;
+      margin-top: 0.15rem;
+    }
+
+    .social-library-submit {
+      font-size: 1.04rem;
+      padding-top: 0.58rem;
+      padding-bottom: 0.58rem;
+    }
+  }
 </style>
