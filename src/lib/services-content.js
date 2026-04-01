@@ -363,7 +363,8 @@ export async function getServiceDetailContent({ resource, lang = DEFAULT_LANG, f
   };
 }
 
-export async function getServicesOriginalSlides({ lang = DEFAULT_LANG, limit = 3, fallback = [] }) {
+/** @param {{ lang?: string, limit?: number, fallback?: Array<{ title: string, subtitle: string, image: string, slug: string }> }} options */
+export async function getServicesOriginalSlides({ lang = DEFAULT_LANG, limit = 10, fallback = [] }) {
   const response = await getCollectionDocuments("originals", {
     locale: lang,
     status: "published",

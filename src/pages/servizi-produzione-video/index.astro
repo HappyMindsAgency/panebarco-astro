@@ -102,6 +102,12 @@ const originalSlidesFallback = [
     image: "/images/originals-cover-03-270x395.jpg",
     slug: "nostoppingnora",
   },
+  {
+    title: "",
+    subtitle: "",
+    image: "/images/originals-cover-03-270x395.jpg",
+    slug: "nostoppingnora",
+  },
 ];
 
 const servicesOriginalSlides = await getServicesOriginalSlides({
@@ -116,8 +122,8 @@ const repeatedClientNames = Array.from({ length: 3 }, (_, groupIndex) =>
   }))
 ).flat();
 
-const portfolioOriginalSlides = originalSlidesFallback.map((fallbackSlide, index) => {
-  const slide = servicesOriginalSlides[index] || fallbackSlide;
+const portfolioOriginalSlides = servicesOriginalSlides.map((slide, index) => {
+  const fallbackSlide = originalSlidesFallback[index] || originalSlidesFallback[0];
 
   return {
     title: slide.title,

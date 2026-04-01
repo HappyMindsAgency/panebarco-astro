@@ -178,12 +178,12 @@ export async function getPaneblogPreviewArticles({ lang = DEFAULT_LANG, limit = 
   const response = await getCollectionDocuments("articoli", {
     locale: lang,
     status: "published",
-    sort: ["publishedAt:desc", "updatedAt:desc"],
+    sort: ["publishedAt:asc", "updatedAt:asc"],
     pagination: {
       page: 1,
       pageSize: limit,
     },
-    fields: ["documentId", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
+    fields: ["documentId", "dataPubblicazione", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
     populate: {
       cover: true,
       categorie_articolo: {
