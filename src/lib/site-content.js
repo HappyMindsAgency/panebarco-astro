@@ -513,7 +513,7 @@ export async function getStudioPageContent({ lang = DEFAULT_LANG, fallback }) {
           pulsante: true,
         },
       },
-      sliderProtagonisti: true,
+      // sliderProtagonisti: true,
       cta: {
         populate: {
           cover: true,
