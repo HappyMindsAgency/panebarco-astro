@@ -30,7 +30,7 @@ const introContent = {
     customLabel("home.introParagraph1", lang),
     customLabel("home.introParagraph2", lang),
   ],
-  imageSrc: "/images/siamo-teams.png",
+  imageSrc: "/images/home-team-panebarco.png",
   imageAlt: customLabel("home.introImageAlt", lang),
 };
 
@@ -255,12 +255,23 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
           ></span>
         </h2>
         <div class="row g-4 g-xl-5 align-items-center">
-          <div class="col-12 col-lg-5">
-            {introContent.paragraphs.map((paragraph, index) => (
-              <p class:list={["en-home-intro__text", index === 0 && "about-text"]}>{paragraph}</p>
-            ))}
+          <div class="col-12 col-lg-6">
+            <p class="en-home-intro__text">
+              There's a creative space in the heart of Ravenna where multiple identities come together: an animation studio, an independent production house, and a multimedia workshop.
+            </p>
+            <p class="en-home-intro__text">We develop original projects and support other productions with services, VFX, and post-production—working in a hands-on, craft-driven way, with great attention to detail.
+              </p>
+            <p class="en-home-intro__text">Since 1995, from Ravenna, we've continued to do this work with the same curiosity as always, staying connected to the world.
+              </p>
+            <p class="en-home-intro__text">Daniele Panebarco, a banker who chose to change his future, decided to pursue his dream: comics. Supported by his wife, he brought his vision to life at the age of 30.
+              </p>
+            <p class="en-home-intro__text">Together, they built both a family and a company that, over more than thirty years, has reinvented itself three times.
+              </p>
+            <p class="en-home-intro__text">Today, the Panebarcos are a creative multimedia workshop, driven by an endless passion for animation.
+            </p>
+            
           </div>
-          <div class="col-12 col-lg-7">
+          <div class="col-12 col-lg-6">
             <div class="en-home-intro__media">
               <img src={introContent.imageSrc} alt={introContent.imageAlt} loading="lazy" />
             </div>
@@ -302,7 +313,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
           <div class="col-12 col-lg-5">
             <h2 id="enHomeSpotlightTitle" class="page-title-uniform en-home-spotlight__title">
               <span class="en-home-spotlight__title-top">Teams</span>
-              <span class="en-home-spotlight__title-bottom">I PANEBARCOS</span>
+              <span class="en-home-spotlight__title-bottom">PANEBARCOS</span>
             </h2>
             <p class="en-home-spotlight__text">{customLabel("home.spotlightText", lang)}</p>
             <a href={panebarcosTeamHref} class="btn btn-cta btn-cta--blue btn-pill">
@@ -1203,7 +1214,7 @@ const portfolioShowcase = await getPortfolioShowcaseContent({
 
     .en-home-intro__text,
     .en-home-spotlight__text {
-      max-width: 34rem;
+      /*max-width: 34rem;*/
       color: #111827;
     }
 

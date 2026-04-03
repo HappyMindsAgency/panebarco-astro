@@ -33,7 +33,7 @@ export const localizedLabels = {
     },
     introTitleStatic: {
       it: "Siamo i Panebarcos",
-      en: "We are Panebarcos",
+      en: "We are the Panebarcos",
     },
     introTypingWords: {
       it: "uno studio di animazione|una casa di produzione indipendente|una bottega multimediale",
