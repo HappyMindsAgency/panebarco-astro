@@ -3,6 +3,7 @@ import type { Lang } from "../i18n/config";
 import { customLabel } from "../i18n/labels";
 import { buildPath } from "../i18n/routing";
 import imgLoghiBando from "../assets/images/loghi-er-bando.jpeg";
+import poster from "../assets/documents/panebarco-poster.pdf";
 
 interface Props {
   lang?: Lang;
@@ -70,7 +71,8 @@ const footerHeadingPrefix = footerHeadingHighlight
     <div class="bg-white row">
       <div class="lg-col-8 col-12 mx-auto">
         <div class="text-container text-center py-4">
-          <p class="mb-0 fs-6 text-black">{customLabel("footer.projectFondiEu", lang)}</p>
+          <p class="mb-0 fs-6 text-black">{customLabel("footer.newProjectFondiEu", lang)} <br />
+            <a href={poster} target="_blank" rel="noopener noreferrer" download="progetto-panebarco.pdf">Leggi la sintesi del progetto</a></p>
           <img src={imgLoghiBando.src} alt="Loghi Bando Fondi Europei" class="img-fluid mt-3" style="max-height: 80px;">
 
         </div>

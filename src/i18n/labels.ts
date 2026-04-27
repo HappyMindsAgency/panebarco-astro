@@ -412,6 +412,10 @@ export const localizedLabels = {
       it: "Il progetto è realizzato grazie ai Fondi europei della Regione Emilia-Romagna",
       en: "The project is made possible thanks to the European Funds of the Emilia-Romagna Region",
     },
+    newProjectFondiEu: {
+      it: "PANE-RELOAD: innovazione digitale per l’animazione del futuro è realizzato grazie ai Fondi europei della Regione Emilia-Romagna.",
+      en: "PANE-RELOAD: digital innovation for the animation of the future is made possible thanks to the European Funds of the Emilia-Romagna Region.",
+    },
     trasparenza: {
       it: "Trasparenza",
       en: "Transparency",
