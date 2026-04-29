@@ -178,7 +178,7 @@ export async function getPaneblogPreviewArticles({ lang = DEFAULT_LANG, limit = 
   const response = await getCollectionDocuments("articoli", {
     locale: lang,
     status: "published",
-    sort: ["publishedAt:asc", "updatedAt:asc"],
+    sort: ["dataPubblicazione:desc", "publishedAt:desc"],
     pagination: {
       page: 1,
       pageSize: limit,
@@ -223,7 +223,7 @@ export async function getPaneblogPageContent({ lang = DEFAULT_LANG, fallback = {
     getCollectionDocuments("articoli", {
       locale: lang,
       status: "published",
-      sort: ["publishedAt:asc", "updatedAt:asc"],
+      sort: ["dataPubblicazione:desc", "publishedAt:desc"],
       fields: ["documentId", "dataPubblicazione", "titolo", "slug", "contenuto", "publishedAt", "updatedAt"],
       populate: {
         cover: true,
@@ -309,7 +309,7 @@ export async function getPaneblogArticlePageContent({ lang = DEFAULT_LANG, slug 
           $ne: slug,
         },
       },
-      sort: ["publishedAt:asc", "updatedAt:asc"],
+      sort: ["dataPubblicazione:desc", "publishedAt:desc"],
       pagination: {
         page: 1,
         pageSize: 3,
